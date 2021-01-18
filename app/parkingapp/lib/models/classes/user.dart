@@ -1,15 +1,21 @@
-// Example for a class which is used in the app (here "user")
+import 'package:shared_preferences/shared_preferences.dart';
 
 class User {
-  int id;
-  String apikey;
   String username;
-  String password;
 
-  User(this.id, this.apikey, this.username, this.password);
+  User(this.username);
 
   static User fromJson(Map<String, dynamic> parsedJson) {
-    return new User(parsedJson['id'], parsedJson['apikey'],
-        parsedJson['username'], parsedJson['password']);
+    return new User(parsedJson['username']);
+  }
+
+  Future setUsername(String username) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('username', username);
+  }
+
+  Future<String> getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('username');
   }
 }

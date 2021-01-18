@@ -7,7 +7,6 @@ import 'package:parkingapp/models/classes/user.dart';
 
 class ApiProvider {
   Client client = Client();
-  final _apiKey = 'your_api_key';
 
   Future<User> registerUser(String username) async {
     final response =
