@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,11 +20,7 @@ class Main extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Parking App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          dialogBackgroundColor: Colors.transparent,
-        ),
+        theme: themeData,
         home: MyHomePage());
   }
 }

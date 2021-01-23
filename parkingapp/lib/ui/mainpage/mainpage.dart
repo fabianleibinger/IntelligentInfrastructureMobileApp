@@ -21,7 +21,6 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Vehicle', style: whiteHeader),
-        backgroundColor: green,
       ),
       drawer: Drawer(
         child: ListView(

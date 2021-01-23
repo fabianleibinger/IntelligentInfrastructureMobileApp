@@ -67,3 +67,11 @@ TextStyle redButtonText = new TextStyle(
     fontWeight: FontWeight.bold,
     color: red,
     fontSize: 30);
+
+// App theme
+ThemeData themeData = ThemeData(
+  primaryColor: green,
+  accentColor: lightgreen,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  dialogBackgroundColor: Colors.transparent,
+);
