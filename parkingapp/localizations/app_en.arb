@@ -3,12 +3,38 @@
     "@appTitle": {
         "description": "Application Title shown on homescreen"
       },
-    "drawerHeader": "Parking Garage",
+    "drawerHeader": "Car park",
     "@drawerHeader": {
         "description": "Text shown in header of the drawer"
     },
     "drawerSettings": "Settings",
     "@drawerSettings": {
         "description": "Settings text in drawer"
+    },
+    "actionButtonPark": "Park vehicle",
+    "@actionButtonPark": {
+        "description": "Park vehicle action button on main page"
+    },
+    "mainPageCarParkTitle": "Parkgarage am Fasanengarten",
+    "@mainPageCarParkTitle": {
+        "description": "The name of the car park"
+    },
+    "mainPageCarParkSubtitleUndergroundCarPark": "Underground cark park",
+    "@mainPageCarParkSubtitleUndergroundCarPark": {
+        "description": "Text shown below the car park title to specify wheter it is an over ground car park or under ground car park"
+    },
+    "mainPageCarPreferenceShouldCharge": "Charge vehicle",
+    "@mainPageCarPreferenceShouldCharge": {
+        "description": "Text shown on main s    creen with SwitchListTile to toggle vehicle charging"
+    },
+    "mainPageCarPreferences": "Car preferences: ",
+    "@mainPageCarPreferences": {},
+    "textNone": "none",
+    "@textNone": {
+        "description": "Text to display of no options of a set of options is selected"
+    },
+    "mainPageAvailableSpaces": "Empty spaces: ",
+    "@mainPageAvailableSpaces": {
+        "description": "Available Spaces text on main Page"
     }
 }

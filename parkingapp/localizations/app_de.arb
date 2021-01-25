@@ -1,5 +1,12 @@
 {
     "appTitle": "Parkhaus App",
     "drawerHeader": "Parkhaus",
-    "drawerSettings": "Einstellungen"
+    "drawerSettings": "Einstellungen",
+    "actionButtonPark": "Fahrzeug einparken",
+    "mainPageCarParkTitle": "Parkgarage am Fasanengarten",
+    "mainPageCarParkSubtitleUndergroundCarPark": "Tiefgarage",
+    "mainPageCarPreferenceShouldCharge": "Fahrzeug laden",
+    "mainPageCarPreferences": "Fahrzeugpräferenzen: ",
+    "textNone": "keine",
+    "mainPageAvailableSpaces": "Freie Parkplätze: "
 }
