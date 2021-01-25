@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Main: From here you call all u'r widgets.
 
@@ -19,15 +20,15 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        //Initialize Localization
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate,
         ],
-        supportedLocales: [
-          const Locale('en', ''),
-          const Locale('de', ''),
-        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        // App info
         debugShowCheckedModeBanner: false,
         title: 'Parking App',
         theme: themeData,

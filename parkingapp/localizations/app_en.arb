@@ -1,0 +1,14 @@
+{
+    "appTitle": "Parking App",
+    "@appTitle": {
+        "description": "Application Title shown on homescreen"
+      },
+    "drawerHeader": "Parking Garage",
+    "@drawerHeader": {
+        "description": "Text shown in header of the drawer"
+    },
+    "drawerSettings": "Settings",
+    "@drawerSettings": {
+        "description": "Settings text in drawer"
+    }
+}
