@@ -41,8 +41,21 @@ def connect():
     return
 
 
-@app.route('/freeParkingSpots')
-def get_free_parking_spots():
+@app.route('/testJson')
+def test_extract_content_from_json():
+    print(request.is_json)
+    content = request.get_json()
+    print(content)
+    return 'JSON posted'
+
+
+@app.route('/freeParkingSpots', methods=['POST'])
+def normal_parking_spots():
+    return
+
+
+@app.route('/freeElectricParkingSpots')
+def electric_parking_spots():
     return
 
 
