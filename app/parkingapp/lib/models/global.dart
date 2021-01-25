@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 Color black = Colors.black;
-Color blue = new Color(0xFF0E2356);
-Color green = new Color(0xFF007749);
-Color grey = new Color(0xFF807F84);
-Color lightgreen = new Color(0xFF2FAE7A);
-Color red = new Color(0xFFBF1E00);
+Color blue = Color(0xFF0E2356);
+Color green = Color(0xFF007749);
+Color grey = Color(0xFF807F84);
+Color lightgreen = Color(0xFF2FAE7A);
+Color red = Color(0xFFBF1E00);
 Color white = Colors.white;
 
 TextStyle blackText = new TextStyle(
@@ -67,3 +67,12 @@ TextStyle redButtonText = new TextStyle(
     fontWeight: FontWeight.bold,
     color: red,
     fontSize: 30);
+
+// App theme
+ThemeData themeData = ThemeData(
+  primaryColor: green,
+  accentColor: lightgreen,
+  errorColor: red,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
+  dialogBackgroundColor: Colors.transparent,
+);

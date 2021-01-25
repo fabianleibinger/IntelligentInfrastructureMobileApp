@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'package:parkingapp/bloc/blocs/userbloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Main: From here you call all u'r widgets.
 
@@ -17,13 +20,19 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        //Initialize Localization
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        // App info
         debugShowCheckedModeBanner: false,
-        title: 'Parking App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          dialogBackgroundColor: Colors.transparent,
-        ),
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context).appTitle,
+        theme: themeData,
         home: MyHomePage());
   }
 }
