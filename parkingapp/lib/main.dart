@@ -30,7 +30,8 @@ class Main extends StatelessWidget {
         supportedLocales: AppLocalizations.supportedLocales,
         // App info
         debugShowCheckedModeBanner: false,
-        title: 'Parking App',
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context).appTitle,
         theme: themeData,
         home: MyHomePage());
   }
