@@ -9,9 +9,7 @@ import 'package:parkingapp/models/global.dart';
 import 'package:wifi/wifi.dart';
 
 class SettingsPage extends StatefulWidget {
-  final String apikey;
-
-  const SettingsPage({Key key, this.apikey}) : super(key: key);
+  const SettingsPage({Key key}) : super(key: key);
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }

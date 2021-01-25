@@ -1,69 +1,81 @@
 class Vehicle {
   String key, name, licenseplate;
-  List<int> dimensions;
-  List<bool> preferences;
+  double width, height, depth, turnangle;
+  bool nearexit, parkingcard;
 
-  Vehicle(this.key, this.name, this.licenseplate, this.dimensions,
-      this.preferences);
+  Vehicle(this.key, this.name, this.licenseplate, this.width, this.height,
+      this.depth, this.turnangle, this.nearexit, this.parkingcard);
 
-  static Vehicle fromJson(Map<String, dynamic> parsedJson) {
-    List<int> dimensions = [
-      int.parse(parsedJson['dimensionH']),
-      int.parse(parsedJson['dimensionW']),
-      int.parse(parsedJson['dimensionD'])
-    ];
-    List<bool> preferences = [
-      parsedJson['nearExit'].parseBool(),
-      parsedJson['parkingcard'].parseBool()
-    ];
-    return new Vehicle(parsedJson['key'], parsedJson['name'],
-        parsedJson['licenseplate'], dimensions, preferences);
-  }
+  // static Vehicle fromJson(Map<String, dynamic> parsedJson) {
+  //   List<int> dimensions = [
+  //     int.parse(parsedJson['dimensionH']),
+  //     int.parse(parsedJson['dimensionW']),
+  //     int.parse(parsedJson['dimensionD'])
+  //   ];
+  //   List<bool> preferences = [
+  //     parsedJson['nearExit'].parseBool(),
+  //     parsedJson['parkingcard'].parseBool()
+  //   ];
+  //   return new Vehicle(parsedJson['key'], parsedJson['name'],
+  //       parsedJson['licenseplate'], dimensions, preferences);
+  // }
 
   //Todo
   String toString() {}
 
   //Todo
-  String setPreferences(List<bool> preferences) {}
+  String setPreferences(bool nearexit, bool parkingcard) {}
 }
 
 class ElectricalVehicle extends Vehicle {
   bool docharge;
   String chargingprovider;
-  List<DateTime> chargetime;
-  String charge;
+  DateTime chargebegin, chargeend;
 
-  ElectricalVehicle(key, name, licenseplate, dimensions, preferences,
-      this.docharge, this.chargingprovider, this.chargetime, this.charge)
-      : super(key, name, licenseplate, dimensions, preferences);
+  ElectricalVehicle(
+      key,
+      name,
+      licenseplate,
+      width,
+      height,
+      depth,
+      turnangle,
+      nearexit,
+      parkingcard,
+      this.docharge,
+      this.chargingprovider,
+      this.chargebegin,
+      this.chargeend)
+      : super(key, name, licenseplate, width, height, depth, turnangle,
+            nearexit, parkingcard);
 
-  static ElectricalVehicle fromJson(Map<String, dynamic> parsedJson) {
-    List<int> dimensions = [
-      int.parse(parsedJson['dimensionH']),
-      int.parse(parsedJson['dimensionW']),
-      int.parse(parsedJson['dimensionD'])
-    ];
-    List<bool> preferences = [
-      parsedJson['nearExit'].parseBool(),
-      parsedJson['parkingcard'].parseBool()
-    ];
-    List<DateTime> chargetime = [
-      parsedJson['chargetimebegin'],
-      parsedJson['chargetimeend']
-    ];
-
-    return new ElectricalVehicle(
-        parsedJson['key'],
-        parsedJson['name'],
-        parsedJson['licenseplate'],
-        dimensions,
-        preferences,
-        parsedJson['docharge'],
-        parsedJson['chargingprovider'],
-        chargetime,
-        parsedJson['charge']);
-  }
+  // static ElectricalVehicle fromJson(Map<String, dynamic> parsedJson) {
+  //   List<int> dimensions = [
+  //     int.parse(parsedJson['dimensionH']),
+  //     int.parse(parsedJson['dimensionW']),
+  //     int.parse(parsedJson['dimensionD'])
+  //   ];
+  //   List<bool> preferences = [
+  //     parsedJson['nearExit'].parseBool(),
+  //     parsedJson['parkingcard'].parseBool()
+  //   ];
+  //   List<DateTime> chargetime = [
+  //     parsedJson['chargetimebegin'],
+  //     parsedJson['chargetimeend']
+  //   ];
+  //
+  //   return new ElectricalVehicle(
+  //       parsedJson['key'],
+  //       parsedJson['name'],
+  //       parsedJson['licenseplate'],
+  //       dimensions,
+  //       preferences,
+  //       parsedJson['docharge'],
+  //       parsedJson['chargingprovider'],
+  //       chargetime,
+  //       parsedJson['charge']);
+  // }
 
   //Todo
-  String getBatteryCharge() {}
+  //String getBatteryCharge() {}
 }

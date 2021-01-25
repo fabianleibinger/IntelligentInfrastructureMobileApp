@@ -17,27 +17,12 @@ class _FirstStartPageState extends State<FirstStartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
-      body: Center(
-        child: Container(
-          margin: EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 100),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "Welcome!",
-              ),
-              Container(
-                height: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      backgroundColor: grey,
+      body: Center(),
     );
+  }
+
+  getStartScreen(BuildContext context) {
+    return;
   }
 }

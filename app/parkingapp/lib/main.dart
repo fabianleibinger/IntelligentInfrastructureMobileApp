@@ -39,12 +39,6 @@ class _MyHomePageState extends State<MyHomePage> {
     return MainPage();
   }
 
-  void login() {
-    setState(() {
-      build(context);
-    });
-  }
-
   @override
   void initState() {
     super.initState();
