@@ -22,10 +22,10 @@ port = config.getint('server', 'port')
 # Implement logic here
 
 
-
 ##############################################################################
 
 # Routes
+
 
 @app.route('/')
 def main():
@@ -34,6 +34,36 @@ def main():
     :return: Welcome message
     """
     return "Welcome to the server. "
+
+
+@app.route('/connect')
+def connect():
+    return
+
+
+@app.route('/freeParkingSpots')
+def get_free_parking_spots():
+    return
+
+
+@app.route('/parkIn')
+def perform_park_in_request():
+    return
+
+
+@app.route('/parkOut')
+def perform_park_out_request():
+    return
+
+
+@app.route('/getPosition')
+def get_position():
+    return
+
+
+@app.route('/garageAnimation')
+def show_garage_animation():
+    return
 
 
 #####################################################################
