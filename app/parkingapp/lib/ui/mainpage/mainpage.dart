@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkoutdialog.dart';
+import 'package:parkingapp/ui/parkpage/parkpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:wifi/wifi.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 final parkhausImage = 'assets/parkgarage-fasanengarten.jpg';
 final parkhausImageHeight = 250;
@@ -14,6 +16,7 @@ final bottomMargin = 220;
 bool _charge = false;
 
 class MainPage extends StatefulWidget {
+  static const String routeName = '/MainPage';
   final String apikey;
 
   const MainPage({Key key, this.apikey}) : super(key: key);
@@ -33,32 +36,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: green,
-                ),
-                child: Text(AppLocalizations.of(context).drawerHeader,
-                    style: blackHeader),
-              ),
-              ListTile(
-                leading: Icon(Icons.message),
-                title: Text('Messages'),
-              ),
-              ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Profile'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text(AppLocalizations.of(context).drawerSettings),
-              ),
-            ],
-          ),
-        ),
+        drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
           label: Text(AppLocalizations.of(context).actionButtonPark),
