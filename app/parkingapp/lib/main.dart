@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
-import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
