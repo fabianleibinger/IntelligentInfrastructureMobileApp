@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkoutdialog.dart';
+import 'package:parkingapp/enum/parkinggaragetype.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
+import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:wifi/wifi.dart';
 
-final parkhausImage = 'assets/parkgarage-fasanengarten.jpg';
+final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkhausImageHeight = 250;
 final bottomMargin = 220;
 List<String> _properties = [
-  'Freie Parkplätze: 79',
+  currentParkingGarage.name,
   'Fahrzeugpräferenzen: keine'
 ];
 bool _charge = false;
@@ -20,6 +23,7 @@ class MainPage extends StatefulWidget {
   final String apikey;
 
   const MainPage({Key key, this.apikey}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -84,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                       height: parkhausImageHeight.toDouble(),
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                        image: AssetImage(parkhausImage),
+                        image: AssetImage(currentParkingGarage.image),
                         fit: BoxFit.cover,
                       )),
                     ),
