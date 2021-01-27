@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="added object of parkinggarage to mainpage, saves all parkinggarage-related variables">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dart File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="app" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1nZCzb3gRdq0FYCbZintf8HhkOP" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="dart.analysis.tool.window.visible" value="false" />
+    <property name="io.flutter.reload.alreadyRun" value="true" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+    <property name="show.migrate.to.gradle.popup" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\fabia\AndroidStudioProjects\intelligentinfrastructuremobileapp\app\parkingapp\lib\enum" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+      <option name="filePath" value="$PROJECT_DIR$/app/parkingapp/lib/main.dart" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="" />
+      <created>1611588488368</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611588488368</updated>
+    </task>
+    <task id="LOCAL-00001" summary="added class parkingGarage in folder models&#10;enum parkingGarageType, new folder enum">
+      <created>1611673087890</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1611673087890</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added class parkingGarage&#10;enum parkingGarageType, new folder enum">
+      <created>1611673466463</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1611673466463</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added class parkingGarage in folder models&#10;enum parkingGarageType, new folder enum" />
+    <MESSAGE value="added class parkingGarage" />
+    <MESSAGE value="added class parkingGarage&#10;enum parkingGarageType, new folder enum" />
+    <MESSAGE value="added object of parkinggarage to mainpage, saves all parkinggarage-related variables" />
+    <option name="LAST_COMMIT_MESSAGE" value="added object of parkinggarage to mainpage, saves all parkinggarage-related variables" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611588693291">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588693291" />
+    <state x="370" y="130" key="#com.intellij.ide.util.TreeFileChooserDialog" timestamp="1611588690294">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="370" y="130" key="#com.intellij.ide.util.TreeFileChooserDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588690294" />
+    <state width="1236" height="162" key="GridCell.Tab.0.bottom" timestamp="1611674484832">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1236" height="162" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
+    <state width="1236" height="162" key="GridCell.Tab.0.center" timestamp="1611674484832">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1236" height="162" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
+    <state width="1236" height="162" key="GridCell.Tab.0.left" timestamp="1611674484832">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1236" height="162" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
+    <state width="1236" height="162" key="GridCell.Tab.0.right" timestamp="1611674484832">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1236" height="162" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
+    <state x="279" y="61" key="RollbackChangesDialog" timestamp="1611588938847">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="279" y="61" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588938847" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611673504122">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611673504122" />
+    <state x="450" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611670442626">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="450" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1611670442626" />
+    <state x="301" y="53" key="git4idea.branch.GitSmartOperationDialog" timestamp="1611669179149">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="301" y="53" key="git4idea.branch.GitSmartOperationDialog/0.0.1280.680@0.0.1280.680" timestamp="1611669179149" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611673492833">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611673492833" />
+  </component>
+</project>
