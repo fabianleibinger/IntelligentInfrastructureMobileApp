@@ -6,7 +6,9 @@ class Vehicle {
   double width, height, depth, turnangle;
   bool nearexit, parkingcard;
 
-  Vehicle(this.id, this.key, this.name, this.licenseplate, this.width,
+  Vehicle(this.key, this.name, this.licenseplate, this.width, this.height,
+      this.depth, this.turnangle, this.nearexit, this.parkingcard);
+  Vehicle._(this.id, this.key, this.name, this.licenseplate, this.width,
       this.height, this.depth, this.turnangle, this.nearexit, this.parkingcard);
 
   Map<String, dynamic> toMap() {
@@ -30,7 +32,7 @@ class Vehicle {
   }
 
   static Vehicle fromMap(Map<String, dynamic> map) {
-    return Vehicle(
+    return Vehicle._(
         map[DatabaseProvider.COLUMN_ID],
         map[DatabaseProvider.COLUMN_KEY],
         map[DatabaseProvider.COLUMN_NAME],
@@ -57,6 +59,23 @@ class ElectricalVehicle extends Vehicle {
   String charge;
 
   ElectricalVehicle(
+      key,
+      name,
+      licenseplate,
+      width,
+      height,
+      depth,
+      turnangle,
+      nearexit,
+      parkingcard,
+      this.docharge,
+      this.chargingprovider,
+      this.chargebegin,
+      this.chargeend,
+      this.charge)
+      : super(key, name, licenseplate, width, height, depth, turnangle,
+            nearexit, parkingcard);
+  ElectricalVehicle._(
       id,
       key,
       name,
@@ -72,7 +91,7 @@ class ElectricalVehicle extends Vehicle {
       this.chargebegin,
       this.chargeend,
       this.charge)
-      : super(id, key, name, licenseplate, width, height, depth, turnangle,
+      : super._(id, key, name, licenseplate, width, height, depth, turnangle,
             nearexit, parkingcard);
 
   Map<String, dynamic> toMap() {
@@ -102,7 +121,7 @@ class ElectricalVehicle extends Vehicle {
   }
 
   static ElectricalVehicle fromMap(Map<String, dynamic> map) {
-    return ElectricalVehicle(
+    return ElectricalVehicle._(
         map[DatabaseProvider.COLUMN_ID],
         map[DatabaseProvider.COLUMN_KEY],
         map[DatabaseProvider.COLUMN_NAME],
