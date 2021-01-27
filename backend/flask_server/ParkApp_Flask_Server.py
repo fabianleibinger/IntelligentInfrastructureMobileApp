@@ -1,29 +1,38 @@
 import os
 import configparser
+import rospy
+import threading
+
 from flask import Flask, jsonify, request
+from std_msgs.msg import String
 
-#################################################################
 
-app = Flask(__name__)  # server running on flask device
+############################################################################
+# Start Flask server with configuration from config.properties file
+app = Flask(__name__)
 
-dir_path = os.path.dirname(os.path.realpath(__file__))  # file path of this file
-
+dir_path = os.path.dirname(os.path.realpath(__file__))
 config = configparser.RawConfigParser()
-configFilePath = os.path.join(dir_path,
-                              'config.properties')  # configFile should be saved in the same folder and named config.properties
+# Save configuration file in same folder and check name matching
+configFilePath = os.path.join(dir_path, 'config.properties')
 config.read(configFilePath)
 
 # Loading configuration from configuration file for url and port
 url_address = config['server']['ipAddress']
 port = config.getint('server', 'port')
 
-##################################################################
+############################################################################
+# Connect to ROS node
+ros_root_node = 'parking_node'
+ros_message = '/requestFreeParkingSpots01'
+threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
+pubParkingSpots = rospy.Publisher(ros_root_node, String, queue_size=1)
 
+############################################################################
 # Implement logic here
 
 
-##############################################################################
-
+############################################################################
 # Routes
 
 
@@ -79,8 +88,7 @@ def show_garage_animation():
     return
 
 
-#####################################################################
-
+############################################################################
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
