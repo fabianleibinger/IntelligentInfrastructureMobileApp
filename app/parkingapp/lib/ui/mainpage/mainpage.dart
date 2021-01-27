@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:wifi/wifi.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
@@ -31,6 +31,11 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    List<String> _properties = [
+      AppLocalizations.of(context).mainPageAvailableSpaces + '79',
+      AppLocalizations.of(context).mainPageCarPreferences +
+          AppLocalizations.of(context).textNone
+    ];
     return Scaffold(
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
@@ -43,7 +48,8 @@ class _MainPageState extends State<MainPage> {
                 decoration: BoxDecoration(
                   color: green,
                 ),
-                child: Text('Parkhaus', style: blackHeader),
+                child: Text(AppLocalizations.of(context).drawerHeader,
+                    style: blackHeader),
               ),
               ListTile(
                 leading: Icon(Icons.message),
@@ -55,14 +61,14 @@ class _MainPageState extends State<MainPage> {
               ),
               ListTile(
                 leading: Icon(Icons.settings),
-                title: Text('Settings'),
+                title: Text(AppLocalizations.of(context).drawerSettings),
               ),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
-          label: Text('Fahrzeug einparken'),
+          label: Text(AppLocalizations.of(context).actionButtonPark),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: Column(
@@ -78,11 +84,10 @@ class _MainPageState extends State<MainPage> {
                   children: [
                     ListTile(
                       //leading: Icon(Icons.location_on),
-                      title: const Text('Parkgarage Fasanengarten'),
-                      subtitle: Text(
-                        'Tiefgarage',
-                        style: TextStyle(color: Colors.black.withOpacity(0.6)),
-                      ),
+                      title: Text(
+                          AppLocalizations.of(context).mainPageCarParkTitle),
+                      subtitle: Text(AppLocalizations.of(context)
+                          .mainPageCarParkSubtitleUndergroundCarPark),
                     ),
                     Container(
                       height: parkhausImageHeight.toDouble(),
@@ -114,7 +119,8 @@ class _MainPageState extends State<MainPage> {
             ))
         .toList());
     widgets.add(SwitchListTile(
-      title: Text('Fahrzeug laden'),
+      title:
+          Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
           _charge = newValue;
