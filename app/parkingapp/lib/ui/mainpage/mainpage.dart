@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/ui/Drawer/Drawer.dart';
 
 final parkhausImage = 'assets/parkgarage-fasanengarten.jpg';
 final parkhausImageHeight = 250;
@@ -27,32 +28,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: green,
-                ),
-                child: Text(AppLocalizations.of(context).drawerHeader,
-                    style: blackHeader),
-              ),
-              ListTile(
-                leading: Icon(Icons.message),
-                title: Text('Messages'),
-              ),
-              ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Profile'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text(AppLocalizations.of(context).drawerSettings),
-              ),
-            ],
-          ),
-        ),
+        drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
           label: Text(AppLocalizations.of(context).actionButtonPark),
