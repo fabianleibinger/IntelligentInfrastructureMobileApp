@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:parkingapp/models/classes/vehicle.dart';
 
 enum EventType { add, delete, update }
