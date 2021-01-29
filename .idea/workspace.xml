@@ -19,8 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="mainpage.dart: deleted unused imports, deleted _properties List">
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" afterDir="false" />
+    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight">
+      <change afterPath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/loadablevehicle.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/vehicle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/vehicle.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611917784017</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight">
+      <created>1611917977775</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1611917977775</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -132,7 +141,8 @@
     <MESSAGE value="deleted parkinggarage-localizations. mainpage.dart uses attributes of parkinggarage instead of hardcoded localization" />
     <MESSAGE value="mainpage.dart: deleted unused imports" />
     <MESSAGE value="mainpage.dart: deleted unused imports, deleted _properties List" />
-    <option name="LAST_COMMIT_MESSAGE" value="mainpage.dart: deleted unused imports, deleted _properties List" />
+    <MESSAGE value="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight" />
+    <option name="LAST_COMMIT_MESSAGE" value="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight" />
   </component>
   <component name="WindowStateProjectService">
     <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611588693291">
@@ -147,30 +157,30 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="93" y="93" width="1095" height="495" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1611914862955" />
-    <state width="1236" height="162" key="GridCell.Tab.0.bottom" timestamp="1611917677030">
+    <state width="1236" height="162" key="GridCell.Tab.0.bottom" timestamp="1611917991342">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611917677030" />
-    <state width="1236" height="162" key="GridCell.Tab.0.center" timestamp="1611917677029">
+    <state width="1236" height="162" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611917991342" />
+    <state width="1236" height="162" key="GridCell.Tab.0.center" timestamp="1611917991342">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611917677029" />
-    <state width="1236" height="162" key="GridCell.Tab.0.left" timestamp="1611917677029">
+    <state width="1236" height="162" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611917991342" />
+    <state width="1236" height="162" key="GridCell.Tab.0.left" timestamp="1611917991342">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611917677029" />
-    <state width="1236" height="162" key="GridCell.Tab.0.right" timestamp="1611917677029">
+    <state width="1236" height="162" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611917991342" />
+    <state width="1236" height="162" key="GridCell.Tab.0.right" timestamp="1611917991342">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611917677029" />
+    <state width="1236" height="162" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611917991342" />
     <state x="279" y="61" key="RollbackChangesDialog" timestamp="1611588938847">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="279" y="61" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588938847" />
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611917788212">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611917987141">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611917788212" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611917987141" />
     <state x="279" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1611917136284">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -183,9 +193,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="301" y="53" key="git4idea.branch.GitSmartOperationDialog/0.0.1280.680@0.0.1280.680" timestamp="1611669179149" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611917652885">
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611917984738">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611917652885" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611917984738" />
   </component>
 </project>
