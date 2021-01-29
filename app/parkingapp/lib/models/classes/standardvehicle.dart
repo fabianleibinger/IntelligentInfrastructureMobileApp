@@ -1,12 +1,7 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 
-class LoadableVehicle implements Vehicle {
-  bool doCharge;
-  String chargingProvider;
-  List<DateTime> chargeTime;
-  String charge;
-
-  LoadableVehicle(
+class StandardVehicle implements Vehicle {
+  StandardVehicle(
       this.key,
       this.name,
       this.licensePlate,
@@ -15,19 +10,10 @@ class LoadableVehicle implements Vehicle {
       this.length,
       this.turningCycle,
       this.nearExitPreference,
-      this.parkingCard,
-      this.doCharge,
-      this.chargingProvider,
-      this.chargeTime,
-      this.charge);
+      this.parkingCard);
 
-  static LoadableVehicle fromJson(Map<String, dynamic> parsedJson) {
-    List<DateTime> chargeTime = [
-      parsedJson['chargeTimeBegin'],
-      parsedJson['chargeTimeEnd']
-    ];
-
-    return new LoadableVehicle(
+  static StandardVehicle fromJson(Map<String, dynamic> parsedJson) {
+    return new StandardVehicle(
         parsedJson['key'],
         parsedJson['name'],
         parsedJson['licensePlate'],
@@ -36,16 +22,7 @@ class LoadableVehicle implements Vehicle {
         int.parse(parsedJson['length']),
         int.parse(parsedJson['turningCycle']),
         parsedJson['nearExitPreference'].parseBool(),
-        parsedJson['parkingCard'].parseBool(),
-        parsedJson['doCharge'].parseBool(),
-        parsedJson['chargingProvider'],
-        chargeTime,
-        parsedJson['charge']);
-  }
-
-  String getBatteryCharge() {
-    // TODO: implement getBatteryCharge
-    throw UnimplementedError();
+        parsedJson['parkingCard'].parseBool());
   }
 
   @override
