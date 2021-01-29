@@ -19,10 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight">
-      <change afterPath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/loadablevehicle.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/vehicle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/vehicle.dart" afterDir="false" />
+    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="refactored vehicle.dart, 4 variables instead of one List for dimensions, 2 variables instead of one List for preferences, outsourced loadablevehicle.dart (new name for electricalVehicle)">
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/loadablevehicle.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/models/classes/loadablevehicle.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +113,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611917977775</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="refactored vehicle.dart, 4 variables instead of one List for dimensions, 2 variables instead of one List for preferences, outsourced loadablevehicle.dart (new name for electricalVehicle)">
+      <created>1611921638150</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1611921638150</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -142,7 +147,8 @@
     <MESSAGE value="mainpage.dart: deleted unused imports" />
     <MESSAGE value="mainpage.dart: deleted unused imports, deleted _properties List" />
     <MESSAGE value="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight" />
-    <option name="LAST_COMMIT_MESSAGE" value="mainpage.dart: renamed parkhausImageHeight to parkingGarageImageHeight" />
+    <MESSAGE value="refactored vehicle.dart, 4 variables instead of one List for dimensions, 2 variables instead of one List for preferences, outsourced loadablevehicle.dart (new name for electricalVehicle)" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored vehicle.dart, 4 variables instead of one List for dimensions, 2 variables instead of one List for preferences, outsourced loadablevehicle.dart (new name for electricalVehicle)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611588693291">
@@ -177,10 +183,10 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="279" y="61" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588938847" />
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611917987141">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611921642518">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611917987141" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611921642518" />
     <state x="279" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1611917136284">
       <screen x="0" y="0" width="1280" height="680" />
     </state>

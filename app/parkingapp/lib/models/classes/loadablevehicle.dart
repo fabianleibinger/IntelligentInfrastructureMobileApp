@@ -6,8 +6,16 @@ class LoadableVehicle extends Vehicle {
   List<DateTime> chargeTime;
   String charge;
 
-  LoadableVehicle(key, name, licensePlate, height, width, length, turningCycle,
-      nearExitPreference, parkingCard,
+  LoadableVehicle(
+      key,
+      name,
+      licensePlate,
+      height,
+      width,
+      length,
+      turningCycle,
+      nearExitPreference,
+      parkingCard,
       this.doCharge,
       this.chargingProvider,
       this.chargeTime,
