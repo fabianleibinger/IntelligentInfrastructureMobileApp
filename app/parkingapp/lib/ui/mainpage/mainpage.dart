@@ -6,7 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
-final parkhausImageHeight = 250;
+final parkingGarageImageHeight = 250;
 final bottomMargin = 220;
 bool _charge = false;
 
@@ -80,7 +80,7 @@ class _MainPageState extends State<MainPage> {
                       subtitle: Text(currentParkingGarage.type.toShortString()),
                     ),
                     Container(
-                      height: parkhausImageHeight.toDouble(),
+                      height: parkingGarageImageHeight.toDouble(),
                       decoration: BoxDecoration(
                           image: DecorationImage(
                         image: AssetImage(currentParkingGarage.image),

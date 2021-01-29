@@ -19,17 +19,8 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="added object of parkinggarage to mainpage, saves all parkinggarage-related variables">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_1_25_2021_4_36_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_1_25_2021_4_36_PM__Default_Changelist_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/enum/parkinggaragetype.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/enum/parkinggaragetype.dart" afterDir="false" />
+    <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="mainpage.dart: deleted unused imports, deleted _properties List">
       <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/localizations/app_de.arb" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/localizations/app_de.arb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/pubspec.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/parkingapp/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +92,21 @@
       <option name="project" value="LOCAL" />
       <updated>1611673466463</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="deleted parkinggarage-localizations. mainpage.dart uses attributes of parkinggarage instead of hardcoded localization">
+      <created>1611917641140</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1611917641140</updated>
+    </task>
+    <task id="LOCAL-00004" summary="mainpage.dart: deleted unused imports, deleted _properties List">
+      <created>1611917784017</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1611917784017</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -124,7 +129,10 @@
     <MESSAGE value="added class parkingGarage" />
     <MESSAGE value="added class parkingGarage&#10;enum parkingGarageType, new folder enum" />
     <MESSAGE value="added object of parkinggarage to mainpage, saves all parkinggarage-related variables" />
-    <option name="LAST_COMMIT_MESSAGE" value="added object of parkinggarage to mainpage, saves all parkinggarage-related variables" />
+    <MESSAGE value="deleted parkinggarage-localizations. mainpage.dart uses attributes of parkinggarage instead of hardcoded localization" />
+    <MESSAGE value="mainpage.dart: deleted unused imports" />
+    <MESSAGE value="mainpage.dart: deleted unused imports, deleted _properties List" />
+    <option name="LAST_COMMIT_MESSAGE" value="mainpage.dart: deleted unused imports, deleted _properties List" />
   </component>
   <component name="WindowStateProjectService">
     <state x="95" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611588693291">
@@ -139,30 +147,30 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="93" y="93" width="1095" height="495" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1611914862955" />
-    <state width="1220" height="160" key="GridCell.Tab.0.bottom" timestamp="1611764176255">
+    <state width="1236" height="162" key="GridCell.Tab.0.bottom" timestamp="1611917677030">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
-    <state width="1220" height="160" key="GridCell.Tab.0.center" timestamp="1611764176255">
+    <state width="1236" height="162" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611917677030" />
+    <state width="1236" height="162" key="GridCell.Tab.0.center" timestamp="1611917677029">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
-    <state width="1220" height="160" key="GridCell.Tab.0.left" timestamp="1611764176255">
+    <state width="1236" height="162" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611917677029" />
+    <state width="1236" height="162" key="GridCell.Tab.0.left" timestamp="1611917677029">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
-    <state width="1220" height="160" key="GridCell.Tab.0.right" timestamp="1611764176255">
+    <state width="1236" height="162" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611917677029" />
+    <state width="1236" height="162" key="GridCell.Tab.0.right" timestamp="1611917677029">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1220" height="160" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
+    <state width="1236" height="162" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611917677029" />
     <state x="279" y="61" key="RollbackChangesDialog" timestamp="1611588938847">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="279" y="61" key="RollbackChangesDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588938847" />
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611673504122">
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2" timestamp="1611917788212">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611673504122" />
+    <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611917788212" />
     <state x="279" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1611917136284">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -175,9 +183,9 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="301" y="53" key="git4idea.branch.GitSmartOperationDialog/0.0.1280.680@0.0.1280.680" timestamp="1611669179149" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611914658459">
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611917652885">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611914658459" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611917652885" />
   </component>
 </project>
