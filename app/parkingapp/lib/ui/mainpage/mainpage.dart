@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/bloc/blocs/userbloc.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
-import 'package:parkingapp/dialogs/parkoutdialog.dart';
 import 'package:parkingapp/enum/parkinggaragetype.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,10 +8,6 @@ final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkhausImageHeight = 250;
 final bottomMargin = 220;
-List<String> _properties = [
-  currentParkingGarage.name,
-  'Fahrzeugpräferenzen: keine'
-];
 bool _charge = false;
 
 class MainPage extends StatefulWidget {
