@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>parking_app_ros_pkg</name>
+  <version>0.0.0</version>
+  <description>A ROS package for communication between autonomous parking app and parking garage management system.</description>
+
+  <maintainer email="bjarne.sauer@student.kit.edu">Bjarne Sauer</maintainer>
+
+  <license>MIT</license>
+
+  <url type="website">https://git.scc.kit.edu/teamprojekt-intelligente-infrastruktur-2020-21-fzi/intelligentinfrastructuremobileapp</url>
+
+
+  <author email="bjarne.sauer@student.kit.edu">Bjarne Sauer</author>
+  <author email="carl.hauschke@student.kit.edu">Carl Hauschke</author>
+  <author email="uwqqd@student.kit.edu">Fabian Leibinger</author>
+  <author email="sophie.witt@student.kit.edu">Sophie Witt</author>
+  <author email="vincent.geppert@student.kit.edu">Vincent Geppert</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+
+</package>
