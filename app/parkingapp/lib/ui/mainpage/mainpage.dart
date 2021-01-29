@@ -32,7 +32,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     List<String> _properties = [
-      AppLocalizations.of(context).mainPageAvailableSpaces + '79',
+      AppLocalizations.of(context).mainPageAvailableSpaces +
+          currentParkingGarage.freeParkingSpots.toString(),
       AppLocalizations.of(context).mainPageCarPreferences +
           AppLocalizations.of(context).textNone
     ];
@@ -84,10 +85,8 @@ class _MainPageState extends State<MainPage> {
                   children: [
                     ListTile(
                       //leading: Icon(Icons.location_on),
-                      title: Text(
-                          AppLocalizations.of(context).mainPageCarParkTitle),
-                      subtitle: Text(AppLocalizations.of(context)
-                          .mainPageCarParkSubtitleUndergroundCarPark),
+                      title: Text(currentParkingGarage.name),
+                      subtitle: Text(currentParkingGarage.type.toShortString()),
                     ),
                     Container(
                       height: parkhausImageHeight.toDouble(),

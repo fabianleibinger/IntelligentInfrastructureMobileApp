@@ -20,8 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="564419cf-4f46-455e-aa21-a2be6532c685" name="Default Changelist" comment="added object of parkinggarage to mainpage, saves all parkinggarage-related variables">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_1_25_2021_4_36_PM__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_1_25_2021_4_36_PM__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.h" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.m" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/ios/Runner/GeneratedPluginRegistrant.m" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/enum/parkinggaragetype.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/enum/parkinggaragetype.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/lib/ui/mainpage/mainpage.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/localizations/app_de.arb" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/localizations/app_de.arb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/parkingapp/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app/parkingapp/pubspec.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +104,9 @@
     <option name="localTasksCounter" value="3" />
     <servers />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.arb" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
@@ -124,22 +135,26 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="370" y="130" key="#com.intellij.ide.util.TreeFileChooserDialog/0.0.1280.680@0.0.1280.680" timestamp="1611588690294" />
-    <state width="1236" height="162" key="GridCell.Tab.0.bottom" timestamp="1611674484832">
+    <state x="93" y="93" width="1095" height="495" key="AVDManager" timestamp="1611914862955">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
-    <state width="1236" height="162" key="GridCell.Tab.0.center" timestamp="1611674484832">
+    <state x="93" y="93" width="1095" height="495" key="AVDManager/0.0.1280.680@0.0.1280.680" timestamp="1611914862955" />
+    <state width="1220" height="160" key="GridCell.Tab.0.bottom" timestamp="1611764176255">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
-    <state width="1236" height="162" key="GridCell.Tab.0.left" timestamp="1611674484832">
+    <state width="1220" height="160" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
+    <state width="1220" height="160" key="GridCell.Tab.0.center" timestamp="1611764176255">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
-    <state width="1236" height="162" key="GridCell.Tab.0.right" timestamp="1611674484832">
+    <state width="1220" height="160" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
+    <state width="1220" height="160" key="GridCell.Tab.0.left" timestamp="1611764176255">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1236" height="162" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611674484832" />
+    <state width="1220" height="160" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
+    <state width="1220" height="160" key="GridCell.Tab.0.right" timestamp="1611764176255">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state width="1220" height="160" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1611764176255" />
     <state x="279" y="61" key="RollbackChangesDialog" timestamp="1611588938847">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
@@ -148,17 +163,21 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="233" y="74" key="Vcs.Push.Dialog.v2/0.0.1280.680@0.0.1280.680" timestamp="1611673504122" />
-    <state x="450" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611670442626">
+    <state x="279" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1611917136284">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="450" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1611670442626" />
+    <state x="279" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1280.680@0.0.1280.680" timestamp="1611917136284" />
+    <state x="450" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611914416835">
+      <screen x="0" y="0" width="1280" height="680" />
+    </state>
+    <state x="450" y="254" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.680@0.0.1280.680" timestamp="1611914416835" />
     <state x="301" y="53" key="git4idea.branch.GitSmartOperationDialog" timestamp="1611669179149">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="301" y="53" key="git4idea.branch.GitSmartOperationDialog/0.0.1280.680@0.0.1280.680" timestamp="1611669179149" />
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611673492833">
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup" timestamp="1611914658459">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611673492833" />
+    <state x="303" y="1" width="672" height="678" key="search.everywhere.popup/0.0.1280.680@0.0.1280.680" timestamp="1611914658459" />
   </component>
 </project>
