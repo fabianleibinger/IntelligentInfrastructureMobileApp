@@ -1,0 +1,32 @@
+{
+    "appTitle": "Parkhaus App",
+    "@appTitle": {
+        "description": "Application Title shown on homescreen"
+      },
+    "drawerHeader": "Parkhaus",
+    "@drawerHeader": {
+        "description": "Text shown in header of the drawer"
+    },
+    "drawerSettings": "Einstellungen",
+    "@drawerSettings": {
+        "description": "Settings text in drawer"
+    },
+    "actionButtonPark": "Fahrzeug einparken",
+    "@actionButtonPark": {
+        "description": "Park vehicle action button on main page"
+    },
+    "mainPageCarPreferenceShouldCharge": "Fahrzeug laden",
+    "@mainPageCarPreferenceShouldCharge": {
+        "description": "Text shown on main screen with SwitchListTile to toggle vehicle charging"
+    },
+    "mainPageCarPreferences": "Fahrzeugpräferenzen: ",
+    "@mainPageCarPreferences": {},
+    "textNone": "keine",
+    "@textNone": {
+        "description": "Text to display of no options of a set of options is selected"
+    },
+    "mainPageAvailableSpaces": "Freie Parkplätze: ",
+    "@mainPageAvailableSpaces": {
+        "description": "Available Spaces text on main Page"
+    }
+}
