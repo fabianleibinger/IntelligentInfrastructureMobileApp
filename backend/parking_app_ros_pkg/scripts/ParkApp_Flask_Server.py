@@ -23,11 +23,17 @@ port = config.getint('server', 'port')
 
 ############################################################################
 # Connect to ROS node
-def run_ros():
-    ros_root_node = 'parking_node'
-    ros_message = '/requestFreeParkingSpots01'
-    threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
-    pubParkingSpots = rospy.Publisher(ros_root_node, String, queue_size=1)
+ros_root_node = 'parking_node'
+threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
+ros_message_parking_spots = 'parkingSpots'
+pubParkingSpots = rospy.Publisher(ros_message_parking_spots, String, queue_size=10)
+
+
+def request_free_parking_spots_from_pms(electric):
+    if electric:
+        pubParkingSpots.publish('electric spots')
+    else:
+        pubParkingSpots.publish('normal spots')
 ############################################################################
 # Implement logic here
 
@@ -58,14 +64,16 @@ def test_extract_content_from_json():
     return 'JSON posted'
 
 
-@app.route('/freeParkingSpots', methods=['POST'])
-def normal_parking_spots():
-    return
+@app.route('/freeParkingSpots')
+def get_normal_parking_spots():
+    request_free_parking_spots_from_pms(False)
+    return '42'
 
 
 @app.route('/freeElectricParkingSpots')
 def electric_parking_spots():
-    return
+    request_free_parking_spots_from_pms(True)
+    return '17'
 
 
 @app.route('/parkIn')
@@ -92,4 +100,5 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 
