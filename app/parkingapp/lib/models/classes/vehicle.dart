@@ -1,67 +1,142 @@
+import 'package:parkingapp/models/data/vehicles.dart';
+
 class Vehicle {
+  int id;
   String key, name, licenseplate;
-  List<int> dimensions;
-  List<bool> preferences;
+  double width, height, depth, turnangle;
+  bool nearexit, parkingcard;
 
-  Vehicle(this.key, this.name, this.licenseplate, this.dimensions,
-      this.preferences);
+  Vehicle(this.key, this.name, this.licenseplate, this.width, this.height,
+      this.depth, this.turnangle, this.nearexit, this.parkingcard);
+  Vehicle._(this.id, this.key, this.name, this.licenseplate, this.width,
+      this.height, this.depth, this.turnangle, this.nearexit, this.parkingcard);
 
-  static Vehicle fromJson(Map<String, dynamic> parsedJson) {
-    List<int> dimensions = [
-      int.parse(parsedJson['dimensionH']),
-      int.parse(parsedJson['dimensionW']),
-      int.parse(parsedJson['dimensionD'])
-    ];
-    List<bool> preferences = [
-      parsedJson['nearExit'].parseBool(),
-      parsedJson['parkingcard'].parseBool()
-    ];
-    return new Vehicle(parsedJson['key'], parsedJson['name'],
-        parsedJson['licenseplate'], dimensions, preferences);
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      DatabaseProvider.COLUMN_KEY: key,
+      DatabaseProvider.COLUMN_NAME: name,
+      DatabaseProvider.COLUMN_LICENSEPLATE: licenseplate,
+      DatabaseProvider.COLUMN_WIDTH: width.toDouble(),
+      DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
+      DatabaseProvider.COLUMN_DEPTH: depth.toDouble(),
+      DatabaseProvider.COLUMN_TURNANGLE: turnangle.toDouble(),
+      DatabaseProvider.COLUMN_NEAREXIT: nearexit ? 1 : 0,
+      DatabaseProvider.COLUMN_PARKINGCARD: parkingcard ? 1 : 0
+    };
+
+    if (id != null) {
+      map[DatabaseProvider.COLUMN_ID] = id;
+    }
+
+    return map;
+  }
+
+  static Vehicle fromMap(Map<String, dynamic> map) {
+    return Vehicle._(
+        map[DatabaseProvider.COLUMN_ID],
+        map[DatabaseProvider.COLUMN_KEY],
+        map[DatabaseProvider.COLUMN_NAME],
+        map[DatabaseProvider.COLUMN_LICENSEPLATE],
+        double.parse(map[DatabaseProvider.COLUMN_WIDTH]),
+        double.parse(map[DatabaseProvider.COLUMN_HEIGHT]),
+        double.parse(map[DatabaseProvider.COLUMN_DEPTH]),
+        double.parse(map[DatabaseProvider.COLUMN_TURNANGLE]),
+        map[DatabaseProvider.COLUMN_NEAREXIT] == 1,
+        map[DatabaseProvider.COLUMN_PARKINGCARD] == 1);
   }
 
   //Todo
   String toString() {}
 
   //Todo
-  String setPreferences(List<bool> preferences) {}
+  String setPreferences(bool nearexit, bool parkingcard) {}
 }
 
 class ElectricalVehicle extends Vehicle {
   bool docharge;
   String chargingprovider;
-  List<DateTime> chargetime;
+  DateTime chargebegin, chargeend;
   String charge;
 
-  ElectricalVehicle(key, name, licenseplate, dimensions, preferences,
-      this.docharge, this.chargingprovider, this.chargetime, this.charge)
-      : super(key, name, licenseplate, dimensions, preferences);
+  ElectricalVehicle(
+      key,
+      name,
+      licenseplate,
+      width,
+      height,
+      depth,
+      turnangle,
+      nearexit,
+      parkingcard,
+      this.docharge,
+      this.chargingprovider,
+      this.chargebegin,
+      this.chargeend,
+      this.charge)
+      : super(key, name, licenseplate, width, height, depth, turnangle,
+            nearexit, parkingcard);
+  ElectricalVehicle._(
+      id,
+      key,
+      name,
+      licenseplate,
+      width,
+      height,
+      depth,
+      turnangle,
+      nearexit,
+      parkingcard,
+      this.docharge,
+      this.chargingprovider,
+      this.chargebegin,
+      this.chargeend,
+      this.charge)
+      : super._(id, key, name, licenseplate, width, height, depth, turnangle,
+            nearexit, parkingcard);
 
-  static ElectricalVehicle fromJson(Map<String, dynamic> parsedJson) {
-    List<int> dimensions = [
-      int.parse(parsedJson['dimensionH']),
-      int.parse(parsedJson['dimensionW']),
-      int.parse(parsedJson['dimensionD'])
-    ];
-    List<bool> preferences = [
-      parsedJson['nearExit'].parseBool(),
-      parsedJson['parkingcard'].parseBool()
-    ];
-    List<DateTime> chargetime = [
-      parsedJson['chargetimebegin'],
-      parsedJson['chargetimeend']
-    ];
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      DatabaseProvider.COLUMN_ID: id,
+      DatabaseProvider.COLUMN_KEY: key,
+      DatabaseProvider.COLUMN_NAME: name,
+      DatabaseProvider.COLUMN_LICENSEPLATE: licenseplate,
+      DatabaseProvider.COLUMN_WIDTH: width.toDouble(),
+      DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
+      DatabaseProvider.COLUMN_DEPTH: depth.toDouble(),
+      DatabaseProvider.COLUMN_TURNANGLE: turnangle.toDouble(),
+      DatabaseProvider.COLUMN_NEAREXIT: nearexit ? 1 : 0,
+      DatabaseProvider.COLUMN_PARKINGCARD: parkingcard ? 1 : 0,
+      DatabaseProvider.COLUMN_DOCHARGE: docharge ? 1 : 0,
+      DatabaseProvider.COLUMN_CHARGINGPROVIDER: chargingprovider,
+      DatabaseProvider.COLUMN_CHARGEBEGIN: chargebegin.toString(),
+      DatabaseProvider.COLUMN_CHARGEEND: chargeend.toString(),
+      DatabaseProvider.COLUMN_CHARGE: charge
+    };
 
-    return new ElectricalVehicle(
-        parsedJson['key'],
-        parsedJson['name'],
-        parsedJson['licenseplate'],
-        dimensions,
-        preferences,
-        parsedJson['docharge'],
-        parsedJson['chargingprovider'],
-        chargetime,
-        parsedJson['charge']);
+    if (id != null) {
+      map[DatabaseProvider.COLUMN_ID] = id;
+    }
+
+    return map;
+  }
+
+  static ElectricalVehicle fromMap(Map<String, dynamic> map) {
+    return ElectricalVehicle._(
+        map[DatabaseProvider.COLUMN_ID],
+        map[DatabaseProvider.COLUMN_KEY],
+        map[DatabaseProvider.COLUMN_NAME],
+        map[DatabaseProvider.COLUMN_LICENSEPLATE],
+        double.parse(map[DatabaseProvider.COLUMN_WIDTH]),
+        double.parse(map[DatabaseProvider.COLUMN_HEIGHT]),
+        double.parse(map[DatabaseProvider.COLUMN_DEPTH]),
+        double.parse(map[DatabaseProvider.COLUMN_TURNANGLE]),
+        map[DatabaseProvider.COLUMN_NEAREXIT] == 1,
+        map[DatabaseProvider.COLUMN_PARKINGCARD] == 1,
+        map[DatabaseProvider.COLUMN_DOCHARGE] == 1,
+        map[DatabaseProvider.COLUMN_CHARGINGPROVIDER],
+        DateTime.parse(map[DatabaseProvider.COLUMN_CHARGEBEGIN]),
+        DateTime.parse(map[DatabaseProvider.COLUMN_CHARGEEND]),
+        map[DatabaseProvider.COLUMN_CHARGE]);
   }
 
   //Todo

@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/bloc/blocs/userbloc.dart';
+import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/parkoutdialog.dart';
+import 'package:parkingapp/ui/parkpage/parkpage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:wifi/wifi.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parkingapp/ui/Drawer/Drawer.dart';
+import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 final parkhausImage = 'assets/parkgarage-fasanengarten.jpg';
 final parkhausImageHeight = 250;
@@ -9,6 +16,7 @@ final bottomMargin = 220;
 bool _charge = false;
 
 class MainPage extends StatefulWidget {
+  static const String routeName = '/MainPage';
   final String apikey;
 
   const MainPage({Key key, this.apikey}) : super(key: key);
