@@ -1,5 +1,5 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/vehicles.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class LoadableVehicle implements Vehicle {
   bool doCharge;
@@ -84,7 +84,6 @@ class LoadableVehicle implements Vehicle {
         DateTime.parse(map[DatabaseProvider.COLUMN_CHARGE_TIME_END]),
         map[DatabaseProvider.COLUMN_CHARGE]);
   }
-
 
   String getBatteryCharge() {
     // TODO: implement getBatteryCharge

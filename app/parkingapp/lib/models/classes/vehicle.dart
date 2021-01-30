@@ -1,3 +1,4 @@
+//Interface for vehicles
 class Vehicle {
   int id;
 

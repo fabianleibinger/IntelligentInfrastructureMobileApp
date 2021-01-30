@@ -1,5 +1,5 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/vehicles.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle implements Vehicle {
   StandardVehicle(

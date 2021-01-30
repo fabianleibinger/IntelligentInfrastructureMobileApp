@@ -11,7 +11,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class VehiclePage extends StatefulWidget {
   static const String routeName = '/vehiclepage';
+
   const VehiclePage({Key key}) : super(key: key);
+
   @override
   _VehiclePageState createState() => _VehiclePageState();
 }
@@ -26,16 +28,9 @@ class _VehiclePageState extends State<VehiclePage> {
       drawer: AppDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          BlocProvider.of<VehicleBloc>(context).add(VehicleEvent.add(StandardVehicle(
-              Utility.generateKey(),
-              "Audi",
-              "OG-DE-923",
-              93.0,
-              93.4,
-              29.3,
-              84.0,
-              true,
-              false)));
+          BlocProvider.of<VehicleBloc>(context).add(VehicleEvent.add(
+              StandardVehicle(Utility.generateKey(), "Audi", "OG-DE-923", 93.0,
+                  93.4, 29.3, 84.0, true, false)));
         },
         label: Text(AppLocalizations.of(context).actionButtonPark),
       ),
