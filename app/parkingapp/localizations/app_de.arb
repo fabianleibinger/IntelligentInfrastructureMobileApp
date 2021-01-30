@@ -28,5 +28,9 @@
     "mainPageAvailableSpaces": "Freie Parkplätze: ",
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
+    },
+    "drawerVehicles": "Fahrzeuge",
+    "@drawerVehicles": {
+        "description": "Vehicles text in drawer"
     }
 }
