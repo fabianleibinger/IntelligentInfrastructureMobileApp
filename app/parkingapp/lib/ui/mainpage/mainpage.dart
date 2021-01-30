@@ -5,13 +5,15 @@ import 'package:parkingapp/dialogs/parkoutdialog.dart';
 import 'package:parkingapp/ui/parkpage/parkpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
+import 'package:parkingapp/enum/parkinggaragetype.dart';
+import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:wifi/wifi.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
-final parkhausImage = 'assets/parkgarage-fasanengarten.jpg';
-final parkhausImageHeight = 250;
+final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+final parkingGarageImageHeight = 250;
 final bottomMargin = 220;
 bool _charge = false;
 
@@ -20,6 +22,7 @@ class MainPage extends StatefulWidget {
   final String apikey;
 
   const MainPage({Key key, this.apikey}) : super(key: key);
+
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -28,7 +31,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     List<String> _properties = [
-      AppLocalizations.of(context).mainPageAvailableSpaces + '79',
+      AppLocalizations.of(context).mainPageAvailableSpaces +
+          currentParkingGarage.freeParkingSpots.toString(),
       AppLocalizations.of(context).mainPageCarPreferences +
           AppLocalizations.of(context).textNone
     ];
@@ -55,16 +59,14 @@ class _MainPageState extends State<MainPage> {
                   children: [
                     ListTile(
                       //leading: Icon(Icons.location_on),
-                      title: Text(
-                          AppLocalizations.of(context).mainPageCarParkTitle),
-                      subtitle: Text(AppLocalizations.of(context)
-                          .mainPageCarParkSubtitleUndergroundCarPark),
+                      title: Text(currentParkingGarage.name),
+                      subtitle: Text(currentParkingGarage.type.toShortString()),
                     ),
                     Container(
-                      height: parkhausImageHeight.toDouble(),
+                      height: parkingGarageImageHeight.toDouble(),
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                        image: AssetImage(parkhausImage),
+                        image: AssetImage(currentParkingGarage.image),
                         fit: BoxFit.cover,
                       )),
                     ),
