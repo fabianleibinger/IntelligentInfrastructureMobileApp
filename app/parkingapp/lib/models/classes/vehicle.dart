@@ -1,10 +1,10 @@
-import 'package:parkingapp/models/data/vehicles.dart';
-
 class Vehicle {
+  int id;
+
   String key, name, licensePlate;
 
   //Dimensions
-  int height, width, length, turningCycle;
+  double height, width, length, turningCycle;
 
   //Preferences
   bool nearExitPreference, parkingCard;
