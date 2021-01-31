@@ -5,8 +5,8 @@ import 'package:path/path.dart';
 
 class DatabaseProvider {
   static const String TABLE_VEHICLE = "vehicle";
-  static const String COLUMN_ID = "id";
-  static const String COLUMN_KEY = "key";
+  static const String COLUMN_DATABASE_ID = "databaseId";
+  static const String COLUMN_IN_APP_KEY = "inAppKey";
   static const String COLUMN_NAME = "name";
   static const String COLUMN_LICENSE_PLATE = "licensePlate";
   static const String COLUMN_WIDTH = "width";
@@ -48,8 +48,8 @@ class DatabaseProvider {
 
         await database.execute(
           "CREATE TABLE $TABLE_VEHICLE ("
-          "$COLUMN_ID INTEGER PRIMARY KEY,"
-          "$COLUMN_KEY TEXT,"
+          "$COLUMN_DATABASE_ID INTEGER PRIMARY KEY,"
+          "$COLUMN_IN_APP_KEY TEXT,"
           "$COLUMN_NAME TEXT,"
           "$COLUMN_LICENSE_PLATE TEXT,"
           "$COLUMN_WIDTH DOUBLE,"
@@ -73,8 +73,8 @@ class DatabaseProvider {
     final db = await database;
 
     var vehicles = await db.query(TABLE_VEHICLE, columns: [
-      COLUMN_ID,
-      COLUMN_KEY,
+      COLUMN_DATABASE_ID,
+      COLUMN_IN_APP_KEY,
       COLUMN_NAME,
       COLUMN_LICENSE_PLATE,
       COLUMN_WIDTH,
@@ -102,7 +102,7 @@ class DatabaseProvider {
 
   Future<LoadableVehicle> insert(LoadableVehicle vehicle) async {
     final db = await database;
-    vehicle.id = await db.insert(TABLE_VEHICLE, vehicle.toMap());
+    vehicle.databaseId = await db.insert(TABLE_VEHICLE, vehicle.toMap());
     return vehicle;
   }
 
@@ -114,6 +114,6 @@ class DatabaseProvider {
   Future<int> update(LoadableVehicle vehicle) async {
     final db = await database;
     return await db.update(TABLE_VEHICLE, vehicle.toMap(),
-        where: "id = ?", whereArgs: [vehicle.id]);
+        where: "id = ?", whereArgs: [vehicle.databaseId]);
   }
 }

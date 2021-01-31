@@ -3,7 +3,7 @@ import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle implements Vehicle {
   StandardVehicle(
-      this.key,
+      this.inAppKey,
       this.name,
       this.licensePlate,
       this.height,
@@ -13,9 +13,10 @@ class StandardVehicle implements Vehicle {
       this.nearExitPreference,
       this.parkingCard);
 
+  //private constructor: only called by fromMap() method, database defines databaseId
   StandardVehicle._(
-      this.id,
-      this.key,
+      this.databaseId,
+      this.inAppKey,
       this.name,
       this.licensePlate,
       this.height,
@@ -27,7 +28,7 @@ class StandardVehicle implements Vehicle {
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      DatabaseProvider.COLUMN_KEY: key,
+      DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
       DatabaseProvider.COLUMN_NAME: name,
       DatabaseProvider.COLUMN_LICENSE_PLATE: licensePlate,
       DatabaseProvider.COLUMN_WIDTH: width.toDouble(),
@@ -38,8 +39,8 @@ class StandardVehicle implements Vehicle {
       DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0
     };
 
-    if (id != null) {
-      map[DatabaseProvider.COLUMN_ID] = id;
+    if (databaseId != null) {
+      map[DatabaseProvider.COLUMN_DATABASE_ID] = databaseId;
     }
 
     return map;
@@ -47,8 +48,8 @@ class StandardVehicle implements Vehicle {
 
   static StandardVehicle fromMap(Map<String, dynamic> map) {
     return StandardVehicle._(
-        map[DatabaseProvider.COLUMN_ID],
-        map[DatabaseProvider.COLUMN_KEY],
+        map[DatabaseProvider.COLUMN_DATABASE_ID],
+        map[DatabaseProvider.COLUMN_IN_APP_KEY],
         map[DatabaseProvider.COLUMN_NAME],
         map[DatabaseProvider.COLUMN_LICENSE_PLATE],
         double.parse(map[DatabaseProvider.COLUMN_WIDTH]),
@@ -72,10 +73,10 @@ class StandardVehicle implements Vehicle {
   }
 
   @override
-  int id;
+  int databaseId;
 
   @override
-  String key, name, licensePlate;
+  String inAppKey, name, licensePlate;
 
   @override
   double height, width, length, turningCycle;

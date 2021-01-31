@@ -8,7 +8,7 @@ class LoadableVehicle implements Vehicle {
   String charge;
 
   LoadableVehicle(
-      this.key,
+      this.inAppKey,
       this.name,
       this.licensePlate,
       this.height,
@@ -23,9 +23,10 @@ class LoadableVehicle implements Vehicle {
       this.chargeTimeEnd,
       this.charge);
 
+  //private constructor: only called by fromMap() method, database defines databaseId
   LoadableVehicle._(
-      this.id,
-      this.key,
+      this.databaseId,
+      this.inAppKey,
       this.name,
       this.licensePlate,
       this.height,
@@ -42,8 +43,7 @@ class LoadableVehicle implements Vehicle {
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
-      DatabaseProvider.COLUMN_ID: id,
-      DatabaseProvider.COLUMN_KEY: key,
+      DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
       DatabaseProvider.COLUMN_NAME: name,
       DatabaseProvider.COLUMN_LICENSE_PLATE: licensePlate,
       DatabaseProvider.COLUMN_WIDTH: width.toDouble(),
@@ -59,8 +59,8 @@ class LoadableVehicle implements Vehicle {
       DatabaseProvider.COLUMN_CHARGE: charge
     };
 
-    if (id != null) {
-      map[DatabaseProvider.COLUMN_ID] = id;
+    if (databaseId != null) {
+      map[DatabaseProvider.COLUMN_DATABASE_ID] = databaseId;
     }
 
     return map;
@@ -68,8 +68,8 @@ class LoadableVehicle implements Vehicle {
 
   static LoadableVehicle fromMap(Map<String, dynamic> map) {
     return LoadableVehicle._(
-        map[DatabaseProvider.COLUMN_ID],
-        map[DatabaseProvider.COLUMN_KEY],
+        map[DatabaseProvider.COLUMN_DATABASE_ID],
+        map[DatabaseProvider.COLUMN_IN_APP_KEY],
         map[DatabaseProvider.COLUMN_NAME],
         map[DatabaseProvider.COLUMN_LICENSE_PLATE],
         double.parse(map[DatabaseProvider.COLUMN_WIDTH]),
@@ -103,10 +103,10 @@ class LoadableVehicle implements Vehicle {
   }
 
   @override
-  int id;
+  int databaseId;
 
   @override
-  String key, name, licensePlate;
+  String inAppKey, name, licensePlate;
 
   @override
   double height, width, length, turningCycle;

@@ -1,8 +1,8 @@
 //Interface for vehicles
 class Vehicle {
-  int id;
+  int databaseId;
 
-  String key, name, licensePlate;
+  String inAppKey, name, licensePlate;
 
   //Dimensions
   double height, width, length, turningCycle;
