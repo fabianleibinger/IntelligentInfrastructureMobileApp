@@ -36,7 +36,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
         ),
-        drawer: AppDrawer(),
+        drawer: AppDrawer('/MainPage'),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
           label: Text(AppLocalizations.of(context).actionButtonPark),

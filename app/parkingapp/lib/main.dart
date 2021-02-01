@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehicleblocobserver.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 // Main: From here you call all u'r widgets.
 
@@ -26,26 +28,30 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //Initialize Localization
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      // App info
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context).appTitle,
-      theme: themeData,
-      home: MyHomePage(),
-      routes: {
-        Routes.main: (context) => MainPage(),
-        Routes.settings: (context) => SettingsPage(),
-        Routes.vehicle: (context) => VehiclePage(),
-      },
+    return Provider(
+      child: MaterialApp(
+        //Initialize Localization
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        // App info
+        debugShowCheckedModeBanner: false,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context).appTitle,
+        theme: themeData,
+        home: MyHomePage(),
+        routes: {
+          Routes.main: (context) => MainPage(),
+          Routes.settings: (context) => SettingsPage(),
+          Routes.vehicle: (context) => VehiclePage(),
+        },
+      ),
+      //Provider for Drawer
+      create: (_) => DrawerStateInfo(),
     );
   }
 }

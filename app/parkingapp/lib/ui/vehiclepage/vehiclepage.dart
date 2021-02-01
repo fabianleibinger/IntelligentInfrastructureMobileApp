@@ -30,7 +30,7 @@ class _VehiclePageState extends State<VehiclePage> {
       appBar: AppBar(
         title: Text('Vehicle', style: whiteHeader),
       ),
-      drawer: AppDrawer(),
+      drawer: AppDrawer('/vehiclepage'),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           BlocProvider.of<VehicleBloc>(context).add(VehicleEvent.add(Vehicle(
