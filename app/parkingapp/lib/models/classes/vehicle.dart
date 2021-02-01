@@ -1,4 +1,4 @@
-import 'package:parkingapp/models/data/vehicles.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class Vehicle {
   int id;

@@ -22,7 +22,7 @@ class AppDrawer extends StatelessWidget {
               leading: Icon(Icons.message),
               title: Text('Messages'),
               onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.vehicle)),
+                  Navigator.pushReplacementNamed(context, Routes.main)),
           ListTile(
               leading: Icon(Icons.directions_car),
               title: Text(AppLocalizations.of(context).drawerVehicles),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -18,38 +19,42 @@ import 'package:parkingapp/routes/routes.dart';
 // Main: From here you call all u'r widgets.
 
 void main() {
-  Bloc.observer = VehicleBlocObserver();
+  //Bloc.observer = VehicleBlocObserver();
   runApp(Main());
 }
 
 class Main extends StatelessWidget {
-  // This widget is the root of your application.
+  VehicleBloc get _vehicleBloc => VehicleBloc(List<Vehicle>());
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      //Initialize Localization
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        AppLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      // App info
-      debugShowCheckedModeBanner: false,
-      onGenerateTitle: (BuildContext context) =>
-          AppLocalizations.of(context).appTitle,
-      theme: themeData,
-      home: MyHomePage(),
-      routes: {
-        Routes.main: (context) => MainPage(),
-        Routes.settings: (context) => SettingsPage(),
-        Routes.vehicle: (context) => VehiclePage(),
-      },
+    return BlocProvider<VehicleBloc>(
+      create: (context) => _vehicleBloc,
+      child: MaterialApp(
+        //Initialize Localization
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          AppLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        // App info
+        debugShowCheckedModeBanner: false,
+        onGenerateTitle: (BuildContext context) =>
+            AppLocalizations.of(context).appTitle,
+        theme: themeData,
+        home: MainPage(),
+        routes: {
+          Routes.main: (context) => MainPage(),
+          Routes.settings: (context) => SettingsPage(),
+          Routes.vehicle: (context) => VehiclePage(),
+        },
+      ),
     );
   }
 }
-
+/*
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -58,7 +63,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return MainPage();
+    return Text("ijawd");
   }
 
   void login() {
@@ -71,4 +76,4 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
   }
-}
+}*/
