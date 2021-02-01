@@ -28,7 +28,7 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Provider(
+    return ListenableProvider(
       child: MaterialApp(
         //Initialize Localization
         localizationsDelegates: [
