@@ -27,6 +27,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    // TODO generate from vehicle
     List<String> _properties = [
       AppLocalizations.of(context).mainPageAvailableSpaces + '79',
       AppLocalizations.of(context).mainPageCarPreferences +
