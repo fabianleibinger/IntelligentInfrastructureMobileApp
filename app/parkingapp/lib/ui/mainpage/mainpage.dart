@@ -13,9 +13,9 @@ bool _charge = false;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
-  final String apikey;
+  final String apiKey;
 
-  const MainPage({Key key, this.apikey}) : super(key: key);
+  const MainPage({Key key, this.apiKey}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
