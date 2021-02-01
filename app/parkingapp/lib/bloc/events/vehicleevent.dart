@@ -1,5 +1,13 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 
+abstract class VehicleEvent {}
+
+/*import 'package:parkingapp/models/classes/vehicle.dart';
+
+import 'package:parkingapp/models/classes/vehicle.dart';
+
+
+
 enum EventType { add, delete, update }
 
 class VehicleEvent {
