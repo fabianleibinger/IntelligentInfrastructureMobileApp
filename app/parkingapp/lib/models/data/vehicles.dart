@@ -22,70 +22,30 @@ class DatabaseProvider {
   static const String COLUMN_CHARGE = "charge";
 
   DatabaseProvider._();
-  static final _instance = DatabaseProvider._();
-  static DatabaseProvider get = _instance;
+  static final DatabaseProvider db = DatabaseProvider._();
 
-  bool isInitialized = false;
   Database _database;
 
-  Future<Database> database() async {
-    if (!isInitialized) await _init();
-    return _database;
-    /*print("database getter called");
+  Future<Database> get database async {
+    print("database getter called");
 
     if (_database != null) {
-      print("1");
       return _database;
     }
-    print("2");
+
     _database = await createDatabase();
-    print("6" + database.toString());
-
-    return _database;*/
-  }
-
-  Future _init() async {
-    var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'vehicleDB.db');
-
-    await openDatabase(path, version: 1,
-        onCreate: (Database database, int version) async {
-      print("Creating vehicle table");
-      await database.execute(
-        "CREATE TABLE $TABLE_VEHICLE ("
-        "$COLUMN_ID INTEGER PRIMARY KEY,"
-        "$COLUMN_KEY TEXT,"
-        "$COLUMN_NAME TEXT,"
-        "$COLUMN_LICENSEPLATE TEXT,"
-        "$COLUMN_WIDTH DOUBLE,"
-        "$COLUMN_HEIGHT DOUBLE,"
-        "$COLUMN_DEPTH DOUBLE,"
-        "$COLUMN_TURNANGLE DOUBLE,"
-        "$COLUMN_NEAREXIT INTEGER,"
-        "$COLUMN_PARKINGCARD INTEGER,"
-        "$COLUMN_DOCHARGE INTEGER,"
-        "$COLUMN_CHARGINGPROVIDER TEXT,"
-        "$COLUMN_CHARGEBEGIN TEXT,"
-        "$COLUMN_CHARGEEND TEXT,"
-        "$COLUMN_CHARGE TEXT"
-        ")",
-      );
-    }).then((value) {
-      _database = value;
-      isInitialized = true;
-    });
+    return _database;
   }
 
   Future<Database> createDatabase() async {
-    var path = await getDatabasesPath();
-    print("3");
-    String dbPath = join(path, 'vehicleDB.db');
-    print("4");
-    Database database = await openDatabase(
-      dbPath,
+    String dbPath = await getDatabasesPath();
+
+    return await openDatabase(
+      join(dbPath, 'vehicleDB.db'),
       version: 1,
       onCreate: (Database database, int version) async {
         print("Creating vehicle table");
+
         await database.execute(
           "CREATE TABLE $TABLE_VEHICLE ("
           "$COLUMN_ID INTEGER PRIMARY KEY,"
@@ -102,17 +62,15 @@ class DatabaseProvider {
           "$COLUMN_CHARGINGPROVIDER TEXT,"
           "$COLUMN_CHARGEBEGIN TEXT,"
           "$COLUMN_CHARGEEND TEXT,"
-          "$COLUMN_CHARGE TEXT"
+          "$COLUMN_NEAREXIT TEXT"
           ")",
         );
       },
     );
-    print("5" + database.toString());
-    return database;
   }
 
-  Future<List<Vehicle>> getVehicles() async {
-    final db = await get.database();
+  Future<List<ElectricalVehicle>> getVehicles() async {
+    final db = await database;
 
     var vehicles = await db.query(TABLE_VEHICLE, columns: [
       COLUMN_ID,
@@ -132,29 +90,29 @@ class DatabaseProvider {
       COLUMN_CHARGE
     ]);
 
-    List<Vehicle> vehicleList = List<Vehicle>();
+    List<ElectricalVehicle> vehicleList = List<ElectricalVehicle>();
 
     vehicles.forEach((currentVehicle) {
-      Vehicle vehicle = Vehicle.fromMap(currentVehicle);
+      ElectricalVehicle vehicle = ElectricalVehicle.fromMap(currentVehicle);
       vehicleList.add(vehicle);
     });
 
     return vehicleList;
   }
 
-  Future<Vehicle> insert(Vehicle vehicle) async {
-    final db = await get.database();
+  Future<ElectricalVehicle> insert(ElectricalVehicle vehicle) async {
+    final db = await database;
     vehicle.id = await db.insert(TABLE_VEHICLE, vehicle.toMap());
     return vehicle;
   }
 
   Future<int> delete(int id) async {
-    final db = await get.database();
+    final db = await database;
     return await db.delete(TABLE_VEHICLE, where: "id = ?", whereArgs: [id]);
   }
 
-  Future<int> update(Vehicle vehicle) async {
-    final db = await get.database();
+  Future<int> update(ElectricalVehicle vehicle) async {
+    final db = await database;
     return await db.update(TABLE_VEHICLE, vehicle.toMap(),
         where: "id = ?", whereArgs: [vehicle.id]);
   }
