@@ -40,7 +40,7 @@ ListTile generateTile(BuildContext context, String currentDrawer, String route, 
     leading: Icon(icon),
     title: Text(text),
     onTap: () {
-      Navigator.pushReplacementNamed(context, route);
+      currentDrawer == route ? Navigator.pop(context) : Navigator.pushReplacementNamed(context, route);
       Provider.of<DrawerStateInfo>(context, listen: false)
           .setCurrentDrawer(route);
     }
