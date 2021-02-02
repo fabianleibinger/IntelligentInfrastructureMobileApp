@@ -35,21 +35,28 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-ListTile generateTile(BuildContext context, String currentDrawer, String route, String text, IconData icon) {
+//route: Route to page that shall be opened on tap
+//text: text shown on tile
+//icon: icon shown to the left of the text on the tile
+ListTile generateTile(BuildContext context, String currentDrawer, String route,
+    String text, IconData icon) {
   return ListTile(
-    selected: currentDrawer == route ? true : false,
-    leading: Icon(icon),
-    title: Text(text),
-    onTap: () {
-      currentDrawer == route ? Navigator.pop(context) : Navigator.pushReplacementNamed(context, route);
-      Provider.of<DrawerStateInfo>(context, listen: false)
-          .setCurrentDrawer(route);
-    }
-  );
+      selected: currentDrawer == route ? true : false,
+      leading: Icon(icon),
+      title: Text(text),
+      onTap: () {
+        currentDrawer == route
+            ? Navigator.pop(context)
+            : Navigator.pushReplacementNamed(context, route);
+        //This may be added to the Class itself to update the [DrawerStateInfo] every time the respective widget is built
+        Provider.of<DrawerStateInfo>(context, listen: false)
+            .setCurrentDrawer(route);
+      });
 }
 
+// this manages the highlighted item in the drawer.
 class DrawerStateInfo with ChangeNotifier {
-  String _currentDrawer = Routes.main;
+  String _currentDrawer;
   String get getCurrentDrawer => _currentDrawer;
 
   void setCurrentDrawer(String drawer) {
