@@ -1,8 +1,11 @@
+//Interface for vehicles
 class Vehicle {
-  String key, name, licensePlate;
+  int databaseId;
+
+  String inAppKey, name, licensePlate;
 
   //Dimensions
-  int height, width, length, turningCycle;
+  double height, width, length, turningCycle;
 
   //Preferences
   bool nearExitPreference, parkingCard;
