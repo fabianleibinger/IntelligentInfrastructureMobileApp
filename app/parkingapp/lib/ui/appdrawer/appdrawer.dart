@@ -26,6 +26,7 @@ class AppDrawer extends StatelessWidget {
                 style: blackHeader),
           ),
           generateTile(context, currentDrawer, Routes.main, 'Main', Icons.message),
+          Divider(),
           generateTile(context, currentDrawer, Routes.vehicle, AppLocalizations.of(context).drawerVehicles, Icons.directions_car),
           generateTile(context, currentDrawer, Routes.settings, AppLocalizations.of(context).drawerSettings, Icons.settings),
         ],
