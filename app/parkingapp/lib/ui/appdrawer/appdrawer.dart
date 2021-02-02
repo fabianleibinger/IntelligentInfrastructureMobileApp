@@ -25,40 +25,26 @@ class AppDrawer extends StatelessWidget {
             child: Text(AppLocalizations.of(context).drawerHeader,
                 style: blackHeader),
           ),
-          ListTile(
-            selected: currentDrawer == Routes.main ? true : false,
-            leading: Icon(Icons.message),
-            title: Text('Messages'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.main);
-              Provider.of<DrawerStateInfo>(context, listen: false)
-                  .setCurrentDrawer(Routes.main);
-            },
-          ),
-          ListTile(
-            selected: currentDrawer == Routes.vehicle ? true : false,
-            leading: Icon(Icons.directions_car),
-            title: Text(AppLocalizations.of(context).drawerVehicles),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.vehicle);
-              Provider.of<DrawerStateInfo>(context, listen: false)
-                  .setCurrentDrawer(Routes.vehicle);
-            },
-          ),
-          ListTile(
-            selected: currentDrawer == Routes.settings ? true : false,
-            leading: Icon(Icons.settings),
-            title: Text(AppLocalizations.of(context).drawerSettings),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.settings);
-              Provider.of<DrawerStateInfo>(context, listen: false)
-                  .setCurrentDrawer(Routes.settings);
-            },
-          ),
+          generateTile(context, currentDrawer, Routes.main, 'Main', Icons.message),
+          generateTile(context, currentDrawer, Routes.vehicle, AppLocalizations.of(context).drawerVehicles, Icons.directions_car),
+          generateTile(context, currentDrawer, Routes.settings, AppLocalizations.of(context).drawerSettings, Icons.settings),
         ],
       ),
     );
   }
+}
+
+ListTile generateTile(BuildContext context, String currentDrawer, String route, String text, IconData icon) {
+  return ListTile(
+    selected: currentDrawer == route ? true : false,
+    leading: Icon(icon),
+    title: Text(text),
+    onTap: () {
+      Navigator.pushReplacementNamed(context, route);
+      Provider.of<DrawerStateInfo>(context, listen: false)
+          .setCurrentDrawer(route);
+    }
+  );
 }
 
 class DrawerStateInfo with ChangeNotifier {
