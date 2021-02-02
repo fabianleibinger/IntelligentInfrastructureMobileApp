@@ -26,38 +26,38 @@ void main() {
 
 class Main extends StatelessWidget {
   //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
-  static ListenableProvider getMaterialApp(Widget homeWidget) {
-    return ListenableProvider(
-      child: MaterialApp(
-        //Initialize Localization
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          AppLocalizations.delegate,
-        ],
-        supportedLocales: AppLocalizations.supportedLocales,
-        // App info
-        debugShowCheckedModeBanner: false,
-        onGenerateTitle: (BuildContext context) =>
-            AppLocalizations.of(context).appTitle,
-        theme: themeData,
-        home: homeWidget,
-        routes: {
-          Routes.main: (context) => MainPage(),
-          Routes.settings: (context) => SettingsPage(),
-          Routes.vehicle: (context) => VehiclePage(),
-        },
-      ),
-      //Provider for Drawer
-      create: (_) => DrawerStateInfo(),
+  static MaterialApp getMaterialApp(Widget homeWidget) {
+    return MaterialApp(
+      //Initialize Localization
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        AppLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      // App info
+      debugShowCheckedModeBanner: false,
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context).appTitle,
+      theme: themeData,
+      home: homeWidget,
+      routes: {
+        Routes.main: (context) => MainPage(),
+        Routes.settings: (context) => SettingsPage(),
+        Routes.vehicle: (context) => VehiclePage(),
+      },
     );
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return getMaterialApp(MyHomePage());
+    //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
+    return ListenableProvider(
+      child: getMaterialApp(MyHomePage()), //Provider for Drawer
+      create: (_) => DrawerStateInfo(),
+    );
   }
 }
 
