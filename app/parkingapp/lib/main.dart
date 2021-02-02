@@ -25,9 +25,8 @@ void main() {
 }
 
 class Main extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
+  //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
+  static ListenableProvider getMaterialApp(Widget homeWidget) {
     return ListenableProvider(
       child: MaterialApp(
         //Initialize Localization
@@ -43,7 +42,7 @@ class Main extends StatelessWidget {
         onGenerateTitle: (BuildContext context) =>
             AppLocalizations.of(context).appTitle,
         theme: themeData,
-        home: MyHomePage(),
+        home: homeWidget,
         routes: {
           Routes.main: (context) => MainPage(),
           Routes.settings: (context) => SettingsPage(),
@@ -53,6 +52,12 @@ class Main extends StatelessWidget {
       //Provider for Drawer
       create: (_) => DrawerStateInfo(),
     );
+  }
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return getMaterialApp(MyHomePage());
   }
 }
 
