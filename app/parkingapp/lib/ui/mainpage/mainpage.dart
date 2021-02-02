@@ -3,6 +3,7 @@ import 'package:parkingapp/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
@@ -35,7 +36,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
         ),
-        drawer: AppDrawer('/MainPage'),
+        drawer: AppDrawer(Routes.main),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
           label: Text(AppLocalizations.of(context).actionButtonPark),
@@ -45,6 +46,7 @@ class _MainPageState extends State<MainPage> {
           children: [
             Container(
               constraints: BoxConstraints(
+                  //TODO Use usable screen area instead of screen size
                   maxHeight: MediaQuery.of(context).size.height - bottomMargin),
               child: Card(
                 margin: EdgeInsets.all(0),

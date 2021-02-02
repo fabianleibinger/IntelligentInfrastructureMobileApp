@@ -26,33 +26,33 @@ class AppDrawer extends StatelessWidget {
                 style: blackHeader),
           ),
           ListTile(
-            selected: currentDrawer == '/HomePage' ? true : false,
+            selected: currentDrawer == Routes.main ? true : false,
             leading: Icon(Icons.message),
             title: Text('Messages'),
             onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.vehicle);
+              Navigator.pushReplacementNamed(context, Routes.main);
               Provider.of<DrawerStateInfo>(context, listen: false)
-                  .setCurrentDrawer('/HomePage');
+                  .setCurrentDrawer(Routes.main);
             },
           ),
           ListTile(
-            selected: currentDrawer == '/vehiclepage' ? true : false,
+            selected: currentDrawer == Routes.vehicle ? true : false,
             leading: Icon(Icons.directions_car),
             title: Text(AppLocalizations.of(context).drawerVehicles),
             onTap: () {
               Navigator.pushReplacementNamed(context, Routes.vehicle);
               Provider.of<DrawerStateInfo>(context, listen: false)
-                  .setCurrentDrawer('/vehiclepage');
+                  .setCurrentDrawer(Routes.vehicle);
             },
           ),
           ListTile(
-            selected: currentDrawer == '/settingspage' ? true : false,
+            selected: currentDrawer == Routes.settings ? true : false,
             leading: Icon(Icons.settings),
             title: Text(AppLocalizations.of(context).drawerSettings),
             onTap: () {
               Navigator.pushReplacementNamed(context, Routes.settings);
               Provider.of<DrawerStateInfo>(context, listen: false)
-                  .setCurrentDrawer('/settingspage');
+                  .setCurrentDrawer(Routes.settings);
             },
           ),
         ],
@@ -62,7 +62,7 @@ class AppDrawer extends StatelessWidget {
 }
 
 class DrawerStateInfo with ChangeNotifier {
-  String _currentDrawer = '/MainPage';
+  String _currentDrawer = Routes.main;
   String get getCurrentDrawer => _currentDrawer;
 
   void setCurrentDrawer(String drawer) {
