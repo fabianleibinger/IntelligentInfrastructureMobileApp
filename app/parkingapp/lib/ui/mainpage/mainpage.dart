@@ -3,6 +3,7 @@ import 'package:parkingapp/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
@@ -11,9 +12,10 @@ final bottomMargin = 220;
 bool _charge = false;
 
 class MainPage extends StatefulWidget {
-  final String apikey;
+  static const String routeName = '/MainPage';
+  final String apiKey;
 
-  const MainPage({Key key, this.apikey}) : super(key: key);
+  const MainPage({Key key, this.apiKey}) : super(key: key);
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -32,32 +34,7 @@ class _MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
         ),
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                decoration: BoxDecoration(
-                  color: green,
-                ),
-                child: Text(AppLocalizations.of(context).drawerHeader,
-                    style: blackHeader),
-              ),
-              ListTile(
-                leading: Icon(Icons.message),
-                title: Text('Messages'),
-              ),
-              ListTile(
-                leading: Icon(Icons.account_circle),
-                title: Text('Profile'),
-              ),
-              ListTile(
-                leading: Icon(Icons.settings),
-                title: Text(AppLocalizations.of(context).drawerSettings),
-              ),
-            ],
-          ),
-        ),
+        drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {},
           label: Text(AppLocalizations.of(context).actionButtonPark),

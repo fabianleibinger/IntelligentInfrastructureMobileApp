@@ -6,13 +6,13 @@ import 'package:parkingapp/models/global.dart';
 import 'package:wifi/wifi.dart';
 // example for a page (mainpage)
 
-class VehiclePage extends StatefulWidget {
-  const VehiclePage({Key key}) : super(key: key);
+class ParkPage extends StatefulWidget {
+  const ParkPage({Key key}) : super(key: key);
   @override
-  _VehiclePageState createState() => _VehiclePageState();
+  _ParkPageState createState() => _ParkPageState();
 }
 
-class _VehiclePageState extends State<VehiclePage> {
+class _ParkPageState extends State<ParkPage> {
   @override
   Widget build(BuildContext context) {}
 }
