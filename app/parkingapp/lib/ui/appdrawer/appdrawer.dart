@@ -5,6 +5,8 @@ import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:provider/Provider.dart';
 
+final double drawerHeaderHeight = 120;
+
 class AppDrawer extends StatelessWidget {
   AppDrawer(this.currentPage);
 
@@ -19,7 +21,7 @@ class AppDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           Container(
-            height: 120,
+            height: drawerHeaderHeight,
             child: DrawerHeader(
               decoration: BoxDecoration(
                 color: green,
