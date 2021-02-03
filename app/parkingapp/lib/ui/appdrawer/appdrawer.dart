@@ -18,9 +18,14 @@ class AppDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: green,
+          Container(
+            height: 120,
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: green,
+              ),
+              child: Text(AppLocalizations.of(context).drawerHeader,
+                  style: blackHeader),
             ),
             child: Text(AppLocalizations.of(context).drawerHeader,
                 style: blackHeader),
