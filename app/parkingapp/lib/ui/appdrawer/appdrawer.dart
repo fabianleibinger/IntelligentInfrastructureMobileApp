@@ -20,9 +20,10 @@ class AppDrawer extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
+          //Drawer Header
           Container(
             height: MediaQuery.of(context).padding.top,
-            color: green,
+            color: Theme.of(context).primaryColor,
           ),
           Container(
             padding: drawerHeaderPadding,
@@ -30,12 +31,13 @@ class AppDrawer extends StatelessWidget {
             child: Text(AppLocalizations.of(context).drawerHeader,
                 style: whiteHeader),
             decoration: BoxDecoration(
-              color: green,
+              color: Theme.of(context).primaryColor,
               border: Border(
                 bottom: Divider.createBorderSide(context),
               ),
             ),
           ),
+          //Drawer Content
           Expanded(
             child: ListView(
               padding: listViewPadding,
