@@ -1,7 +1,7 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
-class StandardVehicle implements Vehicle {
+class StandardVehicle extends Vehicle {
   StandardVehicle(
       this.inAppKey,
       this.name,
