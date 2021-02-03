@@ -27,7 +27,7 @@ class AppDrawer extends StatelessWidget {
                 color: green,
               ),
               child: Text(AppLocalizations.of(context).drawerHeader,
-                  style: blackHeader),
+                  style: whiteHeader),
             ),
           ),
           generateTile(context, currentDrawer, Routes.main, 'Main',
