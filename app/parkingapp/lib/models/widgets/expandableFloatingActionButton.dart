@@ -2,6 +2,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -90,11 +91,32 @@ class _FancyFabState extends State<FancyFab>
           // DatabaseProvider.db.delete(2).then((index) {
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
-          // DatabaseProvider.db.clear();
-          Navigator.push(
-              (context),
-              MaterialPageRoute(
-                  builder: (BuildContext context) => VehiclePage()));
+          DatabaseProvider.db
+              .insert(LoadableVehicle(
+                  Utility.generateKey(),
+                  "Audi",
+                  "OG-DE-923",
+                  93.0,
+                  93.4,
+                  29.3,
+                  84.0,
+                  true,
+                  false,
+                  true,
+                  "EnBW",
+                  DateTime.now(),
+                  DateTime.now(),
+                  "45"))
+              .then((vehicle) {
+            BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
+          });
+          // DatabaseProvider.db.clear().then((value) {
+          //   BlocProvider.of<VehicleBloc>(context).add(ResetVehicles());
+          // });
+          // Navigator.push(
+          //     (context),
+          //     MaterialPageRoute(
+          //         builder: (BuildContext context) => VehiclePage()));
         },
         tooltip: 'QR Code',
         elevation: 10,
@@ -140,7 +162,7 @@ class _FancyFabState extends State<FancyFab>
         tooltip: 'Toggle',
         elevation: 10,
         child: AnimatedIcon(
-          icon: AnimatedIcons.add_event,
+          icon: AnimatedIcons.menu_close,
           progress: _animateIcon,
         ),
         heroTag: 0,

@@ -1,3 +1,4 @@
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:sqflite/sqflite.dart';
@@ -71,7 +72,7 @@ class DatabaseProvider {
     );
   }
 
-  Future<List<StandardVehicle>> getVehicles() async {
+  Future<List<Vehicle>> getVehicles() async {
     final db = await database;
 
     var vehicles = await db.query(TABLE_VEHICLE, columns: [
@@ -92,17 +93,22 @@ class DatabaseProvider {
       COLUMN_CHARGE
     ]);
 
-    List<StandardVehicle> vehicleList = List<StandardVehicle>();
+    List<Vehicle> vehicleList = List<Vehicle>();
 
     vehicles.forEach((currentVehicle) {
-      StandardVehicle vehicle = StandardVehicle.fromMap(currentVehicle);
-      vehicleList.add(vehicle);
+      if (currentVehicle[COLUMN_DO_CHARGE] == null) {
+        StandardVehicle vehicle = StandardVehicle.fromMap(currentVehicle);
+        vehicleList.add(vehicle);
+      } else {
+        LoadableVehicle vehicle = LoadableVehicle.fromMap(currentVehicle);
+        vehicleList.add(vehicle);
+      }
     });
 
     return vehicleList;
   }
 
-  Future<StandardVehicle> insert(StandardVehicle vehicle) async {
+  Future<Vehicle> insert(Vehicle vehicle) async {
     final db = await database;
     vehicle.databaseId = await db.insert(TABLE_VEHICLE, vehicle.toMap());
     return vehicle;
@@ -113,7 +119,7 @@ class DatabaseProvider {
     return await db.delete(TABLE_VEHICLE, where: "id = ?", whereArgs: [id]);
   }
 
-  Future<int> update(StandardVehicle vehicle) async {
+  Future<int> update(Vehicle vehicle) async {
     final db = await database;
     return await db.update(TABLE_VEHICLE, vehicle.toMap(),
         where: "id = ?", whereArgs: [vehicle.databaseId]);
@@ -123,6 +129,6 @@ class DatabaseProvider {
     var path = await getDatabasesPath();
     String dbPath = join(path, 'vehicleDB.db');
     _database.delete(TABLE_VEHICLE);
-    await deleteDatabase(dbPath);
+    //await deleteDatabase(dbPath);
   }
 }

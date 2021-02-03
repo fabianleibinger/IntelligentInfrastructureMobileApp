@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
+import 'package:parkingapp/bloc/events/resetvehicles.dart';
 import 'package:parkingapp/bloc/events/vehicleevent.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
@@ -18,6 +19,10 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
       if (event.newVehicle != null) {
         newState.add(event.newVehicle);
       }
+      yield newState;
+    } else if (event is ResetVehicles) {
+      List<Vehicle> newState = List.from(state);
+      newState.clear();
       yield newState;
     }
 
