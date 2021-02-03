@@ -45,8 +45,10 @@ class AppDrawer extends StatelessWidget {
                 generateTile(context, currentDrawer, Routes.main, 'Main',
                     Icons.directions_car),
                 Divider(),
+                //Edit vehicles
                 generateTile(context, currentDrawer, Routes.vehicle,
                     AppLocalizations.of(context).drawerVehicles, Icons.edit),
+                //Settings
                 generateTile(
                     context,
                     currentDrawer,
