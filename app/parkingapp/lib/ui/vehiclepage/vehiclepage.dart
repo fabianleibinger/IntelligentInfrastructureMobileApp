@@ -44,7 +44,7 @@ class _VehiclePageState extends State<VehiclePage> {
         appBar: AppBar(
           title: Text('Vehicle', style: whiteHeader),
         ),
-        drawer: AppDrawer('/vehiclepage'),
+        drawer: AppDrawer(),
         floatingActionButton: FancyFab(),
         body: Container(
             padding: EdgeInsets.all(8), color: white, child: createListView()));
