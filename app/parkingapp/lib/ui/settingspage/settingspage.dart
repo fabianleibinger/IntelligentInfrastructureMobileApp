@@ -3,6 +3,7 @@ import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:parkingapp/dialogs/agbsdialog.dart';
 import 'package:parkingapp/dialogs/profileqrdialog.dart';
 import 'package:parkingapp/dialogs/vehicleqrdialog.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
@@ -22,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer('/settingspage'),
+      drawer: AppDrawer(Routes.settings),
       body: Text("Hello"),
     );
   }
