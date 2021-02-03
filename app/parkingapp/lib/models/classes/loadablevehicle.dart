@@ -1,7 +1,7 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
-class LoadableVehicle extends Vehicle {
+class LoadableVehicle implements Vehicle {
   bool doCharge;
   String chargingProvider;
   DateTime chargeTimeBegin, chargeTimeEnd;

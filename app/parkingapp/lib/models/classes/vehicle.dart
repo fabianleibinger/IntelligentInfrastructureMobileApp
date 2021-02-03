@@ -1,4 +1,5 @@
-abstract class Vehicle {
+//Interface for Vehicles
+class Vehicle {
   int databaseId;
 
   String inAppKey, name, licensePlate;
