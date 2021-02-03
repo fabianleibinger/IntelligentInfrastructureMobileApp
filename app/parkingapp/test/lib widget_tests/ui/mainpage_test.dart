@@ -13,7 +13,6 @@ void main() {
       await tester.pump();
 
       expect(find.text('Messages'), findsOneWidget);
-
+    });
   });
-});
 }

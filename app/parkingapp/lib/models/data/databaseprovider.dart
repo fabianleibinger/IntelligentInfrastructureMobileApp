@@ -1,4 +1,5 @@
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/standardvehicle.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:path/path.dart';
@@ -34,18 +35,19 @@ class DatabaseProvider {
     }
 
     _database = await createDatabase();
+
     return _database;
   }
 
   Future<Database> createDatabase() async {
-    String dbPath = await getDatabasesPath();
+    var path = await getDatabasesPath();
+    String dbPath = join(path, 'vehicleDB.db');
 
     return await openDatabase(
-      join(dbPath, 'vehicleDB.db'),
+      dbPath,
       version: 1,
       onCreate: (Database database, int version) async {
         print("Creating vehicle table");
-
         await database.execute(
           "CREATE TABLE $TABLE_VEHICLE ("
           "$COLUMN_DATABASE_ID INTEGER PRIMARY KEY,"
@@ -69,7 +71,7 @@ class DatabaseProvider {
     );
   }
 
-  Future<List<LoadableVehicle>> getVehicles() async {
+  Future<List<StandardVehicle>> getVehicles() async {
     final db = await database;
 
     var vehicles = await db.query(TABLE_VEHICLE, columns: [
@@ -90,17 +92,17 @@ class DatabaseProvider {
       COLUMN_CHARGE
     ]);
 
-    List<LoadableVehicle> vehicleList = <LoadableVehicle>[];
+    List<StandardVehicle> vehicleList = List<StandardVehicle>();
 
     vehicles.forEach((currentVehicle) {
-      LoadableVehicle vehicle = LoadableVehicle.fromMap(currentVehicle);
+      StandardVehicle vehicle = StandardVehicle.fromMap(currentVehicle);
       vehicleList.add(vehicle);
     });
 
     return vehicleList;
   }
 
-  Future<LoadableVehicle> insert(LoadableVehicle vehicle) async {
+  Future<StandardVehicle> insert(StandardVehicle vehicle) async {
     final db = await database;
     vehicle.databaseId = await db.insert(TABLE_VEHICLE, vehicle.toMap());
     return vehicle;
@@ -111,9 +113,13 @@ class DatabaseProvider {
     return await db.delete(TABLE_VEHICLE, where: "id = ?", whereArgs: [id]);
   }
 
-  Future<int> update(LoadableVehicle vehicle) async {
+  Future<int> update(StandardVehicle vehicle) async {
     final db = await database;
     return await db.update(TABLE_VEHICLE, vehicle.toMap(),
         where: "id = ?", whereArgs: [vehicle.databaseId]);
+  }
+
+  Future clear() async {
+    _database.delete(TABLE_VEHICLE);
   }
 }
