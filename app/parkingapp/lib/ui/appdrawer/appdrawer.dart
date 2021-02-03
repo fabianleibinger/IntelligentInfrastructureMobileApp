@@ -5,7 +5,8 @@ import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:provider/Provider.dart';
 
-final double drawerHeaderHeight = 120;
+final EdgeInsets drawerHeaderPadding = EdgeInsets.all(16.0);
+final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
 
 class AppDrawer extends StatelessWidget {
   AppDrawer(this.currentPage);
@@ -17,26 +18,37 @@ class AppDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     var currentDrawer = Provider.of<DrawerStateInfo>(context).getCurrentDrawer;
     return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
+      child: Column(
+        children: [
           Container(
-            height: drawerHeaderHeight,
-            child: DrawerHeader(
-              decoration: BoxDecoration(
-                color: green,
-              ),
-              child: Text(AppLocalizations.of(context).drawerHeader,
-                  style: whiteHeader),
-            ),
+            height: MediaQuery.of(context).padding.top,
+            color: green,
           ),
-          generateTile(context, currentDrawer, Routes.main, 'Main',
-              Icons.directions_car),
-          Divider(),
-          generateTile(context, currentDrawer, Routes.vehicle,
-              AppLocalizations.of(context).drawerVehicles, Icons.edit),
-          generateTile(context, currentDrawer, Routes.settings,
-              AppLocalizations.of(context).drawerSettings, Icons.settings),
+          Container(
+            padding: drawerHeaderPadding,
+            width: MediaQuery.of(context).size.width,
+            color: green,
+            child: Text(AppLocalizations.of(context).drawerHeader,
+                style: whiteHeader),
+          ),
+          Expanded(
+            child: ListView(
+              padding: listViewPadding,
+              children: <Widget>[
+                generateTile(context, currentDrawer, Routes.main, 'Main',
+                    Icons.directions_car),
+                Divider(),
+                generateTile(context, currentDrawer, Routes.vehicle,
+                    AppLocalizations.of(context).drawerVehicles, Icons.edit),
+                generateTile(
+                    context,
+                    currentDrawer,
+                    Routes.settings,
+                    AppLocalizations.of(context).drawerSettings,
+                    Icons.settings),
+              ],
+            ),
+          )
         ],
       ),
     );
