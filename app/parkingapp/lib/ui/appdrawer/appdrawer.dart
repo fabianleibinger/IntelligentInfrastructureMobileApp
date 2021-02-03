@@ -27,9 +27,14 @@ class AppDrawer extends StatelessWidget {
           Container(
             padding: drawerHeaderPadding,
             width: MediaQuery.of(context).size.width,
-            color: green,
             child: Text(AppLocalizations.of(context).drawerHeader,
                 style: whiteHeader),
+            decoration: BoxDecoration(
+              color: green,
+              border: Border(
+                bottom: Divider.createBorderSide(context),
+              ),
+            ),
           ),
           Expanded(
             child: ListView(
