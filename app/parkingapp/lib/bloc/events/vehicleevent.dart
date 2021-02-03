@@ -1,3 +1,6 @@
+abstract class VehicleEvent {}
+
+/*import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 
 enum EventType { add, delete, update }
@@ -21,4 +24,4 @@ class VehicleEvent {
     this.eventType = EventType.update;
     this.vehicleIndex = index;
   }
-}
+}*/

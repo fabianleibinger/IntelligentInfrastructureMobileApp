@@ -1,4 +1,5 @@
-//Interface for vehicles
+import 'package:parkingapp/models/data/databaseprovider.dart';
+
 class Vehicle {
   int databaseId;
 
@@ -15,4 +16,8 @@ class Vehicle {
   String setPreferences() {}
 
   String toString() {}
+
+  Map<String, dynamic> toMap() {}
+
+  static Vehicle fromMap(Map<String, dynamic> map) {}
 }

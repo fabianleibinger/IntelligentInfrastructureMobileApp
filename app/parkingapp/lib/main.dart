@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
@@ -14,11 +16,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehicleblocobserver.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:provider/provider.dart';
 
 // Main: From here you call all u'r widgets.
 
 void main() {
-  Bloc.observer = VehicleBlocObserver();
+  //Bloc.observer = VehicleBlocObserver();
+  Provider.debugCheckInvalidValueType = null;
   runApp(Main());
 }
 
@@ -51,10 +55,19 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return getMaterialApp(MyHomePage());
+    return Provider<DrawerStateInfo>(
+      create: (context) {
+        return DrawerStateInfo();
+      },
+      child: BlocProvider<VehicleBloc>(
+          create: (context) {
+            return VehicleBloc(List<Vehicle>());
+          },
+          child: getMaterialApp(MainPage())),
+    );
   }
 }
-
+/*
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -63,7 +76,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return MainPage();
+    return Text("ijawd");
   }
 
   void login() {
@@ -76,4 +89,4 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
   }
-}
+}*/
