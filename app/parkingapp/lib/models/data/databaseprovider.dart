@@ -64,7 +64,7 @@ class DatabaseProvider {
           "$COLUMN_CHARGING_PROVIDER TEXT,"
           "$COLUMN_CHARGE_TIME_BEGIN TEXT,"
           "$COLUMN_CHARGE_TIME_END TEXT,"
-          "$COLUMN_NEAR_EXIT_PREFERENCE TEXT"
+          "$COLUMN_CHARGE TEXT"
           ")",
         );
       },
@@ -120,6 +120,9 @@ class DatabaseProvider {
   }
 
   Future clear() async {
+    var path = await getDatabasesPath();
+    String dbPath = join(path, 'vehicleDB.db');
     _database.delete(TABLE_VEHICLE);
+    await deleteDatabase(dbPath);
   }
 }

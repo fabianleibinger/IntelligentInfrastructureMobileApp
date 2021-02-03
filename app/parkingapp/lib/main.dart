@@ -55,16 +55,11 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Provider<DrawerStateInfo>(
-      create: (context) {
-        return DrawerStateInfo();
-      },
-      child: BlocProvider<VehicleBloc>(
-          create: (context) {
-            return VehicleBloc(List<Vehicle>());
-          },
-          child: getMaterialApp(MainPage())),
-    );
+    return BlocProvider<VehicleBloc>(
+        create: (context) {
+          return VehicleBloc(List<Vehicle>());
+        },
+        child: getMaterialApp(MainPage()));
   }
 }
 /*

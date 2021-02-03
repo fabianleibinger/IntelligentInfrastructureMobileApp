@@ -87,9 +87,10 @@ class _FancyFabState extends State<FancyFab>
     return Container(
       child: FloatingActionButton(
         onPressed: () {
-          DatabaseProvider.db.delete(2).then((index) {
-            BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
-          });
+          // DatabaseProvider.db.delete(2).then((index) {
+          //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
+          // });
+          // DatabaseProvider.db.clear();
           Navigator.push(
               (context),
               MaterialPageRoute(
