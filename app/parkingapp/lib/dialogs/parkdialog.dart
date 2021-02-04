@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/routes/routes.dart';
 
 class ParkDialog {
   static createDialog(BuildContext context) {
@@ -15,13 +16,19 @@ class ParkDialog {
             actions: [
               FlatButton(
                 textColor: red,
-                onPressed: () {Navigator.pop(context);},
-                child: Text(AppLocalizations.of(context).parkDialogCancelButton),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child:
+                    Text(AppLocalizations.of(context).parkDialogCancelButton),
               ),
               FlatButton(
                 textColor: green,
-                onPressed: () {},
-                child: Text(AppLocalizations.of(context).parkDialogParkInButton),
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, Routes.park);
+                },
+                child:
+                    Text(AppLocalizations.of(context).parkDialogParkInButton),
               ),
             ],
           );
