@@ -38,7 +38,7 @@ class _MainPageState extends State<MainPage> {
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            ParkDialog.createDialog(context);
+            ParkDialog.createParkInDialog(context);
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),
         ),
