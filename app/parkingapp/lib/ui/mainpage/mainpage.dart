@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
+import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
