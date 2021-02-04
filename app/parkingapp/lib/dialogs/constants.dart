@@ -43,4 +43,36 @@ class Constants {
           );
         });
   }
+
+  static createParkAlertDialogNoTitle(
+      BuildContext context,
+      String content,
+      String cancelButtonText,
+      String confirmButtonText,
+      String confirmButtonNextPage) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            backgroundColor: white,
+            content: Text(content),
+            actions: [
+              FlatButton(
+                textColor: red,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text(cancelButtonText),
+              ),
+              FlatButton(
+                textColor: green,
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, Routes.park);
+                },
+                child: Text(confirmButtonText),
+              ),
+            ],
+          );
+        });
+  }
 }

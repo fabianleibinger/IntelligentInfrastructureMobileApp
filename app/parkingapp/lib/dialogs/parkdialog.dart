@@ -17,9 +17,8 @@ class ParkDialog {
   }
 
   static createParkOutDialog(BuildContext context) {
-    return Constants.createParkAlertDialog(
+    return Constants.createParkAlertDialogNoTitle(
         context,
-        AppLocalizations.of(context).parkDialogParkOutTitle,
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
@@ -28,9 +27,8 @@ class ParkDialog {
   }
 
   static createParkCancelDialog(BuildContext context) {
-    return Constants.createParkAlertDialog(
+    return Constants.createParkAlertDialogNoTitle(
         context,
-        AppLocalizations.of(context).parkDialogParkCancelTitle,
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
         AppLocalizations.of(context).parkDialogParkOutButton,

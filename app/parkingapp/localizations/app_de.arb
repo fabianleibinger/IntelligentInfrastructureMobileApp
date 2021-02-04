@@ -57,14 +57,6 @@
     "@parkDialogParkInTitle": {
         "description": "Park in title text in park dialog"
     },
-    "parkDialogParkOutTitle": "Ausparken",
-    "@parkDialogParkOutTitle": {
-        "description": "Park out title text in park dialog"
-    },
-    "parkDialogParkCancelTitle": "Einparkvorgang abbrechen",
-    "@parkDialogParkCancelTitle": {
-        "description": "Park cancel title text in park dialog"
-    },
     "parkDialogParkInButton": "EINPARKEN",
     "@parkDialogParkInButton": {
         "description": "Text for park in button in park dialog"
