@@ -10,7 +10,7 @@ class Constants {
   static const double padding = 20;
   static const double avatarRadius = 45;
 
-  static createAlertDialog(
+  static createParkAlertDialog(
       BuildContext context,
       String title,
       String content,

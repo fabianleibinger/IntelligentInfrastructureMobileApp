@@ -33,20 +33,44 @@
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
     },
-    "parkDialogContent": "Bitte entfernen Sie alle Wertgegenstände aus dem Fahrzeug. Achten Sie darauf, dass sich keine Gegenstände mehr im unmittelbaren Umfeld des Fahrzeugs befinden. Bitte verlassen Sie nun die Parkzone.",
-    "@parkDialogContent": {
-        "description": "Text body in park dialog"
+    "parkDialogBackButton": "ZURÜCK",
+    "@parkDialogBackButton": {
+        "description": "Text for back button in park dialog"
     },
-    "parkDialogCancelButton": "ZURÜCK",
+    "parkDialogCancelButton": "ABBRECHEN",
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
     },
-    "parkDialogTitle": "Disclaimer",
-    "@parkDialogTitle": {
-        "description": "title text in park dialog"
+    "parkDialogParkInContent": "Bitte entfernen Sie alle Wertgegenstände aus dem Fahrzeug. Achten Sie darauf, dass sich keine Gegenstände mehr im unmittelbaren Umfeld des Fahrzeugs befinden.\n\nBitte verlassen Sie nun die Parkzone.",
+    "@parkDialogParkInContent": {
+        "description": "Text body in park dialog"
+    },
+    "parkDialogParkOutContent": "Sind Sie sicher, dass Sie Ihr Fahrzeug ausparken möchten? \n\nMit Betätigen des Buttons Ausparken wird Ihr Fahrzeug zurück an die Übergabestelle gefahren.",
+    "@parkDialogParkOutContent": {
+        "description": "Text body for park out in park dialog"
+    },
+    "parkDialogParkCancelContent": "Sind Sie sicher, dass Sie den Einparkvorgang abbrechen möchten? \n\nMit Betätigen des Buttons Ausparken wird Ihr Fahrzeug an die Übergabestelle gefahren.",
+    "@parkDialogParkCancelContent": {
+        "description": "Text body for park cancel in park dialog"
+    },
+    "parkDialogParkInTitle": "Disclaimer",
+    "@parkDialogParkInTitle": {
+        "description": "Park in title text in park dialog"
+    },
+    "parkDialogParkOutTitle": "Ausparken",
+    "@parkDialogParkOutTitle": {
+        "description": "Park out title text in park dialog"
+    },
+    "parkDialogParkCancelTitle": "Einparkvorgang abbrechen",
+    "@parkDialogParkCancelTitle": {
+        "description": "Park cancel title text in park dialog"
     },
     "parkDialogParkInButton": "EINPARKEN",
     "@parkDialogParkInButton": {
         "description": "Text for park in button in park dialog"
+    },
+    "parkDialogParkOutButton": "AUSPARKEN",
+    "@parkDialogParkOutButton": {
+        "description": "Text for park out button in park dialog"
     }
 }
