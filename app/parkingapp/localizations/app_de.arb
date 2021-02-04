@@ -11,6 +11,10 @@
     "@drawerSettings": {
         "description": "Settings text in drawer"
     },
+    "drawerVehicles": "Fahrzeuge",
+    "@drawerVehicles": {
+        "description": "Vehicles text in drawer"
+    }
     "actionButtonPark": "Fahrzeug einparken",
     "@actionButtonPark": {
         "description": "Park vehicle action button on main page"
@@ -29,8 +33,23 @@
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
     },
-    "drawerVehicles": "Fahrzeuge",
-    "@drawerVehicles": {
-        "description": "Vehicles text in drawer"
-    }
+    "parkDialogBody": "'Bitte entfernen sie alle Wertgegenstände aus dem Fahrzeug. '
+                        'Achten Sie darauf, dass sich keine Gegenstände mehr im '
+                        'unmittelbaren Umfeld des Fahrzeugs befinden. \n'
+                        'Bitte verlassen Sie nun die Parkzone.'",
+    "@parkDialogBody": {
+        "description": "Text body in park dialog"
+    },
+    "parkDialogCancelButton": "ZURÜCK",
+    "@parkDialogCancelButton": {
+        "description": "Text for cancel button in park dialog"
+    },
+    "parkDialogHeader": "Disclaimer",
+    "@parkDialogHeader": {
+        "description": "header text in park dialog"
+    },
+    "parkDialogParkInButton": "EINPARKEN",
+    "@parkDialogParkInButton": {
+        "description": "Text for park in button in park dialog"
+    },
 }
