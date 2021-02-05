@@ -98,6 +98,7 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
     },
     builder: (context, vehicleList) {
       //build vehicles Column
+      //TODO Sort list
       List<ListTile> listTiles = [];
       for (Vehicle vehicle in vehicleList) {
         listTiles.add(generateTile(context, currentDrawer, Routes.main,
