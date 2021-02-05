@@ -94,8 +94,8 @@ class _FancyFabState extends State<FancyFab>
           DatabaseProvider.db
               .insert(LoadableVehicle(
                   Utility.generateKey(),
-                  "Audi",
-                  "OG-DE-923",
+                  "Tesla Model 3",
+                  "KA-ST 930 E",
                   93.0,
                   93.4,
                   29.3,
