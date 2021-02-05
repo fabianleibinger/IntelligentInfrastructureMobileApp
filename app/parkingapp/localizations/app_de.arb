@@ -41,6 +41,10 @@
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
     },
+    "parkDialogFinishedButton": "FERTIG",
+    "@parkDialogFinishedButton": {
+        "description": "Text for ready button in park dialog"
+    },
     "parkDialogParkInContent": "Bitte entfernen Sie alle Wertgegenstände aus dem Fahrzeug. Achten Sie darauf, dass sich keine Gegenstände mehr im unmittelbaren Umfeld des Fahrzeugs befinden.\n\nBitte verlassen Sie nun die Parkzone.",
     "@parkDialogParkInContent": {
         "description": "Text body in park dialog"
@@ -52,6 +56,10 @@
     "parkDialogParkCancelContent": "Sind Sie sicher, dass Sie den Einparkvorgang abbrechen möchten? \n\nMit Betätigen des Buttons Ausparken wird Ihr Fahrzeug an die Übergabestelle gefahren.",
     "@parkDialogParkCancelContent": {
         "description": "Text body for park cancel in park dialog"
+    },
+    "parkDialogParkOutFinishedContent": "Ihr Fahrzeug wurde erfolgreich ausgeparkt und steht nun in der Übergabezone bereit!",
+    "@parkDialogParkOutFinishedContent": {
+        "description": "Text body for park out finished in park dialog"
     },
     "parkDialogParkInTitle": "Disclaimer",
     "@parkDialogParkInTitle": {

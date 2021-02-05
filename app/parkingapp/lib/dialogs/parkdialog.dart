@@ -1,13 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/constants.dart';
-import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 
 class ParkDialog {
   static createParkInDialog(BuildContext context) {
-    return Constants.createParkAlertDialog(
+    return Constants.createAlertDialog(
         context,
         AppLocalizations.of(context).parkDialogParkInTitle,
         AppLocalizations.of(context).parkDialogParkInContent,
@@ -17,22 +16,27 @@ class ParkDialog {
   }
 
   static createParkOutDialog(BuildContext context) {
-    return Constants.createParkAlertDialogNoTitle(
+    return Constants.createAlertDialogNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        //TODO Seite anpassen
-        Routes.park);
+        Routes.main);
   }
 
-  static createParkCancelDialog(BuildContext context) {
-    return Constants.createParkAlertDialogNoTitle(
+  static createParkInCancelDialog(BuildContext context) {
+    return Constants.createAlertDialogNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        //TODO Seite anpassen
-        Routes.park);
+        Routes.main);
+  }
+
+  static createParkOutFinishedDialog(BuildContext context) {
+    return Constants.createAlertDialogOneBackButtonNoTitle(
+        context,
+        AppLocalizations.of(context).parkDialogParkOutFinishedContent,
+        AppLocalizations.of(context).parkDialogFinishedButton);
   }
 }
