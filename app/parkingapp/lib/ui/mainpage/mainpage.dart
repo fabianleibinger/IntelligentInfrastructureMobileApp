@@ -23,7 +23,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
-final bottomMargin = 75;
+final bottomMargin = 80;
 bool _charge = false;
 
 class MainPage extends StatefulWidget {
