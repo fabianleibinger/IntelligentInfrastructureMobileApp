@@ -28,7 +28,7 @@ void main() {
 
 class Main extends StatelessWidget {
   //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
-  static MaterialApp getMaterialApp(Widget homeWidget) {
+  static MaterialApp getMaterialApp(String initialroute) {
     return MaterialApp(
       //Initialize Localization
       localizationsDelegates: [
@@ -43,7 +43,7 @@ class Main extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,
       theme: themeData,
-      home: homeWidget,
+      initialRoute: initialroute,
       routes: {
         Routes.main: (context) => MainPage(),
         Routes.settings: (context) => SettingsPage(),
@@ -65,7 +65,7 @@ class Main extends StatelessWidget {
           create: (_) => DrawerStateInfo(),
         )
       ],
-      child: getMaterialApp(MainPage()),
+      child: getMaterialApp(Routes.vehicle),
     );
   }
 }
