@@ -58,6 +58,7 @@ class Main extends StatelessWidget {
         RegExp inAppKeyRegExp = RegExp(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}');
         var uri = Uri.parse(settings.name);
         if (inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
+          //TODO generate vehicle Page with inAppKey
           return MaterialPageRoute(builder: (context) => MainPage());
         }
         //fallback route
