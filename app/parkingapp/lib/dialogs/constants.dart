@@ -21,7 +21,6 @@ class Constants {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: white,
             title: Text(title),
             content: Text(content),
             actions: [
@@ -44,7 +43,6 @@ class Constants {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: white,
             content: Text(content),
             actions: [
               createBackFlatButton(context, red, cancelButtonText),
@@ -62,7 +60,6 @@ class Constants {
         context: context,
         builder: (context) {
           return AlertDialog(
-            backgroundColor: white,
             content: Text(content),
             actions: [createBackFlatButton(context, green, confirmButtonText)],
           );
@@ -87,6 +84,37 @@ class Constants {
             ],
           );
         });
+  }
+
+  //TODO REMOVE
+  static listTiles(BuildContext context) {
+    return Container(
+        child: Column(
+      children: [
+        ListTile(
+          title: Text(
+            'option 1',
+            style: Theme.of(context).textTheme.subtitle1.copyWith(color: red),
+          ),
+          leading: Radio(
+            value: 1,
+            groupValue: 1,
+            onChanged: (_) {},
+          ),
+        ),
+        ListTile(
+          title: Text(
+            'option 1',
+            style: Theme.of(context).textTheme.subtitle1.copyWith(color: red),
+          ),
+          leading: Radio(
+            value: 1,
+            groupValue: 1,
+            onChanged: (_) {},
+          ),
+        )
+      ],
+    ));
   }
 
   //creates a button that closes a dialog

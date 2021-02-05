@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
@@ -38,7 +39,7 @@ class _MainPageState extends State<MainPage> {
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            ParkDialog.createParkInDialog(context);
+            ChargingProviderDialog.createChargingProviderDialog(context);
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),
         ),
