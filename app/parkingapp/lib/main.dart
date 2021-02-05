@@ -39,7 +39,6 @@ class Main extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       // App info
-      debugShowCheckedModeBanner: false,
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,
       theme: themeData,
