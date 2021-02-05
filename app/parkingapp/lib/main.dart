@@ -57,7 +57,9 @@ class Main extends StatelessWidget {
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
         RegExp inAppKeyRegExp = RegExp(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}');
         var uri = Uri.parse(settings.name);
-        if (inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
+        if (uri.pathSegments.length > 0 &&
+            inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
+          print('vehicle: ' + uri.pathSegments.first);
           //TODO generate vehicle Page with inAppKey
           return MaterialPageRoute(builder: (context) => MainPage());
         }
