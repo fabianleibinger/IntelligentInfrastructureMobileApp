@@ -59,13 +59,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO generate from vehicle
-    List<String> _properties = [
-      AppLocalizations.of(context).mainPageAvailableSpaces +
-          currentParkingGarage.freeParkingSpots.toString(),
-      AppLocalizations.of(context).mainPageCarPreferences +
-          AppLocalizations.of(context).textNone
-    ];
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
         if (previous.length != current.length)
@@ -123,8 +116,8 @@ class _MainPageState extends State<MainPage> {
                         Flexible(
                           child: ListView(
                             shrinkWrap: true,
-                            children: buildElements(_properties),
                           ),
+                          children: buildCarToggles(),
                         ),
                       ],
                     ),
@@ -139,9 +132,17 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  List<Widget> buildElements(List<String> elements) {
+  List<Widget> buildCarToggles() {
+    // TODO generate from vehicle
+    List<String> _properties = [
+      AppLocalizations.of(context).mainPageAvailableSpaces +
+          currentParkingGarage.freeParkingSpots.toString(),
+      AppLocalizations.of(context).mainPageCarPreferences +
+          AppLocalizations.of(context).textNone
+    ];
+
     List<Widget> widgets = [];
-    widgets.addAll(elements
+    widgets.addAll(_properties
         .map((element) => ListTile(
               title: Text(element),
             ))
