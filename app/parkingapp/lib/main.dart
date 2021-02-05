@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -20,7 +21,8 @@ import 'package:provider/provider.dart';
 // Main: From here you call all u'r widgets.
 
 void main() {
-  Bloc.observer = VehicleBlocObserver();
+  //Bloc.observer = VehicleBlocObserver();
+  Provider.debugCheckInvalidValueType = null;
   runApp(Main());
 }
 
@@ -54,13 +56,20 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
-    return ListenableProvider(
-      child: getMaterialApp(MyHomePage()), //Provider for Drawer
-      create: (_) => DrawerStateInfo(),
+    return MultiProvider(
+      providers: [
+        BlocProvider<VehicleBloc>(create: (context) {
+          return VehicleBloc(List<Vehicle>());
+        }),
+        ListenableProvider(
+          create: (_) => DrawerStateInfo(),
+        )
+      ],
+      child: getMaterialApp(MainPage()),
     );
   }
 }
-
+/*
 class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -69,7 +78,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return MainPage();
+    return Text("ijawd");
   }
 
   void login() {
@@ -82,4 +91,4 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
   }
-}
+}*/
