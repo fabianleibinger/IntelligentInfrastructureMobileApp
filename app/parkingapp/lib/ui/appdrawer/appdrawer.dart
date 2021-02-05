@@ -87,21 +87,6 @@ ListTile generateTile(BuildContext context, String currentDrawer, String route,
       });
 }
 
-// this manages the highlighted item in the drawer.
-class DrawerStateInfo with ChangeNotifier {
-  String _currentDrawer;
-  String get getCurrentDrawer => _currentDrawer;
-
-  void setCurrentDrawer(String drawer) {
-    _currentDrawer = drawer;
-    notifyListeners();
-  }
-
-  void increment() {
-    notifyListeners();
-  }
-}
-
 Widget generateVehicles(BuildContext context, String currentDrawer) {
   // get vehicleList
   DatabaseProvider.db.getVehicles().then((vehicleList) {
@@ -123,4 +108,19 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       );
     },
   );
+}
+
+// this manages the highlighted item in the drawer.
+class DrawerStateInfo with ChangeNotifier {
+  String _currentDrawer;
+  String get getCurrentDrawer => _currentDrawer;
+
+  void setCurrentDrawer(String drawer) {
+    _currentDrawer = drawer;
+    notifyListeners();
+  }
+
+  void increment() {
+    notifyListeners();
+  }
 }
