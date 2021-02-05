@@ -100,6 +100,8 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       //build vehicles Column
       //TODO Sort list
       List<ListTile> listTiles = [];
+      //TODO test if this is necessary
+      if (vehicleList.isEmpty) return Column();
       for (Vehicle vehicle in vehicleList) {
         //console logging
         print('AppDrawer generateVehicles: Name: ' +
