@@ -28,9 +28,14 @@ bool _charge = false;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
-  final String apiKey;
+  //final String apiKey;
+  String carInAppKey;
 
-  const MainPage({Key key, this.apiKey}) : super(key: key);
+  //const MainPage({Key key, this.apiKey}) : super(key: key);
+  MainPage(String carInAppKey) {
+    this.carInAppKey = carInAppKey;
+    print('Vehicle page: carInAppKey: ' + this.carInAppKey);
+  }
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -63,7 +68,7 @@ class _MainPageState extends State<MainPage> {
     ];
     return Scaffold(
         appBar: AppBar(
-          title: Text('Vehicle', style: whiteHeader),
+          title: Text(widget.carInAppKey, style: whiteHeader),
         ),
         drawer: AppDrawer(Routes.main),
         floatingActionButton: FloatingActionButton.extended(

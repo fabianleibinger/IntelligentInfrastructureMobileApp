@@ -61,7 +61,8 @@ class Main extends StatelessWidget {
             inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
           print('vehicle: ' + uri.pathSegments.first);
           //TODO generate vehicle Page with inAppKey
-          return MaterialPageRoute(builder: (context) => MainPage());
+          return MaterialPageRoute(
+              builder: (context) => MainPage(uri.pathSegments.first));
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
