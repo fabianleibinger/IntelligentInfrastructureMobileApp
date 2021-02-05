@@ -9,6 +9,7 @@ class Constants {
   static const double padding = 20;
   static const double avatarRadius = 45;
 
+  //creates an alert dialog with title, text and two buttons
   static createAlertDialog(
       BuildContext context,
       String title,
@@ -32,6 +33,7 @@ class Constants {
         });
   }
 
+  //creates an alert dialog with text and two buttons
   static createAlertDialogNoTitle(
       BuildContext context,
       String content,
@@ -53,6 +55,7 @@ class Constants {
         });
   }
 
+  //creates an alert dialog with text and one button
   static createAlertDialogOneBackButtonNoTitle(
       BuildContext context, String content, String confirmButtonText) {
     return showDialog(
@@ -66,6 +69,8 @@ class Constants {
         });
   }
 
+  //creates a confirmation dialog with title and one button,
+  //[tiles] Widget defines the content.
   static createConfirmationDialog(BuildContext context, String title,
       String confirmButtonText, Widget tiles) {
     return showDialog(
@@ -75,7 +80,7 @@ class Constants {
             title: Text(title),
             content: Column(
               mainAxisSize: MainAxisSize.min,
-              children: [],
+              children: [tiles],
             ),
             actions: [
               createBackFlatButton(context, green, confirmButtonText),
@@ -84,6 +89,7 @@ class Constants {
         });
   }
 
+  //creates a button that closes a dialog
   static createBackFlatButton(BuildContext context, Color color, String text) {
     return FlatButton(
       textColor: color,
@@ -92,6 +98,7 @@ class Constants {
     );
   }
 
+  //creates a button. [nextPage] defines the page to be called by button
   static createFlatButton(
       BuildContext context, Color color, String text, String nextPage) {
     return FlatButton(
