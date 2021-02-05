@@ -6,7 +6,9 @@ import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkoutdialog.dart';
+import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
 import 'package:parkingapp/enum/parkinggaragetype.dart';
+import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -67,7 +69,12 @@ class _MainPageState extends State<MainPage> {
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            DatabaseProvider.db.clear();
+            showDialog(
+                context: context, builder: (_) => VehicleDimensionsDialog());
+            /*Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => VehicleDimensionsDialog()));*/
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),
         ),
