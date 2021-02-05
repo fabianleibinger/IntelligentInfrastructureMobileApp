@@ -108,7 +108,6 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
             vehicle.licensePlate +
             ' inAppKey: ' +
             vehicle.inAppKey);
-        listTiles.add(generateTile(context, currentDrawer, Routes.main,
         listTiles.add(generateTile(context, currentDrawer, vehicle.inAppKey,
             vehicle.name, Icons.directions_car));
       }
