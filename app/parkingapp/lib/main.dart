@@ -66,11 +66,6 @@ class Main extends StatelessWidget {
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
       },
-      /*routes: {
-        Routes.main: (context) => MainPage(),
-        Routes.settings: (context) => SettingsPage(),
-        Routes.vehicle: (context) => VehiclePage(),
-      },*/
     );
   }
 
