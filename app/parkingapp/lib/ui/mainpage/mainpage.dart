@@ -23,7 +23,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
-final bottomMargin = 220;
+final bottomMargin = 75;
 bool _charge = false;
 
 class MainPage extends StatefulWidget {
@@ -99,11 +99,7 @@ class _MainPageState extends State<MainPage> {
                 FloatingActionButtonLocation.centerFloat,
             body: Column(
               children: [
-                Container(
-                  constraints: BoxConstraints(
-                      //TODO Use usable screen area instead of screen size
-                      maxHeight:
-                          MediaQuery.of(context).size.height - bottomMargin),
+                Expanded(
                   child: Card(
                     margin: EdgeInsets.all(0),
                     elevation: 10,
@@ -134,6 +130,9 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                 ),
+                Container(
+                  height: MediaQuery.of(context).padding.bottom + bottomMargin,
+                )
               ],
             ));
       },
