@@ -66,55 +66,78 @@ class _MainPageState extends State<MainPage> {
       AppLocalizations.of(context).mainPageCarPreferences +
           AppLocalizations.of(context).textNone
     ];
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.carInAppKey, style: whiteHeader),
-        ),
-        drawer: AppDrawer(Routes.main),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            DatabaseProvider.db.clear();
-          },
-          label: Text(AppLocalizations.of(context).actionButtonPark),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: Column(
-          children: [
-            Container(
-              constraints: BoxConstraints(
-                  //TODO Use usable screen area instead of screen size
-                  maxHeight: MediaQuery.of(context).size.height - bottomMargin),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                elevation: 10,
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  children: [
-                    ListTile(
-                      //leading: Icon(Icons.location_on),
-                      title: Text(currentParkingGarage.name),
-                      subtitle: Text(currentParkingGarage.type.toShortString()),
-                    ),
-                    Container(
-                      height: parkingGarageImageHeight.toDouble(),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage(currentParkingGarage.image),
-                        fit: BoxFit.cover,
-                      )),
-                    ),
-                    Flexible(
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: buildElements(_properties),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+    return BlocBuilder<VehicleBloc, List<Vehicle>>(
+      buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
+        if (previous.length != current.length)
+          return true;
+        else
+          return false;
+      },
+      builder: (context, vehicleList) {
+        //get vehicle that shall be used from the list of vehicles
+        Vehicle vehicle;
+        for (Vehicle currentVehicle in vehicleList) {
+          if (currentVehicle.inAppKey == widget.carInAppKey)
+            vehicle = currentVehicle;
+        }
+        print('MainPage: vehicle: ' +
+            vehicle.name +
+            ' license plate: ' +
+            vehicle.licensePlate);
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(vehicle.name, style: whiteHeader),
             ),
-          ],
-        ));
+            drawer: AppDrawer(Routes.main),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () {
+                DatabaseProvider.db.clear();
+              },
+              label: Text(AppLocalizations.of(context).actionButtonPark),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            body: Column(
+              children: [
+                Container(
+                  constraints: BoxConstraints(
+                      //TODO Use usable screen area instead of screen size
+                      maxHeight:
+                          MediaQuery.of(context).size.height - bottomMargin),
+                  child: Card(
+                    margin: EdgeInsets.all(0),
+                    elevation: 10,
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          //leading: Icon(Icons.location_on),
+                          title: Text(currentParkingGarage.name),
+                          subtitle:
+                              Text(currentParkingGarage.type.toShortString()),
+                        ),
+                        Container(
+                          height: parkingGarageImageHeight.toDouble(),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: AssetImage(currentParkingGarage.image),
+                            fit: BoxFit.cover,
+                          )),
+                        ),
+                        Flexible(
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: buildElements(_properties),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ));
+      },
+    );
   }
 
   List<Widget> buildElements(List<String> elements) {
