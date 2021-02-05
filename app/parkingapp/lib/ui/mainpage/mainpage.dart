@@ -19,12 +19,12 @@ import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 80;
-bool _charge = false;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -115,7 +115,7 @@ class _MainPageState extends State<MainPage> {
                         ),
                         ListView(
                           shrinkWrap: true,
-                          children: buildCarToggles(),
+                          children: buildCarToggles(vehicle),
                         ),
                       ],
                     ),
@@ -130,13 +130,11 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  List<Widget> buildCarToggles() {
-    // TODO generate from vehicle
+  List<Widget> buildCarToggles(Vehicle vehicle) {
+    // car park specific items
     List<String> _properties = [
       AppLocalizations.of(context).mainPageAvailableSpaces +
-          currentParkingGarage.freeParkingSpots.toString(),
-      AppLocalizations.of(context).mainPageCarPreferences +
-          AppLocalizations.of(context).textNone
+          currentParkingGarage.freeParkingSpots.toString()
     ];
 
     List<Widget> widgets = [];
@@ -145,15 +143,41 @@ class _MainPageState extends State<MainPage> {
               title: Text(element),
             ))
         .toList());
+
+    // vehicle specific toggles
+    //TODO save changes to DB
+    widgets.add(SwitchListTile(
+      title: Text('nearExitPrefference'),
+      onChanged: (bool newValue) =>
+          setState(() => vehicle.nearExitPreference = newValue),
+      value: vehicle.nearExitPreference,
+    ));
+
+    widgets.add(SwitchListTile(
+      title: Text('parkingCard'),
+      onChanged: (bool newValue) =>
+          setState(() => vehicle.parkingCard = newValue),
+      value: vehicle.parkingCard,
+    ));
+
+    // electric vehicle toggles
+    if (vehicle.runtimeType == LoadableVehicle)
+      widgets.addAll(addElectricVehicleTiles(vehicle));
+
+    return widgets;
+  }
+
+  List<Widget> addElectricVehicleTiles(LoadableVehicle vehicle) {
+    List<Widget> widgets = [];
     widgets.add(SwitchListTile(
       title:
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          _charge = newValue;
+          vehicle.doCharge = newValue;
         });
       },
-      value: _charge,
+      value: vehicle.doCharge,
     ));
     return widgets;
   }
