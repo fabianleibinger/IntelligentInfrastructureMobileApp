@@ -40,5 +40,9 @@
     "drawerVehicles": "Fahrzeuge",
     "@drawerVehicles": {
         "description": "Vehicles text in drawer"
-    }
+    },
+    "nearExitPrefference": "Nah am Ausgang parken",
+    "@nearExitPrefference": {},
+    "parkingCard": "Parkkarte",
+    "@parkingCard":{}
 }

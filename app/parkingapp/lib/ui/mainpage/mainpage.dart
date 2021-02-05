@@ -147,14 +147,14 @@ class _MainPageState extends State<MainPage> {
     // vehicle specific toggles
     //TODO save changes to DB
     widgets.add(SwitchListTile(
-      title: Text('nearExitPrefference'),
+      title: Text(AppLocalizations.of(context).nearExitPrefference),
       onChanged: (bool newValue) =>
           setState(() => vehicle.nearExitPreference = newValue),
       value: vehicle.nearExitPreference,
     ));
 
     widgets.add(SwitchListTile(
-      title: Text('parkingCard'),
+      title: Text(AppLocalizations.of(context).parkingCard),
       onChanged: (bool newValue) =>
           setState(() => vehicle.parkingCard = newValue),
       value: vehicle.parkingCard,
