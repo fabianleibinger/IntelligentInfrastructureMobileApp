@@ -101,6 +101,13 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       //TODO Sort list
       List<ListTile> listTiles = [];
       for (Vehicle vehicle in vehicleList) {
+        //console logging
+        print('AppDrawer generateVehicles: Name: ' +
+            vehicle.name +
+            ' licensePlate: ' +
+            vehicle.licensePlate +
+            ' inAppKey: ' +
+            vehicle.inAppKey);
         listTiles.add(generateTile(context, currentDrawer, Routes.main,
             vehicle.name, Icons.directions_car));
       }
