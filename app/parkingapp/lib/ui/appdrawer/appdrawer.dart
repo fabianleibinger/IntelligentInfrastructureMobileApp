@@ -102,6 +102,7 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       List<ListTile> listTiles = [];
       for (Vehicle vehicle in vehicleList) {
         listTiles.add(generateTile(context, currentDrawer, Routes.main,
+        listTiles.add(generateTile(context, currentDrawer, vehicle.inAppKey,
             vehicle.name, Icons.directions_car));
       }
       return Column(

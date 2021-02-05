@@ -43,11 +43,31 @@ class Main extends StatelessWidget {
           AppLocalizations.of(context).appTitle,
       theme: themeData,
       initialRoute: initialroute,
-      routes: {
+      //Routing of app
+      onGenerateRoute: (settings) {
+        //settings Route
+        if (settings.name == Routes.settings) {
+          return MaterialPageRoute(builder: (context) => SettingsPage());
+        }
+        //edit vehicles route
+        if (settings.name == Routes.vehicle) {
+          return MaterialPageRoute(builder: (context) => VehiclePage());
+        }
+        //vehicles park routes
+        //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
+        RegExp inAppKeyRegExp = RegExp(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}');
+        var uri = Uri.parse(settings.name);
+        if (inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
+          return MaterialPageRoute(builder: (context) => MainPage());
+        }
+        //fallback route
+        return MaterialPageRoute(builder: (context) => SettingsPage());
+      },
+      /*routes: {
         Routes.main: (context) => MainPage(),
         Routes.settings: (context) => SettingsPage(),
         Routes.vehicle: (context) => VehiclePage(),
-      },
+      },*/
     );
   }
 
