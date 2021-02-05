@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:provider/Provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parkingapp/bloc/events/setvehicles.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 
 final EdgeInsets drawerHeaderPadding = EdgeInsets.all(16.0);
 final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
@@ -42,8 +47,7 @@ class AppDrawer extends StatelessWidget {
             child: ListView(
               padding: listViewPadding,
               children: <Widget>[
-                generateTile(context, currentDrawer, Routes.main, 'Main',
-                    Icons.directions_car),
+                generateVehicles(context, currentDrawer),
                 Divider(),
                 //Edit vehicles
                 generateTile(context, currentDrawer, Routes.vehicle,
@@ -98,14 +102,25 @@ class DrawerStateInfo with ChangeNotifier {
   }
 }
 
-//TODO implement
-List<ListTile> generateVehicles(BuildContext context) {
-  List<ListTile> tiles = [];
-  tiles.add(
-    ListTile(
-        leading: Icon(Icons.message),
-        title: Text('Messages'),
-        onTap: () => Navigator.pushReplacementNamed(context, Routes.vehicle)),
+Widget generateVehicles(BuildContext context, String currentDrawer) {
+  // get vehicleList
+  DatabaseProvider.db.getVehicles().then((vehicleList) {
+    BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));
+  });
+  return BlocBuilder<VehicleBloc, List<Vehicle>>(
+    buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
+      return true;
+    },
+    builder: (context, vehicleList) {
+      //build vehicles Column
+      List<ListTile> listTiles = [];
+      for (Vehicle vehicle in vehicleList) {
+        listTiles.add(generateTile(context, currentDrawer, Routes.main,
+            vehicle.name, Icons.directions_car));
+      }
+      return Column(
+        children: listTiles,
+      );
+    },
   );
-  return tiles;
 }
