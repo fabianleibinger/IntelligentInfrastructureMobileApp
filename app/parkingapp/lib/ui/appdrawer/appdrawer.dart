@@ -100,16 +100,26 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       //build vehicles Column
       //TODO Sort list
       List<ListTile> listTiles = [];
-      //TODO test if this is necessary
-      if (vehicleList.isEmpty) return Column();
+      //this sometimes seems to fail with
+      /*The following NoSuchMethodError was thrown building BlocBuilder<VehicleBloc, List<Vehicle>>(dirty, dependencies: [MediaQuery, _LocalizationsScope-[GlobalKey#55074]], state: _BlocBuilderBaseState<VehicleBloc, List<Vehicle>>#f9ab8):
+      The getter 'name' was called on null.
+      Receiver: null
+      Tried calling: name
+
+      The relevant error-causing widget was
+      BlocBuilder<VehicleBloc, List<Vehicle>>
+      package:parkingapp/…/mainpage/mainpage.dart:62
+      When the exception was thrown, this was the stack
+      #0      Object.noSuchMethod (dart:core-patch/object_patch.dart:51:5)
+      #1      _MainPageState.build.<anonymous closure>
+      package:parkingapp/…/mainpage/mainpage.dart:77
+      #2      BlocBuilder.build
+      package:flutter_bloc/src/bloc_builder.dart:93
+      #3      _BlocBuilderBaseState.build
+      package:flutter_bloc/src/bloc_builder.dart:153
+      #4      StatefulElement.build
+      */
       for (Vehicle vehicle in vehicleList) {
-        //console logging
-        print('AppDrawer generateVehicles: Name: ' +
-            vehicle.name +
-            ' licensePlate: ' +
-            vehicle.licensePlate +
-            ' inAppKey: ' +
-            vehicle.inAppKey);
         listTiles.add(generateTile(context, currentDrawer, vehicle.inAppKey,
             vehicle.name, Icons.directions_car));
       }
