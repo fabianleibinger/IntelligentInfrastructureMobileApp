@@ -122,7 +122,7 @@ class DatabaseProvider {
   Future<int> update(Vehicle vehicle) async {
     final db = await database;
     return await db.update(TABLE_VEHICLE, vehicle.toMap(),
-        where: "id = ?", whereArgs: [vehicle.databaseId]);
+        where: "$COLUMN_DATABASE_ID = ?", whereArgs: [vehicle.databaseId]);
   }
 
   Future clear() async {
