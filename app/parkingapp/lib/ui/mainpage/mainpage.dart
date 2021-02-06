@@ -148,15 +148,19 @@ class _MainPageState extends State<MainPage> {
     //TODO save changes to DB
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).nearExitPrefference),
-      onChanged: (bool newValue) =>
-          setState(() => vehicle.nearExitPreference = newValue),
+      onChanged: (bool newValue) {
+        setState(() => vehicle.nearExitPreference = newValue);
+        DatabaseProvider.db.update(vehicle);
+      },
       value: vehicle.nearExitPreference,
     ));
 
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).parkingCard),
-      onChanged: (bool newValue) =>
-          setState(() => vehicle.parkingCard = newValue),
+      onChanged: (bool newValue) {
+        setState(() => vehicle.parkingCard = newValue);
+        DatabaseProvider.db.update(vehicle);
+      },
       value: vehicle.parkingCard,
     ));
 
@@ -175,6 +179,7 @@ class _MainPageState extends State<MainPage> {
       onChanged: (bool newValue) {
         setState(() {
           vehicle.doCharge = newValue;
+          DatabaseProvider.db.update(vehicle);
         });
       },
       value: vehicle.doCharge,
