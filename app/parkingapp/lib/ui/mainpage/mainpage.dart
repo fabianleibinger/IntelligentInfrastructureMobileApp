@@ -145,7 +145,6 @@ class _MainPageState extends State<MainPage> {
         .toList());
 
     // vehicle specific toggles
-    //TODO save changes to DB
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).nearExitPrefference),
       onChanged: (bool newValue) {
