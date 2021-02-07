@@ -5,6 +5,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:provider/Provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
@@ -59,6 +60,9 @@ class AppDrawer extends StatelessWidget {
                     Routes.settings,
                     AppLocalizations.of(context).drawerSettings,
                     Icons.settings),
+                // editVehiclePage
+                generateTile(context, currentDrawer, EditVehicle.routeName,
+                    'Edit Vehicle', Icons.edit),
               ],
             ),
           )
