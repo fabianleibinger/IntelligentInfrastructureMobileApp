@@ -5,6 +5,8 @@ class ParkingGarage {
   ParkingGarageType type;
   int freeParkingSpots;
   String image;
+  List<String> chargingProviders;
 
-  ParkingGarage(this.name, this.type, this.freeParkingSpots, this.image);
+  ParkingGarage(this.name, this.type, this.freeParkingSpots, this.image,
+      this.chargingProviders);
 }

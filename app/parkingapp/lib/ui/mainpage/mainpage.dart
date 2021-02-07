@@ -7,8 +7,13 @@ import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
-final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+final List<String> chargingProviders = ['eon', 'EnBW'];
+final currentParkingGarage = ParkingGarage(
+    'Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage,
+    79,
+    'assets/parkgarage-fasanengarten.jpg',
+    chargingProviders);
 final parkingGarageImageHeight = 250;
 final bottomMargin = 220;
 bool _charge = false;

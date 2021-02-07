@@ -2,7 +2,15 @@
     "appTitle": "Parkhaus App",
     "@appTitle": {
         "description": "Application Title shown on homescreen"
-      },
+    },
+    "chargingProviderDialogTitle": "Ladeanbieter",
+    "@chargingProviderDialogTitle": {
+        "description": "title in charging provider dialog"
+    },
+    "chargingProviderDialogTextAutomatic": "Automatisch",
+    "@chargingProviderDialogTextAutomatic": {
+        "description": "first tile in content of charging provider content"
+    },
     "drawerHeader": "Parkhaus",
     "@drawerHeader": {
         "description": "Text shown in header of the drawer"
@@ -72,5 +80,9 @@
     "parkDialogParkOutButton": "AUSPARKEN",
     "@parkDialogParkOutButton": {
         "description": "Text for park out button in park dialog"
+    },
+    "settingsSaveButton": "SPEICHERN",
+    "@settingsSaveButton": {
+        "description": "Text for save button"
     }
 }

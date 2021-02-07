@@ -6,6 +6,7 @@ import 'package:parkingapp/models/global.dart';
 class Constants {
   Constants._();
 
+  //TODO remove
   static const double padding = 20;
   static const double avatarRadius = 45;
 
@@ -84,37 +85,6 @@ class Constants {
             ],
           );
         });
-  }
-
-  //TODO REMOVE
-  static listTiles(BuildContext context) {
-    return Container(
-        child: Column(
-      children: [
-        ListTile(
-          title: Text(
-            'option 1',
-            style: Theme.of(context).textTheme.subtitle1.copyWith(color: red),
-          ),
-          leading: Radio(
-            value: 1,
-            groupValue: 1,
-            onChanged: (_) {},
-          ),
-        ),
-        ListTile(
-          title: Text(
-            'option 1',
-            style: Theme.of(context).textTheme.subtitle1.copyWith(color: red),
-          ),
-          leading: Radio(
-            value: 1,
-            groupValue: 1,
-            onChanged: (_) {},
-          ),
-        )
-      ],
-    ));
   }
 
   //creates a button that closes a dialog
