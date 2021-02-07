@@ -132,6 +132,10 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
 
 // this manages the highlighted item in the drawer.
 class DrawerStateInfo with ChangeNotifier {
+  // set initial drawer state
+  //if not provided drawer will only highlight after the first interaction with the drawer
+  DrawerStateInfo([this._currentDrawer]);
+
   String _currentDrawer;
   String get getCurrentDrawer => _currentDrawer;
 
