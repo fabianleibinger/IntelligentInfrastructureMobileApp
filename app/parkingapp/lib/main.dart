@@ -4,6 +4,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
@@ -63,6 +64,10 @@ class Main extends StatelessWidget {
           //TODO generate vehicle Page with inAppKey
           return MaterialPageRoute(
               builder: (context) => MainPage(uri.pathSegments.first));
+        }
+        //editVehicle route
+        if (settings.name == EditVehicle.routeName) {
+          return MaterialPageRoute(builder: (context) => EditVehicle());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
