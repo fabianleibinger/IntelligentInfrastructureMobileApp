@@ -22,7 +22,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.main);
+        Routes.park);
   }
 
   static createParkInCancelDialog(BuildContext context) {
@@ -31,7 +31,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.main);
+        Routes.park);
   }
 
   static createParkOutFinishedDialog(BuildContext context) {

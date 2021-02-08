@@ -1,36 +1,59 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/enum/chargingprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ChargingProviderDialog {
-  static createChargingProviderDialog(BuildContext context) {
-    return Constants.createConfirmationDialog(
-        context,
-        AppLocalizations.of(context).chargingProviderDialogTitle,
-        AppLocalizations.of(context).settingsSaveButton,
-        getRadioListTiles(context));
+class ChargingProviderDialog extends StatefulWidget {
+  @override
+  _ChargingProviderDialogState createState() => _ChargingProviderDialogState();
+}
+
+class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
+  List<ChargingProvider> _providers = ChargingProvider.values;
+  static ChargingProvider _selectedRadioTile;
+
+  @override
+  initState() {
+    super.initState();
+    //TODO set vehicle provider to car provider
+    for (int i = 0; i < _providers.length; i++) {
+
+    }
   }
 
-  static getRadioListTiles(BuildContext context) {
+  setSelectedRadioTile(ChargingProvider value) {
+    setState(() {
+      _selectedRadioTile = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Constants.getConfirmationDialog(
+        context,
+        AppLocalizations
+            .of(context)
+            .chargingProviderDialogTitle,
+        AppLocalizations
+            .of(context)
+            .settingsSaveButton,
+        _getRadioListTiles(context));
+  }
+
+  _getRadioListTiles(BuildContext context) {
     return Container(
       child: Column(
         children: [
-          RadioListTile(
-              title: Text(AppLocalizations.of(context)
-                  .chargingProviderDialogTextAutomatic),
-              value: 1,
-              groupValue: 1,
-              onChanged: (_) {}),
-          for (int i = 0;
-              i < currentParkingGarage.chargingProviders.length;
-              i++)
-            RadioListTile(
-                title: Text(currentParkingGarage.chargingProviders[i]),
-                value: 0,
-                groupValue: 1,
-                onChanged: (_) {})
+          for (int i = 0; i < _providers.length; i++)
+            RadioListTile<ChargingProvider>(
+                title: Text(_providers[i].toShortString()),
+                value: _providers[i],
+                groupValue: _selectedRadioTile,
+                onChanged: (value) {
+                  setSelectedRadioTile(value);
+                })
         ],
       ),
     );

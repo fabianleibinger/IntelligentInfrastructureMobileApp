@@ -7,13 +7,11 @@ import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
-final List<String> chargingProviders = ['eon', 'EnBW'];
 final currentParkingGarage = ParkingGarage(
     'Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage,
     79,
-    'assets/parkgarage-fasanengarten.jpg',
-    chargingProviders);
+    'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 220;
 bool _charge = false;
@@ -44,7 +42,11 @@ class _MainPageState extends State<MainPage> {
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            ChargingProviderDialog.createChargingProviderDialog(context);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return ChargingProviderDialog();
+                });
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),
         ),

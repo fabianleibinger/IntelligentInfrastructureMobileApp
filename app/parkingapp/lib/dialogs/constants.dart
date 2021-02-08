@@ -67,13 +67,11 @@ class Constants {
         });
   }
 
-  //creates a confirmation dialog with title and one button,
+  //returns a confirmation dialog with title and one button,
   //[tiles] Widget defines the content.
-  static createConfirmationDialog(BuildContext context, String title,
+  static getConfirmationDialog(BuildContext context, String title,
       String confirmButtonText, Widget tiles) {
-    return showDialog(
-        context: context,
-        builder: (context) {
+
           return AlertDialog(
             title: Text(title),
             content: Column(
@@ -84,7 +82,7 @@ class Constants {
               createBackFlatButton(context, green, confirmButtonText),
             ],
           );
-        });
+
   }
 
   //creates a button that closes a dialog

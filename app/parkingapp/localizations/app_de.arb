@@ -7,10 +7,6 @@
     "@chargingProviderDialogTitle": {
         "description": "title in charging provider dialog"
     },
-    "chargingProviderDialogTextAutomatic": "Automatisch",
-    "@chargingProviderDialogTextAutomatic": {
-        "description": "first tile in content of charging provider content"
-    },
     "drawerHeader": "Parkhaus",
     "@drawerHeader": {
         "description": "Text shown in header of the drawer"
