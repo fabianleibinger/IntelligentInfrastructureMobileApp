@@ -66,6 +66,9 @@ class _VehicleFormState extends State<VehicleForm> {
           RaisedButton(
             child: Text('Fahrzeug hinzufügen'),
             onPressed: () => onPressed,
+            highlightColor: Theme.of(context).accentColor,
+            color: Theme.of(context).primaryColor,
+            colorBrightness: Theme.of(context).primaryColorBrightness,
           )
         ],
       ),
