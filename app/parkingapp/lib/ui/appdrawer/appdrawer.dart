@@ -100,15 +100,27 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       //build vehicles Column
       //TODO Sort list
       List<ListTile> listTiles = [];
+      //this sometimes seems to fail with
+      /*The following NoSuchMethodError was thrown building BlocBuilder<VehicleBloc, List<Vehicle>>(dirty, dependencies: [MediaQuery, _LocalizationsScope-[GlobalKey#55074]], state: _BlocBuilderBaseState<VehicleBloc, List<Vehicle>>#f9ab8):
+      The getter 'name' was called on null.
+      Receiver: null
+      Tried calling: name
+
+      The relevant error-causing widget was
+      BlocBuilder<VehicleBloc, List<Vehicle>>
+      package:parkingapp/…/mainpage/mainpage.dart:62
+      When the exception was thrown, this was the stack
+      #0      Object.noSuchMethod (dart:core-patch/object_patch.dart:51:5)
+      #1      _MainPageState.build.<anonymous closure>
+      package:parkingapp/…/mainpage/mainpage.dart:77
+      #2      BlocBuilder.build
+      package:flutter_bloc/src/bloc_builder.dart:93
+      #3      _BlocBuilderBaseState.build
+      package:flutter_bloc/src/bloc_builder.dart:153
+      #4      StatefulElement.build
+      */
       for (Vehicle vehicle in vehicleList) {
-        //console logging
-        print('AppDrawer generateVehicles: Name: ' +
-            vehicle.name +
-            ' licensePlate: ' +
-            vehicle.licensePlate +
-            ' inAppKey: ' +
-            vehicle.inAppKey);
-        listTiles.add(generateTile(context, currentDrawer, Routes.main,
+        listTiles.add(generateTile(context, currentDrawer, vehicle.inAppKey,
             vehicle.name, Icons.directions_car));
       }
       return Column(
@@ -120,6 +132,10 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
 
 // this manages the highlighted item in the drawer.
 class DrawerStateInfo with ChangeNotifier {
+  // set initial drawer state
+  //if not provided drawer will only highlight after the first interaction with the drawer
+  DrawerStateInfo([this._currentDrawer]);
+
   String _currentDrawer;
   String get getCurrentDrawer => _currentDrawer;
 

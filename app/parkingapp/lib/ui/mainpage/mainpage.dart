@@ -12,6 +12,7 @@ import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 
 Vehicle currentVehicle = LoadableVehicle(
     Utility.generateKey(),
@@ -34,14 +35,18 @@ final currentParkingGarage = ParkingGarage(
     79,
     'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
-final bottomMargin = 220;
-bool _charge = false;
+final bottomMargin = 80;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
-  final String apiKey;
+  //final String apiKey;
+  String carInAppKey;
 
-  const MainPage({Key key, this.apiKey}) : super(key: key);
+  //const MainPage({Key key, this.apiKey}) : super(key: key);
+  MainPage(String carInAppKey) {
+    this.carInAppKey = carInAppKey;
+    print('Vehicle page: carInAppKey: ' + this.carInAppKey);
+  }
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -65,80 +70,129 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO generate from vehicle
-    List<String> _properties = [
-      AppLocalizations.of(context).mainPageAvailableSpaces +
-          currentParkingGarage.freeParkingSpots.toString(),
-      AppLocalizations.of(context).mainPageCarPreferences +
-          AppLocalizations.of(context).textNone
-    ];
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Vehicle', style: whiteHeader),
-        ),
-        drawer: AppDrawer(Routes.main),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            DatabaseProvider.db.clear();
-          },
-          label: Text(AppLocalizations.of(context).actionButtonPark),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: Column(
-          children: [
-            Container(
-              constraints: BoxConstraints(
-                  //TODO Use usable screen area instead of screen size
-                  maxHeight: MediaQuery.of(context).size.height - bottomMargin),
-              child: Card(
-                margin: EdgeInsets.all(0),
-                elevation: 10,
-                clipBehavior: Clip.antiAlias,
-                child: Column(
-                  children: [
-                    ListTile(
-                      //leading: Icon(Icons.location_on),
-                      title: Text(currentParkingGarage.name),
-                      subtitle: Text(currentParkingGarage.type.toShortString()),
-                    ),
-                    Container(
-                      height: parkingGarageImageHeight.toDouble(),
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage(currentParkingGarage.image),
-                        fit: BoxFit.cover,
-                      )),
-                    ),
-                    Flexible(
-                      child: ListView(
-                        shrinkWrap: true,
-                        children: buildElements(_properties),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+    return BlocBuilder<VehicleBloc, List<Vehicle>>(
+      buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
+        if (previous.length != current.length)
+          return true;
+        else
+          return false;
+      },
+      builder: (context, vehicleList) {
+        //get vehicle that shall be used from the list of vehicles
+        Vehicle vehicle;
+        for (Vehicle currentVehicle in vehicleList) {
+          if (currentVehicle.inAppKey == widget.carInAppKey)
+            vehicle = currentVehicle;
+        }
+        print('MainPage: vehicle: ' +
+            vehicle.name +
+            ' license plate: ' +
+            vehicle.licensePlate);
+        return Scaffold(
+            appBar: AppBar(
+              title: Text(vehicle.name, style: whiteHeader),
             ),
-          ],
-        ));
+            drawer: AppDrawer(Routes.main),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () {
+                DatabaseProvider.db.clear();
+              },
+              label: Text(AppLocalizations.of(context).actionButtonPark),
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            body: Column(
+              children: [
+                Expanded(
+                  child: Card(
+                    margin: EdgeInsets.all(0),
+                    elevation: 10,
+                    clipBehavior: Clip.antiAlias,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          //leading: Icon(Icons.location_on),
+                          title: Text(currentParkingGarage.name),
+                          subtitle:
+                              Text(currentParkingGarage.type.toShortString()),
+                        ),
+                        Container(
+                          height: parkingGarageImageHeight.toDouble(),
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                            image: AssetImage(currentParkingGarage.image),
+                            fit: BoxFit.cover,
+                          )),
+                        ),
+                        ListView(
+                          shrinkWrap: true,
+                          children: buildCarToggles(vehicle),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).padding.bottom + bottomMargin,
+                )
+              ],
+            ));
+      },
+    );
   }
 
-  List<Widget> buildElements(List<String> elements) {
+  List<Widget> buildCarToggles(Vehicle vehicle) {
+    // car park specific items
+    List<String> _properties = [
+      AppLocalizations.of(context).mainPageAvailableSpaces +
+          currentParkingGarage.freeParkingSpots.toString()
+    ];
+
     List<Widget> widgets = [];
-    widgets.addAll(elements
+    widgets.addAll(_properties
         .map((element) => ListTile(
               title: Text(element),
             ))
         .toList());
+
+    // vehicle specific toggles
+    widgets.add(SwitchListTile(
+      title: Text(AppLocalizations.of(context).nearExitPrefference),
+      onChanged: (bool newValue) {
+        setState(() => vehicle.nearExitPreference = newValue);
+        DatabaseProvider.db.update(vehicle);
+      },
+      value: vehicle.nearExitPreference,
+    ));
+
+    widgets.add(SwitchListTile(
+      title: Text(AppLocalizations.of(context).parkingCard),
+      onChanged: (bool newValue) {
+        setState(() => vehicle.parkingCard = newValue);
+        DatabaseProvider.db.update(vehicle);
+      },
+      value: vehicle.parkingCard,
+    ));
+
+    // electric vehicle toggles
+    if (vehicle.runtimeType == LoadableVehicle)
+      widgets.addAll(addElectricVehicleTiles(vehicle));
+
+    return widgets;
+  }
+
+  List<Widget> addElectricVehicleTiles(LoadableVehicle vehicle) {
+    List<Widget> widgets = [];
     widgets.add(SwitchListTile(
       title:
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          _charge = newValue;
+          vehicle.doCharge = newValue;
+          DatabaseProvider.db.update(vehicle);
         });
       },
-      value: _charge,
+      value: vehicle.doCharge,
     ));
     return widgets;
   }

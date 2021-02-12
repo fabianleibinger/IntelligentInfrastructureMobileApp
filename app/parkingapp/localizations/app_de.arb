@@ -128,5 +128,9 @@
     "vehicleQRDialogCancelButton": "Nein",
     "@vehicleQRDialogCancelButton": {
         "description": "Cancel button text in vehicle qr dialog"
-    }
+    }, 
+    "nearExitPrefference": "Nah am Ausgang parken",
+    "@nearExitPrefference": {},
+    "parkingCard": "Parkkarte",
+    "@parkingCard":{}
 }
