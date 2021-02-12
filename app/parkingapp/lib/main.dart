@@ -55,11 +55,18 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VehicleBloc>(
-        create: (context) {
+    //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
+    return MultiProvider(
+      providers: [
+        BlocProvider<VehicleBloc>(create: (context) {
           return VehicleBloc(List<Vehicle>());
-        },
-        child: getMaterialApp(MainPage()));
+        }),
+        ListenableProvider(
+          create: (_) => DrawerStateInfo(),
+        )
+      ],
+      child: getMaterialApp(MainPage()),
+    );
   }
 }
 /*
