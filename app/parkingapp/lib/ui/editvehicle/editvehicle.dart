@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/standardvehicle.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appDrawer.dart';
+import 'package:parkingapp/util/utility.dart';
 
 class EditVehicle extends StatelessWidget {
   static const String routeName = '/editVehicle';
@@ -29,7 +32,7 @@ class _VehicleFormState extends State<VehicleForm> {
   //global key for form validation
   final _formKey = GlobalKey<FormState>();
 
-  bool _vehicleChargeable = false;
+  bool _vehicleChargeable = false, _parkNearExit = false, _parkingCard = false;
   String _name, _licensePlate;
 
   @override
@@ -55,11 +58,27 @@ class _VehicleFormState extends State<VehicleForm> {
             ),
             //when this is toggled add the electric toggles
             SwitchListTile(
-              title: Text('chargeable'),
+              title: Text('Fahrzeug ist ladefähig'),
               onChanged: (bool newValue) =>
                   setState(() => _vehicleChargeable = newValue),
               value: _vehicleChargeable,
             ),
+            //generic toggles for all vehicles
+            Divider(),
+            SwitchListTile(
+              title: Text('Nah am Ausgang Parken'),
+              onChanged: (bool newValue) =>
+                  setState(() => _parkNearExit = newValue),
+              value: _parkNearExit,
+            ),
+            Divider(),
+            SwitchListTile(
+              title: Text('Parkkarte'),
+              onChanged: (bool newValue) =>
+                  setState(() => _parkingCard = newValue),
+              value: _parkingCard,
+            ),
+            //end of form
             RaisedButton(
               child: Text('Fahrzeug hinzufügen'),
               onPressed: () => onPressed(),
@@ -79,10 +98,60 @@ class _VehicleFormState extends State<VehicleForm> {
     return str.isEmpty ? "Erforderlich" : null;
   }
 
+  //validate the form
   void onPressed() {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
+
+      // create the vehicle that shall be added to the database
+      Vehicle vehicle;
+      if (_vehicleChargeable) {
+        vehicle = LoadableVehicle(
+            Utility.generateKey(),
+            _name,
+            _licensePlate,
+            null,
+            null,
+            null,
+            null,
+            _parkNearExit,
+            _parkingCard,
+            null,
+            null,
+            null,
+            null,
+            null);
+        /*
+       --- handly with VehiclesDimensionDialog 
+      this.height,
+      this.width,
+      this.length,
+      this.turningCycle,
+      ----
+      this.nearExitPreference,
+      this.parkingCard,
+      --- Electric specific
+      Extra toggle that allows for charge by default: this.doCharge,
+      this.chargingProvider,
+      this.chargeTimeBegin,
+      this.chargeTimeEnd,
+      this.charge*/
+      } else {
+        vehicle = StandardVehicle(Utility.generateKey(), _name, _licensePlate,
+            null, null, null, null, _parkNearExit, _parkingCard);
+        /*this.inAppKey,
+      this.name,
+      this.licensePlate,
+
+      this.height,
+      this.width,
+      this.length,
+      this.turningCycle,
+
+      this.nearExitPreference,
+      this.parkingCard*/
+      }
     }
   }
 }
