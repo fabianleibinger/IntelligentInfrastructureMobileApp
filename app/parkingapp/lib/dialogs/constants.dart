@@ -69,20 +69,19 @@ class Constants {
 
   //returns a confirmation dialog with title and one button,
   //[tiles] Widget defines the content.
+  //this is the basic dialog template for this app
   static getConfirmationDialog(BuildContext context, String title,
       String confirmButtonText, Widget tiles) {
-
-          return AlertDialog(
-            title: Text(title),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [tiles],
-            ),
-            actions: [
-              createBackFlatButton(context, green, confirmButtonText),
-            ],
-          );
-
+    return AlertDialog(
+      title: Text(title),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [tiles],
+      ),
+      actions: [
+        createBackFlatButton(context, green, confirmButtonText),
+      ],
+    );
   }
 
   //creates a button that closes a dialog

@@ -19,9 +19,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   void initState() {
     super.initState();
     //TODO set vehicle provider to car provider
-    for (int i = 0; i < _providers.length; i++) {
-
-    }
+    for (int i = 0; i < _providers.length; i++) {}
   }
 
   //saves the selected tile
