@@ -2,12 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/util/utility.dart';
 
+Vehicle currentVehicle = LoadableVehicle(
+    Utility.generateKey(),
+    "Tesla Model 3",
+    "KA-ST 930 E",
+    93.0,
+    93.4,
+    29.3,
+    84.0,
+    true,
+    false,
+    true,
+    "EnBW",
+    DateTime.now(),
+    DateTime.now(),
+    "45");
 final currentParkingGarage = ParkingGarage(
     'Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage,
