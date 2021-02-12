@@ -77,6 +77,18 @@
     "@parkDialogParkOutButton": {
         "description": "Text for park out button in park dialog"
     },
+    "parkPreferencesDialogTitle": "Parkpräferenzen",
+    "@parkPreferencesDialogTitle": {
+        "description": "Park preferences title in park preferences dialog"
+    },
+    "parkPreferencesDialogNearExitPreference": "Nahe am Ausgang",
+    "@parkPreferencesDialogNearExitPreference": {
+        "description": "Text for near exit preference in park preferences dialog"
+    },
+    "parkPreferencesDialogParkingCard": "Dauerparkkarte",
+    "@parkPreferencesDialogParkingCard": {
+        "description": "Text for parking card in park preferences dialog"
+    },
     "settingsSaveButton": "SPEICHERN",
     "@settingsSaveButton": {
         "description": "Text for save button"

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 
+//defines the park preferences dialog
 class ParkPreferencesDialog extends StatefulWidget {
   ParkPreferencesDialog({Key key}) : super(key: key);
 
@@ -43,7 +44,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
         context,
-        'Parkpräferenzen',
+        AppLocalizations.of(context).parkPreferencesDialogTitle,
         AppLocalizations.of(context).settingsSaveButton,
         _getCheckBoxes(context));
   }
@@ -59,7 +60,8 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
                 onChanged: (value) {
                   _setNearExitCheckboxValue(value);
                 }),
-            Text('Nahe am Ausgang')
+            Text(AppLocalizations.of(context)
+                .parkPreferencesDialogNearExitPreference)
           ],
         ),
         Row(
@@ -69,7 +71,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
                 onChanged: (value) {
                   _setParkingCardCheckboxValue(value);
                 }),
-            Text('Dauerparkkarte')
+            Text(AppLocalizations.of(context).parkPreferencesDialogParkingCard)
           ],
         )
       ],
