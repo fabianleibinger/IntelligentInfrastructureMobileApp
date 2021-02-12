@@ -5,6 +5,7 @@ import threading
 
 from flask import Flask, jsonify, request
 from std_msgs.msg import String
+from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
 
 
 ############################################################################
@@ -27,6 +28,16 @@ ros_root_node = 'parking_node'
 threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
 ros_message_parking_spots = 'parkingSpots'
 pubParkingSpots = rospy.Publisher(ros_message_parking_spots, String, queue_size=10)
+
+
+def retrieve_free_parking_spots_from_pms():
+    rospy.wait_for_service('capacity_request')
+    try:
+        request_capacity = rospy.ServiceProxy('handle_request_capacity', CapacityRequest)
+        current_capacity = request_capacity
+        print(current_capacity)
+    except rospy.ServiceException as exception:
+        print(exception)
 
 
 def request_free_parking_spots_from_pms(electric):
@@ -66,7 +77,7 @@ def test_extract_content_from_json():
 
 @app.route('/freeParkingSpots')
 def get_normal_parking_spots():
-    request_free_parking_spots_from_pms(False)
+    retrieve_free_parking_spots_from_pms()
     return '42'
 
 
