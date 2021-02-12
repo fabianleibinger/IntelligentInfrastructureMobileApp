@@ -5,7 +5,19 @@
     },
     "chargingProviderDialogTitle": "Ladeanbieter",
     "@chargingProviderDialogTitle": {
-        "description": "title in charging provider dialog"
+        "description": "Title in charging provider dialog"
+    },
+    "chargeTimeDialogTitle": "Ladeuhrzeit",
+    "@chargeTimeDialogTitle": {
+        "description": "Title in charge time dialog"
+    },
+    "chargeTimeDialogSwitchListTileTitle": "Ganztägig",
+    "@chargeTimeDialogSwitchListTileTitle": {
+        "description": "Title of switch list tile in charge time dialog"
+    },
+    "chargeTimeDialogSwitchListTileSubtitle": "Fahrzeug ganztägig laden",
+    "@chargeTimeDialogSwitchListTileSubtitle": {
+        "description": "Subtitle of switch list tile in charge time dialog"
     },
     "drawerHeader": "Parkhaus",
     "@drawerHeader": {

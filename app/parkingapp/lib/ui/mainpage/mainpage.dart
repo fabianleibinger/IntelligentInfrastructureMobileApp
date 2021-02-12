@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
@@ -64,7 +65,7 @@ class _MainPageState extends State<MainPage> {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return ParkPreferencesDialog();
+                  return ChargeTimeDialog();
                 });
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),

@@ -1,8 +1,6 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/global.dart';
 import 'constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChargeTimeDialog extends StatefulWidget {
   ChargeTimeDialog({Key key}) : super(key: key);
@@ -12,33 +10,46 @@ class ChargeTimeDialog extends StatefulWidget {
 }
 
 class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
+  bool _chargeAllDay;
+
+  //sets the initial values
   @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _chargeAllDay = false;
   }
 
-  contentBox(context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[]),
-        ),
+  //switches current vehicles value and listTile value
+  void _setSwitchListTileValue(bool value) {
+    setState(() {
+      _chargeAllDay = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Constants.getConfirmationDialog(
+        context,
+        AppLocalizations.of(context).chargeTimeDialogTitle,
+        AppLocalizations.of(context).settingsSaveButton,
+        _getBody(context));
+  }
+
+  //returns one switch list tile and two clock widgets
+  _getBody(BuildContext context) {
+    return Column(
+      children: [
+        SwitchListTile(
+            title: Text(AppLocalizations.of(context)
+                .chargeTimeDialogSwitchListTileTitle),
+            subtitle: Text(AppLocalizations.of(context)
+                .chargeTimeDialogSwitchListTileSubtitle),
+            value: _chargeAllDay,
+            onChanged: (value) {
+              _setSwitchListTileValue(value);
+            }),
+        Divider(),
       ],
     );
   }
