@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
@@ -45,7 +46,7 @@ class _MainPageState extends State<MainPage> {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return ChargingProviderDialog();
+                  return ParkPreferencesDialog();
                 });
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),

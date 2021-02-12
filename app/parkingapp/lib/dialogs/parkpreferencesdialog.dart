@@ -1,7 +1,7 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
 import 'constants.dart';
 
 class ParkPreferencesDialog extends StatefulWidget {
@@ -12,33 +12,64 @@ class ParkPreferencesDialog extends StatefulWidget {
 }
 
 class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
+  static bool _nearExitCheckBox;
+  static bool _parkingCardCheckBox;
+
+
+
+  //sets the initial check box values
   @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _nearExitCheckBox = false;
+    _parkingCardCheckBox = false;
   }
 
-  contentBox(context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[]),
+  void _setNearExitCheckboxValue(bool value) {
+    setState(() {
+      _nearExitCheckBox = value;
+    });
+  }
+
+  void _setParkingCardCheckboxValue(bool value) {
+    setState(() {
+      _parkingCardCheckBox = value;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Constants.getConfirmationDialog(
+        context,
+        'Parkpräferenzen',
+        AppLocalizations.of(context).settingsSaveButton,
+        _getCheckBoxes(context));
+  }
+
+  _getCheckBoxes(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Checkbox(
+                value: _nearExitCheckBox,
+                onChanged: (value) {
+                  _setNearExitCheckboxValue(value);
+                }),
+            Text('Nahe am Ausgang')
+          ],
         ),
+        Row(
+          children: [
+            Checkbox(
+                value: _parkingCardCheckBox,
+                onChanged: (value) {
+                  _setParkingCardCheckboxValue(value);
+                }),
+            Text('Dauerparkkarte')
+          ],
+        )
       ],
     );
   }

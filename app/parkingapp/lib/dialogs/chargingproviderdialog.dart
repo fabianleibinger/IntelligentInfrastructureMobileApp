@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
 import 'constants.dart';
@@ -16,14 +15,14 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
 
   //sets the initially selected tile
   @override
-  initState() {
+  void initState() {
     super.initState();
     //TODO set vehicle provider to car provider
     for (int i = 0; i < _providers.length; i++) {}
   }
 
   //saves the selected tile
-  setSelectedRadioTile(ChargingProvider value) {
+  void _setSelectedRadioTile(ChargingProvider value) {
     setState(() {
       _selectedRadioTile = value;
     });
@@ -48,7 +47,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
               value: _providers[i],
               groupValue: _selectedRadioTile,
               onChanged: (value) {
-                setSelectedRadioTile(value);
+                _setSelectedRadioTile(value);
               })
       ],
     );
