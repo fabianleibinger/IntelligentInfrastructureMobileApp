@@ -35,9 +35,9 @@ class _VehicleFormState extends State<VehicleForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: Padding(
         padding: EdgeInsets.all(10),
-        key: _formKey,
         child: Column(
           children: [
             TextFormField(
