@@ -1,6 +1,4 @@
-import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/ui/parkpage/parkpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';

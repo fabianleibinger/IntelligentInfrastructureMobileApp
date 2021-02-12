@@ -1,10 +1,15 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/routes/routes.dart';
 
-class AppDrawer extends StatelessWidget {
+class AppDrawer extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,20 +24,16 @@ class AppDrawer extends StatelessWidget {
                 style: blackHeader),
           ),
           ListTile(
-              leading: Icon(Icons.message),
-              title: Text('Messages'),
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.main)),
+            leading: Icon(Icons.message),
+            title: Text('Messages'),
+          ),
           ListTile(
-              leading: Icon(Icons.directions_car),
-              title: Text(AppLocalizations.of(context).drawerVehicles),
-              onTap: () =>
-                  Navigator.pushReplacementNamed(context, Routes.vehicle)),
+            leading: Icon(Icons.account_circle),
+            title: Text('Profile'),
+          ),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(AppLocalizations.of(context).drawerSettings),
-            onTap: () =>
-                Navigator.pushReplacementNamed(context, Routes.settings),
           ),
         ],
       ),

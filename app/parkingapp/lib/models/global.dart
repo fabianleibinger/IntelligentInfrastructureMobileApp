@@ -4,6 +4,7 @@ Color black = Colors.black;
 Color blue = Color(0xFF0E2356);
 Color green = Color(0xFF007749);
 Color grey = Color(0xFF807F84);
+Color lightgrey = Color(0xFFDEDEDE);
 Color lightGreen = Color(0xFF2FAE7A);
 Color red = Color(0xFFBF1E00);
 Color white = Colors.white;
