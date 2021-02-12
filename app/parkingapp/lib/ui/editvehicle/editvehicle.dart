@@ -35,42 +35,39 @@ class _VehicleFormState extends State<VehicleForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
-      child: Column(
+      child: Padding(
+        padding: EdgeInsets.all(10),
         key: _formKey,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextFormField(
+        child: Column(
+          children: [
+            TextFormField(
               autocorrect: false,
               decoration: InputDecoration(labelText: 'Fahrzeugname'),
               validator: (str) {},
               onSaved: (str) => _name = str,
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(10),
-            child: TextFormField(
+            TextFormField(
               autocorrect: false,
               decoration: InputDecoration(labelText: 'KFZ-Kennzeichen'),
               validator: (str) {},
               onSaved: (str) => _licensePlate = str,
               inputFormatters: [UpperCaseTextFormatter()],
             ),
-          ),
-          SwitchListTile(
-            title: Text('chargeable'),
-            onChanged: (bool newValue) =>
-                setState(() => _vehicleChargeable = newValue),
-            value: _vehicleChargeable,
-          ),
-          RaisedButton(
-            child: Text('Fahrzeug hinzufügen'),
-            onPressed: () => onPressed,
-            highlightColor: Theme.of(context).accentColor,
-            color: Theme.of(context).primaryColor,
-            colorBrightness: Theme.of(context).primaryColorBrightness,
-          )
-        ],
+            SwitchListTile(
+              title: Text('chargeable'),
+              onChanged: (bool newValue) =>
+                  setState(() => _vehicleChargeable = newValue),
+              value: _vehicleChargeable,
+            ),
+            RaisedButton(
+              child: Text('Fahrzeug hinzufügen'),
+              onPressed: () => onPressed,
+              highlightColor: Theme.of(context).accentColor,
+              color: Theme.of(context).primaryColor,
+              colorBrightness: Theme.of(context).primaryColorBrightness,
+            )
+          ],
+        ),
       ),
     );
   }
