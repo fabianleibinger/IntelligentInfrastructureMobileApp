@@ -43,16 +43,17 @@ class _VehicleFormState extends State<VehicleForm> {
             TextFormField(
               autocorrect: false,
               decoration: InputDecoration(labelText: 'Fahrzeugname'),
-              validator: (str) {},
+              validator: (str) => requiredValue(str),
               onSaved: (str) => _name = str,
             ),
             TextFormField(
               autocorrect: false,
               decoration: InputDecoration(labelText: 'KFZ-Kennzeichen'),
-              validator: (str) {},
+              validator: (str) => requiredValue(str),
               onSaved: (str) => _licensePlate = str,
               inputFormatters: [UpperCaseTextFormatter()],
             ),
+            //when this is toggled add the electric toggles
             SwitchListTile(
               title: Text('chargeable'),
               onChanged: (bool newValue) =>
@@ -70,6 +71,10 @@ class _VehicleFormState extends State<VehicleForm> {
         ),
       ),
     );
+  }
+
+  String requiredValue(String str) {
+    return str.isEmpty ? "Erforderlich" : null;
   }
 
   void onPressed() {
