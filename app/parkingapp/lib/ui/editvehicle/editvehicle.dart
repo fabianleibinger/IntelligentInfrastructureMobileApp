@@ -62,7 +62,7 @@ class _VehicleFormState extends State<VehicleForm> {
             ),
             RaisedButton(
               child: Text('Fahrzeug hinzufügen'),
-              onPressed: () => onPressed,
+              onPressed: () => onPressed(),
               highlightColor: Theme.of(context).accentColor,
               color: Theme.of(context).primaryColor,
               colorBrightness: Theme.of(context).primaryColorBrightness,
@@ -73,19 +73,21 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
+  // returns a string if no text is provided, otherwise null
+  // if null is returned the validator accepts the string
   String requiredValue(String str) {
     return str.isEmpty ? "Erforderlich" : null;
   }
 
   void onPressed() {
     var form = _formKey.currentState;
-
     if (form.validate()) {
       form.save();
     }
   }
 }
 
+//format text to uppercase
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
