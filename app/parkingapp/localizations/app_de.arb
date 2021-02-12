@@ -2,7 +2,23 @@
     "appTitle": "Parkhaus App",
     "@appTitle": {
         "description": "Application Title shown on homescreen"
-      },
+    },
+    "chargingProviderDialogTitle": "Ladeanbieter",
+    "@chargingProviderDialogTitle": {
+        "description": "Title in charging provider dialog"
+    },
+    "chargeTimeDialogTitle": "Ladeuhrzeit",
+    "@chargeTimeDialogTitle": {
+        "description": "Title in charge time dialog"
+    },
+    "chargeTimeDialogSwitchListTileTitle": "Ganztägig",
+    "@chargeTimeDialogSwitchListTileTitle": {
+        "description": "Title of switch list tile in charge time dialog"
+    },
+    "chargeTimeDialogSwitchListTileSubtitle": "Fahrzeug ganztägig laden",
+    "@chargeTimeDialogSwitchListTileSubtitle": {
+        "description": "Subtitle of switch list tile in charge time dialog"
+    },
     "drawerHeader": "Parkhaus",
     "@drawerHeader": {
         "description": "Text shown in header of the drawer"
@@ -10,6 +26,10 @@
     "drawerSettings": "Einstellungen",
     "@drawerSettings": {
         "description": "Settings text in drawer"
+    },
+    "drawerVehicles": "Fahrzeuge",
+    "@drawerVehicles": {
+        "description": "Vehicles text in drawer"
     },
     "actionButtonPark": "Fahrzeug einparken",
     "@actionButtonPark": {
@@ -29,8 +49,76 @@
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
     },
-    "drawerVehicles": "Fahrzeuge",
-    "@drawerVehicles": {
-        "description": "Vehicles text in drawer"
+    "parkDialogBackButton": "ZURÜCK",
+    "@parkDialogBackButton": {
+        "description": "Text for back button in park dialog"
+    },
+    "parkDialogCancelButton": "ABBRECHEN",
+    "@parkDialogCancelButton": {
+        "description": "Text for cancel button in park dialog"
+    },
+    "parkDialogFinishedButton": "FERTIG",
+    "@parkDialogFinishedButton": {
+        "description": "Text for ready button in park dialog"
+    },
+    "parkDialogParkInContent": "Bitte entfernen Sie alle Wertgegenstände aus dem Fahrzeug. Achten Sie darauf, dass sich keine Gegenstände mehr im unmittelbaren Umfeld des Fahrzeugs befinden.\n\nBitte verlassen Sie nun die Parkzone.",
+    "@parkDialogParkInContent": {
+        "description": "Text body in park dialog"
+    },
+    "parkDialogParkOutContent": "Sind Sie sicher, dass Sie Ihr Fahrzeug ausparken möchten? \n\nMit Betätigen des Buttons Ausparken wird Ihr Fahrzeug zurück an die Übergabestelle gefahren.",
+    "@parkDialogParkOutContent": {
+        "description": "Text body for park out in park dialog"
+    },
+    "parkDialogParkCancelContent": "Sind Sie sicher, dass Sie den Einparkvorgang abbrechen möchten? \n\nMit Betätigen des Buttons Ausparken wird Ihr Fahrzeug an die Übergabestelle gefahren.",
+    "@parkDialogParkCancelContent": {
+        "description": "Text body for park cancel in park dialog"
+    },
+    "parkDialogParkOutFinishedContent": "Ihr Fahrzeug wurde erfolgreich ausgeparkt und steht nun in der Übergabezone bereit!",
+    "@parkDialogParkOutFinishedContent": {
+        "description": "Text body for park out finished in park dialog"
+    },
+    "parkDialogParkInTitle": "Disclaimer",
+    "@parkDialogParkInTitle": {
+        "description": "Park in title text in park dialog"
+    },
+    "parkDialogParkInButton": "EINPARKEN",
+    "@parkDialogParkInButton": {
+        "description": "Text for park in button in park dialog"
+    },
+    "parkDialogParkOutButton": "AUSPARKEN",
+    "@parkDialogParkOutButton": {
+        "description": "Text for park out button in park dialog"
+    },
+    "parkPreferencesDialogTitle": "Parkpräferenzen",
+    "@parkPreferencesDialogTitle": {
+        "description": "Park preferences title in park preferences dialog"
+    },
+    "parkPreferencesDialogNearExitPreference": "Nahe am Ausgang",
+    "@parkPreferencesDialogNearExitPreference": {
+        "description": "Text for near exit preference in park preferences dialog"
+    },
+    "parkPreferencesDialogParkingCard": "Dauerparkkarte",
+    "@parkPreferencesDialogParkingCard": {
+        "description": "Text for parking card in park preferences dialog"
+    },
+    "settingsSaveButton": "SPEICHERN",
+    "@settingsSaveButton": {
+        "description": "Text for save button"
+    },
+    "vehicleQRDialogTitle": "Auf mehreren Geräten verwenden?",
+    "@vehicleQRDialogTitle": {
+        "description": "Title in vehicle QR dialog"
+    },
+    "vehicleQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / sdie Fahrzeuge haben?",
+    "@vehicleQRDialogContent": {
+        "description": "Text body in vehicle QR dialog"
+    },
+    "vehicleQRDialogConfirmButton": "Ja",
+    "@vehicleQRDialogConfirmButton": {
+        "description": "Confirm button text in vehicle qr dialog"
+    },
+    "vehicleQRDialogCancelButton": "Nein",
+    "@vehicleQRDialogCancelButton": {
+        "description": "Cancel button text in vehicle qr dialog"
     }
 }
