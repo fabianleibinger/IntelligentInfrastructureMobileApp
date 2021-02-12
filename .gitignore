@@ -195,3 +195,4 @@ dmypy.json
 *.ipr
 *.iws
 .idea/
+.DS_Store
