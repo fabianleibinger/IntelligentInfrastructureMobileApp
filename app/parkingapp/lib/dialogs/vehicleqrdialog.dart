@@ -1,45 +1,18 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class VehicleQRDialog extends StatefulWidget {
-  VehicleQRDialog({Key key}) : super(key: key);
-
-  @override
-  _VehicleQRDialogState createState() => _VehicleQRDialogState();
-}
-
-class _VehicleQRDialogState extends State<VehicleQRDialog> {
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
-  }
-
-  contentBox(context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[]),
-        ),
-      ],
-    );
+//defines the qr code dialog
+class VehicleQRDialog {
+  static createVehicleQRDialog(BuildContext context) {
+    //TODO update next page
+    return Constants.createAlertDialog(
+        context,
+        AppLocalizations.of(context).vehicleQRDialogTitle,
+        AppLocalizations.of(context).vehicleQRDialogContent,
+        AppLocalizations.of(context).vehicleQRDialogCancelButton,
+        AppLocalizations.of(context).vehicleQRDialogConfirmButton,
+        Routes.settings);
   }
 }

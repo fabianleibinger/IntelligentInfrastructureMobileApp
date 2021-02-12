@@ -1,28 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
-import 'package:parkingapp/dialogs/parkoutdialog.dart';
-import 'package:parkingapp/enum/parkinggaragetype.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
-import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
-import 'package:parkingapp/ui/parkpage/parkpage.dart';
+import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/util/utility.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/models/classes/loadablevehicle.dart';
 
-final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+Vehicle currentVehicle = LoadableVehicle(
+    Utility.generateKey(),
+    "Tesla Model 3",
+    "KA-ST 930 E",
+    93.0,
+    93.4,
+    29.3,
+    84.0,
+    true,
+    false,
+    true,
+    "EnBW",
+    DateTime.now(),
+    DateTime.now(),
+    "45");
+final currentParkingGarage = ParkingGarage(
+    'Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage,
+    79,
+    'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 80;
 

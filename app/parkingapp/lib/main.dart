@@ -85,7 +85,7 @@ class Main extends StatelessWidget {
           return VehicleBloc(List<Vehicle>());
         }),
         ListenableProvider(
-          create: (_) => DrawerStateInfo(),
+          create: (_) => DrawerStateInfo(Routes.vehicle),
         )
       ],
       child: getMaterialApp(Routes.vehicle),
