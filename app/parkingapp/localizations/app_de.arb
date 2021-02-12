@@ -92,5 +92,21 @@
     "settingsSaveButton": "SPEICHERN",
     "@settingsSaveButton": {
         "description": "Text for save button"
+    },
+    "vehicleQRDialogTitle": "Auf mehreren Geräten verwenden?",
+    "@vehicleQRDialogTitle": {
+        "description": "Title in vehicle QR dialog"
+    },
+    "vehicleQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / sdie Fahrzeuge haben?",
+    "@vehicleQRDialogContent": {
+        "description": "Text body in vehicle QR dialog"
+    },
+    "vehicleQRDialogConfirmButton": "Ja",
+    "@vehicleQRDialogConfirmButton": {
+        "description": "Confirm button text in vehicle qr dialog"
+    },
+    "vehicleQRDialogCancelButton": "Nein",
+    "@vehicleQRDialogCancelButton": {
+        "description": "Cancel button text in vehicle qr dialog"
     }
 }
