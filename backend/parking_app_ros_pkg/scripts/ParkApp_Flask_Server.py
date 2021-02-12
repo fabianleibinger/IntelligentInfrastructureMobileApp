@@ -33,8 +33,8 @@ pubParkingSpots = rospy.Publisher(ros_message_parking_spots, String, queue_size=
 def retrieve_free_parking_spots_from_pms():
     rospy.wait_for_service('capacity_request')
     try:
-        request_capacity = rospy.ServiceProxy('handle_request_capacity', CapacityRequest)
-        current_capacity = request_capacity
+        capacity_request = rospy.ServiceProxy('capacity_request', CapacityRequest)
+        current_capacity = capacity_request
         print(current_capacity)
     except rospy.ServiceException as exception:
         print(exception)
