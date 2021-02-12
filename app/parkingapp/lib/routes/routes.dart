@@ -7,4 +7,5 @@ class Routes {
   static const String main = MainPage.routeName;
   static const String vehicle = VehiclePage.routeName;
   static const String settings = SettingsPage.routeName;
+  static const String park = ParkPage.routeName;
 }

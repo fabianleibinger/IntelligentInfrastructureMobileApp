@@ -19,8 +19,26 @@ import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
-final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+Vehicle currentVehicle = LoadableVehicle(
+    Utility.generateKey(),
+    "Tesla Model 3",
+    "KA-ST 930 E",
+    93.0,
+    93.4,
+    29.3,
+    84.0,
+    true,
+    false,
+    true,
+    "EnBW",
+    DateTime.now(),
+    DateTime.now(),
+    "45");
+final currentParkingGarage = ParkingGarage(
+    'Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage,
+    79,
+    'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 220;
 bool _charge = false;
