@@ -216,6 +216,7 @@ class _VehicleFormState extends State<VehicleForm> {
       //addd vehicle to database
       DatabaseProvider.db.insert(vehicle).then((vehicle) =>
           BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
+      form.reset();
     }
   }
 }
