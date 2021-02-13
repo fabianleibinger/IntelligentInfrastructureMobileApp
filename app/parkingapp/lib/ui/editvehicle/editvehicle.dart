@@ -8,7 +8,7 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/appdrawer/appDrawer.dart';
+import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/util/utility.dart';
 
 class EditVehicle extends StatelessWidget {
