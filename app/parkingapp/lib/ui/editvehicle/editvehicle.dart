@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appDrawer.dart';
 import 'package:parkingapp/util/utility.dart';
@@ -165,10 +169,10 @@ class _VehicleFormState extends State<VehicleForm> {
             Utility.generateKey(),
             _name,
             _licensePlate,
-            null,
-            null,
-            null,
-            null,
+            0,
+            0,
+            0,
+            0,
             _parkNearExit,
             _parkingCard,
             _vehicleDoCharge,
@@ -195,7 +199,7 @@ class _VehicleFormState extends State<VehicleForm> {
       this.charge*/
       } else {
         vehicle = StandardVehicle(Utility.generateKey(), _name, _licensePlate,
-            null, null, null, null, _parkNearExit, _parkingCard);
+            0, 0, 0, 0, _parkNearExit, _parkingCard);
         /*this.inAppKey,
       this.name,
       this.licensePlate,
@@ -208,6 +212,10 @@ class _VehicleFormState extends State<VehicleForm> {
       this.nearExitPreference,
       this.parkingCard*/
       }
+
+      //addd vehicle to database
+      DatabaseProvider.db.insert(vehicle).then((vehicle) =>
+          BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
     }
   }
 }
