@@ -63,11 +63,40 @@ class _VehicleFormState extends State<VehicleForm> {
               inputFormatters: [UpperCaseTextFormatter()],
             ),
             //when this is toggled add the electric toggles
+            //TODO animate expand
+            //TODO move this into a seperate Form
             SwitchListTile(
               title: Text('Fahrzeug ist ladefähig'),
-              onChanged: (bool newValue) =>
-                  setState(() => _vehicleChargeable = newValue),
+              onChanged: (bool newValue) => setState(() {
+                _vehicleChargeable = newValue;
+                if (_vehicleChargeable) {
+                  _electricToggles.addAll([
+                    Divider(),
+                    SwitchListTile(
+                      title: Text('Fahrzeug standardmäßig laden'),
+                      onChanged: (bool newValue) =>
+                          setState(() => _vehicleDoCharge = newValue),
+                      value: _vehicleDoCharge,
+                    ),
+                    Divider(),
+                    ListTile(
+                      title: Text('Charge Time Begin'),
+                      onTap: () => _selectChargeBeginTime(context),
+                    ),
+                    Divider(),
+                    ListTile(
+                      title: Text('Charge End Time'),
+                      onTap: () => _selectChargeEndTime(context),
+                    )
+                  ]);
+                } else {
+                  _electricToggles.clear();
+                }
+              }),
               value: _vehicleChargeable,
+            ),
+            Column(
+              children: _electricToggles,
             ),
             //generic toggles for all vehicles
             Divider(),
@@ -98,6 +127,25 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
+  // TODO merge into one funciton
+  // select Time (used for start and end of charge)
+  void _selectChargeBeginTime(BuildContext context) async {
+    TimeOfDay timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: _chargeBegin,
+        helpText: 'Fahrzeug bevorzugt laden ab: ');
+    setState(() => _chargeBegin = timeOfDay);
+  }
+
+  // select Time (used for start and end of charge)
+  void _selectChargeEndTime(BuildContext context) async {
+    TimeOfDay timeOfDay = await showTimePicker(
+        context: context,
+        initialTime: _chargeEnd,
+        helpText: 'Fahrzeug bevorzugt laden ab: ');
+    setState(() => _chargeEnd = timeOfDay);
+  }
+
   // returns a string if no text is provided, otherwise null
   // if null is returned the validator accepts the string
   String requiredValue(String str) {
@@ -123,10 +171,12 @@ class _VehicleFormState extends State<VehicleForm> {
             null,
             _parkNearExit,
             _parkingCard,
-            null,
-            null,
-            null,
-            null,
+            _vehicleDoCharge,
+            _chargingProvider,
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day, _chargeBegin.hour, _chargeBegin.minute),
+            DateTime(DateTime.now().year, DateTime.now().month,
+                DateTime.now().day, _chargeEnd.hour, _chargeEnd.minute),
             null);
         /*
        --- handly with VehiclesDimensionDialog 
