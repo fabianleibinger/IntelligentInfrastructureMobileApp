@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
+import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/bloc/events/vehicleevent.dart';
 import 'package:parkingapp/dialogs/scanqrdialog.dart';
@@ -74,7 +75,8 @@ class _VehiclePageState extends State<VehiclePage> {
                 subtitle: Text(vehicle.licensePlate +
                     "; " +
                     vehicle.databaseId.toString()),
-                //onTap: () => showVehicleDialog(context, vehicle, index),
+                //Bloc will not be updated
+                onTap: () => DatabaseProvider.db.delete(vehicle.databaseId),
               );
             },
             itemCount: vehicleList.length);
