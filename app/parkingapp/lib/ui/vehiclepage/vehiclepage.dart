@@ -45,7 +45,7 @@ class _VehiclePageState extends State<VehiclePage> {
           title: Text('Vehicle', style: whiteHeader),
         ),
         //TODO use routeName
-        drawer: AppDrawer('/vehiclepage'),
+        drawer: AppDrawer(),
         floatingActionButton: FancyFab(),
         body: Container(
             padding: EdgeInsets.all(8), color: white, child: createListView()));

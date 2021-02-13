@@ -21,7 +21,7 @@ class EditVehicle extends StatelessWidget {
         title: Text('Edit Vehicle'),
       ),
       //replace with back button
-      drawer: AppDrawer(Routes.main),
+      drawer: AppDrawer(),
       body: VehicleForm(),
     );
   }

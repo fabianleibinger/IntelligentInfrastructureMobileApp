@@ -15,7 +15,7 @@ final EdgeInsets drawerHeaderPadding = EdgeInsets.all(16.0);
 final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
 
 class AppDrawer extends StatelessWidget {
-  AppDrawer(this.currentPage);
+  AppDrawer([this.currentPage]);
 
   // TODO Make this something dynamic
   final String currentPage;
@@ -62,7 +62,7 @@ class AppDrawer extends StatelessWidget {
                     Icons.settings),
                 // editVehiclePage
                 generateTile(context, currentDrawer, EditVehicle.routeName,
-                    'Edit Vehicle', Icons.edit),
+                    'Edit Vehicle', Icons.add),
               ],
             ),
           )

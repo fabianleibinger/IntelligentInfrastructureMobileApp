@@ -23,7 +23,7 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(Routes.settings),
+      drawer: AppDrawer(),
       body: Text("Hello"),
     );
   }

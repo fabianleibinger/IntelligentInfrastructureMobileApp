@@ -92,7 +92,7 @@ class _MainPageState extends State<MainPage> {
             appBar: AppBar(
               title: Text(vehicle.name, style: whiteHeader),
             ),
-            drawer: AppDrawer(Routes.main),
+            drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
                 DatabaseProvider.db.clear();
