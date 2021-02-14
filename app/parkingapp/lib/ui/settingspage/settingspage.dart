@@ -21,26 +21,56 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  //global key for form validation
+  final _formKey = GlobalKey<FormState>();
+  bool _pushMessages = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AppDrawer(),
-      appBar: AppBar(title: Text('Einstellungen', style: whiteHeader)),
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text('Language'),
-            leading: Icon(Icons.language),
-            onTap: () {},
-          ),
-          SettingsTile.switchTile(
-            title: 'Use fingerprint',
-            leading: Icon(Icons.fingerprint),
-            switchValue: true,
-            onToggle: (bool value) {},
-          ),
-        ],
-      ),
-    );
+        drawer: AppDrawer(),
+        appBar: AppBar(title: Text('Einstellungen', style: whiteHeader)),
+        body: Form(
+            key: _formKey,
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: ListView(
+                children: <Widget>[
+                  SwitchListTile(
+                    title: Text('Push Nachrichten'),
+                    subtitle:
+                        Text('Hinweise erhalten, bei wichtigen Hinweisen'),
+                    value: _pushMessages,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _pushMessages = value;
+                      });
+                    },
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('Daten übertragen'),
+                    subtitle: Text('Daten auf neues Gerät übertragen'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('Passwort'),
+                    subtitle: Text('App mit einem Passwort schützen'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text('AGB und Nutzungsbedingungen'),
+                    subtitle: Text('Anzeigen der AGB und Nutzungsbedingungen'),
+                    trailing: Icon(Icons.arrow_forward_ios),
+                    onTap: () {},
+                  ),
+                  Divider(),
+                ],
+              ),
+            )));
   }
 }
