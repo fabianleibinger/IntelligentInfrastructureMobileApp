@@ -2,33 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
+import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
-import 'package:parkingapp/util/utility.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
 
-Vehicle currentVehicle = LoadableVehicle(
-    Utility.generateKey(),
-    "Tesla Model 3",
-    "KA-ST 930 E",
-    93.0,
-    93.4,
-    29.3,
-    84.0,
-    true,
-    false,
-    true,
-    "EnBW",
-    DateTime.now(),
-    DateTime.now(),
-    "45");
+Vehicle vehicle;
 final currentParkingGarage = ParkingGarage(
     'Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage,
@@ -79,7 +64,6 @@ class _MainPageState extends State<MainPage> {
       },
       builder: (context, vehicleList) {
         //get vehicle that shall be used from the list of vehicles
-        Vehicle vehicle;
         for (Vehicle currentVehicle in vehicleList) {
           if (currentVehicle.inAppKey == widget.carInAppKey)
             vehicle = currentVehicle;
@@ -95,7 +79,10 @@ class _MainPageState extends State<MainPage> {
             drawer: AppDrawer(Routes.main),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                DatabaseProvider.db.clear();
+                showDialog(context: context, builder: (context) {
+                  return ParkPreferencesDialog();
+                });
+                //DatabaseProvider.db.clear();
               },
               label: Text(AppLocalizations.of(context).actionButtonPark),
             ),
@@ -157,7 +144,7 @@ class _MainPageState extends State<MainPage> {
 
     // vehicle specific toggles
     widgets.add(SwitchListTile(
-      title: Text(AppLocalizations.of(context).nearExitPrefference),
+      title: Text(AppLocalizations.of(context).nearExitPreference),
       onChanged: (bool newValue) {
         setState(() => vehicle.nearExitPreference = newValue);
         DatabaseProvider.db.update(vehicle);

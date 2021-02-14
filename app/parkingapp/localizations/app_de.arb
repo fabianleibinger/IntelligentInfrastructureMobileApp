@@ -105,7 +105,7 @@
     "@parkPreferencesDialogNearExitPreference": {
         "description": "Text for near exit preference in park preferences dialog"
     },
-    "parkPreferencesDialogParkingCard": "Dauerparkkarte",
+    "parkPreferencesDialogParkingCard": "Parkkarte",
     "@parkPreferencesDialogParkingCard": {
         "description": "Text for parking card in park preferences dialog"
     },
@@ -129,8 +129,8 @@
     "@vehicleQRDialogCancelButton": {
         "description": "Cancel button text in vehicle qr dialog"
     }, 
-    "nearExitPrefference": "Nah am Ausgang parken",
-    "@nearExitPrefference": {},
+    "nearExitPreference": "Nah am Ausgang parken",
+    "@nearExitPreference": {},
     "parkingCard": "Parkkarte",
     "@parkingCard":{}
 }
