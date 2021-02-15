@@ -19,6 +19,14 @@
     "@chargeTimeDialogSwitchListTileSubtitle": {
         "description": "Subtitle of switch list tile in charge time dialog"
     },
+    "chargeTimeDialogChargeTimeBeginTitle": "Startzeit",
+    "@chargeTimeDialogChargeTimeBeginTitle": {
+        "description": "title text in charge time begin list tile in charge time dialog"
+    },
+    "chargeTimeDialogChargeTimeEndTitle": "Endzeit",
+    "@chargeTimeDialogChargeTimeEndTitle": {
+        "description": "title text in charge time end list tile in charge time dialog"
+    },
     "drawerHeader": "Parkhaus",
     "@drawerHeader": {
         "description": "Text shown in header of the drawer"
