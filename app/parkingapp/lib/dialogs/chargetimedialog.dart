@@ -50,6 +50,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
               _setSwitchListTileValue(value);
             }),
         Divider(),
+
       ],
     );
   }

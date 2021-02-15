@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
+import 'package:parkingapp/dialogs/chargetimedialog.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
@@ -80,7 +82,7 @@ class _MainPageState extends State<MainPage> {
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
                 showDialog(context: context, builder: (context) {
-                  return ParkPreferencesDialog();
+                  return ChargingProviderDialog();
                 });
                 //DatabaseProvider.db.clear();
               },
