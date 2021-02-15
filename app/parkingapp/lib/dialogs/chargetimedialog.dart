@@ -33,11 +33,19 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     });
   }
 
-  void _selectTime(BuildContext context, TimeOfDay time) async {
+  void _selectChargeTimeBegin(BuildContext context) async {
     _picked =
         await showTimePicker(context: context, initialTime: _chargeTimeBegin);
     setState(() {
-      time = _picked;
+      _chargeTimeBegin = _picked;
+    });
+  }
+
+  void _selectChargeTimeEnd(BuildContext context) async {
+    _picked =
+    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+    setState(() {
+      _chargeTimeEnd = _picked;
     });
   }
 
@@ -68,13 +76,13 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
             title: Text('Startzeit'),
             subtitle: Text(_chargeTimeBegin.format(context)),
             onTap: () {
-              _selectTime(context, _chargeTimeBegin);
+              _selectChargeTimeBegin(context);
             }),
         ListTile(
             title: Text('Endzeit'),
             subtitle: Text(_chargeTimeEnd.format(context)),
             onTap: () {
-              _selectTime(context, _chargeTimeEnd);
+              _selectChargeTimeEnd(context);
             })
       ],
     );
