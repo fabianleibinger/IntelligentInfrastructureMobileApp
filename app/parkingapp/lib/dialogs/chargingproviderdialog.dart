@@ -27,8 +27,8 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
 
   //saves the selected tile and changes vehicles value
   void _setSelectedRadioTile(ChargingProvider value) {
+    _setChargingProvider(vehicle, value);
     setState(() {
-      _setChargingProvider(vehicle, value);
       _selectedRadioTile = value;
     });
   }

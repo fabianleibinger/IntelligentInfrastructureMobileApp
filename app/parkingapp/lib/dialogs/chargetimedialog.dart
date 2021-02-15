@@ -12,18 +12,32 @@ class ChargeTimeDialog extends StatefulWidget {
 class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   bool _chargeAllDay;
 
+  TimeOfDay _chargeTimeBegin;
+  TimeOfDay _chargeTimeEnd;
+  TimeOfDay _picked;
+
   //sets the initial values
   @override
   void initState() {
-    // TODO: implement initState
+    //TODO implement
     super.initState();
     _chargeAllDay = false;
+    _chargeTimeBegin = TimeOfDay.now();
+    _chargeTimeEnd = TimeOfDay.now();
   }
 
   //switches current vehicles value and listTile value
   void _setSwitchListTileValue(bool value) {
     setState(() {
       _chargeAllDay = value;
+    });
+  }
+
+  void _selectTime(BuildContext context, TimeOfDay time) async {
+    _picked =
+        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+    setState(() {
+      time = _picked;
     });
   }
 
@@ -50,7 +64,18 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
               _setSwitchListTileValue(value);
             }),
         Divider(),
-
+        ListTile(
+            title: Text('Startzeit'),
+            subtitle: Text(_chargeTimeBegin.format(context)),
+            onTap: () {
+              _selectTime(context, _chargeTimeBegin);
+            }),
+        ListTile(
+            title: Text('Endzeit'),
+            subtitle: Text(_chargeTimeEnd.format(context)),
+            onTap: () {
+              _selectTime(context, _chargeTimeEnd);
+            })
       ],
     );
   }
