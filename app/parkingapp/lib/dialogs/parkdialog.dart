@@ -38,6 +38,6 @@ class ParkDialog {
     return Constants.createAlertDialogOneBackButtonNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutFinishedContent,
-        AppLocalizations.of(context).parkDialogFinishedButton);
+loc        AppLocalizations.of(context).dialogFinishedButton);
   }
 }

@@ -9,10 +9,10 @@ class ScanQRDialog {
     //TODO update next page
     return Constants.createAlertDialog(
         context,
-        AppLocalizations.of(context).vehicleQRDialogTitle,
-        AppLocalizations.of(context).vehicleQRDialogContent,
-        AppLocalizations.of(context).vehicleQRDialogCancelButton,
-        AppLocalizations.of(context).vehicleQRDialogConfirmButton,
+        AppLocalizations.of(context).scanQRDialogTitle,
+        AppLocalizations.of(context).scanQRDialogContent,
+        AppLocalizations.of(context).scanQRDialogCancelButton,
+        AppLocalizations.of(context).scanQRDialogConfirmButton,
         Routes.settings);
   }
 }
