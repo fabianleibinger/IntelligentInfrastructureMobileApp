@@ -13,21 +13,35 @@ import 'package:parkingapp/util/utility.dart';
 
 class EditVehicle extends StatelessWidget {
   static const String routeName = '/editVehicle';
+  final Vehicle vehicle;
+  const EditVehicle({Key key, this.vehicle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    vehicle != null
+        ? print('Update vehicle: ' +
+            vehicle.inAppKey +
+            ', ' +
+            vehicle.name +
+            ', ' +
+            vehicle.licensePlate)
+        : null;
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Vehicle'),
       ),
       //replace with back button
       drawer: AppDrawer(),
-      body: VehicleForm(),
+      body: VehicleForm(
+        vehicle: vehicle,
+      ),
     );
   }
 }
 
 class VehicleForm extends StatefulWidget {
+  final Vehicle vehicle;
+  const VehicleForm({Key key, this.vehicle}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _VehicleFormState();
 }
@@ -163,7 +177,7 @@ class _VehicleFormState extends State<VehicleForm> {
       form.save();
 
       // create the vehicle that shall be added to the database
-      Vehicle vehicle;
+      Vehicle vehicle = widget.vehicle;
       if (_vehicleChargeable) {
         vehicle = LoadableVehicle(
             Utility.generateKey(),
@@ -213,6 +227,7 @@ class _VehicleFormState extends State<VehicleForm> {
       this.parkingCard*/
       }
 
+      //TODO update vehicle if necessary
       //addd vehicle to database
       DatabaseProvider.db.insert(vehicle).then((vehicle) =>
           BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
