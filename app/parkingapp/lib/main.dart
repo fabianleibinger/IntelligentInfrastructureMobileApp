@@ -25,7 +25,7 @@ void main() {
 
 class Main extends StatelessWidget {
   //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
-  static MaterialApp getMaterialApp(Widget homeWidget) {
+  static MaterialApp getMaterialApp(String initialroute) {
     return MaterialApp(
       //Initialize Localization
       localizationsDelegates: [
@@ -36,15 +36,33 @@ class Main extends StatelessWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       // App info
-      debugShowCheckedModeBanner: false,
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,
       theme: themeData,
-      home: homeWidget,
-      routes: {
-        Routes.main: (context) => MainPage(),
-        Routes.settings: (context) => SettingsPage(),
-        Routes.vehicle: (context) => VehiclePage(),
+      initialRoute: initialroute,
+      //Routing of app
+      onGenerateRoute: (settings) {
+        //settings Route
+        if (settings.name == Routes.settings) {
+          return MaterialPageRoute(builder: (context) => SettingsPage());
+        }
+        //edit vehicles route
+        if (settings.name == Routes.vehicle) {
+          return MaterialPageRoute(builder: (context) => VehiclePage());
+        }
+        //vehicles park routes
+        //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
+        RegExp inAppKeyRegExp = RegExp(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}');
+        var uri = Uri.parse(settings.name);
+        if (uri.pathSegments.length > 0 &&
+            inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
+          print('vehicle: ' + uri.pathSegments.first);
+          //TODO generate vehicle Page with inAppKey
+          return MaterialPageRoute(
+              builder: (context) => MainPage(uri.pathSegments.first));
+        }
+        //fallback route
+        return MaterialPageRoute(builder: (context) => SettingsPage());
       },
     );
   }
@@ -52,11 +70,18 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<VehicleBloc>(
-        create: (context) {
+    //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
+    return MultiProvider(
+      providers: [
+        BlocProvider<VehicleBloc>(create: (context) {
           return VehicleBloc(List<Vehicle>());
-        },
-        child: getMaterialApp(MainPage()));
+        }),
+        ListenableProvider(
+          create: (_) => DrawerStateInfo(Routes.vehicle),
+        )
+      ],
+      child: getMaterialApp(Routes.vehicle),
+    );
   }
 }
 /*

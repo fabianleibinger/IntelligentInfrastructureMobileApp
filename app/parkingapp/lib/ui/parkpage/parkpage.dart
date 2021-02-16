@@ -6,6 +6,8 @@ import 'package:wifi/wifi.dart';
 // example for a page (mainpage)
 
 class ParkPage extends StatefulWidget {
+  static const String routeName = '/parkpage';
+
   const ParkPage({Key key}) : super(key: key);
   @override
   _ParkPageState createState() => _ParkPageState();

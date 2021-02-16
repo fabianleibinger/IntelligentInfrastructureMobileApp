@@ -1,5 +1,4 @@
-import 'package:parkingapp/models/data/databaseprovider.dart';
-
+//serves as Interface for Vehicles
 class Vehicle {
   int databaseId;
 

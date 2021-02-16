@@ -1,4 +1,4 @@
-import 'package:parkingapp/enum/parkinggaragetype.dart';
+import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 
 class ParkingGarage {
   String name;

@@ -1,9 +1,10 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 
+//defines the park preferences dialog
 class ParkPreferencesDialog extends StatefulWidget {
   ParkPreferencesDialog({Key key}) : super(key: key);
 
@@ -12,33 +13,70 @@ class ParkPreferencesDialog extends StatefulWidget {
 }
 
 class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
+  static bool _nearExitCheckBox;
+  static bool _parkingCardCheckBox;
+
+  //sets the initial check box values using the current vehicles attributes
   @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
+  void initState() {
+    // TODO: switch to correct currentVehicle
+    super.initState();
+    _nearExitCheckBox = vehicle.nearExitPreference;
+    _parkingCardCheckBox = vehicle.parkingCard;
   }
 
-  contentBox(context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[]),
+  //switches current vehicles value and checkbox value
+  void _setNearExitCheckboxValue(bool value) {
+    vehicle.nearExitPreference = value;
+    DatabaseProvider.db.update(vehicle);
+    setState(() {
+      _nearExitCheckBox = vehicle.nearExitPreference;
+    });
+  }
+
+  //switches current vehicles value and checkbox value
+  void _setParkingCardCheckboxValue(bool value) {
+    vehicle.parkingCard = value;
+    DatabaseProvider.db.update(vehicle);
+    setState(() {
+      _parkingCardCheckBox = vehicle.parkingCard;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Constants.getConfirmationDialog(
+        context,
+        AppLocalizations.of(context).parkPreferencesDialogTitle,
+        AppLocalizations.of(context).settingsSaveButton,
+        _getCheckBoxes(context));
+  }
+
+  //returns two checkboxes for near exit preference and parking card
+  _getCheckBoxes(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            Checkbox(
+                value: _nearExitCheckBox,
+                onChanged: (value) {
+                  _setNearExitCheckboxValue(value);
+                }),
+            Text(AppLocalizations.of(context)
+                .parkPreferencesDialogNearExitPreference)
+          ],
         ),
+        Row(
+          children: [
+            Checkbox(
+                value: _parkingCardCheckBox,
+                onChanged: (value) {
+                  _setParkingCardCheckboxValue(value);
+                }),
+            Text(AppLocalizations.of(context).parkPreferencesDialogParkingCard)
+          ],
+        )
       ],
     );
   }
