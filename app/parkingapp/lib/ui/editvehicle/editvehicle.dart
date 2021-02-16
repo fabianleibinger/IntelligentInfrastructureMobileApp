@@ -45,8 +45,6 @@ class CreateVehicle extends StatelessWidget {
       appBar: AppBar(
         title: Text('Edit Vehicle'),
       ),
-      //replace with back button
-      drawer: AppDrawer(),
       body: VehicleForm(),
     );
   }
