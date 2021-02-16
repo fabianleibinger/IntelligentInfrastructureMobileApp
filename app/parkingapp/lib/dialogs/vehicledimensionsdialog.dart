@@ -12,6 +12,8 @@ class VehicleDimensionsDialog extends StatefulWidget {
 }
 
 class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
+  int selectedValue = 0;
+
   @override
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
@@ -26,5 +28,21 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
     return Column(
       children: [],
     );
+  }
+
+  List<ExampleVehicle> parseJson(String response) {
+    if (response == null) {
+      return [];
+    }
+    List<ExampleVehicle> list;
+    /*final parsed = json.decode(response);
+    list = List<ExampleVehicle>.from(
+        parsed.map((model) => ExampleVehicle.fromJson(model)));*/
+
+    list = (json.decode(response) as List)
+        .map((e) => ExampleVehicle.fromJson(e))
+        .toList();
+
+    return list;
   }
 }

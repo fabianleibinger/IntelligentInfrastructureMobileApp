@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
@@ -44,9 +47,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    DatabaseProvider.db.getVehicles().then((vehicles) {
-      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicles));
-    });
+    DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
         for (Vehicle vehicle in vehicleList) {
