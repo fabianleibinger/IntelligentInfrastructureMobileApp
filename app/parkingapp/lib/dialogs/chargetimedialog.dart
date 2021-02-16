@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 
 //defines the charge time dialog
 class ChargeTimeDialog extends StatefulWidget {
@@ -23,11 +26,10 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   //sets the initial values
   @override
   void initState() {
-    //TODO implement
     super.initState();
-    _chargeAllDay = false;
-    _chargeTimeBegin = TimeOfDay.now();
-    _chargeTimeEnd = TimeOfDay.now();
+    if (vehicle.runtimeType == LoadableVehicle) {
+      _checkChargeTimes(vehicle);
+    }
   }
 
   //switches current vehicles value and listTile values
@@ -37,6 +39,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
       if (value) {
         _chargeTimeBegin = _midnight;
         _chargeTimeEnd = _midnight;
+        _setChargeTimeVehicle(vehicle);
       }
     });
   }
@@ -48,6 +51,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     if (_picked != null) {
       setState(() {
         _chargeTimeBegin = _picked;
+        _setChargeTimeVehicle(vehicle);
         _checkHoleDay();
       });
     }
@@ -60,6 +64,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     if (_picked != null) {
       setState(() {
         _chargeTimeEnd = _picked;
+        _setChargeTimeVehicle(vehicle);
         _checkHoleDay();
       });
     }
@@ -104,6 +109,20 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
             })
       ],
     );
+  }
+
+  //sets vehicles charge time values
+  void _setChargeTimeVehicle(LoadableVehicle vehicle) {
+    vehicle.chargeTimeBegin = _chargeTimeBegin;
+    vehicle.chargeTimeEnd = _chargeTimeEnd;
+    DatabaseProvider.db.update(vehicle);
+  }
+
+  //selects the right charge time values for all tiles
+  void _checkChargeTimes(LoadableVehicle vehicle) {
+    _chargeTimeBegin = vehicle.chargeTimeBegin;
+    _chargeTimeEnd = vehicle.chargeTimeEnd;
+    _checkHoleDay();
   }
 
   //checks if switchListTile for charging hole day has to be true or false
