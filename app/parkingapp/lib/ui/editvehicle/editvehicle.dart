@@ -12,7 +12,6 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/util/utility.dart';
 
 class EditVehicle extends StatelessWidget {
-  static const String routeName = '/editVehicle';
   final Vehicle vehicle;
   const EditVehicle({Key key, this.vehicle}) : super(key: key);
 
@@ -30,11 +29,25 @@ class EditVehicle extends StatelessWidget {
       appBar: AppBar(
         title: Text('Edit Vehicle'),
       ),
-      //replace with back button
-      drawer: AppDrawer(),
       body: VehicleForm(
         vehicle: vehicle,
       ),
+    );
+  }
+}
+
+class CreateVehicle extends StatelessWidget {
+  static const String routeName = '/editVehicle';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Vehicle'),
+      ),
+      //replace with back button
+      drawer: AppDrawer(),
+      body: VehicleForm(),
     );
   }
 }
