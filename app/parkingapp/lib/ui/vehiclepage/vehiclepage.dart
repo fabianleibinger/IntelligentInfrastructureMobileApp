@@ -12,6 +12,7 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -92,7 +93,10 @@ class _VehiclePageState extends State<VehiclePage> {
                     subtitle: Text(vehicle.licensePlate +
                         "; " +
                         vehicle.databaseId.toString()),
-                    //Bloc will not be updated
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditVehicle(
+                              vehicle: vehicle,
+                            ))),
                   ));
             },
             itemCount: vehicleList.length);
