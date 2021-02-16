@@ -66,8 +66,8 @@ class Main extends StatelessWidget {
               builder: (context) => MainPage(uri.pathSegments.first));
         }
         //editVehicle route
-        if (settings.name == EditVehicle.routeName) {
-          return MaterialPageRoute(builder: (context) => EditVehicle());
+        if (settings.name == CreateVehicle.routeName) {
+          return MaterialPageRoute(builder: (context) => CreateVehicle());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
