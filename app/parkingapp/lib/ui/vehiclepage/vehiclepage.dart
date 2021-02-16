@@ -70,14 +70,30 @@ class _VehiclePageState extends State<VehiclePage> {
               print("vehicleList: $vehicleList");
 
               Vehicle vehicle = vehicleList[index];
-              return ListTile(
-                title: Text(vehicle.name),
-                subtitle: Text(vehicle.licensePlate +
-                    "; " +
-                    vehicle.databaseId.toString()),
-                //Bloc will not be updated
-                onTap: () => DatabaseProvider.db.delete(vehicle.databaseId),
-              );
+              return Dismissible(
+                  background: Container(
+                    color: Colors.red,
+                  ),
+                  key: Key(vehicle.inAppKey),
+                  onDismissed: (direction) {
+                    //remove vehicle from displayed list
+                    vehicleList.remove(vehicle.inAppKey);
+                    //remove vehicle from database and bloc
+                    DatabaseProvider.db.delete(vehicle.databaseId);
+                    BlocProvider.of<VehicleBloc>(context)
+                        .add(DeleteVehicle(vehicle));
+                    //show snackbar that vehicle has been deleted
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(vehicle.inAppKey + ' removed!'),
+                    ));
+                  },
+                  child: ListTile(
+                    title: Text(vehicle.name),
+                    subtitle: Text(vehicle.licensePlate +
+                        "; " +
+                        vehicle.databaseId.toString()),
+                    //Bloc will not be updated
+                  ));
             },
             itemCount: vehicleList.length);
       },
