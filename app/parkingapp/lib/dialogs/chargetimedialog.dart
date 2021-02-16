@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+//defines the charge time dialog
 class ChargeTimeDialog extends StatefulWidget {
   ChargeTimeDialog({Key key}) : super(key: key);
 
@@ -15,6 +16,9 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   TimeOfDay _chargeTimeBegin;
   TimeOfDay _chargeTimeEnd;
   TimeOfDay _picked;
+
+  final TimeOfDay _midnight = TimeOfDay(hour: 00, minute: 00);
+  final double _dividerThickness = 1;
 
   //sets the initial values
   @override
@@ -31,8 +35,8 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     setState(() {
       _chargeAllDay = value;
       if (value) {
-        _chargeTimeBegin = TimeOfDay(hour: 00, minute: 00);
-        _chargeTimeEnd = TimeOfDay(hour: 00, minute: 00);
+        _chargeTimeBegin = _midnight;
+        _chargeTimeEnd = _midnight;
       }
     });
   }
@@ -40,7 +44,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   //selects charge time begin in vehicle and listTile
   void _selectChargeTimeBegin(BuildContext context) async {
     _picked =
-    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
     if (_picked != null) {
       setState(() {
         _chargeTimeBegin = _picked;
@@ -52,7 +56,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   //selects charge time end in vehicle and listTile
   void _selectChargeTimeEnd(BuildContext context) async {
     _picked =
-    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
     if (_picked != null) {
       setState(() {
         _chargeTimeEnd = _picked;
@@ -65,12 +69,8 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
         context,
-        AppLocalizations
-            .of(context)
-            .chargeTimeDialogTitle,
-        AppLocalizations
-            .of(context)
-            .settingsSaveButton,
+        AppLocalizations.of(context).chargeTimeDialogTitle,
+        AppLocalizations.of(context).settingsSaveButton,
         _getBody(context));
   }
 
@@ -79,28 +79,24 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     return Column(
       children: [
         SwitchListTile(
-            title: Text(AppLocalizations
-                .of(context)
+            title: Text(AppLocalizations.of(context)
                 .chargeTimeDialogSwitchListTileTitle),
-            subtitle: Text(AppLocalizations
-                .of(context)
+            subtitle: Text(AppLocalizations.of(context)
                 .chargeTimeDialogSwitchListTileSubtitle),
             value: _chargeAllDay,
             onChanged: (value) {
               _setSwitchListTileValue(value);
             }),
-        Divider(),
+        Divider(thickness: _dividerThickness),
         ListTile(
-            title: Text(AppLocalizations
-                .of(context)
+            title: Text(AppLocalizations.of(context)
                 .chargeTimeDialogChargeTimeBeginTitle),
             subtitle: Text(_chargeTimeBegin.format(context)),
             onTap: () {
               _selectChargeTimeBegin(context);
             }),
         ListTile(
-            title: Text(AppLocalizations
-                .of(context)
+            title: Text(AppLocalizations.of(context)
                 .chargeTimeDialogChargeTimeEndTitle),
             subtitle: Text(_chargeTimeEnd.format(context)),
             onTap: () {
@@ -112,8 +108,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
 
   //checks if switchListTile for charging hole day has to be true or false
   void _checkHoleDay() {
-    if (_chargeTimeBegin == TimeOfDay(hour: 00, minute: 00) &&
-        _chargeTimeEnd == TimeOfDay(hour: 00, minute: 00)) {
+    if (_chargeTimeBegin == _midnight && _chargeTimeEnd == _midnight) {
       _setSwitchListTileValue(true);
     } else {
       _setSwitchListTileValue(false);
