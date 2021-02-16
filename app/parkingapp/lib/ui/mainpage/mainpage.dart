@@ -13,6 +13,7 @@ import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,11 +21,8 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
-final currentParkingGarage = ParkingGarage(
-    'Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage,
-    79,
-    'assets/parkgarage-fasanengarten.jpg');
+final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 80;
 
@@ -83,9 +81,11 @@ class _MainPageState extends State<MainPage> {
             drawer: AppDrawer(Routes.main),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                showDialog(context: context, builder: (context) {
-                  return ChargeTimeDialog();
-                });
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ChargeTimeDialog();
+                    });
                 //DatabaseProvider.db.clear();
               },
               label: Text(AppLocalizations.of(context).actionButtonPark),

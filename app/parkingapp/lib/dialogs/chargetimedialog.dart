@@ -14,7 +14,7 @@ class ChargeTimeDialog extends StatefulWidget {
 }
 
 class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
-  bool _chargeAllDay;
+  bool _chargeAllDay = true;
 
   TimeOfDay _chargeTimeBegin;
   TimeOfDay _chargeTimeEnd;
