@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parkingapp/bloc/blocs/userbloc.dart';
+import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
+import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkoutdialog.dart';
 import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
@@ -13,6 +16,7 @@ import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/ui/parkpage/parkpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,9 +45,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    DatabaseProvider.db.getVehicles().then((vehicles) {
-      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicles));
-    });
+    DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
         for (Vehicle vehicle in vehicleList) {
@@ -62,9 +64,15 @@ class _MainPageState extends State<MainPage> {
       AppLocalizations.of(context).mainPageCarPreferences +
           AppLocalizations.of(context).textNone
     ];
+
+    // Example for calling the Backend Server
+    ApiProvider.getWelcome().then((value) {
+      print(value);
+    });
+
     return Scaffold(
         appBar: AppBar(
-          title: Text('Vehicle', style: whiteHeader),
+          title: Text("Hello", style: whiteHeader),
         ),
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(

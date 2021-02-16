@@ -1,9 +1,11 @@
+import 'package:parkingapp/models/classes/vehicle.dart';
+
 import 'vehicleevent.dart';
 
 class DeleteVehicle extends VehicleEvent {
-  int vehicleIndex;
+  Vehicle eventVehicle;
 
-  DeleteVehicle(int index) {
-    vehicleIndex = index;
+  DeleteVehicle(Vehicle vehicle) {
+    eventVehicle = vehicle;
   }
 }

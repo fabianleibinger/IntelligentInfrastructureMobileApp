@@ -10,6 +10,7 @@ import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:parkingapp/models/global.dart';
@@ -33,9 +34,7 @@ class _VehiclePageState extends State<VehiclePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    DatabaseProvider.db.getVehicles().then((vehicleList) {
-      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));
-    });
+    DataHelper.initVehicles(context);
   }
 
   @override
