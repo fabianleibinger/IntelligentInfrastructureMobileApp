@@ -61,9 +61,6 @@ class AppDrawer extends StatelessWidget {
                     Routes.settings,
                     AppLocalizations.of(context).drawerSettings,
                     Icons.settings),
-                // createVehiclePage
-                generateTile(context, currentDrawer, CreateVehicle.routeName,
-                    'Create Vehicle', Icons.add),
               ],
             ),
           )
