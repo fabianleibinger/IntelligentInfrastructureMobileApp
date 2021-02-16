@@ -37,7 +37,7 @@ class EditVehicle extends StatelessWidget {
 }
 
 class CreateVehicle extends StatelessWidget {
-  static const String routeName = '/editVehicle';
+  static const String routeName = '/createVehicle';
 
   @override
   Widget build(BuildContext context) {
