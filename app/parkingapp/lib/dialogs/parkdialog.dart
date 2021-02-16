@@ -1,44 +1,43 @@
-import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/global.dart';
-import 'constants.dart';
+import 'package:parkingapp/dialogs/constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/routes/routes.dart';
 
-class ParkDialog extends StatefulWidget {
-  ParkDialog({Key key}) : super(key: key);
-  @override
-  _ParkDialogState createState() => _ParkDialogState();
-}
-
-class _ParkDialogState extends State<ParkDialog> {
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
-    );
+//defines the different park-related dialogs
+class ParkDialog {
+  static createParkInDialog(BuildContext context) {
+    return Constants.createAlertDialog(
+        context,
+        AppLocalizations.of(context).parkDialogParkInTitle,
+        AppLocalizations.of(context).parkDialogParkInContent,
+        AppLocalizations.of(context).parkDialogCancelButton,
+        AppLocalizations.of(context).parkDialogParkInButton,
+        Routes.park);
   }
 
-  contentBox(context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[]),
-        ),
-      ],
-    );
+  static createParkOutDialog(BuildContext context) {
+    return Constants.createAlertDialogNoTitle(
+        context,
+        AppLocalizations.of(context).parkDialogParkOutContent,
+        AppLocalizations.of(context).parkDialogCancelButton,
+        AppLocalizations.of(context).parkDialogParkOutButton,
+        Routes.park);
+  }
+
+  static createParkInCancelDialog(BuildContext context) {
+    return Constants.createAlertDialogNoTitle(
+        context,
+        AppLocalizations.of(context).parkDialogParkCancelContent,
+        AppLocalizations.of(context).parkDialogBackButton,
+        AppLocalizations.of(context).parkDialogParkOutButton,
+        Routes.park);
+  }
+
+  static createParkOutFinishedDialog(BuildContext context) {
+    return Constants.createAlertDialogOneBackButtonNoTitle(
+        context,
+        AppLocalizations.of(context).parkDialogParkOutFinishedContent,
+        AppLocalizations.of(context).dialogFinishedButton);
   }
 }
