@@ -243,6 +243,8 @@ class _VehicleFormState extends State<VehicleForm> {
       DatabaseProvider.db.insert(vehicle).then((vehicle) =>
           BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
       form.reset();
+      //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
+      Navigator.of(context).pop();
     }
   }
 }
