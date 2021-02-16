@@ -83,7 +83,7 @@ class _MainPageState extends State<MainPage> {
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
                 showDialog(context: context, builder: (context) {
-                  return VehicleDimensionsDialog();
+                  return ChargeTimeDialog();
                 });
                 //DatabaseProvider.db.clear();
               },
