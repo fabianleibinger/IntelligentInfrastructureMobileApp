@@ -41,20 +41,24 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   void _selectChargeTimeBegin(BuildContext context) async {
     _picked =
     await showTimePicker(context: context, initialTime: _chargeTimeBegin);
-    setState(() {
-      _chargeTimeBegin = _picked;
-      _checkHoleDay();
-    });
+    if (_picked != null) {
+      setState(() {
+        _chargeTimeBegin = _picked;
+        _checkHoleDay();
+      });
+    }
   }
 
   //selects charge time end in vehicle and listTile
   void _selectChargeTimeEnd(BuildContext context) async {
     _picked =
     await showTimePicker(context: context, initialTime: _chargeTimeBegin);
-    setState(() {
-      _chargeTimeEnd = _picked;
-      _checkHoleDay();
-    });
+    if (_picked != null) {
+      setState(() {
+        _chargeTimeEnd = _picked;
+        _checkHoleDay();
+      });
+    }
   }
 
   @override
