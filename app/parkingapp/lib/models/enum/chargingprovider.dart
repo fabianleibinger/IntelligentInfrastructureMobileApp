@@ -1,7 +1,7 @@
 enum ChargingProvider {
   Automatisch,
   eon,
-  EnBW
+  EnBW,
 }
 
 extension ParseToString on ChargingProvider {

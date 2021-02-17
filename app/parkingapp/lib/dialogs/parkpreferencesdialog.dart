@@ -1,5 +1,6 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 
@@ -15,28 +16,27 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
   static bool _nearExitCheckBox;
   static bool _parkingCardCheckBox;
 
-  //sets the initial check box values
+  //sets the initial check box values using the current vehicles attributes
   @override
   void initState() {
-    // TODO: switch to correct currentVehicle
     super.initState();
-    _nearExitCheckBox = currentVehicle.nearExitPreference;
-    _parkingCardCheckBox = currentVehicle.parkingCard;
+    _nearExitCheckBox = vehicle.nearExitPreference;
+    _parkingCardCheckBox = vehicle.parkingCard;
   }
 
   //switches current vehicles value and checkbox value
   void _setNearExitCheckboxValue(bool value) {
+    vehicle.setNearExitPreference(context, value);
     setState(() {
-      currentVehicle.nearExitPreference = value;
-      _nearExitCheckBox = currentVehicle.nearExitPreference;
+      _nearExitCheckBox = vehicle.nearExitPreference;
     });
   }
 
   //switches current vehicles value and checkbox value
   void _setParkingCardCheckboxValue(bool value) {
+    vehicle.setParkingCard(context, value);
     setState(() {
-      currentVehicle.parkingCard = value;
-      _parkingCardCheckBox = currentVehicle.parkingCard;
+      _parkingCardCheckBox = vehicle.parkingCard;
     });
   }
 
