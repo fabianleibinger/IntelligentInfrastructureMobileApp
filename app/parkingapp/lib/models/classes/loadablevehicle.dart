@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 
 class LoadableVehicle extends Vehicle {
   bool doCharge;
@@ -95,24 +96,34 @@ class LoadableVehicle extends Vehicle {
         map[DatabaseProvider.COLUMN_CHARGE]);
   }
 
-  void setDoCharge(bool doCharge) {
+  //setter which includes database updating
+  void setDoCharge(BuildContext context, bool doCharge) {
     this.doCharge = doCharge;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setChargingProvider(String chargingProvider) {
+  //setter which includes database updating
+  void setChargingProvider(BuildContext context, String chargingProvider) {
     this.chargingProvider = chargingProvider;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setChargeTimeBegin(TimeOfDay begin) {
+  //setter which includes database updating
+  void setChargeTimeBegin(BuildContext context, TimeOfDay begin) {
     this.chargeTimeBegin = begin;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setChargeTimeEnd(TimeOfDay end) {
+  //setter which includes database updating
+  void setChargeTimeEnd(BuildContext context, TimeOfDay end) {
     this.chargeTimeEnd = end;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setCharge(String charge) {
+  //setter which includes database updating
+  void setCharge(BuildContext context, String charge) {
     this.charge = charge;
+    DataHelper.updateVehicle(context, this);
   }
 
   @override

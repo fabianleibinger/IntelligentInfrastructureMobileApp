@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 
 abstract class Vehicle {
   int databaseId;
@@ -31,43 +33,63 @@ abstract class Vehicle {
     return map;
   }
 
-  void setDatabaseID(int id) {
+  //setter which includes database updating
+  void setDatabaseID(BuildContext context, int id) {
     this.databaseId = id;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setInAppKey(String key) {
+  //setter which includes database updating
+  void setInAppKey(BuildContext context, String key) {
     this.inAppKey = key;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setName(String name) {
+  //setter which includes database updating
+  void setName(BuildContext context, String name) {
     this.name = name;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setLicensePlate(String licensePlate) {
+  //setter which includes database updating
+  void setLicensePlate(BuildContext context, String licensePlate) {
     this.licensePlate = licensePlate;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setHeight(double height) {
+  //setter which includes database updating
+  void setHeight(BuildContext context, double height) {
     this.height = height;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setWidth(double width) {
+  //setter which includes database updating
+  void setWidth(BuildContext context, double width) {
     this.width = width;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setLength(double length) {
+  //setter which includes database updating
+  void setLength(BuildContext context, double length) {
     this.length = length;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setTurningCycle(double turningCycle) {
+  //setter which includes database updating
+  void setTurningCycle(BuildContext context, double turningCycle) {
     this.turningCycle = turningCycle;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setNearExitPreference(bool nearExitPreference) {
+  //setter which includes database updating
+  void setNearExitPreference(BuildContext context, bool nearExitPreference) {
     this.nearExitPreference = nearExitPreference;
+    DataHelper.updateVehicle(context, this);
   }
 
-  void setParkingCard(bool parkingCard) {
+  //setter which includes database updating
+  void setParkingCard(BuildContext context, bool parkingCard) {
     this.parkingCard = parkingCard;
+    DataHelper.updateVehicle(context, this);
   }
 }
