@@ -8,8 +8,12 @@ import rospy
 
 def handle_request_capacity(req):
     print('Handle')
-    capacity_total = req.capacity.total
-    return CapacityRequestResponse
+    response = CapacityRequestResponse()
+    response.capacity_total.total = 10
+    response.capacity_free.total = 8
+    response.capacity_total.electric = 5
+    response.capacity_free.electric = 2
+    return response
 
 
 def request_capacity_server():
