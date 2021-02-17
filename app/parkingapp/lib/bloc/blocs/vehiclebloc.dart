@@ -32,8 +32,13 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
       yield newState;
     } else if (event is UpdateVehicle) {
       List<Vehicle> newState = List.from(state);
-      newState.replaceRange(newState.indexOf(event.eventVehicle),
-          newState.indexOf(event.eventVehicle), {event.eventVehicle});
+      int index;
+      newState.forEach((element) {
+        if (element.inAppKey == event.eventVehicle.inAppKey) {
+          index = newState.indexOf(element);
+        }
+      });
+      newState.replaceRange(index, index, {event.eventVehicle});
       yield newState;
     }
 

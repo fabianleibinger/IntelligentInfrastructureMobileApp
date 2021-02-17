@@ -17,7 +17,7 @@ class VehicleDimensionsDialog extends StatefulWidget {
 }
 
 class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
-  int _selectedRadioTile;
+  ExampleVehicle _selectedRadioTile;
   List<ExampleVehicle> _exampleVehicles;
 
   @override
@@ -41,7 +41,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
               if (element.height == vehicle.height &&
                   element.width == vehicle.width &&
                   element.length == vehicle.length) {
-                _selectedRadioTile = _exampleVehicles.indexOf(element);
+                _selectedRadioTile = element;
               }
             });
             return _exampleVehicles.isNotEmpty
@@ -53,8 +53,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           ? 0
                           : _exampleVehicles.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return RadioListTile(
-                          value: index,
+                        return RadioListTile<ExampleVehicle>(
+                          value: _exampleVehicles[index],
                           groupValue: _selectedRadioTile,
                           onChanged: (value) {
                             setState(() {
@@ -72,16 +72,16 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
     ]);
   }
 
-  void _setSelectedRadioTile(int index) {
-    _setExampleVehicle(vehicle, index);
+  void _setSelectedRadioTile(ExampleVehicle exampleVehicle) {
+    _setExampleVehicle(vehicle, exampleVehicle);
     setState(() {
-      _selectedRadioTile = index;
+      _selectedRadioTile = exampleVehicle;
     });
   }
 
-  void _setExampleVehicle(Vehicle vehicle, int index) {
-    vehicle.setDimensions(context, _exampleVehicles[index].height,
-        _exampleVehicles[index].width, _exampleVehicles[index].length);
+  void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
+    vehicle.setDimensions(context, exampleVehicle.height, exampleVehicle.width,
+        exampleVehicle.length);
   }
 
   List<ExampleVehicle> _parseJson(String response) {
