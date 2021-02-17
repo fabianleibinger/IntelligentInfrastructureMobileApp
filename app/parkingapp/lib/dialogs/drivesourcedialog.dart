@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/models/global.dart';
 import 'constants.dart';
 
-class VehicleDimensionsDialog extends StatefulWidget {
-  VehicleDimensionsDialog({Key key}) : super(key: key);
+// example for a popup dialog triggered by a button or something
+
+class DriveSourceDialog extends StatefulWidget {
+  DriveSourceDialog({Key key}) : super(key: key);
 
   @override
-  _VehicleDimensionsDialogState createState() =>
-      _VehicleDimensionsDialogState();
+  _DriveSourceDialogState createState() => _DriveSourceDialogState();
 }
 
-class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
+class _DriveSourceDialogState extends State<DriveSourceDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(

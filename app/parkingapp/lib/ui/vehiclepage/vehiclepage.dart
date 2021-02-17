@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/bloc/events/addvehicle.dart';
+import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
+import 'package:parkingapp/bloc/events/vehicleevent.dart';
+import 'package:parkingapp/dialogs/scanqrdialog.dart';
+import 'package:parkingapp/dialogs/drivesourcedialog.dart';
+import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
+import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
+import 'package:parkingapp/util/utility.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // example for a page (mainpage)
 
 class VehiclePage extends StatefulWidget {
@@ -26,7 +34,9 @@ class _VehiclePageState extends State<VehiclePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    DataHelper.initVehicles(context);
+    DatabaseProvider.db.getVehicles().then((vehicleList) {
+      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));
+    });
   }
 
   @override

@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/models/global.dart';
 import 'constants.dart';
 
-class VehicleDimensionsDialog extends StatefulWidget {
-  VehicleDimensionsDialog({Key key}) : super(key: key);
+class ProfilQRDialog extends StatefulWidget {
+  ProfilQRDialog({Key key}) : super(key: key);
 
   @override
-  _VehicleDimensionsDialogState createState() =>
-      _VehicleDimensionsDialogState();
+  _ProfilQRDialogState createState() => _ProfilQRDialogState();
 }
 
-class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
+class _ProfilQRDialogState extends State<ProfilQRDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
