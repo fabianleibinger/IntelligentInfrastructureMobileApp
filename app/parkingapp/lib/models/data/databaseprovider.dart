@@ -104,7 +104,6 @@ class DatabaseProvider {
         vehicleList.add(vehicle);
       }
     });
-
     return vehicleList;
   }
 
@@ -116,13 +115,34 @@ class DatabaseProvider {
 
   Future<int> delete(int id) async {
     final db = await database;
-    return await db.delete(TABLE_VEHICLE, where: "id = ?", whereArgs: [id]);
+    return await db.delete(TABLE_VEHICLE,
+        where: "$COLUMN_DATABASE_ID = ?", whereArgs: [id]);
   }
 
   Future<int> update(Vehicle vehicle) async {
+    print('DB update: inAppKey: ' +
+        vehicle.inAppKey +
+        ' name: ' +
+        vehicle.name +
+        ' licensePlate: ' +
+        vehicle.licensePlate +
+        ' width: ' +
+        vehicle.width.toString() +
+        ' height: ' +
+        vehicle.height.toString() +
+        ' length: ' +
+        vehicle.length.toString() +
+        'turningCircle: ' +
+        vehicle.turningCycle.toString() +
+        ' nearExitPreference: ' +
+        vehicle.nearExitPreference.toString() +
+        ' parkingCard: ' +
+        vehicle.parkingCard.toString() +
+        ' databaseId: ' +
+        vehicle.databaseId.toString());
     final db = await database;
     return await db.update(TABLE_VEHICLE, vehicle.toMap(),
-        where: "id = ?", whereArgs: [vehicle.databaseId]);
+        where: "$COLUMN_DATABASE_ID = ?", whereArgs: [vehicle.databaseId]);
   }
 
   Future clear() async {

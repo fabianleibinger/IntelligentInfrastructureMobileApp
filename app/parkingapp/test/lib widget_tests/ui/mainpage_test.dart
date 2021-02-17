@@ -63,6 +63,7 @@ void main() {
       await tester.pump();
 
       //TODO update onPressed
+      expect(find.text('Messages'), findsOneWidget);
     });
   });
 }

@@ -1,9 +1,11 @@
-import 'dart:ui';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:parkingapp/models/global.dart';
-import 'constants.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/examplevehicle.dart';
+import 'constants.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+//defines the vehicle dimensions dialog
 class VehicleDimensionsDialog extends StatefulWidget {
   VehicleDimensionsDialog({Key key}) : super(key: key);
 
@@ -13,34 +15,37 @@ class VehicleDimensionsDialog extends StatefulWidget {
 }
 
 class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
+  int selectedValue = 0;
+
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(Constants.padding),
-      ),
-      elevation: 0,
-      backgroundColor: Colors.transparent,
-      child: contentBox(context),
+    return Constants.getConfirmationDialog(
+        context,
+        AppLocalizations.of(context).vehicleDimensionsDialogTitle,
+        AppLocalizations.of(context).dialogFinishedButton,
+        _getRadioListTiles(context));
+  }
+
+  //returns a tile for every different dimension
+  _getRadioListTiles(BuildContext context) {
+    return Column(
+      children: [],
     );
   }
 
-  contentBox(context) {
-    return Stack(
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.all(20),
-          height: 300,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-          ),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[]),
-        ),
-      ],
-    );
+  List<ExampleVehicle> parseJson(String response) {
+    if (response == null) {
+      return [];
+    }
+    List<ExampleVehicle> list;
+    /*final parsed = json.decode(response);
+    list = List<ExampleVehicle>.from(
+        parsed.map((model) => ExampleVehicle.fromJson(model)));*/
+
+    list = (json.decode(response) as List)
+        .map((e) => ExampleVehicle.fromJson(e))
+        .toList();
+
+    return list;
   }
 }

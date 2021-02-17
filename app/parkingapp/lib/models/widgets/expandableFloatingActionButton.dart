@@ -8,6 +8,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter/material.dart';
@@ -94,8 +95,8 @@ class _FancyFabState extends State<FancyFab>
           DatabaseProvider.db
               .insert(LoadableVehicle(
                   Utility.generateKey(),
-                  "Audi",
-                  "OG-DE-923",
+                  "Tesla Model 3",
+                  "KA-ST 930 E",
                   93.0,
                   93.4,
                   29.3,
@@ -104,8 +105,8 @@ class _FancyFabState extends State<FancyFab>
                   false,
                   true,
                   "EnBW",
-                  DateTime.now(),
-                  DateTime.now(),
+                  TimeOfDay.now(),
+                  TimeOfDay.now(),
                   "45"))
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
@@ -130,21 +131,7 @@ class _FancyFabState extends State<FancyFab>
   Widget add() {
     return Container(
       child: FloatingActionButton(
-        onPressed: () {
-          DatabaseProvider.db
-              .insert(StandardVehicle(Utility.generateKey(), "Audi",
-                  "OG-DE-923", 93.0, 93.4, 29.3, 84.0, true, false))
-              .then((vehicle) {
-            BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
-          });
-          BlocListener<VehicleBloc, List<Vehicle>>(
-            listener: (context, vehicleList) {
-              for (Vehicle vehicle in vehicleList) {
-                print(vehicle.toString());
-              }
-            },
-          );
-        },
+        onPressed: () => Navigator.pushNamed(context, Routes.createVehicle),
         tooltip: 'Add',
         elevation: 10,
         child: Icon(Icons.add),
