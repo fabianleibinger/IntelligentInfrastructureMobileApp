@@ -84,7 +84,7 @@ class _MainPageState extends State<MainPage> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return ChargeTimeDialog();
+                      return VehicleDimensionsDialog();
                     });
                 //DatabaseProvider.db.clear();
               },

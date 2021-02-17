@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 
 class StandardVehicle implements Vehicle {
   StandardVehicle(
@@ -61,9 +63,12 @@ class StandardVehicle implements Vehicle {
   }
 
   @override
-  String setDimensions() {
-    // TODO: implement setDimensions
-    throw UnimplementedError();
+  void setDimensions(
+      BuildContext context, double height, double width, double length) {
+    this.height = height;
+    this.width = width;
+    this.length = length;
+    DataHelper.updateVehicle(context, this);
   }
 
   @override

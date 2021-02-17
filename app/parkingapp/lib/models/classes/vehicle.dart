@@ -1,4 +1,6 @@
 //serves as Interface for Vehicles
+import 'package:flutter/material.dart';
+
 class Vehicle {
   int databaseId;
 
@@ -10,7 +12,8 @@ class Vehicle {
   //Preferences
   bool nearExitPreference, parkingCard;
 
-  String setDimensions() {}
+  void setDimensions(
+      BuildContext context, double height, double width, double length) {}
 
   String setPreferences() {}
 
