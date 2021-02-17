@@ -237,6 +237,7 @@ class _VehicleFormState extends State<VehicleForm> {
       }
 
       //TODO update vehicle if necessary
+      //TODO use new wrapper method
       //addd vehicle to database
       DatabaseProvider.db.insert(vehicle).then((vehicle) =>
           BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
