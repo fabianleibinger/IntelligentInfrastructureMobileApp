@@ -3,7 +3,7 @@ import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 
 //defines the charge time dialog
 class ChargeTimeDialog extends StatefulWidget {
@@ -27,7 +27,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   @override
   void initState() {
     super.initState();
-    if (vehicle.runtimeType == LoadableVehicle) {
+    if (vehicle.runtimeType == ChargeableVehicle) {
       _checkChargeTimes(vehicle);
     }
   }
@@ -39,7 +39,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
       if (value) {
         _chargeTimeBegin = _midnight;
         _chargeTimeEnd = _midnight;
-        if(vehicle.runtimeType == LoadableVehicle) {
+        if(vehicle.runtimeType == ChargeableVehicle) {
           _setChargeTimeVehicle(vehicle);
         }
       }
@@ -53,7 +53,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     if (_picked != null) {
       setState(() {
         _chargeTimeBegin = _picked;
-        if(vehicle.runtimeType == LoadableVehicle) {
+        if(vehicle.runtimeType == ChargeableVehicle) {
           _setChargeTimeVehicle(vehicle);
           _checkHoleDay();
         }
@@ -68,7 +68,7 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     if (_picked != null) {
       setState(() {
         _chargeTimeEnd = _picked;
-        if(vehicle.runtimeType == LoadableVehicle) {
+        if(vehicle.runtimeType == ChargeableVehicle) {
           _setChargeTimeVehicle(vehicle);
           _checkHoleDay();
         }
@@ -118,13 +118,13 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
   }
 
   //sets vehicles charge time values
-  void _setChargeTimeVehicle(LoadableVehicle vehicle) {
+  void _setChargeTimeVehicle(ChargeableVehicle vehicle) {
     vehicle.setChargeTimeBegin(context, _chargeTimeBegin);
     vehicle.setChargeTimeEnd(context, _chargeTimeEnd);
   }
 
   //selects the right charge time values for all tiles
-  void _checkChargeTimes(LoadableVehicle vehicle) {
+  void _checkChargeTimes(ChargeableVehicle vehicle) {
     _chargeTimeBegin = vehicle.chargeTimeBegin;
     _chargeTimeEnd = vehicle.chargeTimeEnd;
     _checkHoleDay();

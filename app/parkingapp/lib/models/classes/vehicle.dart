@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 
+//cannot be instantiated
 abstract class Vehicle {
   int databaseId;
 
@@ -13,6 +14,8 @@ abstract class Vehicle {
   //Preferences
   bool nearExitPreference, parkingCard;
 
+  bool parkedIn;
+
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
@@ -23,7 +26,8 @@ abstract class Vehicle {
       DatabaseProvider.COLUMN_LENGTH: length.toDouble(),
       DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
       DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
-      DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0
+      DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0,
+      DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0
     };
 
     if (databaseId != null) {
@@ -90,6 +94,12 @@ abstract class Vehicle {
   //setter which includes database updating
   void setParkingCard(BuildContext context, bool parkingCard) {
     this.parkingCard = parkingCard;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setParkedIn(BuildContext context, bool parkedIn) {
+    this.parkedIn = parkedIn;
     DataHelper.updateVehicle(context, this);
   }
 }

@@ -3,13 +3,12 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 
-class LoadableVehicle extends Vehicle {
+class ChargeableVehicle extends Vehicle {
   bool doCharge;
   String chargingProvider;
   TimeOfDay chargeTimeBegin, chargeTimeEnd;
-  String charge;
 
-  LoadableVehicle(
+  ChargeableVehicle(
       this.inAppKey,
       this.name,
       this.licensePlate,
@@ -19,14 +18,14 @@ class LoadableVehicle extends Vehicle {
       this.turningCycle,
       this.nearExitPreference,
       this.parkingCard,
+      this.parkedIn,
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd,
-      this.charge);
+      this.chargeTimeEnd);
 
   //private constructor: only called by fromMap() method, database defines databaseId
-  LoadableVehicle._(
+  ChargeableVehicle._(
       this.databaseId,
       this.inAppKey,
       this.name,
@@ -37,11 +36,11 @@ class LoadableVehicle extends Vehicle {
       this.turningCycle,
       this.nearExitPreference,
       this.parkingCard,
+      this.parkedIn,
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd,
-      this.charge);
+      this.chargeTimeEnd);
 
   @override
   Map<String, dynamic> toMap() {
@@ -55,13 +54,13 @@ class LoadableVehicle extends Vehicle {
       DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
       DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
       DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0,
+      DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0,
       DatabaseProvider.COLUMN_DO_CHARGE: doCharge ? 1 : 0,
       DatabaseProvider.COLUMN_CHARGING_PROVIDER: chargingProvider,
       DatabaseProvider.COLUMN_CHARGE_TIME_BEGIN:
           chargeTimeBegin.toString().split('(').last.split(')').first,
       DatabaseProvider.COLUMN_CHARGE_TIME_END:
-          chargeTimeEnd.toString().split('(').last.split(')').first,
-      DatabaseProvider.COLUMN_CHARGE: charge
+          chargeTimeEnd.toString().split('(').last.split(')').first
     };
 
     if (databaseId != null) {
@@ -71,10 +70,10 @@ class LoadableVehicle extends Vehicle {
     return map;
   }
 
-  static LoadableVehicle fromMap(Map<String, dynamic> map) {
+  static ChargeableVehicle fromMap(Map<String, dynamic> map) {
     String timeBegin = map[DatabaseProvider.COLUMN_CHARGE_TIME_BEGIN];
     String timeEnd = map[DatabaseProvider.COLUMN_CHARGE_TIME_END];
-    return LoadableVehicle._(
+    return ChargeableVehicle._(
         map[DatabaseProvider.COLUMN_DATABASE_ID],
         map[DatabaseProvider.COLUMN_IN_APP_KEY],
         map[DatabaseProvider.COLUMN_NAME],
@@ -85,6 +84,7 @@ class LoadableVehicle extends Vehicle {
         map[DatabaseProvider.COLUMN_TURNING_CYCLE],
         map[DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE] == 1,
         map[DatabaseProvider.COLUMN_PARKING_CARD] == 1,
+        map[DatabaseProvider.COLUMN_PARKED_IN] == 1,
         map[DatabaseProvider.COLUMN_DO_CHARGE] == 1,
         map[DatabaseProvider.COLUMN_CHARGING_PROVIDER],
         TimeOfDay(
@@ -92,8 +92,7 @@ class LoadableVehicle extends Vehicle {
             minute: int.parse(timeBegin.split(':').last)),
         TimeOfDay(
             hour: int.parse(timeEnd.split(':').first),
-            minute: int.parse(timeEnd.split(':').last)),
-        map[DatabaseProvider.COLUMN_CHARGE]);
+            minute: int.parse(timeEnd.split(':').last)));
   }
 
   //setter which includes database updating
@@ -120,12 +119,6 @@ class LoadableVehicle extends Vehicle {
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setCharge(BuildContext context, String charge) {
-    this.charge = charge;
-    DataHelper.updateVehicle(context, this);
-  }
-
   @override
   int databaseId;
 
@@ -137,4 +130,7 @@ class LoadableVehicle extends Vehicle {
 
   @override
   bool nearExitPreference, parkingCard;
+
+  @override
+  bool parkedIn;
 }
