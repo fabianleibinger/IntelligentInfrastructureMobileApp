@@ -23,7 +23,6 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
     if (vehicle.runtimeType == LoadableVehicle) {
       _checkChargingProvider(vehicle);
     }
-    for (int i = 0; i < _providers.length; i++) {}
   }
 
   //saves the selected tile and changes vehicles value
