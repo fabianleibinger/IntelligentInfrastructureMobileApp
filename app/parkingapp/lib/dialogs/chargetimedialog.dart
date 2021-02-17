@@ -14,14 +14,14 @@ class ChargeTimeDialog extends StatefulWidget {
 }
 
 class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
-  bool _chargeAllDay;
+  static final TimeOfDay _midnight = TimeOfDay(hour: 00, minute: 00);
+  static final double _dividerThickness = 1;
 
-  TimeOfDay _chargeTimeBegin;
-  TimeOfDay _chargeTimeEnd;
+  bool _chargeAllDay = true;
+
+  TimeOfDay _chargeTimeBegin = _midnight;
+  TimeOfDay _chargeTimeEnd = _midnight;
   TimeOfDay _picked;
-
-  final TimeOfDay _midnight = TimeOfDay(hour: 00, minute: 00);
-  final double _dividerThickness = 1;
 
   //sets the initial values
   @override
@@ -39,7 +39,9 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
       if (value) {
         _chargeTimeBegin = _midnight;
         _chargeTimeEnd = _midnight;
-        _setChargeTimeVehicle(vehicle);
+        if(vehicle.runtimeType == LoadableVehicle) {
+          _setChargeTimeVehicle(vehicle);
+        }
       }
     });
   }
@@ -51,8 +53,10 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     if (_picked != null) {
       setState(() {
         _chargeTimeBegin = _picked;
-        _setChargeTimeVehicle(vehicle);
-        _checkHoleDay();
+        if(vehicle.runtimeType == LoadableVehicle) {
+          _setChargeTimeVehicle(vehicle);
+          _checkHoleDay();
+        }
       });
     }
   }
@@ -64,8 +68,10 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     if (_picked != null) {
       setState(() {
         _chargeTimeEnd = _picked;
-        _setChargeTimeVehicle(vehicle);
-        _checkHoleDay();
+        if(vehicle.runtimeType == LoadableVehicle) {
+          _setChargeTimeVehicle(vehicle);
+          _checkHoleDay();
+        }
       });
     }
   }

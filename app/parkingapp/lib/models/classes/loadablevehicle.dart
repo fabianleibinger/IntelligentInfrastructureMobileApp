@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
-class LoadableVehicle implements Vehicle {
+class LoadableVehicle extends Vehicle {
   bool doCharge;
   String chargingProvider;
   TimeOfDay chargeTimeBegin, chargeTimeEnd;
@@ -42,6 +42,7 @@ class LoadableVehicle implements Vehicle {
       this.chargeTimeEnd,
       this.charge);
 
+  @override
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
@@ -94,21 +95,24 @@ class LoadableVehicle implements Vehicle {
         map[DatabaseProvider.COLUMN_CHARGE]);
   }
 
-  String getBatteryCharge() {
-    // TODO: implement getBatteryCharge
-    throw UnimplementedError();
+  void setDoCharge(bool doCharge) {
+    this.doCharge = doCharge;
   }
 
-  @override
-  String setDimensions() {
-    // TODO: implement setDimensions
-    throw UnimplementedError();
+  void setChargingProvider(String chargingProvider) {
+    this.chargingProvider = chargingProvider;
   }
 
-  @override
-  String setPreferences() {
-    // TODO: implement setPreferences
-    throw UnimplementedError();
+  void setChargeTimeBegin(TimeOfDay begin) {
+    this.chargeTimeBegin = begin;
+  }
+
+  void setChargeTimeEnd(TimeOfDay end) {
+    this.chargeTimeEnd = end;
+  }
+
+  void setCharge(String charge) {
+    this.charge = charge;
   }
 
   @override

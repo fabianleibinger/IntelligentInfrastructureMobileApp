@@ -27,10 +27,12 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
 
   //saves the selected tile and changes vehicles value
   void _setSelectedRadioTile(ChargingProvider value) {
-    _setChargingProvider(vehicle, value);
     setState(() {
       _selectedRadioTile = value;
     });
+    if (vehicle.runtimeType == LoadableVehicle) {
+      _setChargingProvider(vehicle);
+    }
   }
 
   @override
@@ -68,8 +70,8 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   }
 
   //sets vehicle charging provider value
-  void _setChargingProvider(LoadableVehicle vehicle, ChargingProvider value) {
-    vehicle.chargingProvider = value.toShortString();
+  void _setChargingProvider(LoadableVehicle vehicle) {
+    vehicle.chargingProvider = _selectedRadioTile.toShortString();
     DatabaseProvider.db.update(vehicle);
   }
 }
