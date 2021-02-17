@@ -2,10 +2,10 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 
 import 'vehicleevent.dart';
 
-class AddVehicle extends VehicleEvent {
+class UpdateVehicle extends VehicleEvent {
   Vehicle eventVehicle;
 
-  AddVehicle(Vehicle vehicle) {
+  UpdateVehicle(Vehicle vehicle) {
     eventVehicle = vehicle;
   }
 }
