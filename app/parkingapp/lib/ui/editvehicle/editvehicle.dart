@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -64,6 +64,7 @@ class _VehicleFormState extends State<VehicleForm> {
   bool _vehicleChargeable = false,
       _parkNearExit = false,
       _parkingCard = false,
+      _parkedIn = false,
       _vehicleDoCharge = true;
   String _name, _licensePlate, _chargingProvider;
   TimeOfDay _chargeBegin = TimeOfDay(hour: 0, minute: 0),
@@ -190,7 +191,7 @@ class _VehicleFormState extends State<VehicleForm> {
       // create the vehicle that shall be added to the database
       Vehicle vehicle = widget.vehicle;
       if (_vehicleChargeable) {
-        vehicle = LoadableVehicle(
+        vehicle = ChargeableVehicle(
             Utility.generateKey(),
             _name,
             _licensePlate,
@@ -200,11 +201,11 @@ class _VehicleFormState extends State<VehicleForm> {
             0,
             _parkNearExit,
             _parkingCard,
+            _parkedIn,
             _vehicleDoCharge,
             _chargingProvider,
             _chargeBegin,
-            _chargeEnd,
-            null);
+            _chargeEnd);
         /*
        --- handly with VehiclesDimensionDialog 
       this.height,
@@ -222,7 +223,7 @@ class _VehicleFormState extends State<VehicleForm> {
       this.charge*/
       } else {
         vehicle = StandardVehicle(Utility.generateKey(), _name, _licensePlate,
-            0, 0, 0, 0, _parkNearExit, _parkingCard);
+            0, 0, 0, 0, _parkNearExit, _parkingCard, _parkedIn);
         /*this.inAppKey,
       this.name,
       this.licensePlate,
@@ -238,7 +239,7 @@ class _VehicleFormState extends State<VehicleForm> {
 
       //TODO update vehicle if necessary
       //TODO use new wrapper method
-      //addd vehicle to database
+      //add vehicle to database
       DatabaseProvider.db.insert(vehicle).then((vehicle) =>
           BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
       form.reset();
