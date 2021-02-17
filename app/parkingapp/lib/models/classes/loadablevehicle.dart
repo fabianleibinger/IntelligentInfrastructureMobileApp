@@ -3,7 +3,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 
-class LoadableVehicle implements Vehicle {
+class LoadableVehicle extends Vehicle {
   bool doCharge;
   String chargingProvider;
   TimeOfDay chargeTimeBegin, chargeTimeEnd;
@@ -43,6 +43,7 @@ class LoadableVehicle implements Vehicle {
       this.chargeTimeEnd,
       this.charge);
 
+  @override
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
@@ -95,24 +96,34 @@ class LoadableVehicle implements Vehicle {
         map[DatabaseProvider.COLUMN_CHARGE]);
   }
 
-  String getBatteryCharge() {
-    // TODO: implement getBatteryCharge
-    throw UnimplementedError();
-  }
-
-  @override
-  void setDimensions(
-      BuildContext context, double height, double width, double length) {
-    this.height = height;
-    this.width = width;
-    this.length = length;
+  //setter which includes database updating
+  void setDoCharge(BuildContext context, bool doCharge) {
+    this.doCharge = doCharge;
     DataHelper.updateVehicle(context, this);
   }
 
-  @override
-  String setPreferences() {
-    // TODO: implement setPreferences
-    throw UnimplementedError();
+  //setter which includes database updating
+  void setChargingProvider(BuildContext context, String chargingProvider) {
+    this.chargingProvider = chargingProvider;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setChargeTimeBegin(BuildContext context, TimeOfDay begin) {
+    this.chargeTimeBegin = begin;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setChargeTimeEnd(BuildContext context, TimeOfDay end) {
+    this.chargeTimeEnd = end;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setCharge(BuildContext context, String charge) {
+    this.charge = charge;
+    DataHelper.updateVehicle(context, this);
   }
 
   @override

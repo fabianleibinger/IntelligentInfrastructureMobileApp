@@ -1,7 +1,8 @@
-//serves as Interface for Vehicles
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 
-class Vehicle {
+abstract class Vehicle {
   int databaseId;
 
   String inAppKey, name, licensePlate;
@@ -12,14 +13,83 @@ class Vehicle {
   //Preferences
   bool nearExitPreference, parkingCard;
 
-  void setDimensions(
-      BuildContext context, double height, double width, double length) {}
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
+      DatabaseProvider.COLUMN_NAME: name,
+      DatabaseProvider.COLUMN_LICENSE_PLATE: licensePlate,
+      DatabaseProvider.COLUMN_WIDTH: width.toDouble(),
+      DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
+      DatabaseProvider.COLUMN_LENGTH: length.toDouble(),
+      DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
+      DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
+      DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0
+    };
 
-  String setPreferences() {}
+    if (databaseId != null) {
+      map[DatabaseProvider.COLUMN_DATABASE_ID] = databaseId;
+    }
 
-  String toString() {}
+    return map;
+  }
 
-  Map<String, dynamic> toMap() {}
+  //setter which includes database updating
+  void setDatabaseID(BuildContext context, int id) {
+    this.databaseId = id;
+    DataHelper.updateVehicle(context, this);
+  }
 
-  static Vehicle fromMap(Map<String, dynamic> map) {}
+  //setter which includes database updating
+  void setInAppKey(BuildContext context, String key) {
+    this.inAppKey = key;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setName(BuildContext context, String name) {
+    this.name = name;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setLicensePlate(BuildContext context, String licensePlate) {
+    this.licensePlate = licensePlate;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setHeight(BuildContext context, double height) {
+    this.height = height;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setWidth(BuildContext context, double width) {
+    this.width = width;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setLength(BuildContext context, double length) {
+    this.length = length;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setTurningCycle(BuildContext context, double turningCycle) {
+    this.turningCycle = turningCycle;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setNearExitPreference(BuildContext context, bool nearExitPreference) {
+    this.nearExitPreference = nearExitPreference;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setParkingCard(BuildContext context, bool parkingCard) {
+    this.parkingCard = parkingCard;
+    DataHelper.updateVehicle(context, this);
+  }
 }

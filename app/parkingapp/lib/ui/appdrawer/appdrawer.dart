@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:provider/Provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
@@ -14,7 +16,7 @@ final EdgeInsets drawerHeaderPadding = EdgeInsets.all(16.0);
 final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
 
 class AppDrawer extends StatelessWidget {
-  AppDrawer(this.currentPage);
+  AppDrawer([this.currentPage]);
 
   // TODO Make this something dynamic
   final String currentPage;
@@ -120,8 +122,12 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       #4      StatefulElement.build
       */
       for (Vehicle vehicle in vehicleList) {
-        listTiles.add(generateTile(context, currentDrawer, vehicle.inAppKey,
-            vehicle.name, Icons.directions_car));
+        var icon;
+        vehicle.runtimeType == LoadableVehicle
+            ? icon = Icons.electric_car
+            : icon = Icons.directions_car;
+        listTiles.add(generateTile(
+            context, currentDrawer, vehicle.inAppKey, vehicle.name, icon));
       }
       return Column(
         children: listTiles,

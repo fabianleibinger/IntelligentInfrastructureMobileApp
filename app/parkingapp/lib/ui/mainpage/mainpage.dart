@@ -2,14 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
-import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
-import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
-import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
-import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
 import 'package:parkingapp/models/classes/loadablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -29,6 +24,7 @@ final bottomMargin = 80;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
+
   //final String apiKey;
   String carInAppKey;
 
@@ -58,10 +54,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    ApiProvider.getWelcome().then((value) {
-      print(value["message"]);
-    });
-
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
         if (previous.length != current.length)
@@ -83,13 +75,13 @@ class _MainPageState extends State<MainPage> {
             appBar: AppBar(
               title: Text(vehicle.name, style: whiteHeader),
             ),
-            drawer: AppDrawer(Routes.main),
+            drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return VehicleDimensionsDialog();
+                      return ChargeTimeDialog();
                     });
                 //DatabaseProvider.db.clear();
               },
@@ -155,8 +147,7 @@ class _MainPageState extends State<MainPage> {
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).nearExitPreference),
       onChanged: (bool newValue) {
-        setState(() => vehicle.nearExitPreference = newValue);
-        DatabaseProvider.db.update(vehicle);
+        setState(() => vehicle.setNearExitPreference(context, newValue));
       },
       value: vehicle.nearExitPreference,
     ));
@@ -164,8 +155,7 @@ class _MainPageState extends State<MainPage> {
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).parkingCard),
       onChanged: (bool newValue) {
-        setState(() => vehicle.parkingCard = newValue);
-        DatabaseProvider.db.update(vehicle);
+        setState(() => vehicle.setParkingCard(context, newValue));
       },
       value: vehicle.parkingCard,
     ));
@@ -184,8 +174,7 @@ class _MainPageState extends State<MainPage> {
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          vehicle.doCharge = newValue;
-          DatabaseProvider.db.update(vehicle);
+          vehicle.setDoCharge(context, newValue);
         });
       },
       value: vehicle.doCharge,

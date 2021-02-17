@@ -27,18 +27,18 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
 
   //switches current vehicles value and checkbox value
   void _setNearExitCheckboxValue(bool value) {
-    vehicle.nearExitPreference = value;
-    DatabaseProvider.db.update(vehicle);
+    vehicle.setNearExitPreference(context, value);
     setState(() {
+      vehicle.nearExitPreference = value;
       _nearExitCheckBox = vehicle.nearExitPreference;
     });
   }
 
   //switches current vehicles value and checkbox value
   void _setParkingCardCheckboxValue(bool value) {
-    vehicle.parkingCard = value;
-    DatabaseProvider.db.update(vehicle);
+    vehicle.setParkingCard(context, value);
     setState(() {
+      vehicle.parkingCard = value;
       _parkingCardCheckBox = vehicle.parkingCard;
     });
   }

@@ -115,7 +115,8 @@ class DatabaseProvider {
 
   Future<int> delete(int id) async {
     final db = await database;
-    return await db.delete(TABLE_VEHICLE, where: "id = ?", whereArgs: [id]);
+    return await db.delete(TABLE_VEHICLE,
+        where: "$COLUMN_DATABASE_ID = ?", whereArgs: [id]);
   }
 
   Future<int> update(Vehicle vehicle) async {
