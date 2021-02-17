@@ -71,7 +71,6 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
 
   //sets vehicle charging provider value
   void _setChargingProvider(LoadableVehicle vehicle) {
-    vehicle.chargingProvider = _selectedRadioTile.toShortString();
-    DatabaseProvider.db.update(vehicle);
+    vehicle.setChargingProvider(context, _selectedRadioTile.toShortString());
   }
 }

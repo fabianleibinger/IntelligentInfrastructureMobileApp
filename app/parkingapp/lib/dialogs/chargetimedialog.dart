@@ -119,9 +119,8 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
 
   //sets vehicles charge time values
   void _setChargeTimeVehicle(LoadableVehicle vehicle) {
-    vehicle.chargeTimeBegin = _chargeTimeBegin;
-    vehicle.chargeTimeEnd = _chargeTimeEnd;
-    DatabaseProvider.db.update(vehicle);
+    vehicle.setChargeTimeBegin(context, _chargeTimeBegin);
+    vehicle.setChargeTimeEnd(context, _chargeTimeEnd);
   }
 
   //selects the right charge time values for all tiles
