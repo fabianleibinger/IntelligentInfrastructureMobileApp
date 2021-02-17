@@ -34,17 +34,18 @@ def retrieve_free_parking_spots_from_pms():
     rospy.wait_for_service('capacity_request')
     try:
         capacity_request = rospy.ServiceProxy('capacity_request', CapacityRequest)
-        current_capacity = capacity_request
-        print(current_capacity)
+        capacities = capacity_request()
+        return capacities
     except rospy.ServiceException as exception:
-        print(exception)
+        print("Service call failed: %s"%exception)
 
 
-def request_free_parking_spots_from_pms(electric):
+def request_free_parking_spots(electric):
+    current_capacities = retrieve_free_parking_spots_from_pms()
     if electric:
-        pubParkingSpots.publish('electric spots')
+    	return current_capacities.capacity_free.electric
     else:
-        pubParkingSpots.publish('normal spots')
+        return current_capacities.capacity_free.total
 ############################################################################
 # Implement logic here
 
@@ -77,14 +78,21 @@ def test_extract_content_from_json():
 
 @app.route('/freeParkingSpots')
 def get_normal_parking_spots():
-    retrieve_free_parking_spots_from_pms()
-    return '42'
+    currently_free_parking_spots = request_free_parking_spots(False)
+    if isinstance(currently_free_parking_spots, int):
+    	return str(currently_free_parking_spots)
+    else:
+    	return -1
+    
 
 
 @app.route('/freeElectricParkingSpots')
 def electric_parking_spots():
-    request_free_parking_spots_from_pms(True)
-    return '17'
+    currently_free_parking_spots = request_free_parking_spots(True)
+    if isinstance(currently_free_parking_spots, int):
+    	return str(currently_free_parking_spots)
+    else:
+    	return -1
 
 
 @app.route('/parkIn')
