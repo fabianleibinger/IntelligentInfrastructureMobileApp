@@ -19,16 +19,14 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
-final currentParkingGarage = ParkingGarage(
-    'Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage,
-    79,
-    'assets/parkgarage-fasanengarten.jpg');
+final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 80;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
+
   //final String apiKey;
   String carInAppKey;
 
@@ -82,9 +80,11 @@ class _MainPageState extends State<MainPage> {
             drawer: AppDrawer(Routes.main),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                showDialog(context: context, builder: (context) {
-                  return ChargeTimeDialog();
-                });
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ChargeTimeDialog();
+                    });
                 //DatabaseProvider.db.clear();
               },
               label: Text(AppLocalizations.of(context).actionButtonPark),
@@ -149,8 +149,7 @@ class _MainPageState extends State<MainPage> {
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).nearExitPreference),
       onChanged: (bool newValue) {
-        setState(() => vehicle.nearExitPreference = newValue);
-        DatabaseProvider.db.update(vehicle);
+        setState(() => vehicle.setNearExitPreference(context, newValue));
       },
       value: vehicle.nearExitPreference,
     ));
@@ -158,8 +157,7 @@ class _MainPageState extends State<MainPage> {
     widgets.add(SwitchListTile(
       title: Text(AppLocalizations.of(context).parkingCard),
       onChanged: (bool newValue) {
-        setState(() => vehicle.parkingCard = newValue);
-        DatabaseProvider.db.update(vehicle);
+        setState(() => vehicle.setParkingCard(context, newValue));
       },
       value: vehicle.parkingCard,
     ));
@@ -178,8 +176,7 @@ class _MainPageState extends State<MainPage> {
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          vehicle.doCharge = newValue;
-          DatabaseProvider.db.update(vehicle);
+          vehicle.setDoCharge(context, newValue);
         });
       },
       value: vehicle.doCharge,
