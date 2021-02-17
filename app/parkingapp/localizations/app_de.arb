@@ -19,6 +19,14 @@
     "@chargeTimeDialogSwitchListTileSubtitle": {
         "description": "Subtitle of switch list tile in charge time dialog"
     },
+    "chargeTimeDialogChargeTimeBeginTitle": "Startzeit",
+    "@chargeTimeDialogChargeTimeBeginTitle": {
+        "description": "title text in charge time begin list tile in charge time dialog"
+    },
+    "chargeTimeDialogChargeTimeEndTitle": "Endzeit",
+    "@chargeTimeDialogChargeTimeEndTitle": {
+        "description": "title text in charge time end list tile in charge time dialog"
+    },
     "drawerHeader": "Parkhaus",
     "@drawerHeader": {
         "description": "Text shown in header of the drawer"
@@ -65,8 +73,8 @@
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
     },
-    "parkDialogFinishedButton": "FERTIG",
-    "@parkDialogFinishedButton": {
+    "dialogFinishedButton": "FERTIG",
+    "@dialogFinishedButton": {
         "description": "Text for ready button in park dialog"
     },
     "parkDialogParkInContent": "Bitte entfernen Sie alle Wertgegenstände aus dem Fahrzeug. Achten Sie darauf, dass sich keine Gegenstände mehr im unmittelbaren Umfeld des Fahrzeugs befinden.\n\nBitte verlassen Sie nun die Parkzone.",
@@ -105,7 +113,7 @@
     "@parkPreferencesDialogNearExitPreference": {
         "description": "Text for near exit preference in park preferences dialog"
     },
-    "parkPreferencesDialogParkingCard": "Dauerparkkarte",
+    "parkPreferencesDialogParkingCard": "Parkkarte",
     "@parkPreferencesDialogParkingCard": {
         "description": "Text for parking card in park preferences dialog"
     },
@@ -113,24 +121,28 @@
     "@settingsSaveButton": {
         "description": "Text for save button"
     },
-    "vehicleQRDialogTitle": "Auf mehreren Geräten verwenden?",
-    "@vehicleQRDialogTitle": {
+    "scanQRDialogTitle": "Auf mehreren Geräten verwenden?",
+    "@scanQRDialogTitle": {
         "description": "Title in vehicle QR dialog"
     },
-    "vehicleQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / sdie Fahrzeuge haben?",
-    "@vehicleQRDialogContent": {
+    "scanQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / sdie Fahrzeuge haben?",
+    "@scanQRDialogContent": {
         "description": "Text body in vehicle QR dialog"
     },
-    "vehicleQRDialogConfirmButton": "Ja",
-    "@vehicleQRDialogConfirmButton": {
+    "scanQRDialogConfirmButton": "Ja",
+    "@scanQRDialogConfirmButton": {
         "description": "Confirm button text in vehicle qr dialog"
     },
-    "vehicleQRDialogCancelButton": "Nein",
-    "@vehicleQRDialogCancelButton": {
+    "scanQRDialogCancelButton": "Nein",
+    "@scanQRDialogCancelButton": {
         "description": "Cancel button text in vehicle qr dialog"
-    }, 
-    "nearExitPrefference": "Nah am Ausgang parken",
-    "@nearExitPrefference": {},
+    },
+    "vehicleDimensionsDialogTitle": "Fahrzeugabmessungen",
+    "@vehicleDimensionsDialogTitle": {
+        "description": "Title in vehicle dimensions dialog"
+    },
+    "nearExitPreference": "Nah am Ausgang parken",
+    "@nearExitPreference": {},
     "parkingCard": "Parkkarte",
     "@parkingCard":{}
 }

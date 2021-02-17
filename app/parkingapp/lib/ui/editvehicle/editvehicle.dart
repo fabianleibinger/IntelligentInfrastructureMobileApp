@@ -202,10 +202,8 @@ class _VehicleFormState extends State<VehicleForm> {
             _parkingCard,
             _vehicleDoCharge,
             _chargingProvider,
-            DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, _chargeBegin.hour, _chargeBegin.minute),
-            DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, _chargeEnd.hour, _chargeEnd.minute),
+            _chargeBegin,
+            _chargeEnd,
             null);
         /*
        --- handly with VehiclesDimensionDialog 

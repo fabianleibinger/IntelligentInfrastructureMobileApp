@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
+import 'package:parkingapp/bloc/events/updatevehicle.dart';
 import 'package:parkingapp/bloc/events/vehicleevent.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
@@ -17,8 +18,8 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
       yield event.vehicleList;
     } else if (event is AddVehicle) {
       List<Vehicle> newState = List.from(state);
-      if (event.newVehicle != null) {
-        newState.add(event.newVehicle);
+      if (event.eventVehicle != null) {
+        newState.add(event.eventVehicle);
       }
       yield newState;
     } else if (event is ResetVehicles) {
@@ -27,7 +28,12 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
       yield newState;
     } else if (event is DeleteVehicle) {
       List<Vehicle> newState = List.from(state);
-      newState.remove(event.vehicleIndex);
+      newState.removeAt(newState.indexOf(event.eventVehicle));
+      yield newState;
+    } else if (event is UpdateVehicle) {
+      List<Vehicle> newState = List.from(state);
+      newState.replaceRange(newState.indexOf(event.eventVehicle),
+          newState.indexOf(event.eventVehicle), {event.eventVehicle});
       yield newState;
     }
 

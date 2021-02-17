@@ -104,7 +104,6 @@ class DatabaseProvider {
         vehicleList.add(vehicle);
       }
     });
-
     return vehicleList;
   }
 

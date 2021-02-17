@@ -105,8 +105,8 @@ class _FancyFabState extends State<FancyFab>
                   false,
                   true,
                   "EnBW",
-                  DateTime.now(),
-                  DateTime.now(),
+                  TimeOfDay.now(),
+                  TimeOfDay.now(),
                   "45"))
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
