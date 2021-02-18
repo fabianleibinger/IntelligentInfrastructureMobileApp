@@ -90,6 +90,7 @@ ListTile generateTile(BuildContext context, String currentDrawer, String route,
 }
 
 Widget generateVehicles(BuildContext context, String currentDrawer) {
+  //TODO this needs to be removed or replaced by something that will not allways regcreate the drawer
   // get vehicleList
   DatabaseProvider.db.getVehicles().then((vehicleList) {
     BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));

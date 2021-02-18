@@ -74,7 +74,6 @@ class _VehicleFormState extends State<VehicleForm> {
 
   //local variables for states
   bool _vehicleChargeable = false;
-  List<Widget> _electricToggles = [];
   //vehicle specific variables (these should be saved in the vehicle)
   bool _vehicleDoCharge = false;
 
@@ -106,44 +105,11 @@ class _VehicleFormState extends State<VehicleForm> {
             //TODO move this into a seperate Form
             SwitchListTile(
               title: Text('Fahrzeug ist ladefähig'),
-              onChanged: (bool newValue) => setState(() {
-                _vehicleChargeable = newValue;
-                if (_vehicleChargeable) {
-                  ChargeableVehicle tempVehicle = vehicle;
-                  _electricToggles.addAll([
-                    Divider(),
-                    SwitchListTile(
-                      title: Text('Fahrzeug standardmäßig laden'),
-                      onChanged: (bool newValue) =>
-                          setState(() => _vehicleDoCharge = newValue),
-                      value: _vehicleDoCharge,
-                    ),
-                    Divider(),
-                    ListTile(
-                      title: Text('Ladeanbieter'),
-                      subtitle: Text(tempVehicle.chargingProvider),
-                      onTap: () =>
-                          _showDialog(context, ChargingProviderDialog()),
-                    ),
-                    Divider(),
-                    ListTile(
-                      title: Text('Ladeuhrzeit'),
-                      subtitle: Text('Begin: ' +
-                          tempVehicle.chargeTimeBegin.toString() +
-                          ' Ende: ' +
-                          tempVehicle.chargeTimeEnd.toString()),
-                      onTap: () => _showDialog(context, ChargeTimeDialog()),
-                    )
-                  ]);
-                } else {
-                  _electricToggles.clear();
-                }
-              }),
+              onChanged: (bool newValue) =>
+                  setState(() => _vehicleChargeable = newValue),
               value: _vehicleChargeable,
             ),
-            Column(
-              children: _electricToggles,
-            ),
+            _getElectricToggles(_vehicleChargeable),
             //generic toggles for all vehicles
             Divider(),
             ListTile(
@@ -186,6 +152,42 @@ class _VehicleFormState extends State<VehicleForm> {
   void _showDialog(BuildContext context, Widget dialog) async {
     await showDialog(context: context, builder: (context) => dialog);
     setState(() {});
+  }
+
+  //electric vehicle toggles
+  Column _getElectricToggles(bool vehicleChargeable) {
+    //return no toggles if not chargeable
+    if (!vehicleChargeable) return Column();
+    //return toggles if chargeable
+    ChargeableVehicle tempVehicle = vehicle;
+    List<Widget> _electricToggles = [];
+    _electricToggles.addAll([
+      Divider(),
+      SwitchListTile(
+        title: Text('Fahrzeug standardmäßig laden'),
+        onChanged: (bool newValue) =>
+            setState(() => _vehicleDoCharge = newValue),
+        value: _vehicleDoCharge,
+      ),
+      Divider(),
+      ListTile(
+        title: Text('Ladeanbieter'),
+        subtitle: Text(tempVehicle.chargingProvider),
+        onTap: () => _showDialog(context, ChargingProviderDialog()),
+      ),
+      Divider(),
+      ListTile(
+        title: Text('Ladeuhrzeit'),
+        subtitle: Text('Begin: ' +
+            tempVehicle.chargeTimeBegin.toString() +
+            ' Ende: ' +
+            tempVehicle.chargeTimeEnd.toString()),
+        onTap: () => _showDialog(context, ChargeTimeDialog()),
+      )
+    ]);
+    return Column(
+      children: _electricToggles,
+    );
   }
 
   // returns a string if no text is provided, otherwise null
