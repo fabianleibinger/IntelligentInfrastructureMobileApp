@@ -172,7 +172,9 @@ class _VehicleFormState extends State<VehicleForm> {
             ),
             //end of form
             RaisedButton(
-              child: Text('Fahrzeug hinzufügen'),
+              child: widget.vehicle == null
+                  ? Text('Fahrzeug hinzufügen')
+                  : Text('Fahrzeug aktualisieren'),
               onPressed: () => onPressed(_vehicleChargeable),
               highlightColor: Theme.of(context).accentColor,
               color: Theme.of(context).primaryColor,
