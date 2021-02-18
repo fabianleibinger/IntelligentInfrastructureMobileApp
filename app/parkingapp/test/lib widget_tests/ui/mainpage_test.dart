@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() {
   group('MainPage has specific AppBar, AppDrawer, text, button', () {
     testWidgets('AppBar', (WidgetTester tester) async {
-      await tester.pumpWidget(Main.getMaterialApp(AppDrawer()));
+      await tester.pumpWidget(Main.getMaterialApp('AppDrawer()'));
 
       await tester.pump();
 
