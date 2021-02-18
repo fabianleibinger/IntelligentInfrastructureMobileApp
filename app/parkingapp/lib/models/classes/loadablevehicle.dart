@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
@@ -137,4 +138,9 @@ class LoadableVehicle extends Vehicle {
 
   @override
   bool nearExitPreference, parkingCard;
+
+  StandardVehicle toStandardVehicle() {
+    return StandardVehicle(inAppKey, name, licensePlate, height, width, length,
+        turningCycle, nearExitPreference, parkingCard);
+  }
 }

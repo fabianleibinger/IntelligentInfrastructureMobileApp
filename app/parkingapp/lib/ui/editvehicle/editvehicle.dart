@@ -156,7 +156,7 @@ class _VehicleFormState extends State<VehicleForm> {
             //end of form
             RaisedButton(
               child: Text('Fahrzeug hinzufügen'),
-              onPressed: () => onPressed(),
+              onPressed: () => onPressed(_vehicleChargeable),
               highlightColor: Theme.of(context).accentColor,
               color: Theme.of(context).primaryColor,
               colorBrightness: Theme.of(context).primaryColorBrightness,
@@ -174,11 +174,16 @@ class _VehicleFormState extends State<VehicleForm> {
   }
 
   //validate the form
-  void onPressed() {
+  void onPressed(bool vehicleChargeable) {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
 
+      //convert vehicle to standardvehicle if necessary
+      if (!vehicleChargeable) {
+        LoadableVehicle convertVehicle = vehicle;
+        vehicle = convertVehicle.toStandardVehicle();
+      }
       // create/update the vehicle
       widget.vehicle == null
           ? DataHelper.addVehicle(context, vehicle)
