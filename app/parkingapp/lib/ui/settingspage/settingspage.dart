@@ -48,6 +48,7 @@ class _SettingsFormState extends State<SettingsForm> {
           padding: EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
+              Padding(padding: EdgeInsets.symmetric(vertical: 0.5)),
               SwitchSettingsTile(
                 settingKey: 'pushNotifications',
                 title: 'Push Nachrichten',
@@ -85,7 +86,7 @@ class _SettingsFormState extends State<SettingsForm> {
               Divider(),
               ListTile(
                   title: Text('AGB und Nutzungsbedingungen'),
-                  subtitle: Text('AGB und Nutzungsbedingungen anzeigen lassen'),
+                  subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.pushReplacementNamed(context, AGB.routeName);
