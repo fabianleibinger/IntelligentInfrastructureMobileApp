@@ -40,12 +40,6 @@ class _SettingsFormState extends State<SettingsForm> {
   //global key for form validation
   final _formKey = GlobalKey<FormState>();
 
-  bool _pushMessages = false,
-      _pushLoad = false,
-      _pushPark = false,
-      _pushNear = false;
-  List<Widget> _messagesOn = [];
-
   @override
   Widget build(BuildContext context) {
     return Form(
