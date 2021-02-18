@@ -6,8 +6,8 @@ class StandardVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       this.nearExitPreference,
@@ -20,8 +20,8 @@ class StandardVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       this.nearExitPreference,
@@ -50,7 +50,7 @@ class StandardVehicle extends Vehicle {
   String inAppKey, name, licensePlate;
 
   @override
-  double height, width, length, turningCycle;
+  double width, height, length, turningCycle;
 
   @override
   bool nearExitPreference, parkingCard;

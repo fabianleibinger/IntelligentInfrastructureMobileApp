@@ -16,13 +16,17 @@ class VehicleDimensionsDialog extends StatefulWidget {
 
 class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
   ExampleVehicleDimensions _selectedRadioTile;
-  List<ExampleVehicleDimensions> _exampleVehicles =
-      ExampleVehicleDimensions.instance;
+  List<ExampleVehicleDimensions> _exampleVehicles;
 
   //sets the initially selected tile
   @override
   void initState() {
     super.initState();
+    _exampleVehicles = [
+      ExampleVehicleDimensions('Audi', 2934.23, 1233.93, 4529.3, 0),
+      ExampleVehicleDimensions('BMW', 2745.23, 1643.93, 4463.3, 0),
+      ExampleVehicleDimensions('Tesla', 2934.23, 1223.93, 4529.3, 0)
+    ];
     _checkVehicleDimensions(vehicle);
   }
 

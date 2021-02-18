@@ -9,7 +9,7 @@ abstract class Vehicle {
   String inAppKey, name, licensePlate;
 
   //Dimensions
-  double height, width, length, turningCycle;
+  double width, height, length, turningCycle;
 
   //Preferences
   bool nearExitPreference, parkingCard;
@@ -62,14 +62,14 @@ abstract class Vehicle {
   }
 
   //setter which includes database updating
-  void setHeight(BuildContext context, double height) {
-    this.height = height;
+  void setWidth(BuildContext context, double width) {
+    this.width = width;
     DataHelper.updateVehicle(context, this);
   }
 
   //setter which includes database updating
-  void setWidth(BuildContext context, double width) {
-    this.width = width;
+  void setHeight(BuildContext context, double height) {
+    this.height = height;
     DataHelper.updateVehicle(context, this);
   }
 
@@ -106,8 +106,8 @@ abstract class Vehicle {
   //setter for all dimensions which includes database updating
   void setDimensions(BuildContext context, double height, double width,
       double length, double turningCycle) {
-    this.height = height;
     this.width = width;
+    this.height = height;
     this.length = length;
     this.turningCycle = turningCycle;
     DataHelper.updateVehicle(context, this);

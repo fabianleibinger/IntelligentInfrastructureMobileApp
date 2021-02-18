@@ -207,9 +207,9 @@ class _VehicleFormState extends State<VehicleForm> {
             _chargeBegin,
             _chargeEnd);
         /*
-       --- handly with VehiclesDimensionDialog 
-      this.height,
+       --- handly with VehiclesDimensionDialog
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       ----
@@ -228,8 +228,8 @@ class _VehicleFormState extends State<VehicleForm> {
       this.name,
       this.licensePlate,
 
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
 

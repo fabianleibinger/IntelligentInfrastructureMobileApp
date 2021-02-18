@@ -12,8 +12,8 @@ class ChargeableVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       this.nearExitPreference,
@@ -30,8 +30,8 @@ class ChargeableVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       this.nearExitPreference,
@@ -126,7 +126,7 @@ class ChargeableVehicle extends Vehicle {
   String inAppKey, name, licensePlate;
 
   @override
-  double height, width, length, turningCycle;
+  double width, height, length, turningCycle;
 
   @override
   bool nearExitPreference, parkingCard;
