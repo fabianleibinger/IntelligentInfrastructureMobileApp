@@ -113,4 +113,3 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
-
