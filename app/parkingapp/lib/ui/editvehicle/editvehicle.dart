@@ -120,9 +120,8 @@ class _VehicleFormState extends State<VehicleForm> {
                     ListTile(
                       title: Text('Ladeanbieter'),
                       subtitle: Text(tempVehicle.chargingProvider),
-                      onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => ChargingProviderDialog()),
+                      onTap: () =>
+                          _showDialog(context, ChargingProviderDialog()),
                     ),
                     Divider(),
                     ListTile(
@@ -131,9 +130,7 @@ class _VehicleFormState extends State<VehicleForm> {
                           tempVehicle.chargeTimeBegin.toString() +
                           ' Ende: ' +
                           tempVehicle.chargeTimeEnd.toString()),
-                      onTap: () => showDialog(
-                          context: context,
-                          builder: (context) => ChargeTimeDialog()),
+                      onTap: () => _showDialog(context, ChargeTimeDialog()),
                     )
                   ]);
                 } else {
@@ -153,9 +150,7 @@ class _VehicleFormState extends State<VehicleForm> {
                     vehicle.parkingCard.toString() +
                     ' Ausgang: ' +
                     vehicle.nearExitPreference.toString()),
-                onTap: () => showDialog(
-                    context: context,
-                    builder: (context) => ParkPreferencesDialog())),
+                onTap: () => _showDialog(context, ParkPreferencesDialog())),
             Divider(),
             ListTile(
               title: Text('Fahrzeugabmessungen'),
@@ -166,9 +161,7 @@ class _VehicleFormState extends State<VehicleForm> {
                   'm Höhe: ' +
                   vehicle.height.toString() +
                   'm'),
-              onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => VehicleDimensionsDialog()),
+              onTap: () => _showDialog(context, VehicleDimensionsDialog()),
             ),
             //end of form
             RaisedButton(
@@ -184,6 +177,13 @@ class _VehicleFormState extends State<VehicleForm> {
         ),
       ),
     );
+  }
+
+  // TODO merge into one funciton
+  // select Time (used for start and end of charge)
+  void _showDialog(BuildContext context, Widget dialog) async {
+    await showDialog(context: context, builder: (context) => dialog);
+    setState(() {});
   }
 
   // returns a string if no text is provided, otherwise null
