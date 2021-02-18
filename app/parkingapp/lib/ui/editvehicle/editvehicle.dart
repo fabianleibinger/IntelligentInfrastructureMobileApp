@@ -73,12 +73,15 @@ class _VehicleFormState extends State<VehicleForm> {
   final _formKey = GlobalKey<FormState>();
 
   //local variables for states
-  bool _vehicleChargeable = false;
+  bool _vehicleChargeable;
   //vehicle specific variables (these should be saved in the vehicle)
   bool _vehicleDoCharge = false;
 
   @override
   Widget build(BuildContext context) {
+    //preselect if vehicle is chargeable or not
+    if (_vehicleChargeable == null)
+      _vehicleChargeable = widget.vehicle.runtimeType == ChargeableVehicle;
     return Form(
       key: _formKey,
       child: Padding(
