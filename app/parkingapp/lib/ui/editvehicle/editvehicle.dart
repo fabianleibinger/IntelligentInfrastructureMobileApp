@@ -89,12 +89,14 @@ class _VehicleFormState extends State<VehicleForm> {
             TextFormField(
               autocorrect: false,
               decoration: InputDecoration(labelText: 'Fahrzeugname'),
+              initialValue: vehicle.name,
               validator: (str) => requiredValue(str),
               onSaved: (str) => vehicle.name = str,
             ),
             TextFormField(
               autocorrect: false,
               decoration: InputDecoration(labelText: 'KFZ-Kennzeichen'),
+              initialValue: vehicle.licensePlate,
               validator: (str) => requiredValue(str),
               onSaved: (str) => vehicle.licensePlate = str,
               inputFormatters: [UpperCaseTextFormatter()],
