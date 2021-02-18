@@ -102,4 +102,14 @@ abstract class Vehicle {
     this.parkedIn = parkedIn;
     DataHelper.updateVehicle(context, this);
   }
+
+  //setter for all dimensions which includes database updating
+  void setDimensions(BuildContext context, double height, double width,
+      double length, double turningCycle) {
+    this.height = height;
+    this.width = width;
+    this.length = length;
+    this.turningCycle = turningCycle;
+    DataHelper.updateVehicle(context, this);
+  }
 }

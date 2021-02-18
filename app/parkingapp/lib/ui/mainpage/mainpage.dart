@@ -1,10 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -13,14 +12,12 @@ import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
-final parkingGarageImageHeight = 250;
-final bottomMargin = 80;
+
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -39,6 +36,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final _parkingGarageImageHeight = 250;
+  final _bottomMargin = 80;
+
   @override
   void initState() {
     super.initState();
@@ -81,7 +81,7 @@ class _MainPageState extends State<MainPage> {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return ChargeTimeDialog();
+                      return VehicleDimensionsDialog();
                     });
                 //DatabaseProvider.db.clear();
               },
@@ -105,7 +105,7 @@ class _MainPageState extends State<MainPage> {
                               Text(currentParkingGarage.type.toShortString()),
                         ),
                         Container(
-                          height: parkingGarageImageHeight.toDouble(),
+                          height: _parkingGarageImageHeight.toDouble(),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage(currentParkingGarage.image),
@@ -121,7 +121,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).padding.bottom + bottomMargin,
+                  height: MediaQuery.of(context).padding.bottom + _bottomMargin,
                 )
               ],
             ));

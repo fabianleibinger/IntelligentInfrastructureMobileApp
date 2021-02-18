@@ -1,7 +1,5 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/classes/examplevehicle.dart';
+import 'package:parkingapp/models/classes/examplevehicledimensions.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,8 +15,24 @@ class VehicleDimensionsDialog extends StatefulWidget {
 }
 
 class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
-  ExampleVehicle _selectedRadioTile;
-  List<ExampleVehicle> _exampleVehicles;
+  ExampleVehicleDimensions _selectedRadioTile;
+  List<ExampleVehicleDimensions> _exampleVehicles =
+      ExampleVehicleDimensions.instance;
+
+  //sets the initially selected tile
+  @override
+  void initState() {
+    super.initState();
+    _checkVehicleDimensions(vehicle);
+  }
+
+  //saves the selected tile and changes vehicles values
+  void _setSelectedRadioTile(ExampleVehicleDimensions exampleVehicle) {
+    setState(() {
+      _selectedRadioTile = exampleVehicle;
+    });
+    _setVehicleDimensions(vehicle, exampleVehicle);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,85 +45,34 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
 
   //returns a tile for every different dimension
   _getRadioListTiles(BuildContext context) {
-    return Column(children: <Widget>[
-      FutureBuilder(
-          future: DefaultAssetBundle.of(context)
-              .loadString('assets/example-vehicles.json'),
-          builder: (context, snapshot) {
-            _exampleVehicles = _parseJson(snapshot.data.toString());
-            _exampleVehicles.forEach((element) {
-              if (element.height == vehicle.height &&
-                  element.width == vehicle.width &&
-                  element.length == vehicle.length) {
-                _selectedRadioTile = element;
-              }
-            });
-            return _exampleVehicles.isNotEmpty
-                ? Container(
-                    height: 150,
-                    width: 250,
-                    child: ListView.builder(
-                      itemCount: _exampleVehicles == null
-                          ? 0
-                          : _exampleVehicles.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return RadioListTile<ExampleVehicle>(
-                          value: _exampleVehicles[index],
-                          groupValue: _selectedRadioTile,
-                          onChanged: (value) {
-                            setState(() {
-                              _setSelectedRadioTile(value);
-                            });
-                          },
-                          title: Text(_exampleVehicles[index].name),
-                        );
-                      },
-                    ))
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
-          })
+    return Column(children: [
+      for (int i = 0; i < _exampleVehicles.length; i++)
+        RadioListTile<ExampleVehicleDimensions>(
+            title: Text(_exampleVehicles[i].name),
+            value: _exampleVehicles[i],
+            groupValue: _selectedRadioTile,
+            onChanged: (value) {
+              _setSelectedRadioTile(value);
+            })
     ]);
   }
 
-  void _setSelectedRadioTile(ExampleVehicle exampleVehicle) {
-    _setExampleVehicle(vehicle, exampleVehicle);
-    setState(() {
-      _selectedRadioTile = exampleVehicle;
+  //selects the right exampleVehicleDimensions value for _selectedRadioTile
+  void _checkVehicleDimensions(Vehicle vehicle) {
+    _exampleVehicles.forEach((exampleVehicle) {
+      if (vehicle.height.compareTo(exampleVehicle.height) == 0 &&
+          vehicle.width.compareTo(exampleVehicle.width) == 0 &&
+          vehicle.length.compareTo(exampleVehicle.length) == 0 &&
+          vehicle.turningCycle.compareTo(exampleVehicle.turningCycle) == 0) {
+        _selectedRadioTile = exampleVehicle;
+      }
     });
   }
 
-  void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
+  //sets vehicle dimension values
+  void _setVehicleDimensions(
+      Vehicle vehicle, ExampleVehicleDimensions exampleVehicle) {
     vehicle.setDimensions(context, exampleVehicle.height, exampleVehicle.width,
-        exampleVehicle.length);
-  }
-
-  List<ExampleVehicle> _parseJson(String response) {
-    if (response == null) {
-      return [];
-    }
-    List<ExampleVehicle> list;
-
-    list = (json.decode(response) as List)
-        .map((e) => ExampleVehicle.fromJson(e))
-        .toList();
-
-    return list;
-  }
-
-  List<ExampleVehicle> parseJson(String response) {
-    if (response == null) {
-      return [];
-    }
-    List<ExampleVehicle> list;
-    /*final parsed = json.decode(response);
-    list = List<ExampleVehicle>.from(
-        parsed.map((model) => ExampleVehicle.fromJson(model)));*/
-
-    list = (json.decode(response) as List)
-        .map((e) => ExampleVehicle.fromJson(e))
-        .toList();
-
-    return list;
+        exampleVehicle.length, exampleVehicle.turningCycle);
   }
 }
