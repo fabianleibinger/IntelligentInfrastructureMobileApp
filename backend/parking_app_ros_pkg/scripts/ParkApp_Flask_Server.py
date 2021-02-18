@@ -1,12 +1,13 @@
 import os
 import configparser
+from ctypes import c_uint
+
 import rospy
 import threading
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 from std_msgs.msg import String
 from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
-
 
 ############################################################################
 # Start Flask server with configuration from config.properties file
@@ -26,8 +27,6 @@ port = config.getint('server', 'port')
 # Connect to ROS node
 ros_root_node = 'parking_node'
 threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
-ros_message_parking_spots = 'parkingSpots'
-pubParkingSpots = rospy.Publisher(ros_message_parking_spots, String, queue_size=10)
 
 
 def retrieve_free_parking_spots_from_pms():
@@ -37,15 +36,19 @@ def retrieve_free_parking_spots_from_pms():
         capacities = capacity_request()
         return capacities
     except rospy.ServiceException as exception:
-        print("Service call failed: %s"%exception)
+        print("Service call failed: %s" % exception)
 
 
 def request_free_parking_spots(electric):
     current_capacities = retrieve_free_parking_spots_from_pms()
     if electric:
-    	return current_capacities.capacity_free.electric
+        free_electric = current_capacities.capacity_free.electric
+        return jsonify({'request': 'capacity free electric', 'result': str(free_electric)})
     else:
-        return current_capacities.capacity_free.total
+        free_total = current_capacities.capacity_free.total
+        return jsonify({'request': 'capacity free total', 'result': str(free_total)})
+
+
 ############################################################################
 # Implement logic here
 
@@ -78,21 +81,12 @@ def test_extract_content_from_json():
 
 @app.route('/freeParkingSpots')
 def get_normal_parking_spots():
-    currently_free_parking_spots = request_free_parking_spots(False)
-    if isinstance(currently_free_parking_spots, int):
-    	return str(currently_free_parking_spots)
-    else:
-    	return -1
-    
+    return request_free_parking_spots(False)
 
 
 @app.route('/freeElectricParkingSpots')
 def electric_parking_spots():
-    currently_free_parking_spots = request_free_parking_spots(True)
-    if isinstance(currently_free_parking_spots, int):
-    	return str(currently_free_parking_spots)
-    else:
-    	return -1
+    return request_free_parking_spots(True)
 
 
 @app.route('/parkIn')
@@ -119,5 +113,4 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
-
 
