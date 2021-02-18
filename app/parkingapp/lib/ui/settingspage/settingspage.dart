@@ -4,23 +4,23 @@ import 'package:parkingapp/dialogs/agbsdialog.dart';
 import 'package:parkingapp/dialogs/profileqrdialog.dart';
 import 'package:parkingapp/dialogs/vehicleqrdialog.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:wifi/wifi.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:parkingapp/models/classes/user.dart';
+import 'package:parkingapp/models/data/sharedpreferences.dart';
+import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
-class SettingsPage extends StatefulWidget {
+class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
   final String apikey;
-
   const SettingsPage({Key key, this.apikey}) : super(key: key);
-  @override
-  _SettingsPageState createState() => _SettingsPageState();
-}
 
-class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,9 +41,9 @@ class _SettingsFormState extends State<SettingsForm> {
   final _formKey = GlobalKey<FormState>();
 
   bool _pushMessages = false,
-      _pushLoad = true,
-      _pushPark = true,
-      _pushNear = true;
+      _pushLoad = false,
+      _pushPark = false,
+      _pushNear = false;
   List<Widget> _messagesOn = [];
 
   @override
@@ -54,82 +54,48 @@ class _SettingsFormState extends State<SettingsForm> {
           padding: EdgeInsets.all(10),
           child: ListView(
             children: <Widget>[
-              SwitchListTile(
-                title: Text('Push Nachrichten'),
-                subtitle: Text('Hinweise erhalten, bei wichtigen Hinweisen!'),
-                onChanged: (bool value) {
-                  setState(() {
-                    _pushMessages = value;
-                    if (_pushMessages) {
-                      _messagesOn.addAll([
-                        SwitchListTile(
-                          title: Text('Ladevorgang'),
-                          subtitle: Text(
-                              'Hinweise erhalten, bei wichtigen Hinweisen!'),
-                          value: _pushLoad,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _pushLoad = value;
-                            });
-                          },
-                        ),
-                        Divider(),
-                        SwitchListTile(
-                          title: Text('Einparkvorgang'),
-                          subtitle: Text(
-                              'Hinweise erhalten, bei wichtigen Hinweisen!'),
-                          value: _pushPark,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _pushPark = value;
-                            });
-                          },
-                        ),
-                        Divider(),
-                        SwitchListTile(
-                          title: Text('In der Nähe des Parkhauses'),
-                          subtitle: Text(
-                              'Hinweise erhalten, bei wichtigen Hinweisen!'),
-                          value: _pushNear,
-                          onChanged: (bool value) {
-                            setState(() {
-                              _pushNear = value;
-                            });
-                          },
-                        ),
-                      ]);
-                    } else {
-                      _messagesOn.clear();
-                    }
-                  });
-                },
-                value: _pushMessages,
+              SwitchSettingsTile(
+                settingKey: 'pushNotifications',
+                title: 'Push Nachrichten',
+                subtitle: 'Hinweise erhalten, bei wichtigen Hinweisen',
               ),
-              Divider(),
-              Column(
-                children: _messagesOn,
+              SwitchSettingsTile(
+                settingKey: 'pushLoad',
+                title: 'Ladevorgang',
+                subtitle: 'Push Benachrichtigungen zum Ladevorgang erhalten',
+                visibleIfKey: 'pushNotifications',
               ),
-              ListTile(
-                title: Text('Daten übertragen'),
-                subtitle: Text('Daten auf neues Gerät übertragen'),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () {},
+              SwitchSettingsTile(
+                settingKey: 'pushPark',
+                title: 'Einparkvorgang',
+                subtitle:
+                    'Push Benachrichtigungen bei abgeschlossenem Einparkvorgang',
+                visibleIfKey: 'pushNotifications',
               ),
-              Divider(),
               ListTile(
                 title: Text('Passwort'),
                 subtitle: Text('App mit einem Passwort schützen'),
                 trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushReplacementNamed(context, AGB.routeName);
+                },
               ),
               Divider(),
               ListTile(
-                title: Text('AGB und Nutzungsbedingungen'),
-                subtitle: Text('Anzeigen der AGB und Nutzungsbedingungen'),
-                trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () {},
-              ),
+                  title: Text('Daten übertragen'),
+                  subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, AGB.routeName);
+                  }),
               Divider(),
+              ListTile(
+                  title: Text('AGB und Nutzungsbedingungen'),
+                  subtitle: Text('AGB und Nutzungsbedingungen anzeigen lassen'),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, AGB.routeName);
+                  })
             ],
           ),
         ));
