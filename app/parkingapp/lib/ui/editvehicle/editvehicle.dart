@@ -61,14 +61,14 @@ class _VehicleFormState extends State<VehicleForm> {
   //global key for form validation
   final _formKey = GlobalKey<FormState>();
 
-  bool _vehicleChargeable = false,
-      _parkNearExit = false,
-      _parkingCard = false,
-      _vehicleDoCharge = true;
+  //local variables for states
+  bool _vehicleChargeable = false;
+  List<Widget> _electricToggles = [];
+  //local variabkles for the vehicle
+  bool _parkNearExit = false, _parkingCard = false, _vehicleDoCharge = true;
   String _name, _licensePlate, _chargingProvider;
   TimeOfDay _chargeBegin = TimeOfDay(hour: 0, minute: 0),
       _chargeEnd = TimeOfDay(hour: 23, minute: 59);
-  List<Widget> _electricToggles = [];
 
   @override
   Widget build(BuildContext context) {
