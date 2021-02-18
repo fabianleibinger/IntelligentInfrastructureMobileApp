@@ -39,20 +39,39 @@ def retrieve_free_parking_spots_from_pms():
         print("Service call failed: %s" % exception)
 
 
+############################################################################
+# Implement logic here
+
 def request_free_parking_spots(electric):
     current_capacities = retrieve_free_parking_spots_from_pms()
     if electric:
         free_electric = current_capacities.capacity_free.electric
-        return jsonify({'request': 'capacity free electric', 'result': str(free_electric)})
+        return jsonify({'free_electric': free_electric})
     else:
         free_total = current_capacities.capacity_free.total
-        return jsonify({'request': 'capacity free total', 'result': str(free_total)})
+        return jsonify({'free_total': free_total})
 
 
-############################################################################
-# Implement logic here
-
-
+def request_capacities(free):
+    current_capacities = retrieve_free_parking_spots_from_pms()
+    if free:
+        free_total = current_capacities.capacity_free.total
+        free_electric = current_capacities.capacity_free.electric
+        free_electric_fast = current_capacities.capacity_free.electric_fast
+        free_electric_inductive = current_capacities.capacity_free.electric_inductive
+        return jsonify({'free_total': free_total,
+                        'free_electric': free_electric,
+                        'free_electric_fast': free_electric_fast,
+                        'free_electric_inductive': free_electric_inductive})
+    else:
+        total = current_capacities.capacity_total.total
+        electric = current_capacities.capacity_total.electric
+        electric_fast = current_capacities.capacity_total.electric_fast
+        electric_inductive = current_capacities.capacity_total.electric_inductive
+        return jsonify({'total': total,
+                        'electric': electric,
+                        'electric_fast': electric_fast,
+                        'electric_inductive': electric_inductive})
 ############################################################################
 # Routes
 
@@ -79,13 +98,23 @@ def test_extract_content_from_json():
     return 'JSON posted'
 
 
-@app.route('/freeParkingSpots')
-def get_normal_parking_spots():
+@app.route('/capacities')
+def get_capacities():
+    return request_capacities(False)
+
+
+@app.route('/free')
+def get_free_capacities():
+    return request_capacities(True)
+
+
+@app.route('/free/total')
+def all_free_parking_spots():
     return request_free_parking_spots(False)
 
 
-@app.route('/freeElectricParkingSpots')
-def electric_parking_spots():
+@app.route('/free/electric')
+def electric_free_parking_spots():
     return request_free_parking_spots(True)
 
 
