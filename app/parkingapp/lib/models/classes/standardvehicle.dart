@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
@@ -13,7 +13,8 @@ class StandardVehicle extends Vehicle {
       this.length,
       this.turningCycle,
       this.nearExitPreference,
-      this.parkingCard);
+      this.parkingCard,
+      this.parkedIn);
 
   //private constructor: only called by fromMap() method, database defines databaseId
   StandardVehicle._(
@@ -26,7 +27,8 @@ class StandardVehicle extends Vehicle {
       this.length,
       this.turningCycle,
       this.nearExitPreference,
-      this.parkingCard);
+      this.parkingCard,
+      this.parkedIn);
 
   static Vehicle fromMap(Map<String, dynamic> map) {
     return StandardVehicle._(
@@ -39,7 +41,8 @@ class StandardVehicle extends Vehicle {
         map[DatabaseProvider.COLUMN_LENGTH],
         map[DatabaseProvider.COLUMN_TURNING_CYCLE],
         map[DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE] == 1,
-        map[DatabaseProvider.COLUMN_PARKING_CARD] == 1);
+        map[DatabaseProvider.COLUMN_PARKING_CARD] == 1,
+        map[DatabaseProvider.COLUMN_PARKED_IN] == 1);
   }
 
   @override
@@ -54,8 +57,10 @@ class StandardVehicle extends Vehicle {
   @override
   bool nearExitPreference, parkingCard;
 
+  @override
+  bool parkedIn;
   Vehicle toElectricVehicle() {
-    return LoadableVehicle(
+    return ChargeableVehicle(
         inAppKey,
         name,
         licensePlate,
@@ -66,9 +71,9 @@ class StandardVehicle extends Vehicle {
         nearExitPreference,
         parkingCard,
         false,
+        false,
         '',
         TimeOfDay(hour: 0, minute: 0),
-        TimeOfDay(hour: 23, minute: 59),
-        '');
+        TimeOfDay(hour: 23, minute: 59));
   }
 }

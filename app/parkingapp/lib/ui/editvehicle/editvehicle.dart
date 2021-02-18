@@ -7,7 +7,7 @@ import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -109,7 +109,7 @@ class _VehicleFormState extends State<VehicleForm> {
               onChanged: (bool newValue) => setState(() {
                 _vehicleChargeable = newValue;
                 if (_vehicleChargeable) {
-                  LoadableVehicle tempVehicle = vehicle;
+                  ChargeableVehicle tempVehicle = vehicle;
                   _electricToggles.addAll([
                     Divider(),
                     SwitchListTile(
@@ -202,7 +202,7 @@ class _VehicleFormState extends State<VehicleForm> {
 
       //convert vehicle to standardvehicle if necessary
       if (!vehicleChargeable) {
-        LoadableVehicle convertVehicle = vehicle;
+        ChargeableVehicle convertVehicle = vehicle;
         vehicle = convertVehicle.toStandardVehicle();
       }
       // create/update the vehicle
@@ -232,22 +232,23 @@ class _UpdateMainPageVehicle {
   _UpdateMainPageVehicle({Vehicle parseVehicle}) {
     if (parseVehicle == null) {
       print('set new electric vehicle on main page');
-      vehicle = LoadableVehicle(
-          Utility.generateKey(),
-          '',
-          '',
-          0,
-          0,
-          0,
-          0,
-          false,
-          false,
-          false,
-          '',
-          TimeOfDay(hour: 0, minute: 0),
-          TimeOfDay(hour: 0, minute: 0),
-          null);
-    } else if (parseVehicle.runtimeType == LoadableVehicle) {
+      vehicle = ChargeableVehicle(
+        Utility.generateKey(),
+        '',
+        '',
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        '',
+        TimeOfDay(hour: 0, minute: 0),
+        TimeOfDay(hour: 0, minute: 0),
+      );
+    } else if (parseVehicle.runtimeType == ChargeableVehicle) {
       print('parsedVehicle is electric; using parsed vehicle as is');
       vehicle = parseVehicle;
     } else if (parseVehicle.runtimeType == StandardVehicle) {

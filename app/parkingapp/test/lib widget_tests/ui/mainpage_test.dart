@@ -30,11 +30,11 @@ void main() {
     testWidgets('parkingGarage information', (WidgetTester tester) async {
       var parkingGarageName = find.text(currentParkingGarage.name);
       var parkingGarageType =
-      find.text(currentParkingGarage.type.toShortString());
+          find.text(currentParkingGarage.type.toShortString());
       //TODO replace hardcoded text
       var freeParkingSpotsText = find.textContaining('Freie Parkplätze:');
       var freeParkingSpotsNumber =
-      find.textContaining(currentParkingGarage.freeParkingSpots.toString());
+          find.textContaining(currentParkingGarage.freeParkingSpots.toString());
 
       await tester.pumpWidget(Main.getMaterialApp(MainPage()));
 
@@ -45,12 +45,12 @@ void main() {
     });
 
     testWidgets('preference information and some settings',
-            (WidgetTester tester) async {
-          await tester.pumpWidget(Main.getMaterialApp(MainPage()));
+        (WidgetTester tester) async {
+      await tester.pumpWidget(Main.getMaterialApp(MainPage()));
 
-          //TODO replace text
-          expect(find.textContaining('Fahrzeugpräferenzen:'), findsOneWidget);
-        });
+      //TODO replace text
+      expect(find.textContaining('Fahrzeugpräferenzen:'), findsOneWidget);
+    });
 
     testWidgets('parkInButton', (WidgetTester tester) async {
       var parkInButton = find.byType(FloatingActionButton);

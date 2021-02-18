@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
@@ -123,7 +123,7 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       */
       for (Vehicle vehicle in vehicleList) {
         var icon;
-        vehicle.runtimeType == LoadableVehicle
+        vehicle.runtimeType == ChargeableVehicle
             ? icon = Icons.electric_car
             : icon = Icons.directions_car;
         listTiles.add(generateTile(

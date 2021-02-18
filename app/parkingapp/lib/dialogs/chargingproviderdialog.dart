@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -20,7 +20,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   @override
   void initState() {
     super.initState();
-    if (vehicle.runtimeType == LoadableVehicle) {
+    if (vehicle.runtimeType == ChargeableVehicle) {
       _checkChargingProvider(vehicle);
     }
   }
@@ -30,7 +30,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
     setState(() {
       _selectedRadioTile = value;
     });
-    if (vehicle.runtimeType == LoadableVehicle) {
+    if (vehicle.runtimeType == ChargeableVehicle) {
       _setChargingProvider(vehicle);
     }
   }
@@ -61,7 +61,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   }
 
   //selects the right charging Provider value for _selectedRadioTile
-  void _checkChargingProvider(LoadableVehicle vehicle) {
+  void _checkChargingProvider(ChargeableVehicle vehicle) {
     for (int i = 0; i < _providers.length; i++) {
       if (vehicle.chargingProvider == _providers[i].toShortString()) {
         _selectedRadioTile = _providers[i];
@@ -70,7 +70,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   }
 
   //sets vehicle charging provider value
-  void _setChargingProvider(LoadableVehicle vehicle) {
+  void _setChargingProvider(ChargeableVehicle vehicle) {
     vehicle.setChargingProvider(context, _selectedRadioTile.toShortString());
   }
 }

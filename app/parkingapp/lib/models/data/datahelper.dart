@@ -29,8 +29,8 @@ class DataHelper {
   }
 
   static initVehicles(BuildContext context) {
-    DatabaseProvider.db.getVehicles().then((dbvehicles) {
-      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(dbvehicles));
+    DatabaseProvider.db.getVehicles().then((dbVehicles) {
+      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(dbVehicles));
     });
   }
 }

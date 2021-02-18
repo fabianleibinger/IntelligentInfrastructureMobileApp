@@ -19,6 +19,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
   //sets the initial check box values using the current vehicles attributes
   @override
   void initState() {
+    // TODO: switch to correct currentVehicle
     super.initState();
     _nearExitCheckBox = vehicle.nearExitPreference;
     _parkingCardCheckBox = vehicle.parkingCard;
@@ -28,6 +29,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
   void _setNearExitCheckboxValue(bool value) {
     vehicle.setNearExitPreference(context, value);
     setState(() {
+      vehicle.nearExitPreference = value;
       _nearExitCheckBox = vehicle.nearExitPreference;
     });
   }
@@ -36,6 +38,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
   void _setParkingCardCheckboxValue(bool value) {
     vehicle.setParkingCard(context, value);
     setState(() {
+      vehicle.parkingCard = value;
       _parkingCardCheckBox = vehicle.parkingCard;
     });
   }

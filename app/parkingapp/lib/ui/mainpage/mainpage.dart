@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
@@ -5,9 +7,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
-import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
-import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -58,7 +58,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
-        if (previous.length != current.length)
+        if (previous.hashCode != current.hashCode)
           return true;
         else
           return false;
@@ -163,13 +163,13 @@ class _MainPageState extends State<MainPage> {
     ));
 
     // electric vehicle toggles
-    if (vehicle.runtimeType == LoadableVehicle)
+    if (vehicle.runtimeType == ChargeableVehicle)
       widgets.addAll(addElectricVehicleTiles(vehicle));
 
     return widgets;
   }
 
-  List<Widget> addElectricVehicleTiles(LoadableVehicle vehicle) {
+  List<Widget> addElectricVehicleTiles(ChargeableVehicle vehicle) {
     List<Widget> widgets = [];
     widgets.add(SwitchListTile(
       title:
