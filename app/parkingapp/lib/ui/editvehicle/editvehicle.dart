@@ -107,6 +107,7 @@ class _VehicleFormState extends State<VehicleForm> {
               onChanged: (bool newValue) => setState(() {
                 _vehicleChargeable = newValue;
                 if (_vehicleChargeable) {
+                  LoadableVehicle tempVehicle = vehicle;
                   _electricToggles.addAll([
                     Divider(),
                     SwitchListTile(
@@ -118,6 +119,7 @@ class _VehicleFormState extends State<VehicleForm> {
                     Divider(),
                     ListTile(
                       title: Text('Ladeanbieter'),
+                      subtitle: Text(tempVehicle.chargingProvider),
                       onTap: () => showDialog(
                           context: context,
                           builder: (context) => ChargingProviderDialog()),
@@ -125,6 +127,10 @@ class _VehicleFormState extends State<VehicleForm> {
                     Divider(),
                     ListTile(
                       title: Text('Ladeuhrzeit'),
+                      subtitle: Text('Begin: ' +
+                          tempVehicle.chargeTimeBegin.toString() +
+                          ' Ende: ' +
+                          tempVehicle.chargeTimeEnd.toString()),
                       onTap: () => showDialog(
                           context: context,
                           builder: (context) => ChargeTimeDialog()),
@@ -143,12 +149,23 @@ class _VehicleFormState extends State<VehicleForm> {
             Divider(),
             ListTile(
                 title: Text('Parkpräferenzen'),
+                subtitle: Text('Parkkarte: ' +
+                    vehicle.parkingCard.toString() +
+                    ' Ausgang: ' +
+                    vehicle.nearExitPreference.toString()),
                 onTap: () => showDialog(
                     context: context,
                     builder: (context) => ParkPreferencesDialog())),
             Divider(),
             ListTile(
               title: Text('Fahrzeugabmessungen'),
+              subtitle: Text('Länge: ' +
+                  vehicle.length.toString() +
+                  'm Breite: ' +
+                  vehicle.width.toString() +
+                  'm Höhe: ' +
+                  vehicle.height.toString() +
+                  'm'),
               onTap: () => showDialog(
                   context: context,
                   builder: (context) => VehicleDimensionsDialog()),
