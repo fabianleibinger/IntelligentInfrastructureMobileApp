@@ -123,7 +123,7 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-catkin_install_python(PROGRAMS bin/ParkApp_Flask_Server.py scripts/listener.py scripts/Service_Server.py scripts/parking_communication.py
+catkin_install_python(PROGRAMS bin/parking_app_flask_server.py scripts/Service_Server.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
