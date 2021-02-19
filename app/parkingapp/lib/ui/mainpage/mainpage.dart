@@ -13,6 +13,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 Vehicle currentVehicle = LoadableVehicle(
     Utility.generateKey(),
@@ -29,11 +30,8 @@ Vehicle currentVehicle = LoadableVehicle(
     DateTime.now(),
     DateTime.now(),
     "45");
-final currentParkingGarage = ParkingGarage(
-    'Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage,
-    79,
-    'assets/parkgarage-fasanengarten.jpg');
+final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 final parkingGarageImageHeight = 250;
 final bottomMargin = 80;
 
@@ -53,6 +51,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  //initialize push messages
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  String messageTitle = "Empty";
+  String notificationAlert = "alert";
   @override
   void initState() {
     super.initState();
@@ -64,6 +66,20 @@ class _MainPageState extends State<MainPage> {
         for (Vehicle vehicle in vehicleList) {
           print(vehicle.toString());
         }
+      },
+    );
+    _firebaseMessaging.configure(
+      onMessage: (message) async {
+        setState(() {
+          messageTitle = message["notification"]["title"];
+          notificationAlert = "New Notification Alert";
+        });
+      },
+      onResume: (message) async {
+        setState(() {
+          messageTitle = message["data"]["title"];
+          notificationAlert = "Application opened from Notification";
+        });
       },
     );
   }

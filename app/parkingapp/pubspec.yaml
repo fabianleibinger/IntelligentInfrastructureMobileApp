@@ -29,6 +29,7 @@ dependencies:
   dependencies:
   settings_ui: ^0.6.0
   shared_preferences_settings: ^1.2.0
+  firebase_messaging: ^7.0.3
 
 
   # The following adds the Cupertino Icons font to your application.

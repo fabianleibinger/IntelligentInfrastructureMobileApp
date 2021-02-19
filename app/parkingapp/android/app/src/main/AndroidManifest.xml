@@ -10,8 +10,6 @@
         android:label="parkingapp"
         android:icon="@mipmap/ic_launcher">
         <activity
-            android:name=".MainActivity"
-            <!-- for firebase push notifications-->
             android:name=".Application"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
