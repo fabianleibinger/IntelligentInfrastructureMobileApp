@@ -12,13 +12,20 @@ threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=T
 
 
 def retrieve_free_parking_spots_from_pms():
-    rospy.wait_for_service('capacity_request', 5)
+    try:
+        rospy.wait_for_service('capacity_request', 5)
+    except rospy.exceptions.ROSException as ros_exception:
+        raise CommunicationRosServiceException(str(ros_exception))
     try:
         capacity_request = rospy.ServiceProxy('capacity_request', CapacityRequest)
         capacities = capacity_request()
         return capacities
-    except rospy.ServiceException as exception:
-        print("Service call failed: %s" % exception)
+    except rospy.ServiceException as service_exception:
+        raise CommunicationRosServiceException(str(service_exception))
+
+
+class CommunicationRosServiceException(Exception):
+    pass
 
 
 def request_free_parking_spots(electric):
@@ -52,3 +59,4 @@ def request_capacities(free):
                         'electric_fast': electric_fast,
                         'electric_inductive': electric_inductive})
     
+

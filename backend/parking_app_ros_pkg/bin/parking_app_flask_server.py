@@ -1,10 +1,10 @@
 import os
 import configparser
-from enum import Enum
+from flask import Flask, jsonify, request, Response
 
+# parking_communication python module provides the logic for
+# communication between flask server and ROS nodes
 import parking_app_python_pkg.parking_communication as communication
-
-from flask import Flask, request, Response
 
 ############################################################################
 # Start Flask server with configuration from config.properties file
@@ -20,9 +20,14 @@ config.read(configFilePath)
 url_address = config['server']['ipAddress']
 port = config.getint('server', 'port')
 
+parking_garage_name = config['parking garage']['name']
+
+############################################################################
+
+communication_failed_message = "The parking garage management system could not return the current capacity."
+
 ############################################################################
 # Routes
-
 @app.route('/')
 def main():
     """
@@ -33,8 +38,8 @@ def main():
 
 
 @app.route('/connect')
-def connect():
-    return
+def return_connection_information():
+    return jsonify({'IP': url_address, 'Port': port, 'Parking garage': parking_garage_name})
 
 
 @app.route('/testJson')
@@ -47,22 +52,34 @@ def test_extract_content_from_json():
 
 @app.route('/capacities')
 def get_capacities():
-    return communication.request_capacities(False)
+    try:
+        return communication.request_capacities(False)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
 @app.route('/free')
 def get_free_capacities():
-    return communication.request_capacities(True)
+    try:
+        return communication.request_capacities(True)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
 @app.route('/free/total')
 def all_free_parking_spots():
-    return communication.request_free_parking_spots(False)
+    try:
+        return communication.request_free_parking_spots(False)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
 @app.route('/free/electric')
 def electric_free_parking_spots():
-    return communication.request_free_parking_spots(True)
+    try:
+        return communication.request_free_parking_spots(True)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
 @app.route('/parkIn')
@@ -89,4 +106,5 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 
