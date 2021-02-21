@@ -233,7 +233,6 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 }
 
 class _UpdateMainPageVehicle {
-  //TODO insert dummy vehicle into DB and create a clenUp method that removes the DB vehicle if the form is cancled
   static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
       print('set new electric vehicle on main page');
@@ -265,5 +264,10 @@ class _UpdateMainPageVehicle {
       print('converting standard vehicle to electric vehicle in database');
       DataHelper.updateVehicle(context, vehicle);
     }
+  }
+
+  static Future<bool> cleanUp({@required BuildContext context}) async {
+    DataHelper.deleteVehicle(context, vehicle);
+    return true;
   }
 }
