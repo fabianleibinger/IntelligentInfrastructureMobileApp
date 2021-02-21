@@ -33,7 +33,7 @@ class EditVehicle extends StatelessWidget {
         : null;
 
     //update vehicle in MainPage
-    _UpdateMainPageVehicle(parseVehicle: vehicle);
+    _UpdateMainPageVehicle(context: context, parseVehicle: vehicle);
     return Scaffold(
       appBar: AppBar(
         title: Text('Edit Vehicle'),
@@ -51,7 +51,7 @@ class CreateVehicle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    _UpdateMainPageVehicle();
+    _UpdateMainPageVehicle(context: context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Vehicle'),
@@ -211,9 +211,8 @@ class _VehicleFormState extends State<VehicleForm> {
         vehicle = convertVehicle.toStandardVehicle();
       }
       // create/update the vehicle
-      widget.vehicle == null
-          ? DataHelper.addVehicle(context, vehicle)
-          : DataHelper.updateVehicle(context, vehicle);
+      //this will only "update" the vehicle because it has been created at the start
+      DataHelper.updateVehicle(context, vehicle);
       form.reset();
       //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
       Navigator.of(context).pop();
@@ -234,7 +233,8 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 }
 
 class _UpdateMainPageVehicle {
-  _UpdateMainPageVehicle({Vehicle parseVehicle}) {
+  //TODO insert dummy vehicle into DB and create a clenUp method that removes the DB vehicle if the form is cancled
+  _UpdateMainPageVehicle({BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
       print('set new electric vehicle on main page');
       vehicle = ChargeableVehicle(
@@ -253,6 +253,8 @@ class _UpdateMainPageVehicle {
         TimeOfDay(hour: 0, minute: 0),
         TimeOfDay(hour: 0, minute: 0),
       );
+      print('adding dummy vehicle to database');
+      DataHelper.addVehicle(context, vehicle);
     } else if (parseVehicle.runtimeType == ChargeableVehicle) {
       print('parsedVehicle is electric; using parsed vehicle as is');
       vehicle = parseVehicle;
@@ -260,6 +262,8 @@ class _UpdateMainPageVehicle {
       print('parsedVehicle is standard; converting into electric');
       StandardVehicle convertVehicle = parseVehicle;
       vehicle = convertVehicle.toElectricVehicle();
+      print('converting standard vehicle to electric vehicle in database');
+      DataHelper.updateVehicle(context, vehicle);
     }
   }
 }
