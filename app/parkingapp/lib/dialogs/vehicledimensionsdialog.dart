@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -79,8 +81,13 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
   }
 
   void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
-    //vehicle.setDimensions(context, exampleVehicle.height, exampleVehicle.width,
-    //    exampleVehicle.length);
+    //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
+    //TODO move this into an updateDimensions method within the vehicle
+    vehicle.height = exampleVehicle.height;
+    vehicle.length = exampleVehicle.length;
+    vehicle.width = exampleVehicle.width;
+    vehicle.height = exampleVehicle.height;
+    DataHelper.updateVehicle(context, vehicle);
   }
 
   List<ExampleVehicle> _parseJson(String response) {
