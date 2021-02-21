@@ -234,7 +234,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 
 class _UpdateMainPageVehicle {
   //TODO insert dummy vehicle into DB and create a clenUp method that removes the DB vehicle if the form is cancled
-  _UpdateMainPageVehicle({BuildContext context, Vehicle parseVehicle}) {
+  static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
       print('set new electric vehicle on main page');
       vehicle = ChargeableVehicle(
