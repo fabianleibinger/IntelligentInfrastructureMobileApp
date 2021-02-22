@@ -40,9 +40,12 @@ class _MainPageState extends State<MainPage> {
   final _parkingGarageImageHeight = 250;
   final _bottomMargin = 80;
 
+  bool _buttonIsDisabled;
+
   @override
   void initState() {
     super.initState();
+    _buttonIsDisabled = false;
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -53,8 +56,17 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  //enables button according to free parking spots
+  _setButtonIsDisabled() {
+    bool disable = currentParkingGarage.getFreeParkingSpots() <= 0;
+    setState(() {
+      _buttonIsDisabled = disable;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _setButtonIsDisabled();
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
         if (previous.hashCode != current.hashCode)
@@ -78,8 +90,11 @@ class _MainPageState extends State<MainPage> {
             ),
             drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => ParkPage()))
+              backgroundColor: _buttonIsDisabled ? grey : green,
+              onPressed: _buttonIsDisabled
+                  ? () => currentParkingGarage.getFreeParkingSpots()
+                  : () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ParkPage()))
               /*showDialog(
                     context: context,
                     builder: (context) {
