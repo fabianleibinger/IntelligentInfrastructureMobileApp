@@ -242,6 +242,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 }
 
 class _UpdateMainPageVehicle {
+  //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
   static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
       print('set new electric vehicle on main page');
@@ -275,8 +276,36 @@ class _UpdateMainPageVehicle {
     }
   }
 
-  static Future<bool> cleanUp({@required BuildContext context}) async {
-    DataHelper.deleteVehicle(context, vehicle);
+  static Future<bool> cleanUp(
+      {@required BuildContext context, Vehicle parseVehicle}) async {
+    print('starting clean up');
+    if (parseVehicle == null) {
+      print('removing dummy vehicle');
+      //the behicle did not exist before opening the form and needs to be removed
+      DataHelper.deleteVehicle(context, vehicle);
+    } else {
+      print('restoring previous state');
+      print('previous vehicle: inAppID: ' +
+          parseVehicle.inAppKey +
+          ' name: ' +
+          parseVehicle.name +
+          ' licensePlate: ' +
+          parseVehicle.licensePlate +
+          ' parkpreferences: ' +
+          parseVehicle.nearExitPreference.toString() +
+          parseVehicle.parkingCard.toString());
+      print('temporary vehicle: inAppID: ' +
+          vehicle.inAppKey +
+          ' name: ' +
+          vehicle.name +
+          ' licensePlate: ' +
+          vehicle.licensePlate +
+          ' parkpreferences: ' +
+          vehicle.nearExitPreference.toString() +
+          vehicle.parkingCard.toString());
+      //restore the previous state
+      DataHelper.updateVehicle(context, parseVehicle);
+    }
     return true;
   }
 }
