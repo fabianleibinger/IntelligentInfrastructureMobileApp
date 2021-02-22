@@ -271,11 +271,12 @@ class _UpdateMainPageVehicle {
       print('parsedVehicle is electric; using parsed vehicle as is');
       vehicle = parseVehicle;
     } else if (parseVehicle.runtimeType == StandardVehicle) {
+      DataHelper.deleteVehicle(context, vehicle);
       print('parsedVehicle is standard; converting into electric');
       StandardVehicle convertVehicle = parseVehicle;
       vehicle = convertVehicle.toElectricVehicle();
       print('converting standard vehicle to electric vehicle in database');
-      DataHelper.updateVehicle(context, vehicle);
+      DataHelper.addVehicle(context, vehicle);
     }
   }
 
