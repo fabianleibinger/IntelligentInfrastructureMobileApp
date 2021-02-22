@@ -7,6 +7,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -164,6 +165,14 @@ class _MainPageState extends State<MainPage> {
       value: vehicle.parkingCard,
     ));
 
+    widgets.add(ListTile(
+        title: Text('Parkpräferenzen'),
+        subtitle: Text('Parkkarte: ' +
+            vehicle.parkingCard.toString() +
+            ' Ausgang: ' +
+            vehicle.nearExitPreference.toString()),
+        onTap: () => _showDialog(context, ParkPreferencesDialog())));
+
     // electric vehicle toggles
     if (vehicle.runtimeType == ChargeableVehicle)
       widgets.addAll(addElectricVehicleTiles(vehicle));
@@ -184,5 +193,10 @@ class _MainPageState extends State<MainPage> {
       value: vehicle.doCharge,
     ));
     return widgets;
+  }
+
+  void _showDialog(BuildContext context, Widget dialog) async {
+    await showDialog(context: context, builder: (context) => dialog);
+    setState(() {});
   }
 }
