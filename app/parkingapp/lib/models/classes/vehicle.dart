@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //cannot be instantiated
 abstract class Vehicle {
@@ -35,6 +37,12 @@ abstract class Vehicle {
     }
 
     return map;
+  }
+
+  //TODO implement
+  void parkIn(BuildContext context) {
+    print(this.name + ' wird eingeparkt');
+    this.parkedIn = !this.parkedIn;
   }
 
   //setter which includes database updating

@@ -16,6 +16,8 @@ import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // example for a page (mainpage)
 
 class VehiclePage extends StatefulWidget {
@@ -41,7 +43,7 @@ class _VehiclePageState extends State<VehiclePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Vehicle', style: whiteHeader),
+          title: Text(AppLocalizations.of(context).vehiclePageTitle, style: whiteHeader),
         ),
         //TODO use routeName
         drawer: AppDrawer(),

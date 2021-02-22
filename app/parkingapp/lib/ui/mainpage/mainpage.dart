@@ -12,12 +12,13 @@ import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/ui/parkpage/parkpage.dart';
 
 Vehicle vehicle;
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
-
+    ParkingGarageType.Tiefgarage, 0, 'assets/parkgarage-fasanengarten.jpg');
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -77,14 +78,17 @@ class _MainPageState extends State<MainPage> {
             ),
             drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                showDialog(
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => ParkPage()))
+              /*showDialog(
                     context: context,
                     builder: (context) {
                       return VehicleDimensionsDialog();
                     });
                 //DatabaseProvider.db.clear();
-              },
+
+                 */
+              ,
               label: Text(AppLocalizations.of(context).actionButtonPark),
             ),
             floatingActionButtonLocation:
