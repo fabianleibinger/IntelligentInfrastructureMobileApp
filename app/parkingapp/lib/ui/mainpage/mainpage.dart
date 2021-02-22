@@ -66,6 +66,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    //check if button should be disabled
     _setButtonIsDisabled();
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
