@@ -16,6 +16,7 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
@@ -42,7 +43,7 @@ class EditVehicle extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text('Edit Vehicle'),
+          title: Text(AppLocalizations.of(context).editVehicleTitle),
         ),
         body: VehicleForm(
           vehicle: vehicle,
@@ -63,7 +64,7 @@ class CreateVehicle extends StatelessWidget {
       onWillPop: () => _UpdateMainPageVehicle.cleanUp(context: context),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add Vehicle'),
+          title: Text(AppLocalizations.of(context).addVehicleTitle),
         ),
         body: VehicleForm(),
       ),
@@ -100,14 +101,16 @@ class _VehicleFormState extends State<VehicleForm> {
           children: [
             TextFormField(
               autocorrect: false,
-              decoration: InputDecoration(labelText: 'Fahrzeugname'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context).vehicleName),
               initialValue: vehicle.name,
               validator: (str) => requiredValue(str),
               onSaved: (str) => vehicle.name = str,
             ),
             TextFormField(
               autocorrect: false,
-              decoration: InputDecoration(labelText: 'KFZ-Kennzeichen'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context).licensePlate),
               initialValue: vehicle.licensePlate,
               validator: (str) => requiredValue(str),
               onSaved: (str) => vehicle.licensePlate = str,
@@ -126,29 +129,29 @@ class _VehicleFormState extends State<VehicleForm> {
             //generic toggles for all vehicles
             Divider(),
             ListTile(
-                title: Text('Parkpräferenzen'),
-                subtitle: Text('Parkkarte: ' +
+                title: Text(AppLocalizations.of(context).parkPreferences),
+                subtitle: Text(AppLocalizations.of(context).parkingCard +
                     vehicle.parkingCard.toString() +
-                    ' Ausgang: ' +
+                    AppLocalizations.of(context).nearExitPreference +
                     vehicle.nearExitPreference.toString()),
                 onTap: () => _showDialog(context, ParkPreferencesDialog())),
             Divider(),
             ListTile(
-              title: Text('Fahrzeugabmessungen'),
-              subtitle: Text('Länge: ' +
+              title: Text(
+                  AppLocalizations.of(context).vehicleDimensionsDialogTitle),
+              subtitle: Text(AppLocalizations.of(context).length +
                   vehicle.length.toString() +
-                  'm Breite: ' +
+                  AppLocalizations.of(context).width +
                   vehicle.width.toString() +
-                  'm Höhe: ' +
-                  vehicle.height.toString() +
-                  'm'),
+                  AppLocalizations.of(context).height +
+                  vehicle.height.toString()),
               onTap: () => _showDialog(context, VehicleDimensionsDialog()),
             ),
             //end of form
             RaisedButton(
               child: widget.vehicle == null
-                  ? Text('Fahrzeug hinzufügen')
-                  : Text('Fahrzeug aktualisieren'),
+                  ? Text(AppLocalizations.of(context).addVehicleButton)
+                  : Text(AppLocalizations.of(context).editVehicleButton),
               onPressed: () => onPressed(_vehicleChargeable),
               highlightColor: Theme.of(context).accentColor,
               color: Theme.of(context).primaryColor,
@@ -177,23 +180,23 @@ class _VehicleFormState extends State<VehicleForm> {
     _electricToggles.addAll([
       Divider(),
       SwitchListTile(
-        title: Text('Fahrzeug standardmäßig laden'),
+        title: Text(AppLocalizations.of(context).chargeVehicleByDefault),
         onChanged: (bool newValue) =>
             setState(() => _vehicleDoCharge = newValue),
         value: _vehicleDoCharge,
       ),
       Divider(),
       ListTile(
-        title: Text('Ladeanbieter'),
+        title: Text(AppLocalizations.of(context).chargingProviderDialogTitle),
         subtitle: Text(tempVehicle.chargingProvider),
         onTap: () => _showDialog(context, ChargingProviderDialog()),
       ),
       Divider(),
       ListTile(
-        title: Text('Ladeuhrzeit'),
-        subtitle: Text('Begin: ' +
+        title: Text(AppLocalizations.of(context).chargeTimeDialogTitle),
+        subtitle: Text(AppLocalizations.of(context).begin +
             tempVehicle.chargeTimeBegin.toString() +
-            ' Ende: ' +
+            AppLocalizations.of(context).end +
             tempVehicle.chargeTimeEnd.toString()),
         onTap: () => _showDialog(context, ChargeTimeDialog()),
       )
@@ -206,7 +209,7 @@ class _VehicleFormState extends State<VehicleForm> {
   // returns a string if no text is provided, otherwise null
   // if null is returned the validator accepts the string
   String requiredValue(String str) {
-    return str.isEmpty ? "Erforderlich" : null;
+    return str.isEmpty ? AppLocalizations.of(context).requiredText : null;
   }
 
   //validate the form
