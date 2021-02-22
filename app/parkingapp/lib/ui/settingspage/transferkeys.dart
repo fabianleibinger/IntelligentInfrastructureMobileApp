@@ -1,0 +1,18 @@
+import 'package:flutter/material.dart';
+import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/settingspage/settingspage.dart';
+
+class Transferkeys extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+            title: Text('Daten übertragen', style: whiteHeader),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.popAndPushNamed(context, SettingsPage.routeName);
+              },
+            )));
+  }
+}

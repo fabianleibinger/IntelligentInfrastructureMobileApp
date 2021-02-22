@@ -7,6 +7,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,6 +66,12 @@ class Main extends StatelessWidget {
         //editVehicle route
         if (settings.name == Routes.createVehicle) {
           return MaterialPageRoute(builder: (context) => CreateVehicle());
+        if (settings.name == EditVehicle.routeName) {
+          return MaterialPageRoute(builder: (context) => EditVehicle());
+        }
+        //AGB route
+        if (settings.name == AGB.routeName) {
+          return MaterialPageRoute(builder: (context) => AGB());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
