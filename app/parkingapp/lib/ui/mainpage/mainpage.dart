@@ -114,9 +114,11 @@ class _MainPageState extends State<MainPage> {
                             fit: BoxFit.cover,
                           )),
                         ),
-                        ListView(
-                          shrinkWrap: true,
-                          children: buildCarToggles(vehicle),
+                        Expanded(
+                          child: ListView(
+                            shrinkWrap: true,
+                            children: buildCarToggles(vehicle),
+                          ),
                         ),
                       ],
                     ),
