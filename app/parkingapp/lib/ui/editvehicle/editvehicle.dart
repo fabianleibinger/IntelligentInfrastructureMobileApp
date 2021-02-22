@@ -214,14 +214,17 @@ class _VehicleFormState extends State<VehicleForm> {
     if (form.validate()) {
       form.save();
 
+      //update does not work if the runtime type changes
+      DataHelper.deleteVehicle(context, vehicle);
       //convert vehicle to standardvehicle if necessary
       if (!vehicleChargeable) {
+        print('converting to standard vehicle');
         ChargeableVehicle convertVehicle = vehicle;
         vehicle = convertVehicle.toStandardVehicle();
       }
       // create/update the vehicle
       //this will only "update" the vehicle because it has been created at the start
-      DataHelper.updateVehicle(context, vehicle);
+      DataHelper.addVehicle(context, vehicle);
       form.reset();
       //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
       Navigator.of(context).pop();
