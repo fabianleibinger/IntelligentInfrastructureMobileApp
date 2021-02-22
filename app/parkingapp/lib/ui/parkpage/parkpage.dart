@@ -19,6 +19,7 @@ class _ParkPageState extends State<ParkPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    vehicle.parkIn(context);
   }
 
   @override
@@ -29,7 +30,7 @@ class _ParkPageState extends State<ParkPage> {
       floatingActionButton: FloatingActionButton.extended(
         label: Text(AppLocalizations.of(context).actionButtonCancelPark),
         backgroundColor: red,
-        onPressed: () {Navigator.pop(context);},
+        onPressed: () {Navigator.pushReplacementNamed(context, vehicle.inAppKey);},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Text('Hello'),

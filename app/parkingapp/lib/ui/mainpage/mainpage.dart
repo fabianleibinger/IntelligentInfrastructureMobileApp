@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
@@ -18,7 +19,7 @@ import 'package:parkingapp/ui/parkpage/parkpage.dart';
 
 Vehicle vehicle;
 final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 0, 'assets/parkgarage-fasanengarten.jpg');
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -95,15 +96,10 @@ class _MainPageState extends State<MainPage> {
               onPressed: () {
                 _setButtonIsDisabled();
                 if (!_buttonIsDisabled) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ParkPage()));
+                  ParkDialog.createParkInDialog(context);
                 }
               }
-              /*showDialog(
-                    context: context,
-                    builder: (context) {
-                      return VehicleDimensionsDialog();
-                    });
+              /*
                 //DatabaseProvider.db.clear();
 
                  */
