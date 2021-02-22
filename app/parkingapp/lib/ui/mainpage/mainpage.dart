@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  //enables button according to free parking spots
+  //disables button according to free parking spots
   _setButtonIsDisabled() {
     bool disable = currentParkingGarage.getFreeParkingSpots() <= 0;
     setState(() {
