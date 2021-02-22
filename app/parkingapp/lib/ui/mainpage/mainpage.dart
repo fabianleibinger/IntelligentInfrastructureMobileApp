@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
-        if (previous.length != current.length)
+        if (previous.hashCode != current.hashCode)
           return true;
         else
           return false;
