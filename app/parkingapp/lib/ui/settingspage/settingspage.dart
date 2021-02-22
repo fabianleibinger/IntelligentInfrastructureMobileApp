@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/bloc/blocs/userbloc.dart';
 import 'package:parkingapp/dialogs/agbsdialog.dart';
-import 'package:parkingapp/dialogs/profileqrdialog.dart';
-import 'package:parkingapp/dialogs/vehicleqrdialog.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
