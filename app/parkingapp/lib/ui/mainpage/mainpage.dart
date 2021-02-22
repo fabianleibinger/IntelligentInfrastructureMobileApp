@@ -91,10 +91,13 @@ class _MainPageState extends State<MainPage> {
             drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
               backgroundColor: _buttonIsDisabled ? grey : green,
-              onPressed: _buttonIsDisabled
-                  ? () => currentParkingGarage.getFreeParkingSpots()
-                  : () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ParkPage()))
+              onPressed: () {
+                _setButtonIsDisabled();
+                if (!_buttonIsDisabled) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ParkPage()));
+                }
+              }
               /*showDialog(
                     context: context,
                     builder: (context) {
