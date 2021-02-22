@@ -4,6 +4,7 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 
 class ParkPage extends StatefulWidget {
   static const String routeName = '/parkpage';
@@ -33,7 +34,12 @@ class _ParkPageState extends State<ParkPage> {
         onPressed: () {Navigator.pushReplacementNamed(context, vehicle.inAppKey);},
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Text('Hello'),
+      body: ListTile(
+        //leading: Icon(Icons.location_on),
+        title: Text(currentParkingGarage.name),
+        subtitle:
+        Text(currentParkingGarage.type.toShortString()),
+      ),
     );
   }
 }
