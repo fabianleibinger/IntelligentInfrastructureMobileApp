@@ -1,22 +1,15 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
-import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
@@ -149,22 +142,6 @@ class _MainPageState extends State<MainPage> {
         .toList());
 
     // vehicle specific toggles
-    widgets.add(SwitchListTile(
-      title: Text(AppLocalizations.of(context).nearExitPreference),
-      onChanged: (bool newValue) {
-        setState(() => vehicle.setNearExitPreference(context, newValue));
-      },
-      value: vehicle.nearExitPreference,
-    ));
-
-    widgets.add(SwitchListTile(
-      title: Text(AppLocalizations.of(context).parkingCard),
-      onChanged: (bool newValue) {
-        setState(() => vehicle.setParkingCard(context, newValue));
-      },
-      value: vehicle.parkingCard,
-    ));
-
     widgets.add(ListTile(
         title: Text('Parkpräferenzen'),
         subtitle: Text('Parkkarte: ' +
