@@ -33,13 +33,19 @@ class EditVehicle extends StatelessWidget {
         : null;
 
     //update vehicle in MainPage
-    _UpdateMainPageVehicle(context: context, parseVehicle: vehicle);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Vehicle'),
-      ),
-      body: VehicleForm(
-        vehicle: vehicle,
+    _UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
+    return WillPopScope(
+      onWillPop: () {
+        return _UpdateMainPageVehicle.cleanUp(
+            context: context, parseVehicle: this.vehicle);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Edit Vehicle'),
+        ),
+        body: VehicleForm(
+          vehicle: vehicle,
+        ),
       ),
     );
   }
@@ -51,12 +57,15 @@ class CreateVehicle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    _UpdateMainPageVehicle(context: context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Vehicle'),
+    _UpdateMainPageVehicle.setUp(context: context);
+    return WillPopScope(
+      onWillPop: () => _UpdateMainPageVehicle.cleanUp(context: context),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Add Vehicle'),
+        ),
+        body: VehicleForm(),
       ),
-      body: VehicleForm(),
     );
   }
 }
