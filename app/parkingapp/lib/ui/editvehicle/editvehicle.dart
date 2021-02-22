@@ -41,6 +41,7 @@ class EditVehicle extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('Edit Vehicle'),
         ),
         body: VehicleForm(
