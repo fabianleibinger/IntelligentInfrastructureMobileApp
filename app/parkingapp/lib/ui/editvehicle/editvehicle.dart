@@ -8,6 +8,7 @@ import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
+import 'package:parkingapp/models/enum/chargingprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,6 +17,8 @@ final double _notSpecifiedDouble = 0;
 final String _notSpecifiedString = '';
 final bool _notSpecifiedBool = false;
 final TimeOfDay _notSpecifiedTimeOfDay = TimeOfDay(hour: 0, minute: 0);
+final String _defaultChargingProvider =
+    ChargingProvider.Automatisch.toShortString();
 
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
@@ -283,7 +286,7 @@ class _UpdateMainPageVehicle {
         _notSpecifiedBool,
         _notSpecifiedBool,
         _notSpecifiedBool,
-        _notSpecifiedString,
+        _defaultChargingProvider,
         _notSpecifiedTimeOfDay,
         _notSpecifiedTimeOfDay,
       );
