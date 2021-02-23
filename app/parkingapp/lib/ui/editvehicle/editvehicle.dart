@@ -141,7 +141,7 @@ class _VehicleFormState extends State<VehicleForm> {
             ListTile(
               title: Text(
                   AppLocalizations.of(context).vehicleDimensionsDialogTitle),
-              subtitle: _vehicleDimensionsSubtitle(context: context),
+              subtitle: _vehicleDimensionsSubtitle(context),
               onTap: () => _showDialog(context, VehicleDimensionsDialog()),
             ),
             //end of form
@@ -235,7 +235,7 @@ class _VehicleFormState extends State<VehicleForm> {
     }
   }
 
-  Text _vehicleDimensionsSubtitle({BuildContext context}) {
+  Text _vehicleDimensionsSubtitle(BuildContext context) {
     if (vehicle.height == _notSpecifiedDouble &&
         vehicle.width == _notSpecifiedDouble &&
         vehicle.height == _notSpecifiedDouble &&
