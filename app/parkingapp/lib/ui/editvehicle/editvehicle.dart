@@ -12,7 +12,7 @@ import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-final double _notSpecified = 0;
+final double _notSpecifiedDouble = 0;
 
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
@@ -230,10 +230,10 @@ class _VehicleFormState extends State<VehicleForm> {
   }
 
   Text _vehicleDimensionsSubtitle({BuildContext context}) {
-    if (vehicle.height == _notSpecified &&
-        vehicle.width == _notSpecified &&
-        vehicle.height == _notSpecified &&
-        vehicle.turningCycle == _notSpecified) return null;
+    if (vehicle.height == _notSpecifiedDouble &&
+        vehicle.width == _notSpecifiedDouble &&
+        vehicle.height == _notSpecifiedDouble &&
+        vehicle.turningCycle == _notSpecifiedDouble) return null;
     return Text(AppLocalizations.of(context).length +
         AppLocalizations.of(context).colonSpace +
         (vehicle.length / 1000).toStringAsPrecision(3) +
@@ -272,10 +272,10 @@ class _UpdateMainPageVehicle {
         Utility.generateKey(),
         '',
         '',
-        _notSpecified,
-        _notSpecified,
-        _notSpecified,
-        _notSpecified,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
         false,
         false,
         false,
