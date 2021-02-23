@@ -18,19 +18,21 @@ class ParkDialog {
   }
 
   static createParkOutDialog(BuildContext context) {
-    return Constants.createAlertDialogNoTitleAssignButton(
+    return Constants.createAlertDialogNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
-        getParkOutButton(context));
+        AppLocalizations.of(context).parkDialogParkOutButton,
+        Routes.park);
   }
 
   static createParkInCancelDialog(BuildContext context) {
-    return Constants.createAlertDialogNoTitleAssignButton(
+    return Constants.createAlertDialogNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
-        getParkOutButton(context));
+        AppLocalizations.of(context).parkDialogParkOutButton,
+        Routes.park);
   }
 
   static createParkOutFinishedDialog(BuildContext context) {
@@ -39,7 +41,8 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkOutFinishedContent,
         AppLocalizations.of(context).dialogFinishedButton);
   }
-  
+
+  //TODO remove
   //button that triggers vehicle park out method
   static getParkOutButton(BuildContext context) {
     return FlatButton(

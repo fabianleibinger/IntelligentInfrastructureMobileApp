@@ -33,12 +33,14 @@ class Constants {
         });
   }
 
-  //creates an alert dialog with text and two buttons, one to be assigned
-  static createAlertDialogNoTitleAssignButton(
+  //creates an alert dialog with text and two buttons
+  static createAlertDialogNoTitle(
       BuildContext context,
       String content,
       String cancelButtonText,
-      FlatButton confirmButton) {
+      String confirmButtonText,
+      String confirmButtonNextPage
+      ) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -46,7 +48,8 @@ class Constants {
             content: Text(content),
             actions: [
               createBackFlatButton(context, red, cancelButtonText),
-              confirmButton
+              createFlatButton(
+                  context, green, confirmButtonText, confirmButtonNextPage)
             ],
           );
         });
