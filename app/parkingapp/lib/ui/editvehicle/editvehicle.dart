@@ -114,7 +114,7 @@ class _VehicleFormState extends State<VehicleForm> {
             //TODO animate expand
             //TODO move this into a seperate Form
             SwitchListTile(
-              title: Text('Fahrzeug ist ladefähig'),
+              title: Text(AppLocalizations.of(context).vehicleCanCharge),
               onChanged: (bool newValue) =>
                   setState(() => _vehicleChargeable = newValue),
               value: _vehicleChargeable,

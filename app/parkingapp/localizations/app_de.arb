@@ -174,5 +174,7 @@
     "addVehicleTitle": "Neues Fahrzeug",
     "@addVehicleTitle": {},
     "editVehicleTitle": "Fahrzeug bearbeiten",
-    "@editVehicleTitle": {}
+    "@editVehicleTitle": {},
+    "vehicleCanCharge": "Fahrzeug ist ladefähig",
+    "@vehicleCanCharge": {}
 }
