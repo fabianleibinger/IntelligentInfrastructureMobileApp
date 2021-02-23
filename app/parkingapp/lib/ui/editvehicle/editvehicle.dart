@@ -13,6 +13,9 @@ import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final double _notSpecifiedDouble = 0;
+final String _notSpecifiedString = '';
+final bool _notSpecifiedBool = false;
+final TimeOfDay _notSpecifiedTimeOfDay = TimeOfDay(hour: 0, minute: 0);
 
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
@@ -270,19 +273,19 @@ class _UpdateMainPageVehicle {
       print('set new electric vehicle on main page');
       vehicle = ChargeableVehicle(
         Utility.generateKey(),
-        '',
-        '',
+        _notSpecifiedString,
+        _notSpecifiedString,
         _notSpecifiedDouble,
         _notSpecifiedDouble,
         _notSpecifiedDouble,
         _notSpecifiedDouble,
-        false,
-        false,
-        false,
-        false,
-        '',
-        TimeOfDay(hour: 0, minute: 0),
-        TimeOfDay(hour: 0, minute: 0),
+        _notSpecifiedBool,
+        _notSpecifiedBool,
+        _notSpecifiedBool,
+        _notSpecifiedBool,
+        _notSpecifiedString,
+        _notSpecifiedTimeOfDay,
+        _notSpecifiedTimeOfDay,
       );
       print('adding dummy vehicle to database');
       DataHelper.addVehicle(context, vehicle);
