@@ -46,16 +46,16 @@ class _MainPageState extends State<MainPage> {
         }
       },
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
     //get vehicle that shall be used from the list of vehicles
     for (Vehicle currentVehicle
         in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     print('MainPage: vehicle: ' +
         vehicle.name +
         ' license plate: ' +
