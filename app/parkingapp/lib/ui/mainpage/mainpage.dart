@@ -50,81 +50,70 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VehicleBloc, List<Vehicle>>(
-      buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
-        if (previous.hashCode != current.hashCode)
-          return true;
-        else
-          return false;
-      },
-      builder: (context, vehicleList) {
-        //get vehicle that shall be used from the list of vehicles
-        for (Vehicle currentVehicle in vehicleList) {
-          if (currentVehicle.inAppKey == widget.carInAppKey)
-            vehicle = currentVehicle;
-        }
-        print('MainPage: vehicle: ' +
-            vehicle.name +
-            ' license plate: ' +
-            vehicle.licensePlate);
-        return Scaffold(
-            appBar: AppBar(
-              title: Text(vehicle.name, style: whiteHeader),
-            ),
-            drawer: AppDrawer(),
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ChargeTimeDialog();
-                    });
-                //DatabaseProvider.db.clear();
-              },
-              label: Text(AppLocalizations.of(context).actionButtonPark),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            body: Column(
-              children: [
-                Expanded(
-                  child: Card(
-                    margin: EdgeInsets.all(0),
-                    elevation: 10,
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          //leading: Icon(Icons.location_on),
-                          title: Text(currentParkingGarage.name),
-                          subtitle:
-                              Text(currentParkingGarage.type.toShortString()),
-                        ),
-                        Container(
-                          height: parkingGarageImageHeight.toDouble(),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(currentParkingGarage.image),
-                            fit: BoxFit.cover,
-                          )),
-                        ),
-                        Expanded(
-                          child: ListView(
-                            shrinkWrap: true,
-                            children: buildCarToggles(vehicle),
-                          ),
-                        ),
-                      ],
+    //get vehicle that shall be used from the list of vehicles
+    for (Vehicle currentVehicle
+        in BlocProvider.of<VehicleBloc>(context).state) {
+      if (currentVehicle.inAppKey == widget.carInAppKey)
+        vehicle = currentVehicle;
+    }
+    print('MainPage: vehicle: ' +
+        vehicle.name +
+        ' license plate: ' +
+        vehicle.licensePlate);
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(vehicle.name, style: whiteHeader),
+        ),
+        drawer: AppDrawer(),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return ChargeTimeDialog();
+                });
+            //DatabaseProvider.db.clear();
+          },
+          label: Text(AppLocalizations.of(context).actionButtonPark),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: Column(
+          children: [
+            Expanded(
+              child: Card(
+                margin: EdgeInsets.all(0),
+                elevation: 10,
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: [
+                    ListTile(
+                      //leading: Icon(Icons.location_on),
+                      title: Text(currentParkingGarage.name),
+                      subtitle: Text(currentParkingGarage.type.toShortString()),
                     ),
-                  ),
+                    Container(
+                      height: parkingGarageImageHeight.toDouble(),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage(currentParkingGarage.image),
+                        fit: BoxFit.cover,
+                      )),
+                    ),
+                    Expanded(
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: buildCarToggles(vehicle),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  height: MediaQuery.of(context).padding.bottom + bottomMargin,
-                )
-              ],
-            ));
-      },
-    );
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).padding.bottom + bottomMargin,
+            )
+          ],
+        ));
   }
 
   List<Widget> buildCarToggles(Vehicle vehicle) {
