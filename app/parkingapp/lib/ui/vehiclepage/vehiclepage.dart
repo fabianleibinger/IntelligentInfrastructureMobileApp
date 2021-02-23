@@ -6,16 +6,16 @@ import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/bloc/events/vehicleevent.dart';
 import 'package:parkingapp/dialogs/scanqrdialog.dart';
-import 'package:parkingapp/dialogs/drivesourcedialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // example for a page (mainpage)
 
 class VehiclePage extends StatefulWidget {
@@ -34,9 +34,7 @@ class _VehiclePageState extends State<VehiclePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    DatabaseProvider.db.getVehicles().then((vehicleList) {
-      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));
-    });
+    DataHelper.initVehicles(context);
   }
 
   @override
@@ -70,14 +68,33 @@ class _VehiclePageState extends State<VehiclePage> {
               print("vehicleList: $vehicleList");
 
               Vehicle vehicle = vehicleList[index];
-              return ListTile(
-                title: Text(vehicle.name),
-                subtitle: Text(vehicle.licensePlate +
-                    "; " +
-                    vehicle.databaseId.toString()),
-                //Bloc will not be updated
-                onTap: () => DatabaseProvider.db.delete(vehicle.databaseId),
-              );
+              return Dismissible(
+                  background: Container(
+                    color: Colors.red,
+                  ),
+                  key: Key(vehicle.inAppKey),
+                  onDismissed: (direction) {
+                    //remove vehicle from displayed list
+                    vehicleList.remove(vehicle.inAppKey);
+                    //remove vehicle from database and bloc
+                    DatabaseProvider.db.delete(vehicle.databaseId);
+                    BlocProvider.of<VehicleBloc>(context)
+                        .add(DeleteVehicle(vehicle));
+                    //show snackbar that vehicle has been deleted
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(vehicle.inAppKey + ' removed!'),
+                    ));
+                  },
+                  child: ListTile(
+                    title: Text(vehicle.name),
+                    subtitle: Text(vehicle.licensePlate +
+                        "; " +
+                        vehicle.databaseId.toString()),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => EditVehicle(
+                              vehicle: vehicle,
+                            ))),
+                  ));
             },
             itemCount: vehicleList.length);
       },

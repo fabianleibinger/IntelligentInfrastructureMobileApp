@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 
-class LoadableVehicle implements Vehicle {
+class ChargeableVehicle extends Vehicle {
   bool doCharge;
   String chargingProvider;
-  DateTime chargeTimeBegin, chargeTimeEnd;
-  String charge;
+  TimeOfDay chargeTimeBegin, chargeTimeEnd;
 
-  LoadableVehicle(
+  ChargeableVehicle(
       this.inAppKey,
       this.name,
       this.licensePlate,
@@ -17,14 +18,14 @@ class LoadableVehicle implements Vehicle {
       this.turningCycle,
       this.nearExitPreference,
       this.parkingCard,
+      this.parkedIn,
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd,
-      this.charge);
+      this.chargeTimeEnd);
 
   //private constructor: only called by fromMap() method, database defines databaseId
-  LoadableVehicle._(
+  ChargeableVehicle._(
       this.databaseId,
       this.inAppKey,
       this.name,
@@ -35,12 +36,13 @@ class LoadableVehicle implements Vehicle {
       this.turningCycle,
       this.nearExitPreference,
       this.parkingCard,
+      this.parkedIn,
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd,
-      this.charge);
+      this.chargeTimeEnd);
 
+  @override
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
@@ -52,11 +54,13 @@ class LoadableVehicle implements Vehicle {
       DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
       DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
       DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0,
+      DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0,
       DatabaseProvider.COLUMN_DO_CHARGE: doCharge ? 1 : 0,
       DatabaseProvider.COLUMN_CHARGING_PROVIDER: chargingProvider,
-      DatabaseProvider.COLUMN_CHARGE_TIME_BEGIN: chargeTimeBegin.toString(),
-      DatabaseProvider.COLUMN_CHARGE_TIME_END: chargeTimeEnd.toString(),
-      DatabaseProvider.COLUMN_CHARGE: charge
+      DatabaseProvider.COLUMN_CHARGE_TIME_BEGIN:
+          chargeTimeBegin.toString().split('(').last.split(')').first,
+      DatabaseProvider.COLUMN_CHARGE_TIME_END:
+          chargeTimeEnd.toString().split('(').last.split(')').first
     };
 
     if (databaseId != null) {
@@ -66,8 +70,10 @@ class LoadableVehicle implements Vehicle {
     return map;
   }
 
-  static LoadableVehicle fromMap(Map<String, dynamic> map) {
-    return LoadableVehicle._(
+  static ChargeableVehicle fromMap(Map<String, dynamic> map) {
+    String timeBegin = map[DatabaseProvider.COLUMN_CHARGE_TIME_BEGIN];
+    String timeEnd = map[DatabaseProvider.COLUMN_CHARGE_TIME_END];
+    return ChargeableVehicle._(
         map[DatabaseProvider.COLUMN_DATABASE_ID],
         map[DatabaseProvider.COLUMN_IN_APP_KEY],
         map[DatabaseProvider.COLUMN_NAME],
@@ -78,28 +84,39 @@ class LoadableVehicle implements Vehicle {
         map[DatabaseProvider.COLUMN_TURNING_CYCLE],
         map[DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE] == 1,
         map[DatabaseProvider.COLUMN_PARKING_CARD] == 1,
+        map[DatabaseProvider.COLUMN_PARKED_IN] == 1,
         map[DatabaseProvider.COLUMN_DO_CHARGE] == 1,
         map[DatabaseProvider.COLUMN_CHARGING_PROVIDER],
-        DateTime.parse(map[DatabaseProvider.COLUMN_CHARGE_TIME_BEGIN]),
-        DateTime.parse(map[DatabaseProvider.COLUMN_CHARGE_TIME_END]),
-        map[DatabaseProvider.COLUMN_CHARGE]);
+        TimeOfDay(
+            hour: int.parse(timeBegin.split(':').first),
+            minute: int.parse(timeBegin.split(':').last)),
+        TimeOfDay(
+            hour: int.parse(timeEnd.split(':').first),
+            minute: int.parse(timeEnd.split(':').last)));
   }
 
-  String getBatteryCharge() {
-    // TODO: implement getBatteryCharge
-    throw UnimplementedError();
+  //setter which includes database updating
+  void setDoCharge(BuildContext context, bool doCharge) {
+    this.doCharge = doCharge;
+    DataHelper.updateVehicle(context, this);
   }
 
-  @override
-  String setDimensions() {
-    // TODO: implement setDimensions
-    throw UnimplementedError();
+  //setter which includes database updating
+  void setChargingProvider(BuildContext context, String chargingProvider) {
+    this.chargingProvider = chargingProvider;
+    DataHelper.updateVehicle(context, this);
   }
 
-  @override
-  String setPreferences() {
-    // TODO: implement setPreferences
-    throw UnimplementedError();
+  //setter which includes database updating
+  void setChargeTimeBegin(BuildContext context, TimeOfDay begin) {
+    this.chargeTimeBegin = begin;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
+  void setChargeTimeEnd(BuildContext context, TimeOfDay end) {
+    this.chargeTimeEnd = end;
+    DataHelper.updateVehicle(context, this);
   }
 
   @override
@@ -113,4 +130,7 @@ class LoadableVehicle implements Vehicle {
 
   @override
   bool nearExitPreference, parkingCard;
+
+  @override
+  bool parkedIn;
 }

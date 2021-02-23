@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -12,22 +12,47 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/util/utility.dart';
 
 class EditVehicle extends StatelessWidget {
-  static const String routeName = '/editVehicle';
+  final Vehicle vehicle;
+  const EditVehicle({Key key, this.vehicle}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    vehicle != null
+        ? print('Update vehicle: ' +
+            vehicle.inAppKey +
+            ', ' +
+            vehicle.name +
+            ', ' +
+            vehicle.licensePlate)
+        : null;
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Edit Vehicle'),
+      ),
+      body: VehicleForm(
+        vehicle: vehicle,
+      ),
+    );
+  }
+}
+
+class CreateVehicle extends StatelessWidget {
+  static const String routeName = '/createVehicle';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Vehicle'),
+        title: Text('Add Vehicle'),
       ),
-      //replace with back button
-      drawer: AppDrawer(),
       body: VehicleForm(),
     );
   }
 }
 
 class VehicleForm extends StatefulWidget {
+  final Vehicle vehicle;
+  const VehicleForm({Key key, this.vehicle}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _VehicleFormState();
 }
@@ -39,6 +64,7 @@ class _VehicleFormState extends State<VehicleForm> {
   bool _vehicleChargeable = false,
       _parkNearExit = false,
       _parkingCard = false,
+      _parkedIn = false,
       _vehicleDoCharge = true;
   String _name, _licensePlate, _chargingProvider;
   TimeOfDay _chargeBegin = TimeOfDay(hour: 0, minute: 0),
@@ -163,9 +189,9 @@ class _VehicleFormState extends State<VehicleForm> {
       form.save();
 
       // create the vehicle that shall be added to the database
-      Vehicle vehicle;
+      Vehicle vehicle = widget.vehicle;
       if (_vehicleChargeable) {
-        vehicle = LoadableVehicle(
+        vehicle = ChargeableVehicle(
             Utility.generateKey(),
             _name,
             _licensePlate,
@@ -175,13 +201,11 @@ class _VehicleFormState extends State<VehicleForm> {
             0,
             _parkNearExit,
             _parkingCard,
+            _parkedIn,
             _vehicleDoCharge,
             _chargingProvider,
-            DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, _chargeBegin.hour, _chargeBegin.minute),
-            DateTime(DateTime.now().year, DateTime.now().month,
-                DateTime.now().day, _chargeEnd.hour, _chargeEnd.minute),
-            null);
+            _chargeBegin,
+            _chargeEnd);
         /*
        --- handly with VehiclesDimensionDialog 
       this.height,
@@ -199,7 +223,7 @@ class _VehicleFormState extends State<VehicleForm> {
       this.charge*/
       } else {
         vehicle = StandardVehicle(Utility.generateKey(), _name, _licensePlate,
-            0, 0, 0, 0, _parkNearExit, _parkingCard);
+            0, 0, 0, 0, _parkNearExit, _parkingCard, _parkedIn);
         /*this.inAppKey,
       this.name,
       this.licensePlate,
@@ -213,10 +237,14 @@ class _VehicleFormState extends State<VehicleForm> {
       this.parkingCard*/
       }
 
-      //addd vehicle to database
+      //TODO update vehicle if necessary
+      //TODO use new wrapper method
+      //add vehicle to database
       DatabaseProvider.db.insert(vehicle).then((vehicle) =>
           BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
       form.reset();
+      //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
+      Navigator.of(context).pop();
     }
   }
 }

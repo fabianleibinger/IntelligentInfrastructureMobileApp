@@ -1,4 +1,4 @@
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:sqflite/sqflite.dart';
@@ -17,11 +17,11 @@ class DatabaseProvider {
   static const String COLUMN_TURNING_CYCLE = "turningCycle";
   static const String COLUMN_NEAR_EXIT_PREFERENCE = "nearExitPreference";
   static const String COLUMN_PARKING_CARD = "parkingCard";
+  static const String COLUMN_PARKED_IN = "parkedIn";
   static const String COLUMN_DO_CHARGE = "doCharge";
   static const String COLUMN_CHARGING_PROVIDER = "chargingProvider";
   static const String COLUMN_CHARGE_TIME_BEGIN = "chargeTimeBegin";
   static const String COLUMN_CHARGE_TIME_END = "chargeTimeEnd";
-  static const String COLUMN_CHARGE = "charge";
 
   DatabaseProvider._();
   static final DatabaseProvider db = DatabaseProvider._();
@@ -61,11 +61,11 @@ class DatabaseProvider {
           "$COLUMN_TURNING_CYCLE DOUBLE,"
           "$COLUMN_NEAR_EXIT_PREFERENCE INTEGER,"
           "$COLUMN_PARKING_CARD INTEGER,"
+          "$COLUMN_PARKED_IN INTEGER,"
           "$COLUMN_DO_CHARGE INTEGER,"
           "$COLUMN_CHARGING_PROVIDER TEXT,"
           "$COLUMN_CHARGE_TIME_BEGIN TEXT,"
-          "$COLUMN_CHARGE_TIME_END TEXT,"
-          "$COLUMN_CHARGE TEXT"
+          "$COLUMN_CHARGE_TIME_END TEXT"
           ")",
         );
       },
@@ -86,11 +86,11 @@ class DatabaseProvider {
       COLUMN_TURNING_CYCLE,
       COLUMN_NEAR_EXIT_PREFERENCE,
       COLUMN_PARKING_CARD,
+      COLUMN_PARKED_IN,
       COLUMN_DO_CHARGE,
       COLUMN_CHARGING_PROVIDER,
       COLUMN_CHARGE_TIME_BEGIN,
-      COLUMN_CHARGE_TIME_END,
-      COLUMN_CHARGE
+      COLUMN_CHARGE_TIME_END
     ]);
 
     List<Vehicle> vehicleList = List<Vehicle>();
@@ -100,11 +100,10 @@ class DatabaseProvider {
         StandardVehicle vehicle = StandardVehicle.fromMap(currentVehicle);
         vehicleList.add(vehicle);
       } else {
-        LoadableVehicle vehicle = LoadableVehicle.fromMap(currentVehicle);
+        ChargeableVehicle vehicle = ChargeableVehicle.fromMap(currentVehicle);
         vehicleList.add(vehicle);
       }
     });
-
     return vehicleList;
   }
 
@@ -133,12 +132,14 @@ class DatabaseProvider {
         vehicle.height.toString() +
         ' length: ' +
         vehicle.length.toString() +
-        'turningCircle: ' +
+        ' turningCycle: ' +
         vehicle.turningCycle.toString() +
         ' nearExitPreference: ' +
         vehicle.nearExitPreference.toString() +
         ' parkingCard: ' +
         vehicle.parkingCard.toString() +
+        ' parkedIn: ' +
+        vehicle.parkedIn.toString() +
         ' databaseId: ' +
         vehicle.databaseId.toString());
     final db = await database;

@@ -2,12 +2,13 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _FancyFabState extends State<FancyFab>
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
           DatabaseProvider.db
-              .insert(LoadableVehicle(
+              .insert(ChargeableVehicle(
                   Utility.generateKey(),
                   "Tesla Model 3",
                   "KA-ST 930 E",
@@ -102,11 +103,11 @@ class _FancyFabState extends State<FancyFab>
                   84.0,
                   true,
                   false,
+                  false,
                   true,
                   "EnBW",
-                  DateTime.now(),
-                  DateTime.now(),
-                  "45"))
+                  TimeOfDay.now(),
+                  TimeOfDay.now()))
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
           });
@@ -130,21 +131,7 @@ class _FancyFabState extends State<FancyFab>
   Widget add() {
     return Container(
       child: FloatingActionButton(
-        onPressed: () {
-          DatabaseProvider.db
-              .insert(StandardVehicle(Utility.generateKey(), "Audi",
-                  "OG-DE-923", 93.0, 93.4, 29.3, 84.0, true, false))
-              .then((vehicle) {
-            BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
-          });
-          BlocListener<VehicleBloc, List<Vehicle>>(
-            listener: (context, vehicleList) {
-              for (Vehicle vehicle in vehicleList) {
-                print(vehicle.toString());
-              }
-            },
-          );
-        },
+        onPressed: () => Navigator.pushNamed(context, Routes.createVehicle),
         tooltip: 'Add',
         elevation: 10,
         child: Icon(Icons.add),

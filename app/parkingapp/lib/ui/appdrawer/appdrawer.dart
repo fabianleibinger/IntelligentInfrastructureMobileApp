@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
@@ -60,9 +61,6 @@ class AppDrawer extends StatelessWidget {
                     Routes.settings,
                     AppLocalizations.of(context).drawerSettings,
                     Icons.settings),
-                // editVehiclePage
-                generateTile(context, currentDrawer, EditVehicle.routeName,
-                    'Edit Vehicle', Icons.add),
               ],
             ),
           )
@@ -124,8 +122,12 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
       #4      StatefulElement.build
       */
       for (Vehicle vehicle in vehicleList) {
-        listTiles.add(generateTile(context, currentDrawer, vehicle.inAppKey,
-            vehicle.name, Icons.directions_car));
+        var icon;
+        vehicle.runtimeType == ChargeableVehicle
+            ? icon = Icons.electric_car
+            : icon = Icons.directions_car;
+        listTiles.add(generateTile(
+            context, currentDrawer, vehicle.inAppKey, vehicle.name, icon));
       }
       return Column(
         children: listTiles,

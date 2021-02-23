@@ -1,7 +1,7 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
-class StandardVehicle implements Vehicle {
+class StandardVehicle extends Vehicle {
   StandardVehicle(
       this.inAppKey,
       this.name,
@@ -11,7 +11,8 @@ class StandardVehicle implements Vehicle {
       this.length,
       this.turningCycle,
       this.nearExitPreference,
-      this.parkingCard);
+      this.parkingCard,
+      this.parkedIn);
 
   //private constructor: only called by fromMap() method, database defines databaseId
   StandardVehicle._(
@@ -24,29 +25,10 @@ class StandardVehicle implements Vehicle {
       this.length,
       this.turningCycle,
       this.nearExitPreference,
-      this.parkingCard);
+      this.parkingCard,
+      this.parkedIn);
 
-  Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
-      DatabaseProvider.COLUMN_NAME: name,
-      DatabaseProvider.COLUMN_LICENSE_PLATE: licensePlate,
-      DatabaseProvider.COLUMN_WIDTH: width.toDouble(),
-      DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
-      DatabaseProvider.COLUMN_LENGTH: length.toDouble(),
-      DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
-      DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
-      DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0
-    };
-
-    if (databaseId != null) {
-      map[DatabaseProvider.COLUMN_DATABASE_ID] = databaseId;
-    }
-
-    return map;
-  }
-
-  static StandardVehicle fromMap(Map<String, dynamic> map) {
+  static Vehicle fromMap(Map<String, dynamic> map) {
     return StandardVehicle._(
         map[DatabaseProvider.COLUMN_DATABASE_ID],
         map[DatabaseProvider.COLUMN_IN_APP_KEY],
@@ -57,19 +39,8 @@ class StandardVehicle implements Vehicle {
         map[DatabaseProvider.COLUMN_LENGTH],
         map[DatabaseProvider.COLUMN_TURNING_CYCLE],
         map[DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE] == 1,
-        map[DatabaseProvider.COLUMN_PARKING_CARD] == 1);
-  }
-
-  @override
-  String setDimensions() {
-    // TODO: implement setDimensions
-    throw UnimplementedError();
-  }
-
-  @override
-  String setPreferences() {
-    // TODO: implement setPreferences
-    throw UnimplementedError();
+        map[DatabaseProvider.COLUMN_PARKING_CARD] == 1,
+        map[DatabaseProvider.COLUMN_PARKED_IN] == 1);
   }
 
   @override
@@ -83,4 +54,7 @@ class StandardVehicle implements Vehicle {
 
   @override
   bool nearExitPreference, parkingCard;
+
+  @override
+  bool parkedIn;
 }
