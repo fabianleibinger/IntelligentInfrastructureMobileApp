@@ -12,6 +12,8 @@ import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+final double _notSpecified = 0;
+
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
   const EditVehicle({Key key, this.vehicle}) : super(key: key);
@@ -133,12 +135,7 @@ class _VehicleFormState extends State<VehicleForm> {
             ListTile(
               title: Text(
                   AppLocalizations.of(context).vehicleDimensionsDialogTitle),
-              subtitle: Text(AppLocalizations.of(context).length +
-                  vehicle.length.toString() +
-                  AppLocalizations.of(context).width +
-                  vehicle.width.toString() +
-                  AppLocalizations.of(context).height +
-                  vehicle.height.toString()),
+              subtitle: _vehicleDimensionsSubtitle(context: context),
               onTap: () => _showDialog(context, VehicleDimensionsDialog()),
             ),
             //end of form
@@ -231,6 +228,27 @@ class _VehicleFormState extends State<VehicleForm> {
       Navigator.of(context).pop();
     }
   }
+
+  Text _vehicleDimensionsSubtitle({BuildContext context}) {
+    if (vehicle.height == _notSpecified &&
+        vehicle.width == _notSpecified &&
+        vehicle.height == _notSpecified &&
+        vehicle.turningCycle == _notSpecified) return null;
+    return Text(AppLocalizations.of(context).length +
+        AppLocalizations.of(context).colonSpace +
+        (vehicle.length / 1000).toStringAsPrecision(3) +
+        AppLocalizations.of(context).meterShort +
+        AppLocalizations.of(context).space +
+        AppLocalizations.of(context).width +
+        AppLocalizations.of(context).colonSpace +
+        (vehicle.width / 1000).toStringAsPrecision(3) +
+        AppLocalizations.of(context).meterShort +
+        AppLocalizations.of(context).space +
+        AppLocalizations.of(context).height +
+        AppLocalizations.of(context).colonSpace +
+        (vehicle.height / 1000).toStringAsPrecision(3) +
+        AppLocalizations.of(context).meterShort);
+  }
 }
 
 //format text to uppercase
@@ -254,10 +272,10 @@ class _UpdateMainPageVehicle {
         Utility.generateKey(),
         '',
         '',
-        0,
-        0,
-        0,
-        0,
+        _notSpecified,
+        _notSpecified,
+        _notSpecified,
+        _notSpecified,
         false,
         false,
         false,

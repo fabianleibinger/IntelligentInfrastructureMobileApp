@@ -184,5 +184,9 @@
     "colonSpace": ": ",
     "@colonSpace": {
         "description": "a colon and a space to show for example after a text followed by a value"
+    },
+    "meterShort": "m",
+    "@meterShort": {
+        "description": "meter as a means of measuring distance"
     }
 }
