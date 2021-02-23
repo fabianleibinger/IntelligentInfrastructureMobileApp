@@ -132,10 +132,7 @@ class _VehicleFormState extends State<VehicleForm> {
             Divider(),
             ListTile(
                 title: Text(AppLocalizations.of(context).parkPreferences),
-                subtitle: Text(AppLocalizations.of(context).parkingCard +
-                    vehicle.parkingCard.toString() +
-                    AppLocalizations.of(context).nearExitPreference +
-                    vehicle.nearExitPreference.toString()),
+                subtitle: _vehicleParkPreferencesSubtitle(context),
                 onTap: () => _showDialog(context, ParkPreferencesDialog())),
             Divider(),
             ListTile(
@@ -254,6 +251,26 @@ class _VehicleFormState extends State<VehicleForm> {
         AppLocalizations.of(context).colonSpace +
         (vehicle.height / 1000).toStringAsPrecision(3) +
         AppLocalizations.of(context).meterShort);
+  }
+
+  Text _vehicleParkPreferencesSubtitle(BuildContext context) {
+    StringBuffer text = StringBuffer();
+    if (vehicle.parkingCard) {
+      text.write(AppLocalizations.of(context).parkingCard);
+      text.write(AppLocalizations.of(context).commaSeperatedList);
+    }
+    if (vehicle.nearExitPreference) {
+      text.write(AppLocalizations.of(context).nearExitPreference);
+      text.write(AppLocalizations.of(context).commaSeperatedList);
+    }
+    if (text.length >= AppLocalizations.of(context).commaSeperatedList.length)
+      // remove the last comma and return
+      return Text(text.toString().substring(
+          0,
+          text.length -
+              AppLocalizations.of(context).commaSeperatedList.length));
+    else
+      return null;
   }
 }
 

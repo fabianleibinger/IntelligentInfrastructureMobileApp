@@ -188,5 +188,9 @@
     "meterShort": "m",
     "@meterShort": {
         "description": "meter as a means of measuring distance"
+    },
+    "commaSeperatedList": ", ",
+    "@commaSeperatedList": {
+        "description": "used for lists of values that are seperated by commas"
     }
 }
