@@ -14,7 +14,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
 ParkingGarage currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 0, 'assets/parkgarage-fasanengarten.jpg');
+    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';

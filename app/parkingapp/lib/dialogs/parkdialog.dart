@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //defines the different park-related dialogs
 class ParkDialog {
@@ -16,21 +18,19 @@ class ParkDialog {
   }
 
   static createParkOutDialog(BuildContext context) {
-    return Constants.createAlertDialogNoTitle(
+    return Constants.createAlertDialogNoTitleAssignButton(
         context,
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
-        AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.park);
+        getParkOutButton(context));
   }
 
   static createParkInCancelDialog(BuildContext context) {
-    return Constants.createAlertDialogNoTitle(
+    return Constants.createAlertDialogNoTitleAssignButton(
         context,
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
-        AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.park);
+        getParkOutButton(context));
   }
 
   static createParkOutFinishedDialog(BuildContext context) {
@@ -38,5 +38,17 @@ class ParkDialog {
         context,
         AppLocalizations.of(context).parkDialogParkOutFinishedContent,
         AppLocalizations.of(context).dialogFinishedButton);
+  }
+  
+  //button that triggers vehicle park out method
+  static getParkOutButton(BuildContext context) {
+    return FlatButton(
+      textColor: green,
+      onPressed: () {
+        vehicle.parkOut(context);
+        Navigator.pushReplacementNamed(context, Routes.park);
+      },
+      child: Text(AppLocalizations.of(context).parkDialogParkOutButton),
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -16,7 +17,6 @@ class ParkPage extends StatefulWidget {
 }
 
 class _ParkPageState extends State<ParkPage> {
-
   @override
   void initState() {
     // TODO: implement initState
@@ -33,16 +33,21 @@ class _ParkPageState extends State<ParkPage> {
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.park),
       floatingActionButton: FloatingActionButton.extended(
-        label: Text(AppLocalizations
-            .of(context)
-            .actionButtonCancelPark),
+        //cancel or park out button
+        label: vehicle.parkedIn
+            ? Text(AppLocalizations.of(context).actionButtonParkOut)
+            : Text(AppLocalizations.of(context).actionButtonCancelPark),
         backgroundColor: red,
+        //cancel dialog or park out dialog
         onPressed: () {
-          Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+          if (vehicle.parkedIn) {
+            ParkDialog.createParkInCancelDialog(context);
+          } else {
+            ParkDialog.createParkOutDialog(context);
+          }
         },
       ),
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListTile(
         //leading: Icon(Icons.location_on),
         title: Text(currentParkingGarage.name),

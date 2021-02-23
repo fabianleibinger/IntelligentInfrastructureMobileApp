@@ -43,6 +43,10 @@
     "@actionButtonPark": {
         "description": "Park vehicle action button on main page"
     },
+    "actionButtonParkOut": "Fahrzeug ausparken",
+    "@actionButtonParkOut": {
+        "description": "Park out vehicle action button on park page"
+    },
     "actionButtonCancelPark": "Einparkvorgang abbrechen",
     "@actionButtonCancelPark": {
         "description": "Cancel parking action button on park page"
