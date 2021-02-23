@@ -90,8 +90,7 @@ class _MainPageState extends State<MainPage> {
               backgroundColor: _buttonIsDisabled ? grey : green,
               onPressed: () {
                 if (_buttonIsDisabled) {
-                  ParkDialog.createParkInDialog(context);
-                  //ParkingGarageOccupiedDialog.createDialog(context);
+                  ParkingGarageOccupiedDialog.createDialog(context);
                 } else {
                   ParkDialog.createParkInDialog(context);
                 }

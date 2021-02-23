@@ -48,7 +48,6 @@ abstract class Vehicle {
       print('vehicle parked in: ' + this.parkedIn.toString());
     } else {
       print('no parking spots available');
-      Navigator.pushReplacementNamed(context, vehicle.inAppKey);
       ParkingGarageOccupiedDialog.createDialog(context);
     }
   }

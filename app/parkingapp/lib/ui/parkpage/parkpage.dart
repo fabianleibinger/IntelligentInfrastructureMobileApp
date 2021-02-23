@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -22,6 +21,8 @@ class _ParkPageState extends State<ParkPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => vehicle.parkIn(context));
   }
 
   //TODO: switch _firstBuild to false in setState()
