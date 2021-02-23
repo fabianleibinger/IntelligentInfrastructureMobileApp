@@ -176,5 +176,13 @@
     "editVehicleTitle": "Fahrzeug bearbeiten",
     "@editVehicleTitle": {},
     "vehicleCanCharge": "Fahrzeug ist ladefähig",
-    "@vehicleCanCharge": {}
+    "@vehicleCanCharge": {},
+    "space": " ",
+    "@space": {
+        "description": "a space to show for example after a value followed by text"
+    },
+    "colonSpace": ": ",
+    "@colonSpace": {
+        "description": "a colon and a space to show for example after a text followed by a value"
+    }
 }

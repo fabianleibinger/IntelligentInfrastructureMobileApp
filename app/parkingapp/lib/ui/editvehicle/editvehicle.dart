@@ -189,9 +189,12 @@ class _VehicleFormState extends State<VehicleForm> {
       ListTile(
         title: Text(AppLocalizations.of(context).chargeTimeDialogTitle),
         subtitle: Text(AppLocalizations.of(context).begin +
-            tempVehicle.chargeTimeBegin.toString() +
+            AppLocalizations.of(context).colonSpace +
+            tempVehicle.chargeTimeBegin.format(context) +
+            AppLocalizations.of(context).space +
             AppLocalizations.of(context).end +
-            tempVehicle.chargeTimeEnd.toString()),
+            AppLocalizations.of(context).colonSpace +
+            tempVehicle.chargeTimeEnd.format(context)),
         onTap: () => _showDialog(context, ChargeTimeDialog()),
       )
     ]);
