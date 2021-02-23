@@ -9,13 +9,8 @@ class AGB extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('AGB und Nutzungsbedingungen', style: whiteHeader),
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.popAndPushNamed(context, SettingsPage.routeName);
-            },
-          )),
+        title: Text('AGB und Nutzungsbedingungen', style: whiteHeader),
+      ),
       body: ScrollableAGB(),
     );
   }
