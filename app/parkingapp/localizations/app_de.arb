@@ -77,8 +77,8 @@
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
     },
-    "parkingGarageOccupiedDialogContent": "",
-    "@parkingGarageOccupiedDialogContent"; {
+    "parkingGarageOccupiedDialogContent": "Leider sind gerade keine freien Parkplätze verfügbar.",
+    "@parkingGarageOccupiedDialogContent": {
         "description": "Text body for parking garage occupied dialog"
     },
     "dialogFinishedButton": "FERTIG",

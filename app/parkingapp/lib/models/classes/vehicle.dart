@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -48,6 +49,7 @@ abstract class Vehicle {
     } else {
       print('no parking spots available');
       Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+      ParkingGarageOccupiedDialog.createDialog(context);
     }
   }
 

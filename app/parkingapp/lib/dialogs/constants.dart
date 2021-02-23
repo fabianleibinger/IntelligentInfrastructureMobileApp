@@ -69,7 +69,7 @@ class Constants {
         });
   }
 
-  //creates an alert dialog with text and one button
+  //creates an alert dialog with text and one back button
   static createAlertDialogOneBackButtonNoTitle(
       BuildContext context, String content, String confirmButtonText) {
     return showDialog(

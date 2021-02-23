@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -13,7 +14,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
 ParkingGarage currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+    ParkingGarageType.Tiefgarage, 0, 'assets/parkgarage-fasanengarten.jpg');
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -88,8 +89,10 @@ class _MainPageState extends State<MainPage> {
             floatingActionButton: FloatingActionButton.extended(
               backgroundColor: _buttonIsDisabled ? grey : green,
               onPressed: () {
-                _setButtonIsDisabled();
-                if (!_buttonIsDisabled) {
+                if (_buttonIsDisabled) {
+                  ParkDialog.createParkInDialog(context);
+                  //ParkingGarageOccupiedDialog.createDialog(context);
+                } else {
                   ParkDialog.createParkInDialog(context);
                 }
               }
