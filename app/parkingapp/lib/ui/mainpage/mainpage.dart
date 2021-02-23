@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/dialogs/chargetimedialog.dart';
-import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
-import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:parkingapp/ui/parkpage/parkpage.dart';
 
 Vehicle vehicle;
-final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+ParkingGarage currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
 
 class MainPage extends StatefulWidget {
@@ -99,10 +93,7 @@ class _MainPageState extends State<MainPage> {
                   ParkDialog.createParkInDialog(context);
                 }
               }
-              /*
-                //DatabaseProvider.db.clear();
-
-                 */
+              //DatabaseProvider.db.clear();
               ,
               label: Text(AppLocalizations.of(context).actionButtonPark),
             ),

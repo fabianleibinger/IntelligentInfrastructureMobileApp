@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/ui/parkpage/parkpage.dart';
-import 'package:parkingapp/ui/settingspage/settingspage.dart';
 
 //cannot be instantiated
 abstract class Vehicle {
@@ -42,13 +40,14 @@ abstract class Vehicle {
   }
 
   void parkIn(BuildContext context) {
-    print(this.name + ' wird eingeparkt');
     if(currentParkingGarage.getFreeParkingSpots() > 0) {
       //TODO implement
-      this.parkedIn = !this.parkedIn;
+      print(this.name + ' wird eingeparkt');
+      this.parkedIn = true;
+      print('vehicle parked in: ' + this.parkedIn.toString());
     } else {
       print('no parking spots available');
-      Navigator.pushNamed(context, vehicle.inAppKey);
+      Navigator.pushReplacementNamed(context, vehicle.inAppKey);
     }
   }
 

@@ -9,7 +9,11 @@ class ParkingGarage {
   ParkingGarage(this.name, this.type, this.freeParkingSpots, this.image);
 
   int getFreeParkingSpots() {
-    //TODO add inquiry for parking spots
+    _updateFreeParkingSpots();
     return freeParkingSpots;
+  }
+
+  void _updateFreeParkingSpots() {
+    //TODO add inquiry for parking spots
   }
 }

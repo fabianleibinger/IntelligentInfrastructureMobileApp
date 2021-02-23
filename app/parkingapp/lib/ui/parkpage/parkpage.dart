@@ -31,14 +31,15 @@ class _ParkPageState extends State<ParkPage> {
       floatingActionButton: FloatingActionButton.extended(
         label: Text(AppLocalizations.of(context).actionButtonCancelPark),
         backgroundColor: red,
-        onPressed: () {Navigator.pushReplacementNamed(context, vehicle.inAppKey);},
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListTile(
         //leading: Icon(Icons.location_on),
         title: Text(currentParkingGarage.name),
-        subtitle:
-        Text(currentParkingGarage.type.toShortString()),
+        subtitle: Text(currentParkingGarage.type.toShortString()),
       ),
     );
   }
