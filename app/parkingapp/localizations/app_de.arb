@@ -77,6 +77,10 @@
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
     },
+    "parkingGarageOccupiedDialogContent": "",
+    "@parkingGarageOccupiedDialogContent"; {
+        "description": "Text body for parking garage occupied dialog"
+    },
     "dialogFinishedButton": "FERTIG",
     "@dialogFinishedButton": {
         "description": "Text for ready button in park dialog"
