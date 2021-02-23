@@ -41,7 +41,7 @@ abstract class Vehicle {
   }
 
   void parkIn(BuildContext context) {
-    if(currentParkingGarage.getFreeParkingSpots() > 0) {
+    if(currentParkingGarage.getFreeParkingSpots() > 0 && !this.parkedIn) {
       //TODO implement
       print(this.name + ' wird eingeparkt');
       this.parkedIn = true;
