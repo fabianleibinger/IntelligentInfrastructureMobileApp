@@ -50,7 +50,7 @@ abstract class Vehicle {
         //TODO implement
 
         print(this.name + ' wird eingeparkt');
-        this.parkedIn = true;
+        this.setParkedIn(context, true);
         print('vehicle parked in: ' + this.parkedIn.toString());
       } else {
         //no parking spots available
@@ -59,7 +59,7 @@ abstract class Vehicle {
       }
     } else {
       //vehicle is already parked in
-      print('vehicle' + this.name + 'is already parked in');
+      print('vehicle ' + this.name + ' is already parked in');
     }
   }
 
@@ -70,7 +70,7 @@ abstract class Vehicle {
     //TODO implement
 
     print(this.name + ' wird ausgeparkt');
-    this.parkedIn = false;
+    this.setParkedIn(context, false);
     print('vehicle parked in: ' + this.parkedIn.toString());
     ParkDialog.createParkOutFinishedDialog(context);
   }

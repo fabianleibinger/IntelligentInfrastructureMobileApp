@@ -37,14 +37,10 @@ class _ParkInPageState extends State<ParkInPage> {
             ? Text(AppLocalizations.of(context).actionButtonParkOut)
             : Text(AppLocalizations.of(context).actionButtonCancelPark),
         backgroundColor: red,
-        //cancel dialog or park out dialog
-        onPressed: () {
-          if (vehicle.parkedIn) {
-            ParkDialog.createParkInCancelDialog(context);
-          } else {
-            ParkDialog.createParkOutDialog(context);
-          }
-        },
+        //park out dialog or cancel dialog
+        onPressed: vehicle.parkedIn
+            ? () => ParkDialog.createParkOutDialog(context)
+            : () => ParkDialog.createParkInCancelDialog(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListTile(

@@ -45,11 +45,19 @@
     },
     "actionButtonParkOut": "Fahrzeug ausparken",
     "@actionButtonParkOut": {
-        "description": "Park out vehicle action button on park page"
+        "description": "Park out vehicle action button on park in page"
+    },
+    "actionButtonParkOutProcess": "Fahrzeug wird ausgeparkt",
+    "@actionButtonParkOutProcess": {
+        "description": "Park out process action button on park out page "
     },
     "actionButtonCancelPark": "Einparkvorgang abbrechen",
     "@actionButtonCancelPark": {
-        "description": "Cancel parking action button on park page"
+        "description": "Cancel parking action button on park in page"
+    },
+    "actionButtonCancelParkProcess": "Einparkvorgang wird abgebrochen",
+    "@actionButtonCancelParkProcess": {
+        "description": "Cancelling park in process action button on park out page "
     },
     "mainPageCarParkTitle": "Parkgarage am Fasanengarten",
     "@mainPageCarParkTitle": {

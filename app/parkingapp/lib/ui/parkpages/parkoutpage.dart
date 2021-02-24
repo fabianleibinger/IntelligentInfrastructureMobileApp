@@ -31,10 +31,10 @@ class _ParkOutPageState extends State<ParkOutPage> {
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkOut),
       floatingActionButton: FloatingActionButton.extended(
-        //cancel or park out button, not clickable
+        //cancel or park out process button, not clickable
         label: vehicle.parkedIn
-            ? Text('Fahrzeug wird ausgeparkt')
-            : Text('Einparkvorgang wird abgebrochen'),
+            ? Text(AppLocalizations.of(context).actionButtonParkOutProcess)
+            : Text(AppLocalizations.of(context).actionButtonCancelParkProcess),
         backgroundColor: grey,
         onPressed: () {},
       ),
