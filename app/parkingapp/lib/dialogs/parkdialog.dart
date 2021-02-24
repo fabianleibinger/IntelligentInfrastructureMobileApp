@@ -14,7 +14,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkInContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkInButton,
-        Routes.park);
+        Routes.parkIn);
   }
 
   static createParkOutDialog(BuildContext context) {
@@ -23,7 +23,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.park);
+        Routes.parkOut);
   }
 
   static createParkInCancelDialog(BuildContext context) {
@@ -32,26 +32,15 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.park);
+        Routes.parkOut);
   }
 
   static createParkOutFinishedDialog(BuildContext context) {
-    return Constants.createAlertDialogOneBackButtonNoTitle(
+    return Constants.createAlertDialogOneButtonNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutFinishedContent,
-        AppLocalizations.of(context).dialogFinishedButton);
-  }
-
-  //TODO remove
-  //button that triggers vehicle park out method
-  static getParkOutButton(BuildContext context) {
-    return FlatButton(
-      textColor: green,
-      onPressed: () {
-        vehicle.parkOut(context);
-        Navigator.pushReplacementNamed(context, Routes.park);
-      },
-      child: Text(AppLocalizations.of(context).parkDialogParkOutButton),
-    );
+        AppLocalizations.of(context).dialogFinishedButton,
+        //mainPage
+        vehicle.inAppKey);
   }
 }

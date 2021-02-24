@@ -40,36 +40,39 @@ abstract class Vehicle {
     return map;
   }
 
-  //sends the park in inquiry to the parking management system
+  //sends the park in inquiry to the parking garage management system
   void parkIn(BuildContext context) {
     //check if vehicle needs to be parked in
     if (!this.parkedIn) {
+      //try to park in
       if (currentParkingGarage.getFreeParkingSpots() > 0) {
+
         //TODO implement
+
         print(this.name + ' wird eingeparkt');
         this.parkedIn = true;
         print('vehicle parked in: ' + this.parkedIn.toString());
       } else {
+        //no parking spots available
         print('no parking spots available');
         ParkingGarageOccupiedDialog.createDialog(context);
       }
-    //vehicle is already parked in
     } else {
+      //vehicle is already parked in
       print('vehicle' + this.name + 'is already parked in');
     }
   }
 
-  //sends the park out inquiry to the parking management system
+  //sends the park out inquiry to the parking garage management system
   void parkOut(BuildContext context) {
-    if (this.parkedIn) {
-      //TODO implement
-      print(this.name + ' wird ausgeparkt');
-      this.parkedIn = false;
-      print('vehicle parked out: ' + this.parkedIn.toString());
-      ParkDialog.createParkOutDialog(context);
-    } else {
-      print('vehicle needs to be parked in first');
-    }
+    //park out or cancel park in process
+
+    //TODO implement
+
+    print(this.name + ' wird ausgeparkt');
+    this.parkedIn = false;
+    print('vehicle parked in: ' + this.parkedIn.toString());
+    ParkDialog.createParkOutFinishedDialog(context);
   }
 
   //setter which includes database updating

@@ -7,7 +7,8 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
-import 'package:parkingapp/ui/parkpage/parkpage.dart';
+import 'package:parkingapp/ui/parkpages/parkinpage.dart';
+import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,9 +53,13 @@ class Main extends StatelessWidget {
         if (settings.name == Routes.vehicle) {
           return MaterialPageRoute(builder: (context) => VehiclePage());
         }
-        //parkPage route
-        if (settings.name == Routes.park) {
-          return MaterialPageRoute(builder: (context) => ParkPage());
+        //parkInPage route
+        if (settings.name == Routes.parkIn) {
+          return MaterialPageRoute(builder: (context) => ParkInPage());
+        }
+        //parkOutPage route
+        if (settings.name == Routes.parkOut) {
+          return MaterialPageRoute(builder: (context) => ParkOutPage());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
