@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -65,6 +66,10 @@ class Main extends StatelessWidget {
         //editVehicle route
         if (settings.name == Routes.createVehicle) {
           return MaterialPageRoute(builder: (context) => CreateVehicle());
+        }
+        //first start route
+        if (settings.name == Routes.landingPage) {
+          return MaterialPageRoute(builder: (context) => LandingPage());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());

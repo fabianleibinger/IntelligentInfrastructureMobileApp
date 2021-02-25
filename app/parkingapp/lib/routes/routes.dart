@@ -1,3 +1,4 @@
+import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/parkpage/parkpage.dart';
@@ -10,4 +11,5 @@ class Routes {
   static const String settings = SettingsPage.routeName;
   static const String park = ParkPage.routeName;
   static const String createVehicle = CreateVehicle.routeName;
+  static const String landingPage = LandingPage.routeName;
 }

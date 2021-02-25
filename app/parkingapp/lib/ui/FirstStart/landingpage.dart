@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/FirstStart/termsofservice.dart';
 
 class LandingPage extends StatelessWidget {
-  static final String routeName = '/LandingPage';
+  static const String routeName = '/LandingPage';
 
   @override
   Widget build(BuildContext context) {
