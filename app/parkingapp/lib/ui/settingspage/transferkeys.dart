@@ -7,12 +7,7 @@ class Transferkeys extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Daten übertragen', style: whiteHeader),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                Navigator.popAndPushNamed(context, SettingsPage.routeName);
-              },
-            )));
+      title: Text('Daten übertragen', style: whiteHeader),
+    ));
   }
 }

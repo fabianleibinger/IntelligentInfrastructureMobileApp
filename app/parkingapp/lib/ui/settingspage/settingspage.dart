@@ -69,7 +69,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 subtitle: Text('App mit einem Passwort schützen'),
                 trailing: Icon(Icons.arrow_forward_ios),
                 onTap: () {
-                  Navigator.pushReplacementNamed(context, AGB.routeName);
+                  Navigator.pushNamed(context, AGB.routeName);
                 },
               ),
               Divider(),
@@ -78,7 +78,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, AGB.routeName);
+                    Navigator.pushNamed(context, AGB.routeName);
                   }),
               Divider(),
               ListTile(
@@ -86,7 +86,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushReplacementNamed(context, AGB.routeName);
+                    Navigator.pushNamed(context, AGB.routeName);
                   })
             ],
           ),
