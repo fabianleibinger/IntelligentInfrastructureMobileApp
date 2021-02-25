@@ -76,7 +76,9 @@ class CreateVehicle extends StatelessWidget {
 
 class VehicleForm extends StatefulWidget {
   final Vehicle vehicle;
-  const VehicleForm({Key key, this.vehicle}) : super(key: key);
+  //this route will be called when the form is completed
+  final MaterialPageRoute route;
+  const VehicleForm({Key key, this.vehicle, this.route}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _VehicleFormState();
 }
@@ -236,7 +238,10 @@ class _VehicleFormState extends State<VehicleForm> {
       DataHelper.addVehicle(context, vehicle);
       form.reset();
       //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
-      Navigator.of(context).pop();
+      //navigate to supplied route or pop the page of no route was supplied
+      widget.route != null
+          ? Navigator.of(context).pushReplacement(widget.route)
+          : Navigator.of(context).pop();
     }
   }
 
