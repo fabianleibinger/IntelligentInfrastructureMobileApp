@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AddVehicle extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _AddVehicleState extends State<AddVehicle> {
         onWillPop: () => UpdateMainPageVehicle.cleanUp(context: context),
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Fahrzeug hinzufügen'),
+            title: Text(AppLocalizations.of(context).addVehicleTitle),
           ),
           body: VehicleForm(
               route: MaterialPageRoute(
