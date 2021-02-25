@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
@@ -19,6 +21,9 @@ abstract class Vehicle {
   bool nearExitPreference, parkingCard;
 
   bool parkedIn;
+
+  //observer for parkedIn
+  ValueNotifier<bool> parkedInObserver;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -135,9 +140,10 @@ abstract class Vehicle {
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
+  //setter which includes database updating and observer updating
   void setParkedIn(BuildContext context, bool parkedIn) {
     this.parkedIn = parkedIn;
+    this.parkedInObserver.value = this.parkedIn;
     DataHelper.updateVehicle(context, this);
   }
 

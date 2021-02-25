@@ -22,7 +22,9 @@ class ChargeableVehicle extends Vehicle {
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd);
+      this.chargeTimeEnd) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+  }
 
   //private constructor: only called by fromMap() method, database defines databaseId
   ChargeableVehicle._(
@@ -40,7 +42,9 @@ class ChargeableVehicle extends Vehicle {
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd);
+      this.chargeTimeEnd) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+  }
 
   @override
   Map<String, dynamic> toMap() {

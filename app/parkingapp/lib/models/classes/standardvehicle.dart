@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle extends Vehicle {
-  StandardVehicle(
-      this.inAppKey,
+  StandardVehicle(this.inAppKey,
       this.name,
       this.licensePlate,
       this.width,
@@ -12,11 +12,12 @@ class StandardVehicle extends Vehicle {
       this.turningCycle,
       this.nearExitPreference,
       this.parkingCard,
-      this.parkedIn);
+      this.parkedIn) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+  }
 
   //private constructor: only called by fromMap() method, database defines databaseId
-  StandardVehicle._(
-      this.databaseId,
+  StandardVehicle._(this.databaseId,
       this.inAppKey,
       this.name,
       this.licensePlate,
@@ -26,7 +27,9 @@ class StandardVehicle extends Vehicle {
       this.turningCycle,
       this.nearExitPreference,
       this.parkingCard,
-      this.parkedIn);
+      this.parkedIn) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+  }
 
   static Vehicle fromMap(Map<String, dynamic> map) {
     return StandardVehicle._(

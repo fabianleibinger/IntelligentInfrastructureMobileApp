@@ -19,6 +19,7 @@ class _ParkOutPageState extends State<ParkOutPage> {
   @override
   void initState() {
     super.initState();
+    //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkOut(context));
   }
@@ -30,13 +31,20 @@ class _ParkOutPageState extends State<ParkOutPage> {
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkOut),
-      floatingActionButton: FloatingActionButton.extended(
-        //cancel or park out process button, not clickable
-        label: vehicle.parkedIn
-            ? Text(AppLocalizations.of(context).actionButtonParkOutProcess)
-            : Text(AppLocalizations.of(context).actionButtonCancelParkProcess),
-        backgroundColor: grey,
-        onPressed: () {},
+      //button observes parkedIn value of car
+      floatingActionButton: ValueListenableBuilder(
+        valueListenable: vehicle.parkedInObserver,
+        builder: (BuildContext context, bool, Widget child) {
+          return FloatingActionButton.extended(
+            //cancel or park out process button, not clickable
+            label: vehicle.parkedIn
+                ? Text(AppLocalizations.of(context).actionButtonParkOutProcess)
+                : Text(
+                    AppLocalizations.of(context).actionButtonCancelParkProcess),
+            backgroundColor: grey,
+            onPressed: () {},
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: ListTile(
