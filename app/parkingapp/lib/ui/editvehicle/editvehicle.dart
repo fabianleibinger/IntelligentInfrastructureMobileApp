@@ -36,10 +36,10 @@ class EditVehicle extends StatelessWidget {
         : null;
 
     //update vehicle in MainPage
-    _UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
+    UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
     return WillPopScope(
       onWillPop: () {
-        return _UpdateMainPageVehicle.cleanUp(
+        return UpdateMainPageVehicle.cleanUp(
             context: context, parseVehicle: this.vehicle);
       },
       child: Scaffold(
@@ -61,9 +61,9 @@ class CreateVehicle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    _UpdateMainPageVehicle.setUp(context: context);
+    UpdateMainPageVehicle.setUp(context: context);
     return WillPopScope(
-      onWillPop: () => _UpdateMainPageVehicle.cleanUp(context: context),
+      onWillPop: () => UpdateMainPageVehicle.cleanUp(context: context),
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).addVehicleTitle),
@@ -286,7 +286,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
   }
 }
 
-class _UpdateMainPageVehicle {
+class UpdateMainPageVehicle {
   //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
   static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
