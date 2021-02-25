@@ -36,10 +36,10 @@ class EditVehicle extends StatelessWidget {
         : null;
 
     //update vehicle in MainPage
-    _UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
+    UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
     return WillPopScope(
       onWillPop: () {
-        return _UpdateMainPageVehicle.cleanUp(
+        return UpdateMainPageVehicle.cleanUp(
             context: context, parseVehicle: this.vehicle);
       },
       child: Scaffold(
@@ -61,9 +61,9 @@ class CreateVehicle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    _UpdateMainPageVehicle.setUp(context: context);
+    UpdateMainPageVehicle.setUp(context: context);
     return WillPopScope(
-      onWillPop: () => _UpdateMainPageVehicle.cleanUp(context: context),
+      onWillPop: () => UpdateMainPageVehicle.cleanUp(context: context),
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).addVehicleTitle),
@@ -99,47 +99,55 @@ class _VehicleFormState extends State<VehicleForm> {
       key: _formKey,
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: ListView(
+        child: Column(
           children: [
-            TextFormField(
-              autocorrect: false,
-              decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context).vehicleName),
-              initialValue: vehicle.name,
-              validator: (str) => requiredValue(str),
-              onSaved: (str) => vehicle.name = str,
-            ),
-            TextFormField(
-              autocorrect: false,
-              decoration: InputDecoration(
-                  labelText: AppLocalizations.of(context).licensePlate),
-              initialValue: vehicle.licensePlate,
-              validator: (str) => requiredValue(str),
-              onSaved: (str) => vehicle.licensePlate = str,
-              inputFormatters: [UpperCaseTextFormatter()],
-            ),
-            //when this is toggled add the electric toggles
-            //TODO animate expand
-            //TODO move this into a seperate Form
-            SwitchListTile(
-              title: Text(AppLocalizations.of(context).vehicleCanCharge),
-              onChanged: (bool newValue) =>
-                  setState(() => _vehicleChargeable = newValue),
-              value: _vehicleChargeable,
-            ),
-            _getElectricToggles(_vehicleChargeable),
-            //generic toggles for all vehicles
-            Divider(),
-            ListTile(
-                title: Text(AppLocalizations.of(context).parkPreferences),
-                subtitle: _vehicleParkPreferencesSubtitle(context),
-                onTap: () => _showDialog(context, ParkPreferencesDialog())),
-            Divider(),
-            ListTile(
-              title: Text(
-                  AppLocalizations.of(context).vehicleDimensionsDialogTitle),
-              subtitle: _vehicleDimensionsSubtitle(context),
-              onTap: () => _showDialog(context, VehicleDimensionsDialog()),
+            Expanded(
+              child: ListView(
+                children: [
+                  TextFormField(
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context).vehicleName),
+                    initialValue: vehicle.name,
+                    validator: (str) => requiredValue(str),
+                    onSaved: (str) => vehicle.name = str,
+                  ),
+                  TextFormField(
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context).licensePlate),
+                    initialValue: vehicle.licensePlate,
+                    validator: (str) => requiredValue(str),
+                    onSaved: (str) => vehicle.licensePlate = str,
+                    inputFormatters: [UpperCaseTextFormatter()],
+                  ),
+                  //when this is toggled add the electric toggles
+                  //TODO animate expand
+                  //TODO move this into a seperate Form
+                  SwitchListTile(
+                    title: Text(AppLocalizations.of(context).vehicleCanCharge),
+                    onChanged: (bool newValue) =>
+                        setState(() => _vehicleChargeable = newValue),
+                    value: _vehicleChargeable,
+                  ),
+                  _getElectricToggles(_vehicleChargeable),
+                  //generic toggles for all vehicles
+                  Divider(),
+                  ListTile(
+                      title: Text(AppLocalizations.of(context).parkPreferences),
+                      subtitle: _vehicleParkPreferencesSubtitle(context),
+                      onTap: () =>
+                          _showDialog(context, ParkPreferencesDialog())),
+                  Divider(),
+                  ListTile(
+                    title: Text(AppLocalizations.of(context)
+                        .vehicleDimensionsDialogTitle),
+                    subtitle: _vehicleDimensionsSubtitle(context),
+                    onTap: () =>
+                        _showDialog(context, VehicleDimensionsDialog()),
+                  ),
+                ],
+              ),
             ),
             //end of form
             RaisedButton(
@@ -286,7 +294,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
   }
 }
 
-class _UpdateMainPageVehicle {
+class UpdateMainPageVehicle {
   //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
   static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
