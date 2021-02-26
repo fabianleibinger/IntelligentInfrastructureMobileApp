@@ -12,4 +12,5 @@ class Routes {
   static const String park = ParkPage.routeName;
   static const String createVehicle = CreateVehicle.routeName;
   static const String landingPage = LandingPage.routeName;
+  static const String routeLandingPage = RouteLandingPage.routeName;
 }

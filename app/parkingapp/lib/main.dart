@@ -71,6 +71,9 @@ class Main extends StatelessWidget {
         if (settings.name == Routes.landingPage) {
           return MaterialPageRoute(builder: (context) => LandingPage());
         }
+        if (settings.name == Routes.routeLandingPage) {
+          return MaterialPageRoute(builder: (context) => RouteLandingPage());
+        }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
       },
@@ -90,7 +93,7 @@ class Main extends StatelessWidget {
           create: (_) => DrawerStateInfo(Routes.vehicle),
         )
       ],
-      child: getMaterialApp(Routes.vehicle),
+      child: getMaterialApp(Routes.routeLandingPage),
     );
   }
 }

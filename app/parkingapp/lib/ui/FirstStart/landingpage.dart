@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/FirstStart/termsofservice.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LandingPage extends StatelessWidget {
   static const String routeName = '/LandingPage';
@@ -33,5 +35,27 @@ class LandingPage extends StatelessWidget {
                 'Herzlich Willkommen in der FZI Autopark App.\nIn den nächsten Schritten werden Dir die grundlegenden Funktionen der Anwendung näher gebracht und das erste Fahrzeug eingerichtet.'),
           ],
         ));
+  }
+}
+
+class RouteLandingPage extends StatelessWidget {
+  static const String routeName = '/RouteLandingPage';
+
+  @override
+  Widget build(BuildContext context) {
+    _isSetUp(context);
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  void _isSetUp(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isSetUp = prefs.getBool('isSetUp') ?? false;
+    print('isSetUp? ' + isSetUp.toString());
+    //navigate to page
+    isSetUp
+        ? Navigator.pushReplacementNamed(context, Routes.vehicle)
+        : Navigator.pushReplacementNamed(context, Routes.landingPage);
   }
 }
