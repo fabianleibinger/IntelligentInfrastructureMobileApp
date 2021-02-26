@@ -132,7 +132,7 @@ class DatabaseProvider {
         vehicle.height.toString() +
         ' length: ' +
         vehicle.length.toString() +
-        ' turningCycle: ' +
+        'turningCircle: ' +
         vehicle.turningCycle.toString() +
         ' nearExitPreference: ' +
         vehicle.nearExitPreference.toString() +

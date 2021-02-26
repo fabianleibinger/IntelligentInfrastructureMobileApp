@@ -144,5 +144,53 @@
     "nearExitPreference": "Nah am Ausgang parken",
     "@nearExitPreference": {},
     "parkingCard": "Parkkarte",
-    "@parkingCard":{}
+    "@parkingCard":{},
+    "parkPreferences": "Parkpräferenzen",
+    "@parkPreferences": {},
+    "vehicleName": "Fahrzeugname",
+    "@vehicleName": {},
+    "licensePlate": "Nummernschild",
+    "@licensePlate": {
+        "description": "hint to show on text field for vehicle creation"
+    },
+    "length": "Länge",
+    "@length": {},
+    "width": "Breite",
+    "@width": {},
+    "height": "Höhe",
+    "@height": {},
+    "addVehicleButton": "Fahrzeug hinzufügen",
+    "@addVehicleButton": {},
+    "editVehicleButton": "Fahrzeug bearbeiten",
+    "@editVehicleButton": {},
+    "chargeVehicleByDefault": "Fahrzeug standardmäßig laden",
+    "@chargeVehicleByDefault": {},
+    "begin": "Begin",
+    "@begin": {},
+    "end": "Ende",
+    "@end": {},
+    "requiredText": "Erforderlich",
+    "@requiredText": {},
+    "addVehicleTitle": "Neues Fahrzeug",
+    "@addVehicleTitle": {},
+    "editVehicleTitle": "Fahrzeug bearbeiten",
+    "@editVehicleTitle": {},
+    "vehicleCanCharge": "Fahrzeug ist ladefähig",
+    "@vehicleCanCharge": {},
+    "space": " ",
+    "@space": {
+        "description": "a space to show for example after a value followed by text"
+    },
+    "colonSpace": ": ",
+    "@colonSpace": {
+        "description": "a colon and a space to show for example after a text followed by a value"
+    },
+    "meterShort": "m",
+    "@meterShort": {
+        "description": "meter as a means of measuring distance"
+    },
+    "commaSeperatedList": ", ",
+    "@commaSeperatedList": {
+        "description": "used for lists of values that are seperated by commas"
+    }
 }

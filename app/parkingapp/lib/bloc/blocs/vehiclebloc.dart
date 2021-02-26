@@ -38,7 +38,7 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
           index = newState.indexOf(element);
         }
       });
-      newState.replaceRange(index, index, {event.eventVehicle});
+      newState.fillRange(index, index, event.eventVehicle);
       yield newState;
     }
 
