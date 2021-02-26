@@ -40,6 +40,7 @@ class LandingPage extends StatelessWidget {
 
 class RouteLandingPage extends StatelessWidget {
   static const String routeName = '/RouteLandingPage';
+  static final String isSetUp = 'isSetUp';
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class RouteLandingPage extends StatelessWidget {
 
   void _isSetUp(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isSetUp = prefs.getBool('isSetUp') ?? false;
+    bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
     print('isSetUp? ' + isSetUp.toString());
     //navigate to page and remove all widgets from the widget tree
     isSetUp

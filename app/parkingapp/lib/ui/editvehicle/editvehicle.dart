@@ -9,9 +9,11 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
+import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final double _notSpecifiedDouble = 0;
 final String _notSpecifiedString = '';
@@ -220,7 +222,7 @@ class _VehicleFormState extends State<VehicleForm> {
   }
 
   //validate the form
-  void onPressed(bool vehicleChargeable) {
+  void onPressed(bool vehicleChargeable) async {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
@@ -237,6 +239,8 @@ class _VehicleFormState extends State<VehicleForm> {
       //this will only "update" the vehicle because it has been created at the start
       DataHelper.addVehicle(context, vehicle);
       form.reset();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool(RouteLandingPage.isSetUp, true);
       //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
       //navigate to supplied route or pop the page of no route was supplied
       widget.route != null
