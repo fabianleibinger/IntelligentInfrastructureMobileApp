@@ -1,4 +1,5 @@
 #!/bin/bash
+
 source /opt/ros/%YOUR_ROS_DISTRO%/setup.bash
 roscore
 
