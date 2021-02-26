@@ -53,9 +53,11 @@ class RouteLandingPage extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isSetUp = prefs.getBool('isSetUp') ?? false;
     print('isSetUp? ' + isSetUp.toString());
-    //navigate to page
+    //navigate to page and remove all widgets from the widget tree
     isSetUp
-        ? Navigator.pushReplacementNamed(context, Routes.vehicle)
-        : Navigator.pushReplacementNamed(context, Routes.landingPage);
+        ? Navigator.pushNamedAndRemoveUntil(
+            context, Routes.vehicle, (Route<dynamic> route) => false)
+        : Navigator.pushNamedAndRemoveUntil(
+            context, Routes.landingPage, (Route<dynamic> route) => false);
   }
 }
