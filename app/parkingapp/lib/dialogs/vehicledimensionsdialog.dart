@@ -26,8 +26,12 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
         context,
-        AppLocalizations.of(context).vehicleDimensionsDialogTitle,
-        AppLocalizations.of(context).dialogFinishedButton,
+        AppLocalizations
+            .of(context)
+            .vehicleDimensionsDialogTitle,
+        AppLocalizations
+            .of(context)
+            .dialogFinishedButton,
         _getRadioListTiles(context));
   }
 
@@ -41,9 +45,10 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
             if (snapshot.connectionState == ConnectionState.done) {
               _exampleVehicles = _parseJson(snapshot.data.toString());
               _exampleVehicles.forEach((element) {
-                if (element.height == vehicle.height &&
-                    element.width == vehicle.width &&
-                    element.length == vehicle.length) {
+                if (element.width == vehicle.width &&
+                    element.height == vehicle.height &&
+                    element.length == vehicle.length &&
+                    element.turningCycle == vehicle.turningCycle) {
                   _selectedRadioTile = element;
                 }
               });
@@ -52,7 +57,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                   width: 250,
                   child: ListView.builder(
                     itemCount:
-                        _exampleVehicles == null ? 0 : _exampleVehicles.length,
+                    _exampleVehicles == null ? 0 : _exampleVehicles.length,
                     itemBuilder: (BuildContext context, int index) {
                       return RadioListTile<ExampleVehicle>(
                         value: _exampleVehicles[index],
@@ -82,12 +87,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
 
   void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
     //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
-    //TODO move this into an updateDimensions method within the vehicle
-    vehicle.height = exampleVehicle.height;
-    vehicle.length = exampleVehicle.length;
-    vehicle.width = exampleVehicle.width;
-    vehicle.height = exampleVehicle.height;
-    DataHelper.updateVehicle(context, vehicle);
+    vehicle.setDimensions(context, exampleVehicle.width, exampleVehicle.height,
+        exampleVehicle.length, exampleVehicle.turningCycle);
   }
 
   List<ExampleVehicle> _parseJson(String response) {

@@ -148,7 +148,7 @@ abstract class Vehicle {
   }
 
   //setter for all dimensions which includes database updating
-  void setDimensions(BuildContext context, double height, double width,
+  void setDimensions(BuildContext context, double width, double height,
       double length, double turningCycle) {
     this.width = width;
     this.height = height;
