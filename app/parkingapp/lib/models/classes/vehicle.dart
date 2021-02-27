@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
@@ -77,6 +74,8 @@ abstract class Vehicle {
     print(this.name + ' wird ausgeparkt');
     this.setParkedIn(context, false);
     print('vehicle parked in: ' + this.parkedIn.toString());
+    //open main page
+    Navigator.pushReplacementNamed(context, this.inAppKey);
     ParkDialog.createParkOutFinishedDialog(context);
   }
 

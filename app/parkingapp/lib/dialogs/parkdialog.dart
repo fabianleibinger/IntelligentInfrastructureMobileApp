@@ -36,11 +36,9 @@ class ParkDialog {
   }
 
   static createParkOutFinishedDialog(BuildContext context) {
-    return Constants.createAlertDialogOneButtonNoTitle(
+    return Constants.createAlertDialogOneBackButtonNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutFinishedContent,
-        AppLocalizations.of(context).dialogFinishedButton,
-        //mainPage
-        vehicle.inAppKey);
+        AppLocalizations.of(context).dialogFinishedButton);
   }
 }

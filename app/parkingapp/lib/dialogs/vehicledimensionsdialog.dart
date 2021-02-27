@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -26,12 +24,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
         context,
-        AppLocalizations
-            .of(context)
-            .vehicleDimensionsDialogTitle,
-        AppLocalizations
-            .of(context)
-            .dialogFinishedButton,
+        AppLocalizations.of(context).vehicleDimensionsDialogTitle,
+        AppLocalizations.of(context).dialogFinishedButton,
         _getRadioListTiles(context));
   }
 
@@ -57,7 +51,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                   width: 250,
                   child: ListView.builder(
                     itemCount:
-                    _exampleVehicles == null ? 0 : _exampleVehicles.length,
+                        _exampleVehicles == null ? 0 : _exampleVehicles.length,
                     itemBuilder: (BuildContext context, int index) {
                       return RadioListTile<ExampleVehicle>(
                         value: _exampleVehicles[index],
