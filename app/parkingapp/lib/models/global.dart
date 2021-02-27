@@ -77,4 +77,5 @@ ThemeData themeData = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   dialogBackgroundColor: Colors.white,
   toggleableActiveColor: green,
+  disabledColor: grey,
 );

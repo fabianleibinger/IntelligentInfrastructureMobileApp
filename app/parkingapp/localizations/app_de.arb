@@ -43,6 +43,22 @@
     "@actionButtonPark": {
         "description": "Park vehicle action button on main page"
     },
+    "actionButtonParkOut": "Fahrzeug ausparken",
+    "@actionButtonParkOut": {
+        "description": "Park out vehicle action button on park in page"
+    },
+    "actionButtonParkOutProcess": "Fahrzeug wird ausgeparkt",
+    "@actionButtonParkOutProcess": {
+        "description": "Park out process action button on park out page "
+    },
+    "actionButtonCancelPark": "Einparkvorgang abbrechen",
+    "@actionButtonCancelPark": {
+        "description": "Cancel parking action button on park in page"
+    },
+    "actionButtonCancelParkProcess": "Einparkvorgang wird abgebrochen",
+    "@actionButtonCancelParkProcess": {
+        "description": "Cancelling park in process action button on park out page "
+    },
     "mainPageCarParkTitle": "Parkgarage am Fasanengarten",
     "@mainPageCarParkTitle": {
         "description": "The name of the car park"
@@ -72,6 +88,10 @@
     "parkDialogCancelButton": "ABBRECHEN",
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
+    },
+    "parkingGarageOccupiedDialogContent": "Leider sind gerade keine freien Parkplätze verfügbar.",
+    "@parkingGarageOccupiedDialogContent": {
+        "description": "Text body for parking garage occupied dialog"
     },
     "dialogFinishedButton": "FERTIG",
     "@dialogFinishedButton": {
@@ -140,6 +160,10 @@
     "vehicleDimensionsDialogTitle": "Fahrzeugabmessungen",
     "@vehicleDimensionsDialogTitle": {
         "description": "Title in vehicle dimensions dialog"
+    },
+    "vehiclePageTitle": "Fahrzeuge",
+    "@vehiclePageTitle": {
+        "description": "Title on vehicle page"
     },
     "nearExitPreference": "Nah am Ausgang parken",
     "@nearExitPreference": {},
