@@ -200,5 +200,7 @@
     "buttonContinue": "Weiter",
     "@buttonContinue": {},
     "titleWelcome": "Herzlich Willkommen",
-    "@titleWelcome": {}
+    "@titleWelcome": {},
+    "titleConfigureApp": "Anwendung konfigurieren",
+    "@titleConfigureApp": {}
 }
