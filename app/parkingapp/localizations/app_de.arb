@@ -202,5 +202,9 @@
     "titleWelcome": "Herzlich Willkommen",
     "@titleWelcome": {},
     "titleConfigureApp": "Anwendung konfigurieren",
-    "@titleConfigureApp": {}
+    "@titleConfigureApp": {},
+    "welcomeText": "Herzlich Willkommen in der FZI Autopark App.\nIn den nächsten Schritten werden Dir die grundlegenden Funktionen der Anwendung näher gebracht und das erste Fahrzeug eingerichtet.",
+    "@welcomeText": {},
+    "appName": "FZI AutoPark",
+    "@appName": {}
 }

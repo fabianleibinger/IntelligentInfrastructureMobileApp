@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/FirstStart/termsofservice.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LandingPage extends StatelessWidget {
   static const String routeName = '/LandingPage';
@@ -10,34 +11,48 @@ class LandingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Herzlich Willkommen'),
+          title: Text(AppLocalizations.of(context).titleWelcome),
         ),
         bottomNavigationBar: Material(
           elevation: 10,
           child: ButtonBar(
             children: [
               FlatButton(
-                child: Text('Weiter'),
+                child: Text(AppLocalizations.of(context).buttonContinue),
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => TermsOfService())),
               )
             ],
           ),
         ),
-        body: ListView(
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               child: Column(
-                children: [Icon(Icons.directions_car), Text('FZI AutoPark')],
+                children: [
+                  Icon(
+                    Icons.directions_car,
+                    size: 150,
+                  ),
+                  Text(AppLocalizations.of(context).appName)
+                ],
               ),
             ),
-            Text(
-                'Herzlich Willkommen in der FZI Autopark App.\nIn den nächsten Schritten werden Dir die grundlegenden Funktionen der Anwendung näher gebracht und das erste Fahrzeug eingerichtet.'),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text(
+                AppLocalizations.of(context).welcomeText,
+                textAlign: TextAlign.justify,
+              ),
+            ),
           ],
         ));
   }
 }
 
+//this will show a circular progress indicator while it waits for the shared preferences to be checked
 class RouteLandingPage extends StatelessWidget {
   static const String routeName = '/RouteLandingPage';
   static final String isSetUp = 'isSetUp';
@@ -50,6 +65,7 @@ class RouteLandingPage extends StatelessWidget {
     );
   }
 
+  //check the shared preferences if the app has been succesfully set up and navigate to correct page
   void _isSetUp(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
