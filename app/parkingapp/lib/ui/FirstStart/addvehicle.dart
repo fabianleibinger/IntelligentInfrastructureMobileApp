@@ -19,10 +19,22 @@ class _AddVehicleState extends State<AddVehicle> {
           appBar: AppBar(
             title: Text(AppLocalizations.of(context).addVehicleTitle),
           ),
-          body: VehicleForm(
-              route: MaterialPageRoute(
-            builder: (context) => MainPage(vehicle.inAppKey),
-          )),
+          //load form asynchronously to increase performance
+          body: FutureBuilder(
+            future: () async {
+              return VehicleForm(
+                  route: MaterialPageRoute(
+                builder: (context) => MainPage(vehicle.inAppKey),
+              ));
+            }(),
+            builder:
+                (BuildContext context, AsyncSnapshot<VehicleForm> snapshot) {
+              if (snapshot.hasData)
+                return snapshot.data;
+              else
+                return CircularProgressIndicator();
+            },
+          ),
         ));
   }
 }
