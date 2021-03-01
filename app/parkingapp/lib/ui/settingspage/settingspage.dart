@@ -3,6 +3,9 @@ import 'package:parkingapp/dialogs/agbsdialog.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
+import 'package:parkingapp/ui/settingspage/passcode.dart';
+import 'package:passcode_screen/circle.dart';
+import 'package:passcode_screen/passcode_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
@@ -12,6 +15,8 @@ import 'package:settings_ui/settings_ui.dart';
 import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
+
+import 'changepasscodepage.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
@@ -69,7 +74,7 @@ class _SettingsFormState extends State<SettingsForm> {
                 subtitle: Text('App mit einem Passwort schützen'),
                 trailing: Icon(Icons.arrow_forward_ios),
                 onTap: () {
-                  Navigator.pushNamed(context, AGB.routeName);
+                  _passCodeSettings();
                 },
               ),
               Divider(),
@@ -91,5 +96,10 @@ class _SettingsFormState extends State<SettingsForm> {
             ],
           ),
         ));
+  }
+
+  _passCodeSettings() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
   }
 }

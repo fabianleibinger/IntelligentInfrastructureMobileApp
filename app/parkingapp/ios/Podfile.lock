@@ -48,12 +48,12 @@ SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
-  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
-  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
+  path_provider: d1a68c4065ce2e0f6fd03f8a46d698525dc79f06
+  qr_code_scanner: 89eb012f742a8f5326fc497f9a461ee2e57c53cc
+  shared_preferences: 5d0fc5691f4e7293ddfc1b599ca398f8af42f5e7
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  wifi: d7d77c94109e36c4175d845f0a5964eadba71060
+  wifi: 117e9c79b6b389b66bbda9c44febe59d782f2752
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

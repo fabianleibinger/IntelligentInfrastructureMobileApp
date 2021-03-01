@@ -8,6 +8,8 @@ import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
+import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
+import 'package:parkingapp/ui/settingspage/passcode.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +19,19 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_app_lock/flutter_app_lock.dart';
+import 'package:parkingapp/ui/settingspage/passcode.dart';
 
 // Main: From here you call all u'r widgets.
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
-  runApp(Main());
+  // app is locked if lock is enabled in settings
+  runApp(AppLock(
+    builder: (args) => Main(),
+    lockScreen: FirstStartPage(),
+    enabled: false,
+  ));
 }
 
 class Main extends StatelessWidget {
@@ -76,6 +85,11 @@ class Main extends StatelessWidget {
           //AGB route
           if (settings.name == Routes.agb) {
             return MaterialPageRoute(builder: (context) => AGB());
+          }
+
+          //changePasscodePage
+          if (settings.name == PasscodePage.routeName) {
+            return MaterialPageRoute(builder: (context) => PasscodePage());
           }
 
           //fallback route
