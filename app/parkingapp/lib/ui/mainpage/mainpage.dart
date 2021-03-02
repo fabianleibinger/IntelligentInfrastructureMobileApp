@@ -87,7 +87,9 @@ class _MainPageState extends State<MainPage> {
         ),
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: _buttonIsDisabled ? grey : green,
+          backgroundColor: _buttonIsDisabled
+              ? Theme.of(context).disabledColor
+              : Theme.of(context).primaryColor,
           onPressed: () {
             if (_buttonIsDisabled) {
               ParkingGarageOccupiedDialog.createDialog(context);
