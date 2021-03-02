@@ -158,7 +158,12 @@ class _VehicleFormState extends State<VehicleForm> {
                                 .then((value) => field.validate()),
                       );
                     },
-                    validator: (value) => vehicle.length == _notSpecifiedDouble
+                    validator: (value) => [
+                      vehicle.length,
+                      vehicle.width,
+                      vehicle.height,
+                      vehicle.turningCycle
+                    ].every((value) => value == _notSpecifiedDouble)
                         ? AppLocalizations.of(context).requiredText
                         : null,
                   )
