@@ -141,13 +141,26 @@ class _VehicleFormState extends State<VehicleForm> {
                       onTap: () =>
                           _showDialog(context, ParkPreferencesDialog())),
                   Divider(),
-                  ListTile(
-                    title: Text(AppLocalizations.of(context)
-                        .vehicleDimensionsDialogTitle),
-                    subtitle: _vehicleDimensionsSubtitle(context),
-                    onTap: () =>
-                        _showDialog(context, VehicleDimensionsDialog()),
-                  ),
+                  FormField(
+                    builder: (FormFieldState<dynamic> field) {
+                      return ListTile(
+                        title: Text(AppLocalizations.of(context)
+                            .vehicleDimensionsDialogTitle),
+                        subtitle: field.hasError
+                            ? Text(
+                                field.errorText,
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              )
+                            : _vehicleDimensionsSubtitle(context),
+                        onTap: () =>
+                            _showDialog(context, VehicleDimensionsDialog()),
+                      );
+                    },
+                    validator: (value) => vehicle.length == _notSpecifiedDouble
+                        ? AppLocalizations.of(context).requiredText
+                        : null,
+                  )
                 ],
               ),
             ),
