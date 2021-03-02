@@ -8,14 +8,16 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 
 class ApiProvider {
   static final int statusCodeSuccess = 200;
+  static final String hostname = 'fzi-autopark-backend.local';
+  static final int serverPort = 2525;
 
   static Future<Map<String, dynamic>> getWelcome() async {
-    return httpGet('http://127.0.0.1:2525/', 'Failed to get welcomed');
+    return httpGet('http://$hostname:$serverPort/', 'Failed to get welcomed');
   }
 
   static Future<Map<String, dynamic>> connect() async {
     return httpGet(
-        'http://127.0.0.1:2525/connect', 'Failed to connect to server');
+        'http://$hostname:$serverPort/connect', 'Failed to connect to server');
   }
 
   //http get request that returns the response body
@@ -34,7 +36,7 @@ class ApiProvider {
   //
   static Future<Map<String, dynamic>> parkIn(Vehicle vehicle) async {
     Client client = Client();
-    final response = await client.post("http://192.168.178.100:5000/",
+    final response = await client.post("http://$hostname:$serverPort/",
         headers: {"Authorization": vehicle.inAppKey},
         body: jsonEncode({
           "nearExitPreference": vehicle.nearExitPreference,
@@ -50,7 +52,7 @@ class ApiProvider {
 
   static Future<Map<String, dynamic>> parkOut(Vehicle vehicle) async {
     Client client = Client();
-    final response = await client.get("http://192.168.178.100:5000/",
+    final response = await client.get("http://$hostname:$serverPort/",
         headers: {"Authorization": vehicle.inAppKey});
     final Map result = json.decode(response.body);
     if (response.statusCode == 201) {
@@ -63,7 +65,7 @@ class ApiProvider {
   static Future<Map<String, dynamic>> getFreeParkingSpots(
       Vehicle vehicle) async {
     Client client = Client();
-    final response = await client.get("http://192.168.178.100:5000/",
+    final response = await client.get("http://$hostname:$serverPort/",
         headers: {"Authorization": vehicle.inAppKey});
     final Map result = json.decode(response.body);
     if (response.statusCode == 201) {
@@ -75,7 +77,7 @@ class ApiProvider {
 
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
     Client client = Client();
-    final response = await client.get("http://192.168.178.100:5000/",
+    final response = await client.get("http://$hostname:$serverPort/",
         headers: {"Authorization": vehicle.inAppKey});
     final Map result = json.decode(response.body);
     if (response.statusCode == 201) {
