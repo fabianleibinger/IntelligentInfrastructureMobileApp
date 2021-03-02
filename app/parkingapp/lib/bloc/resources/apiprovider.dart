@@ -7,20 +7,32 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 // defines the calls to the backend and what should happen with the results
 
 class ApiProvider {
-  // Example Function
+  static final int statusCodeSuccess = 200;
+
   static Future<Map<String, dynamic>> getWelcome() async {
+    return httpGet('http://127.0.0.1:2525/', 'Failed to get welcomed');
+  }
+
+  static Future<Map<String, dynamic>> connect() async {
+    return httpGet(
+        'http://127.0.0.1:2525/connect', 'Failed to connect to server');
+  }
+
+  //http get request that returns the response body
+  static Future<Map<String, dynamic>> httpGet(
+      String url, String failureText) async {
     Client client = Client();
-    final response = await client.get("http://192.168.178.100:5000/");
+    final Response response = await client.get(url);
     final Map result = json.decode(response.body);
-    if (response.statusCode == 201) {
+    if (response.statusCode == statusCodeSuccess) {
       return result;
     } else {
-      throw Exception('Failed to load post');
+      throw Exception(failureText);
     }
   }
 
   //
-  static Future<Map<String, dynamic>> park(Vehicle vehicle) async {
+  static Future<Map<String, dynamic>> parkIn(Vehicle vehicle) async {
     Client client = Client();
     final response = await client.post("http://192.168.178.100:5000/",
         headers: {"Authorization": vehicle.inAppKey},
@@ -36,7 +48,7 @@ class ApiProvider {
     }
   }
 
-  static Future<Map<String, dynamic>> parkout(Vehicle vehicle) async {
+  static Future<Map<String, dynamic>> parkOut(Vehicle vehicle) async {
     Client client = Client();
     final response = await client.get("http://192.168.178.100:5000/",
         headers: {"Authorization": vehicle.inAppKey});
@@ -48,7 +60,7 @@ class ApiProvider {
     }
   }
 
-  static Future<Map<String, dynamic>> getFreeParkingspots(
+  static Future<Map<String, dynamic>> getFreeParkingSpots(
       Vehicle vehicle) async {
     Client client = Client();
     final response = await client.get("http://192.168.178.100:5000/",
@@ -73,7 +85,7 @@ class ApiProvider {
     }
   }
 
-  /*Future<User> signinUser(String username, String apikey) async {
+/*Future<User> signinUser(String username, String apikey) async {
     final response = await client.post("http://192.168.178.48:5000/api/signin",
         headers: {"Authorization": apikey},
         body: jsonEncode({

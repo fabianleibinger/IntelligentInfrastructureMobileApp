@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -41,9 +39,10 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
             if (snapshot.connectionState == ConnectionState.done) {
               _exampleVehicles = _parseJson(snapshot.data.toString());
               _exampleVehicles.forEach((element) {
-                if (element.height == vehicle.height &&
-                    element.width == vehicle.width &&
-                    element.length == vehicle.length) {
+                if (element.width == vehicle.width &&
+                    element.height == vehicle.height &&
+                    element.length == vehicle.length &&
+                    element.turningCycle == vehicle.turningCycle) {
                   _selectedRadioTile = element;
                 }
               });
@@ -82,12 +81,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
 
   void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
     //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
-    //TODO move this into an updateDimensions method within the vehicle
-    vehicle.height = exampleVehicle.height;
-    vehicle.length = exampleVehicle.length;
-    vehicle.width = exampleVehicle.width;
-    vehicle.height = exampleVehicle.height;
-    DataHelper.updateVehicle(context, vehicle);
+    vehicle.setDimensions(context, exampleVehicle.width, exampleVehicle.height,
+        exampleVehicle.length, exampleVehicle.turningCycle);
   }
 
   List<ExampleVehicle> _parseJson(String response) {

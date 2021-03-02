@@ -39,7 +39,8 @@ class Constants {
       String content,
       String cancelButtonText,
       String confirmButtonText,
-      String confirmButtonNextPage) {
+      String confirmButtonNextPage
+      ) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -55,6 +56,21 @@ class Constants {
   }
 
   //creates an alert dialog with text and one button
+  static createAlertDialogOneButtonNoTitle(BuildContext context, String content,
+      String confirmButtonText, String nextPage) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(content),
+            actions: [
+              createFlatButton(context, red, confirmButtonText, nextPage)
+            ],
+          );
+        });
+  }
+
+  //creates an alert dialog with text and one back button
   static createAlertDialogOneBackButtonNoTitle(
       BuildContext context, String content, String confirmButtonText) {
     return showDialog(

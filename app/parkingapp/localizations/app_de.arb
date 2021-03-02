@@ -43,6 +43,22 @@
     "@actionButtonPark": {
         "description": "Park vehicle action button on main page"
     },
+    "actionButtonParkOut": "Fahrzeug ausparken",
+    "@actionButtonParkOut": {
+        "description": "Park out vehicle action button on park in page"
+    },
+    "actionButtonParkOutProcess": "Fahrzeug wird ausgeparkt",
+    "@actionButtonParkOutProcess": {
+        "description": "Park out process action button on park out page "
+    },
+    "actionButtonCancelPark": "Einparkvorgang abbrechen",
+    "@actionButtonCancelPark": {
+        "description": "Cancel parking action button on park in page"
+    },
+    "actionButtonCancelParkProcess": "Einparkvorgang wird abgebrochen",
+    "@actionButtonCancelParkProcess": {
+        "description": "Cancelling park in process action button on park out page "
+    },
     "mainPageCarParkTitle": "Parkgarage am Fasanengarten",
     "@mainPageCarParkTitle": {
         "description": "The name of the car park"
@@ -72,6 +88,10 @@
     "parkDialogCancelButton": "ABBRECHEN",
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
+    },
+    "parkingGarageOccupiedDialogContent": "Leider sind gerade keine freien Parkplätze verfügbar.",
+    "@parkingGarageOccupiedDialogContent": {
+        "description": "Text body for parking garage occupied dialog"
     },
     "dialogFinishedButton": "FERTIG",
     "@dialogFinishedButton": {
@@ -141,8 +161,60 @@
     "@vehicleDimensionsDialogTitle": {
         "description": "Title in vehicle dimensions dialog"
     },
+    "vehiclePageTitle": "Fahrzeuge",
+    "@vehiclePageTitle": {
+        "description": "Title on vehicle page"
+    },
     "nearExitPreference": "Nah am Ausgang parken",
     "@nearExitPreference": {},
     "parkingCard": "Parkkarte",
-    "@parkingCard":{}
+    "@parkingCard":{},
+    "parkPreferences": "Parkpräferenzen",
+    "@parkPreferences": {},
+    "vehicleName": "Fahrzeugname",
+    "@vehicleName": {},
+    "licensePlate": "Nummernschild",
+    "@licensePlate": {
+        "description": "hint to show on text field for vehicle creation"
+    },
+    "length": "Länge",
+    "@length": {},
+    "width": "Breite",
+    "@width": {},
+    "height": "Höhe",
+    "@height": {},
+    "addVehicleButton": "Fahrzeug hinzufügen",
+    "@addVehicleButton": {},
+    "editVehicleButton": "Fahrzeug bearbeiten",
+    "@editVehicleButton": {},
+    "chargeVehicleByDefault": "Fahrzeug standardmäßig laden",
+    "@chargeVehicleByDefault": {},
+    "begin": "Beginn",
+    "@begin": {},
+    "end": "Ende",
+    "@end": {},
+    "requiredText": "Erforderlich",
+    "@requiredText": {},
+    "addVehicleTitle": "Neues Fahrzeug",
+    "@addVehicleTitle": {},
+    "editVehicleTitle": "Fahrzeug bearbeiten",
+    "@editVehicleTitle": {},
+    "vehicleCanCharge": "Fahrzeug ist ladefähig",
+    "@vehicleCanCharge": {},
+    "space": " ",
+    "@space": {
+        "description": "a space to show for example after a value followed by text"
+    },
+    "colonSpace": ": ",
+    "@colonSpace": {
+        "description": "a colon and a space to show for example after a text followed by a value"
+    },
+    "meterShort": "m",
+    "@meterShort": {
+        "description": "meter as a means of measuring distance"
+    },
+    "commaSeperatedList": ", ",
+    "@commaSeperatedList": {
+        "description": "used for lists of values that are seperated by commas"
+    }
 }

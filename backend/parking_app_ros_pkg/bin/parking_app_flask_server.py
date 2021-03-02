@@ -1,13 +1,10 @@
 import os
 import configparser
-from ctypes import c_uint
-
-import rospy
-import threading
-
 from flask import Flask, jsonify, request, Response
-from std_msgs.msg import String
-from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
+
+# parking_communication python module provides the logic for
+# communication between flask server and ROS nodes
+import parking_app_python_pkg.parking_communication as communication
 
 ############################################################################
 # Start Flask server with configuration from config.properties file
@@ -23,40 +20,14 @@ config.read(configFilePath)
 url_address = config['server']['ipAddress']
 port = config.getint('server', 'port')
 
-############################################################################
-# Connect to ROS node
-ros_root_node = 'parking_node'
-threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
-
-
-def retrieve_free_parking_spots_from_pms():
-    rospy.wait_for_service('capacity_request')
-    try:
-        capacity_request = rospy.ServiceProxy('capacity_request', CapacityRequest)
-        capacities = capacity_request()
-        return capacities
-    except rospy.ServiceException as exception:
-        print("Service call failed: %s" % exception)
-
-
-def request_free_parking_spots(electric):
-    current_capacities = retrieve_free_parking_spots_from_pms()
-    if electric:
-        free_electric = current_capacities.capacity_free.electric
-        return jsonify({'request': 'capacity free electric', 'result': str(free_electric)})
-    else:
-        free_total = current_capacities.capacity_free.total
-        return jsonify({'request': 'capacity free total', 'result': str(free_total)})
-
+parking_garage_name = config['parking garage']['name']
 
 ############################################################################
-# Implement logic here
 
+communication_failed_message = "The parking garage management system could not return the current capacity."
 
 ############################################################################
 # Routes
-
-
 @app.route('/')
 def main():
     """
@@ -67,8 +38,8 @@ def main():
 
 
 @app.route('/connect')
-def connect():
-    return
+def return_connection_information():
+    return jsonify({'IP': url_address, 'Port': port, 'Parking garage': parking_garage_name})
 
 
 @app.route('/testJson')
@@ -79,14 +50,36 @@ def test_extract_content_from_json():
     return 'JSON posted'
 
 
-@app.route('/freeParkingSpots')
-def get_normal_parking_spots():
-    return request_free_parking_spots(False)
+@app.route('/capacities')
+def get_capacities():
+    try:
+        return communication.request_capacities(False)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
-@app.route('/freeElectricParkingSpots')
-def electric_parking_spots():
-    return request_free_parking_spots(True)
+@app.route('/free')
+def get_free_capacities():
+    try:
+        return communication.request_capacities(True)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
+
+
+@app.route('/free/total')
+def all_free_parking_spots():
+    try:
+        return communication.request_free_parking_spots(False)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
+
+
+@app.route('/free/electric')
+def electric_free_parking_spots():
+    try:
+        return communication.request_free_parking_spots(True)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
 @app.route('/parkIn')
@@ -113,3 +106,5 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
+

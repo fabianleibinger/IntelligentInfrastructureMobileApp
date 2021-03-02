@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
+import 'package:parkingapp/ui/parkpages/parkinpage.dart';
+import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,6 +50,14 @@ class Main extends StatelessWidget {
         if (settings.name == Routes.vehicle) {
           return MaterialPageRoute(builder: (context) => VehiclePage());
         }
+          //parkInPage route
+          if (settings.name == Routes.parkIn) {
+            return MaterialPageRoute(builder: (context) => ParkInPage());
+          }
+          //parkOutPage route
+          if (settings.name == Routes.parkOut) {
+            return MaterialPageRoute(builder: (context) => ParkOutPage());
+          }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
         RegExp inAppKeyRegExp = RegExp(r'\w{8}-\w{4}-\w{4}-\w{4}-\w{12}');
@@ -66,10 +73,20 @@ class Main extends StatelessWidget {
         if (settings.name == Routes.createVehicle) {
           return MaterialPageRoute(builder: (context) => CreateVehicle());
         }
+
+          //whats this??
+          //if (settings.name == EditVehicle.routeName) {
+          //return MaterialPageRoute(builder: (context) => EditVehicle());
+          //}
+
+          //AGB route
+          if (settings.name == Routes.agb) {
+            return MaterialPageRoute(builder: (context) => AGB());
+          }
+
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
-      },
-    );
+        });
   }
 
   // This widget is the root of your application.

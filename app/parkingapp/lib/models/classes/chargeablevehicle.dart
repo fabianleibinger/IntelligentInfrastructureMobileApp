@@ -13,8 +13,8 @@ class ChargeableVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       this.nearExitPreference,
@@ -23,7 +23,9 @@ class ChargeableVehicle extends Vehicle {
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd);
+      this.chargeTimeEnd) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+  }
 
   //private constructor: only called by fromMap() method, database defines databaseId
   ChargeableVehicle._(
@@ -31,8 +33,8 @@ class ChargeableVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
       this.nearExitPreference,
@@ -41,7 +43,9 @@ class ChargeableVehicle extends Vehicle {
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd);
+      this.chargeTimeEnd) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+  }
 
   @override
   Map<String, dynamic> toMap() {
@@ -133,7 +137,7 @@ class ChargeableVehicle extends Vehicle {
   String inAppKey, name, licensePlate;
 
   @override
-  double height, width, length, turningCycle;
+  double width, height, length, turningCycle;
 
   @override
   bool nearExitPreference, parkingCard;
