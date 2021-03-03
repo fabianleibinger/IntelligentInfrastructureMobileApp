@@ -66,6 +66,12 @@ class _VehiclePageState extends State<VehiclePage> {
               return Dismissible(
                   direction: DismissDirection.endToStart,
                   background: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(Icons.delete,
+                          color: Theme.of(context).dialogBackgroundColor),
+                    ),
                     color: Colors.red,
                   ),
                   key: Key(vehicle.inAppKey),
