@@ -38,45 +38,7 @@ class _FirstStartPageState extends State<FirstStartPage> {
   bool isAuthenticated = false;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey,
-      body: Center(
-        child: Container(
-          margin: EdgeInsets.only(top: 100, left: 20, right: 20, bottom: 100),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                "Welcome!",
-              ),
-              Container(
-                height: 200,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    MaterialButton(
-                      child: Text('Go!'),
-                      color: Colors.green,
-                      onPressed: () async {
-                        await new Future.delayed(const Duration(seconds: 3));
-                        Navigator.push(
-                            context,
-                            PageRouteBuilder(
-                              opaque: false,
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) =>
-                                      _passCodeLockScreen(),
-                            ));
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return _passCodeLockScreen();
   }
 
   _passCodeLockScreen() {
@@ -115,6 +77,7 @@ class _FirstStartPageState extends State<FirstStartPage> {
 
     //for testing without saving passcode before
     SharedPreferencesHelper.setPasscode('123456');
+    AppLock.of(context).didUnlock();
     FutureBuilder<String>(
       future: SharedPreferencesHelper.getPasscode(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
