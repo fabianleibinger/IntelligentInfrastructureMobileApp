@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
+import 'package:parkingapp/dialogs/constants.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -64,6 +66,30 @@ class _VehiclePageState extends State<VehiclePage> {
 
               Vehicle vehicle = vehicleList[index];
               return Dismissible(
+                  confirmDismiss: (dismissDirection) =>
+                      //confirm to delete
+                      showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                                title: Text(AppLocalizations.of(context)
+                                    .askDeleteVehicle),
+                                content: Text(AppLocalizations.of(context)
+                                    .askDeleteVehicleContent),
+                                actions: [
+                                  FlatButton(
+                                    child: Text(AppLocalizations.of(context)
+                                        .scanQRDialogCancelButton),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(false),
+                                  ),
+                                  FlatButton(
+                                    child: Text(AppLocalizations.of(context)
+                                        .scanQRDialogConfirmButton),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(true),
+                                  )
+                                ],
+                              )),
                   direction: DismissDirection.endToStart,
                   background: Container(
                     padding: EdgeInsets.all(10),
