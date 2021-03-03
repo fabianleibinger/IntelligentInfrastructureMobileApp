@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
@@ -14,7 +13,7 @@ class ChargingProviderDialog extends StatefulWidget {
 
 class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   List<ChargingProvider> _providers = ChargingProvider.values;
-  static ChargingProvider _selectedRadioTile;
+  ChargingProvider _selectedRadioTile;
 
   //sets the initially selected tile
   @override
@@ -62,11 +61,11 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
 
   //selects the right charging Provider value for _selectedRadioTile
   void _checkChargingProvider(ChargeableVehicle vehicle) {
-    for (int i = 0; i < _providers.length; i++) {
-      if (vehicle.chargingProvider == _providers[i].toShortString()) {
-        _selectedRadioTile = _providers[i];
+    _providers.forEach((provider) {
+      if(vehicle.chargingProvider == provider.toShortString()) {
+        _selectedRadioTile = provider;
       }
-    }
+    });
   }
 
   //sets vehicle charging provider value
