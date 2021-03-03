@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -36,38 +38,37 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
           future: DefaultAssetBundle.of(context)
               .loadString('assets/example-vehicles.json'),
           builder: (context, snapshot) {
-            _exampleVehicles = _parseJson(snapshot.data.toString());
-            _exampleVehicles.forEach((element) {
-              if (element.height == vehicle.height &&
-                  element.width == vehicle.width &&
-                  element.length == vehicle.length) {
-                _selectedRadioTile = element;
-              }
-            });
-            return _exampleVehicles.isNotEmpty
-                ? Container(
-                    height: 150,
-                    width: 250,
-                    child: ListView.builder(
-                      itemCount: _exampleVehicles == null
-                          ? 0
-                          : _exampleVehicles.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return RadioListTile<ExampleVehicle>(
-                          value: _exampleVehicles[index],
-                          groupValue: _selectedRadioTile,
-                          onChanged: (value) {
-                            setState(() {
-                              _setSelectedRadioTile(value);
-                            });
-                          },
-                          title: Text(_exampleVehicles[index].name),
-                        );
-                      },
-                    ))
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
+            if (snapshot.connectionState == ConnectionState.done) {
+              _exampleVehicles = _parseJson(snapshot.data.toString());
+              _exampleVehicles.forEach((element) {
+                if (element.height == vehicle.height &&
+                    element.width == vehicle.width &&
+                    element.length == vehicle.length) {
+                  _selectedRadioTile = element;
+                }
+              });
+              return Container(
+                  height: 150,
+                  width: 250,
+                  child: ListView.builder(
+                    itemCount:
+                        _exampleVehicles == null ? 0 : _exampleVehicles.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return RadioListTile<ExampleVehicle>(
+                        value: _exampleVehicles[index],
+                        groupValue: _selectedRadioTile,
+                        onChanged: (value) {
+                          setState(() {
+                            _setSelectedRadioTile(value);
+                          });
+                        },
+                        title: Text(_exampleVehicles[index].name),
+                      );
+                    },
+                  ));
+            } else {
+              return CircularProgressIndicator();
+            }
           })
     ]);
   }
@@ -80,8 +81,13 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
   }
 
   void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
-    vehicle.setDimensions(context, exampleVehicle.height, exampleVehicle.width,
-        exampleVehicle.length);
+    //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
+    //TODO move this into an updateDimensions method within the vehicle
+    vehicle.height = exampleVehicle.height;
+    vehicle.length = exampleVehicle.length;
+    vehicle.width = exampleVehicle.width;
+    vehicle.height = exampleVehicle.height;
+    DataHelper.updateVehicle(context, vehicle);
   }
 
   List<ExampleVehicle> _parseJson(String response) {

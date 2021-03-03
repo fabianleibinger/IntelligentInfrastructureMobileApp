@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
@@ -117,6 +118,12 @@ class ChargeableVehicle extends Vehicle {
   void setChargeTimeEnd(BuildContext context, TimeOfDay end) {
     this.chargeTimeEnd = end;
     DataHelper.updateVehicle(context, this);
+  }
+
+  //convert to standard vehicle
+  StandardVehicle toStandardVehicle() {
+    return StandardVehicle(inAppKey, name, licensePlate, height, width, length,
+        turningCycle, nearExitPreference, parkingCard, false);
   }
 
   @override

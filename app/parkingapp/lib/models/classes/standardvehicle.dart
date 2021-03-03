@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
@@ -57,4 +59,21 @@ class StandardVehicle extends Vehicle {
 
   @override
   bool parkedIn;
+  Vehicle toElectricVehicle() {
+    return ChargeableVehicle(
+        inAppKey,
+        name,
+        licensePlate,
+        height,
+        width,
+        length,
+        turningCycle,
+        nearExitPreference,
+        parkingCard,
+        false,
+        false,
+        '',
+        TimeOfDay(hour: 0, minute: 0),
+        TimeOfDay(hour: 23, minute: 59));
+  }
 }
