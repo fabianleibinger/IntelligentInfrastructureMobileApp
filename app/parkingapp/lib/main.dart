@@ -43,25 +43,25 @@ class Main extends StatelessWidget {
       initialRoute: initialroute,
       //Routing of app
       onGenerateRoute: (settings) {
-        //settings Route
-        if (settings.name == Routes.settings) {
-          return MaterialPageRoute(builder: (context) => SettingsPage());
-        }
-        //parkInPage route
-        if (settings.name == Routes.parkIn) {
-          return MaterialPageRoute(builder: (context) => ParkInPage());
-        }
-        //parkOutPage route
-        if (settings.name == Routes.parkOut) {
-          return MaterialPageRoute(builder: (context) => ParkOutPage());
-        }
-        //editVehicle route
-        if (settings.name == Routes.createVehicle) {
-          return MaterialPageRoute(builder: (context) => CreateVehicle());
-        }
-        //AGB route
-        if (settings.name == Routes.agb) {
-          return MaterialPageRoute(builder: (context) => AGB());
+        switch (settings.name) {
+          case Routes.vehicle:
+            return MaterialPageRoute(builder: (context) => VehiclePage());
+          case Routes.settings:
+            return MaterialPageRoute(builder: (context) => SettingsPage());
+          case Routes.parkIn:
+            return MaterialPageRoute(builder: (context) => ParkInPage());
+          case Routes.agb:
+            return MaterialPageRoute(builder: (context) => AGB());
+          case Routes.parkIn:
+            return MaterialPageRoute(builder: (context) => ParkInPage());
+          case Routes.parkOut:
+            return MaterialPageRoute(builder: (context) => ParkOutPage());
+          case Routes.createVehicle:
+            return MaterialPageRoute(builder: (context) => CreateVehicle());
+          case Routes.landingPage:
+            return MaterialPageRoute(builder: (context) => LandingPage());
+          case Routes.routeLandingPage:
+            return MaterialPageRoute(builder: (context) => RouteLandingPage());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
@@ -70,16 +70,8 @@ class Main extends StatelessWidget {
         if (uri.pathSegments.length > 0 &&
             inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
           print('vehicle: ' + uri.pathSegments.first);
-          //TODO generate vehicle Page with inAppKey
           return MaterialPageRoute(
               builder: (context) => MainPage(uri.pathSegments.first));
-        }
-        //first start route
-        if (settings.name == Routes.landingPage) {
-          return MaterialPageRoute(builder: (context) => LandingPage());
-        }
-        if (settings.name == Routes.routeLandingPage) {
-          return MaterialPageRoute(builder: (context) => RouteLandingPage());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
