@@ -74,7 +74,7 @@ class _PasscodePageState extends State<PasscodePage> {
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
-        Navigator.pop(context);
+        //Navigator.pop(context);
         AppLock.of(context).enable();
       });
     }
