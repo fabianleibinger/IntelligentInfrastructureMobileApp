@@ -158,7 +158,7 @@ class _MainPageState extends State<MainPage> {
 
     // vehicle specific toggles
     widgets.add(ListTile(
-        title: Text('Parkpräferenzen'),
+        title: Text(AppLocalizations.of(context).parkPreferences),
         subtitle: SubtitleFormatter.vehicleParkPreferences(
             context: context, vehicle: vehicle),
         onTap: () => _showDialog(context, ParkPreferencesDialog())));
