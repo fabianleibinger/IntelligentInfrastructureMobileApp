@@ -64,6 +64,7 @@ class _VehiclePageState extends State<VehiclePage> {
 
               Vehicle vehicle = vehicleList[index];
               return Dismissible(
+                  direction: DismissDirection.endToStart,
                   background: Container(
                     color: Colors.red,
                   ),
