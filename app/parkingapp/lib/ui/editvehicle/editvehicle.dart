@@ -141,13 +141,32 @@ class _VehicleFormState extends State<VehicleForm> {
                       onTap: () =>
                           _showDialog(context, ParkPreferencesDialog())),
                   Divider(),
-                  ListTile(
-                    title: Text(AppLocalizations.of(context)
-                        .vehicleDimensionsDialogTitle),
-                    subtitle: _vehicleDimensionsSubtitle(context),
-                    onTap: () =>
-                        _showDialog(context, VehicleDimensionsDialog()),
-                  ),
+                  FormField(
+                    builder: (FormFieldState<dynamic> field) {
+                      return ListTile(
+                        title: Text(AppLocalizations.of(context)
+                            .vehicleDimensionsDialogTitle),
+                        subtitle: field.hasError
+                            ? Text(
+                                field.errorText,
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              )
+                            : _vehicleDimensionsSubtitle(context),
+                        onTap: () =>
+                            _showDialog(context, VehicleDimensionsDialog())
+                                .then((value) => field.validate()),
+                      );
+                    },
+                    validator: (value) => [
+                      vehicle.length,
+                      vehicle.width,
+                      vehicle.height,
+                      vehicle.turningCycle
+                    ].every((value) => value == _notSpecifiedDouble)
+                        ? AppLocalizations.of(context).requiredText
+                        : null,
+                  )
                 ],
               ),
             ),
@@ -167,11 +186,12 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  // TODO merge into one funciton
-  // select Time (used for start and end of charge)
-  void _showDialog(BuildContext context, Widget dialog) async {
+  // show a dialog, wait for it to finish and update state after finishing
+  // returns true when finished
+  Future<bool> _showDialog(BuildContext context, Widget dialog) async {
     await showDialog(context: context, builder: (context) => dialog);
     setState(() {});
+    return true;
   }
 
   //electric vehicle toggles
