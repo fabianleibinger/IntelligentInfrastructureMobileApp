@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/bloc/resources/subtitleformatter.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
@@ -158,10 +159,8 @@ class _MainPageState extends State<MainPage> {
     // vehicle specific toggles
     widgets.add(ListTile(
         title: Text('Parkpräferenzen'),
-        subtitle: Text('Parkkarte: ' +
-            vehicle.parkingCard.toString() +
-            ' Ausgang: ' +
-            vehicle.nearExitPreference.toString()),
+        subtitle: SubtitleFormatter.vehicleParkPreferences(
+            context: context, vehicle: vehicle),
         onTap: () => _showDialog(context, ParkPreferencesDialog())));
 
     // electric vehicle toggles
