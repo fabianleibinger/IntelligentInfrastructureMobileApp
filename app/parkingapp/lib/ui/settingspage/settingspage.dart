@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
-import 'package:parkingapp/routes/routes.dart';
-
-import 'changepasscodepage.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
@@ -63,9 +59,10 @@ class _SettingsFormState extends State<SettingsForm> {
                 title: Text('Passwort'),
                 subtitle: Text('App mit einem Passwort schützen'),
                 trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () {
-                  _passCodeSettings();
-                },
+                // TO DO: Implement passcode page
+                //onTap: () {
+                //_passCodeSettings();
+                //},
               ),
               Divider(),
               ListTile(
@@ -87,9 +84,9 @@ class _SettingsFormState extends State<SettingsForm> {
           ),
         ));
   }
-
-  _passCodeSettings() {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
-  }
+  // TO DO: finish implementing passcode page
+  /*_passCodeSettings() {
+    //Navigator.push(context,
+        //MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
+  }*/
 }

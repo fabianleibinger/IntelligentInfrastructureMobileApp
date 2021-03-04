@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/FirstStart/addvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
 class AppConfiguration extends StatefulWidget {
@@ -60,13 +59,14 @@ class _AppConfigurationState extends State<AppConfiguration> {
                         title: Text('Passwort'),
                         subtitle: Text('App mit einem Passwort schützen'),
                         trailing: Icon(Icons.arrow_forward_ios),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      PasscodePage()));
-                        },
+                        //TO DO: Implement passcode page
+                        /*onTap: () {
+                          //Navigator.push(
+                              //context,
+                              //MaterialPageRoute(
+                                  //builder: (BuildContext context) =>
+                                      //PasscodePage()));
+                        },*/
                       ),
                     ],
                   ),
