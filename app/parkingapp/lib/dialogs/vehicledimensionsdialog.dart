@@ -28,7 +28,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
         context,
         AppLocalizations.of(context).vehicleDimensionsDialogTitle,
         AppLocalizations.of(context).dialogFinishedButton,
-        _getRadioListTiles(context));
+        Column(children: [_getRadioListTiles(context), _customDimensions()]));
   }
 
   //returns a tile for every different dimension
@@ -118,5 +118,85 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
         .toList();
 
     return list;
+  }
+
+  //Dialog that allows entering of custom dimensions
+  ListTile _customDimensions() {
+    final _formKey = GlobalKey<FormState>();
+    return ListTile(
+      title: Text('Eigene Abmessungen'),
+      onTap: () async {
+        await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text('Eigene Abmessungen'),
+                  content: Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: [
+                        TextFormField(
+                          initialValue: vehicle.length.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration:
+                              InputDecoration(labelText: 'Länge (in mm)'),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : 'Erforderlich',
+                          onSaved: (val) =>
+                              vehicle.length = double.tryParse(val),
+                        ),
+                        TextFormField(
+                          initialValue: vehicle.width.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration:
+                              InputDecoration(labelText: 'Breite (in mm)'),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : 'Erforderlich',
+                          onSaved: (val) =>
+                              vehicle.width = double.tryParse(val),
+                        ),
+                        TextFormField(
+                          initialValue: vehicle.height.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration:
+                              InputDecoration(labelText: 'Höhe (in mm)'),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : 'Erforderlich',
+                          onSaved: (val) =>
+                              vehicle.height = double.tryParse(val),
+                        ),
+                        TextFormField(
+                          initialValue: vehicle.turningCycle.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration:
+                              InputDecoration(labelText: 'Wendekreis (in mm)'),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : 'Erforderlich',
+                          onSaved: (val) =>
+                              vehicle.turningCycle = double.tryParse(val),
+                        )
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    FlatButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        //validate form and exit on success
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    )
+                  ],
+                ));
+        Navigator.of(context).pop();
+      },
+    );
   }
 }
