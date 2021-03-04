@@ -70,7 +70,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.agbPage);
+                    Navigator.pushNamed(context, Routes.agb);
                   }),
               Divider(),
               ListTile(
@@ -78,7 +78,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.agbPage);
+                    Navigator.pushNamed(context, Routes.agb);
                   })
             ],
           ),
