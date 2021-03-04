@@ -1,20 +1,28 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
-import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
+import 'package:parkingapp/bloc/events/setvehicles.dart';
+import 'package:parkingapp/dialogs/chargetimedialog.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
-ParkingGarage currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
+final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
     ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+final parkingGarageImageHeight = 250;
+final bottomMargin = 80;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -33,15 +41,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _parkingGarageImageHeight = 250;
-  final _bottomMargin = 80;
-
-  bool _buttonIsDisabled;
-
   @override
   void initState() {
     super.initState();
-    _buttonIsDisabled = false;
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -52,18 +54,8 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  //disables button according to free parking spots
-  _setButtonIsDisabled() {
-    bool disable = currentParkingGarage.getFreeParkingSpots() <= 0;
-    setState(() {
-      _buttonIsDisabled = disable;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    //check if button should be disabled
-    _setButtonIsDisabled();
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
         if (previous.hashCode != current.hashCode)
@@ -87,16 +79,14 @@ class _MainPageState extends State<MainPage> {
             ),
             drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
-              backgroundColor: _buttonIsDisabled ? grey : green,
               onPressed: () {
-                if (_buttonIsDisabled) {
-                  ParkingGarageOccupiedDialog.createDialog(context);
-                } else {
-                  ParkDialog.createParkInDialog(context);
-                }
-              }
-              //DatabaseProvider.db.clear();
-              ,
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ChargeTimeDialog();
+                    });
+                //DatabaseProvider.db.clear();
+              },
               label: Text(AppLocalizations.of(context).actionButtonPark),
             ),
             floatingActionButtonLocation:
@@ -117,7 +107,7 @@ class _MainPageState extends State<MainPage> {
                               Text(currentParkingGarage.type.toShortString()),
                         ),
                         Container(
-                          height: _parkingGarageImageHeight.toDouble(),
+                          height: parkingGarageImageHeight.toDouble(),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage(currentParkingGarage.image),
@@ -133,7 +123,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).padding.bottom + _bottomMargin,
+                  height: MediaQuery.of(context).padding.bottom + bottomMargin,
                 )
               ],
             ));

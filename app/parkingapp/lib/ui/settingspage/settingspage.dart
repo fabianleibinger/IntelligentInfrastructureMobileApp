@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/dialogs/agbsdialog.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
-import 'package:parkingapp/ui/settingspage/AGBpage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:wifi/wifi.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:settings_ui/settings_ui.dart';
-import 'package:parkingapp/models/classes/user.dart';
-import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -68,9 +59,10 @@ class _SettingsFormState extends State<SettingsForm> {
                 title: Text('Passwort'),
                 subtitle: Text('App mit einem Passwort schützen'),
                 trailing: Icon(Icons.arrow_forward_ios),
-                onTap: () {
-                  Navigator.pushNamed(context, AGB.routeName);
-                },
+                // TO DO: Implement passcode page
+                //onTap: () {
+                //_passCodeSettings();
+                //},
               ),
               Divider(),
               ListTile(
@@ -78,7 +70,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushNamed(context, AGB.routeName);
+                    Navigator.pushNamed(context, Routes.agbPage);
                   }),
               Divider(),
               ListTile(
@@ -86,10 +78,15 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushNamed(context, AGB.routeName);
+                    Navigator.pushNamed(context, Routes.agbPage);
                   })
             ],
           ),
         ));
   }
+  // TO DO: finish implementing passcode page
+  /*_passCodeSettings() {
+    //Navigator.push(context,
+        //MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
+  }*/
 }

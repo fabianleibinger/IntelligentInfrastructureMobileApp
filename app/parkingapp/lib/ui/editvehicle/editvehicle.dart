@@ -9,9 +9,11 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
+import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final double _notSpecifiedDouble = 0;
 final String _notSpecifiedString = '';
@@ -141,32 +143,13 @@ class _VehicleFormState extends State<VehicleForm> {
                       onTap: () =>
                           _showDialog(context, ParkPreferencesDialog())),
                   Divider(),
-                  FormField(
-                    builder: (FormFieldState<dynamic> field) {
-                      return ListTile(
-                        title: Text(AppLocalizations.of(context)
-                            .vehicleDimensionsDialogTitle),
-                        subtitle: field.hasError
-                            ? Text(
-                                field.errorText,
-                                style: TextStyle(
-                                    color: Theme.of(context).errorColor),
-                              )
-                            : _vehicleDimensionsSubtitle(context),
-                        onTap: () =>
-                            _showDialog(context, VehicleDimensionsDialog())
-                                .then((value) => field.validate()),
-                      );
-                    },
-                    validator: (value) => [
-                      vehicle.length,
-                      vehicle.width,
-                      vehicle.height,
-                      vehicle.turningCycle
-                    ].every((value) => value == _notSpecifiedDouble)
-                        ? AppLocalizations.of(context).requiredText
-                        : null,
-                  )
+                  ListTile(
+                    title: Text(AppLocalizations.of(context)
+                        .vehicleDimensionsDialogTitle),
+                    subtitle: _vehicleDimensionsSubtitle(context),
+                    onTap: () =>
+                        _showDialog(context, VehicleDimensionsDialog()),
+                  ),
                 ],
               ),
             ),
@@ -186,12 +169,11 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  // show a dialog, wait for it to finish and update state after finishing
-  // returns true when finished
-  Future<bool> _showDialog(BuildContext context, Widget dialog) async {
+  // TODO merge into one funciton
+  // select Time (used for start and end of charge)
+  void _showDialog(BuildContext context, Widget dialog) async {
     await showDialog(context: context, builder: (context) => dialog);
     setState(() {});
-    return true;
   }
 
   //electric vehicle toggles
@@ -240,7 +222,7 @@ class _VehicleFormState extends State<VehicleForm> {
   }
 
   //validate the form
-  void onPressed(bool vehicleChargeable) {
+  void onPressed(bool vehicleChargeable) async {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
@@ -257,6 +239,8 @@ class _VehicleFormState extends State<VehicleForm> {
       //this will only "update" the vehicle because it has been created at the start
       DataHelper.addVehicle(context, vehicle);
       form.reset();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool(RouteLandingPage.isSetUp, true);
       //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
       //navigate to supplied route or pop the page of no route was supplied
       widget.route != null
