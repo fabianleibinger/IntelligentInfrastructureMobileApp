@@ -238,7 +238,9 @@
     "buttonOk": "OK",
     "@buttonOk": {},
     "vehicleIsParkedInTitle": "Fahrzeug ist eingeparkt",
-    "@vehicleIsParkedIn": {},
+    "@vehicleIsParkedInTitle": {},
     "vehicleIsParkedInBody": "Während das Fahrzeug eingeparkt ist, kann es nicht entfernt werden. Parken Sie das Fahrzeug aus, um es zu löschen.",
-    "@vehicleIsParkedInBody": {}
+    "@vehicleIsParkedInBody": {},
+    "deleted": "gelöscht!",
+    "@deleted": {}
 }

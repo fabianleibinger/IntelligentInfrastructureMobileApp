@@ -95,7 +95,9 @@ class _VehiclePageState extends State<VehiclePage> {
                         .add(DeleteVehicle(vehicle));
                     //show snackbar that vehicle has been deleted
                     Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(vehicle.name + ' removed!'),
+                      content: Text(vehicle.name +
+                          AppLocalizations.of(context).space +
+                          AppLocalizations.of(context).deleted),
                     ));
                   },
                   child: ListTile(
