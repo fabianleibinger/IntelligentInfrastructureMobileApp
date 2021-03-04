@@ -234,5 +234,11 @@
     "askDeleteVehicle": "Fahrzeug löschen?",
     "@askDeleteVehicle": {},
     "askDeleteVehicleContent": "Alle Informationen über das Fahrzeug weden unwiederruflich gelöscht.",
-    "@askDeleteVehicleContent": {}
+    "@askDeleteVehicleContent": {},
+    "buttonOk": "OK",
+    "@buttonOk": {},
+    "vehicleIsParkedInTitle": "Fahrzeug ist eingeparkt",
+    "@vehicleIsParkedIn": {},
+    "vehicleIsParkedInBody": "Während das Fahrzeug eingeparkt ist, kann es nicht entfernt werden. Parken Sie das Fahrzeug aus, um es zu löschen.",
+    "@vehicleIsParkedInBody": {}
 }
