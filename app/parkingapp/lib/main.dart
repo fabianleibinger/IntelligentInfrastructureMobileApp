@@ -73,7 +73,7 @@ class Main extends StatelessWidget {
         if (settings.name == Routes.routeLandingPage) {
           return MaterialPageRoute(builder: (context) => RouteLandingPage());
         }
-        if (settings.name == Routes.agbPage) {
+        if (settings.name == Routes.agb) {
           return MaterialPageRoute(builder: (context) => AGB());
         }
         //fallback route
