@@ -200,7 +200,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                   ),
                   actions: [
                     FlatButton(
-                      child: Text('OK'),
+                      child: Text(AppLocalizations.of(context).buttonOk),
                       onPressed: () {
                         //validate form and exit on success
                         if (_formKey.currentState.validate()) {
