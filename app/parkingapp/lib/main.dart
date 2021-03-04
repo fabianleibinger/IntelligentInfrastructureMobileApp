@@ -9,6 +9,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
@@ -27,7 +28,7 @@ void main() {
   runApp(AppLock(
     builder: (args) => Main(),
     lockScreen: FirstStartPage(),
-    enabled: true,
+    enabled: false,
   ));
 }
 
@@ -79,6 +80,9 @@ class Main extends StatelessWidget {
         }
         if (settings.name == Routes.routeLandingPage) {
           return MaterialPageRoute(builder: (context) => RouteLandingPage());
+        }
+        if (settings.name == Routes.agbPage) {
+          return MaterialPageRoute(builder: (context) => AGB());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());

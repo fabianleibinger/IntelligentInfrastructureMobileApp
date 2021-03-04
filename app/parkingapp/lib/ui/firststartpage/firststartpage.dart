@@ -1,20 +1,11 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app_lock/flutter_app_lock.dart';
-import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
-import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
-import 'package:parkingapp/ui/settingspage/passcode.dart';
-import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:parkingapp/models/classes/user.dart';
-import 'package:parkingapp/models/global.dart';
 
 class FirstStartPage extends StatefulWidget {
   final String apikey;
@@ -27,7 +18,8 @@ class FirstStartPage extends StatefulWidget {
 const storedPasscode = '123456';
 
 class _FirstStartPageState extends State<FirstStartPage> {
-  TextEditingController usernameController = new TextEditingController();
+  //nötig??
+  //TextEditingController usernameController = new TextEditingController();
 
   //for passcode screen
   final StreamController<bool> _verificationNotifier =
@@ -44,20 +36,19 @@ class _FirstStartPageState extends State<FirstStartPage> {
   _passCodeLockScreen() {
     return PasscodeScreen(
       title: Text(
-        'Enter App Passcode',
+        'App Passwort eingeben',
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white, fontSize: 28),
       ),
       circleUIConfig: CircleUIConfig(
-          borderColor: Theme.of(context).primaryColor,
-          fillColor: Theme.of(context).primaryColor,
-          circleSize: 30),
-      keyboardUIConfig: KeyboardUIConfig(
-          digitBorderWidth: 2, primaryColor: Theme.of(context).primaryColor),
+          borderColor: Colors.green, fillColor: Colors.green, circleSize: 30),
+      keyboardUIConfig:
+          KeyboardUIConfig(digitBorderWidth: 2, primaryColor: Colors.green),
       passwordEnteredCallback: _onPasscodeEntered,
-      cancelButton: Icon(
-        Icons.arrow_back,
-        color: Theme.of(context).primaryColor,
+      cancelButton: Text(
+        'Delete',
+        style: const TextStyle(fontSize: 16, color: Colors.white),
+        semanticsLabel: 'Delete',
       ),
       deleteButton: Text(
         'Delete',
@@ -77,7 +68,7 @@ class _FirstStartPageState extends State<FirstStartPage> {
 
     //for testing without saving passcode before
     SharedPreferencesHelper.setPasscode('123456');
-    AppLock.of(context).didUnlock();
+    //AppLock.of(context).didUnlock();
     FutureBuilder<String>(
       future: SharedPreferencesHelper.getPasscode(),
       builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
@@ -94,7 +85,7 @@ class _FirstStartPageState extends State<FirstStartPage> {
           });
           AppLock.of(context).didUnlock();
         }
-        return;
+        return CircularProgressIndicator();
       },
     );
   }

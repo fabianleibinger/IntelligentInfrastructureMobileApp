@@ -1,20 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/dialogs/agbsdialog.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
-import 'package:parkingapp/ui/settingspage/passcode.dart';
-import 'package:passcode_screen/circle.dart';
-import 'package:passcode_screen/passcode_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:parkingapp/models/classes/user.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:wifi/wifi.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:settings_ui/settings_ui.dart';
-import 'package:parkingapp/models/classes/user.dart';
-import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
+import 'package:parkingapp/routes/routes.dart';
 
 import 'changepasscodepage.dart';
 
@@ -83,7 +73,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushNamed(context, AGB.routeName);
+                    Navigator.pushNamed(context, Routes.agbPage);
                   }),
               Divider(),
               ListTile(
@@ -91,7 +81,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
-                    Navigator.pushNamed(context, AGB.routeName);
+                    Navigator.pushNamed(context, Routes.agbPage);
                   })
             ],
           ),
