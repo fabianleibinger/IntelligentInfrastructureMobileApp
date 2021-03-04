@@ -1,10 +1,7 @@
 import 'dart:convert';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
