@@ -183,6 +183,8 @@
     "@width": {},
     "height": "Höhe",
     "@height": {},
+    "turningCircle": "Wendekreis",
+    "@turningCircle": {},
     "addVehicleButton": "Fahrzeug hinzufügen",
     "@addVehicleButton": {},
     "editVehicleButton": "Fahrzeug bearbeiten",
@@ -242,5 +244,11 @@
     "vehicleIsParkedInBody": "Während das Fahrzeug eingeparkt ist, kann es nicht entfernt werden. Parken Sie das Fahrzeug aus, um es zu löschen.",
     "@vehicleIsParkedInBody": {},
     "deleted": "gelöscht!",
-    "@deleted": {}
+    "@deleted": {},
+    "customDimensions": "Eigene Abmessungen",
+    "@customDimensions": {},
+    "additionalInMilimeters": "(in mm)",
+    "@additionalInMilimeters": {
+        "description": "hint that a dimension shall be specified in milimeters"
+    }
 }
