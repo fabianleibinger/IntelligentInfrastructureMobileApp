@@ -2,7 +2,7 @@
 
 The parking app has a connected backend which can be addressed via HTTP requests. Therefore, the backend opens a python flask server. IP address and port as well as the name of the parking garage can be modified in the config.properties file.
 
-To run the flask server on your device, copy parking_app_ros_pkg to your ROS directory with a setted up catkin workspace (e.g. catkin_ws/src). The device must have a working ROS installation and one should be able to build a ROS package. For further questions, follow steps 1-4 of the general ROS tutorial ([a link](http://wiki.ros.org/ROS/Tutorials)).
+To run the flask server on your device, copy parking_app_ros_pkg to your ROS directory with a setted up catkin workspace (e.g. catkin_ws/src). The device must have a working ROS installation and one should be able to build a ROS package. For further questions, follow steps 1-4 of the general [ROS tutorial](http://wiki.ros.org/ROS/Tutorials).
 
 Put parking_app_ros_pkg folder under catkin_ws/src directory (right next to other ROS packages and a self-generated CMakeLists.txt file). Copy setup_script.sh and requirements.txt in the top-level directory catkin_ws.
 
