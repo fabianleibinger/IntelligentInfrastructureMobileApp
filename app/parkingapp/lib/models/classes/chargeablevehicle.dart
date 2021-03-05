@@ -25,6 +25,8 @@ class ChargeableVehicle extends Vehicle {
       this.chargeTimeBegin,
       this.chargeTimeEnd) {
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
   }
 
   //private constructor: only called by fromMap() method, database defines databaseId
@@ -45,6 +47,8 @@ class ChargeableVehicle extends Vehicle {
       this.chargeTimeBegin,
       this.chargeTimeEnd) {
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
   }
 
   @override

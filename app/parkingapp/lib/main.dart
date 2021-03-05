@@ -16,6 +16,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:provider/provider.dart';
+import 'models/classes/parkinggarage.dart';
+import 'models/enum/parkinggaragetype.dart';
 
 // Main: From here you call all u'r widgets.
 
@@ -85,6 +87,12 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    currentParkingGarage = ParkingGarage(
+        'Parkgarage Fasanengarten',
+        ParkingGarageType.Tiefgarage,
+        0,
+        0,
+        'assets/parkgarage-fasanengarten.jpg');
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
     return MultiProvider(
       providers: [
