@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'dart:convert';
 import 'package:parkingapp/models/classes/vehicle.dart';
 

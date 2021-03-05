@@ -98,11 +98,7 @@ class _MainPageState extends State<MainPage> {
             drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return ChargeTimeDialog();
-                    });
+                Navigator.pushReplacementNamed(context, Routes.parkIn);
                 //DatabaseProvider.db.clear();
               },
               label: Text(AppLocalizations.of(context).actionButtonPark),
@@ -125,7 +121,7 @@ class _MainPageState extends State<MainPage> {
                               Text(currentParkingGarage.type.toShortString()),
                         ),
                         Container(
-                          height: parkingGarageImageHeight.toDouble(),
+                          height: _parkingGarageImageHeight.toDouble(),
                           decoration: BoxDecoration(
                               image: DecorationImage(
                             image: AssetImage(currentParkingGarage.image),
@@ -141,7 +137,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).padding.bottom + bottomMargin,
+                  height: MediaQuery.of(context).padding.bottom + _bottomMargin,
                 )
               ],
             ));

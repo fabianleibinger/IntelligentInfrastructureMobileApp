@@ -64,6 +64,14 @@ class Main extends StatelessWidget {
           return MaterialPageRoute(
               builder: (context) => MainPage(uri.pathSegments.first));
         }
+        //parkIn route
+        if (settings.name == Routes.parkIn) {
+          return MaterialPageRoute(builder: (context) => ParkInPage());
+        }
+        //parkOut route
+        if (settings.name == Routes.parkOut) {
+          return MaterialPageRoute(builder: (context) => ParkOutPage());
+        }
         //editVehicle route
         if (settings.name == Routes.createVehicle) {
           return MaterialPageRoute(builder: (context) => CreateVehicle());
