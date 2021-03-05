@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -17,7 +18,7 @@ abstract class Vehicle {
   //Preferences
   bool nearExitPreference, parkingCard;
 
-  bool parkedIn;
+  bool parkedIn, parkingIn, parkingOut;
 
   //observer for parkedIn
   ValueNotifier<bool> parkedInObserver;
@@ -47,13 +48,20 @@ abstract class Vehicle {
     //check if vehicle needs to be parked in
     if (!this.parkedIn) {
       //try to park in
-      if (currentParkingGarage.getFreeParkingSpots() > 0) {
-
-        //TODO implement
-
+      if (currentParkingGarage.getFreeSpotsForVehicle(this) > 0) {
+        //vehicle parking in
+        this.setParkIngIn(context, true);
         print(this.name + ' wird eingeparkt');
-        this.setParkedIn(context, true);
-        print('vehicle parked in: ' + this.parkedIn.toString());
+
+        //try to contact server
+        ApiProvider.parkIn(this).then((value) {
+          this.setParkedIn(context, true);
+          print('vehicle parked in: ' + this.parkedIn.toString());
+
+          //vehicle not parking in anymore
+        }).whenComplete(() {
+          this.setParkIngIn(context, false);
+        });
       } else {
         //no parking spots available
         print('no parking spots available');
@@ -68,15 +76,21 @@ abstract class Vehicle {
   //sends the park out inquiry to the parking garage management system
   void parkOut(BuildContext context) {
     //park out or cancel park in process
-
-    //TODO implement
-
+    this.setParkIngOut(context, true);
     print(this.name + ' wird ausgeparkt');
-    this.setParkedIn(context, false);
-    print('vehicle parked in: ' + this.parkedIn.toString());
-    //open main page
-    Navigator.pushReplacementNamed(context, this.inAppKey);
-    ParkDialog.createParkOutFinishedDialog(context);
+
+    //try to contact server
+    ApiProvider.parkOut(this).then((value) {
+      this.setParkedIn(context, false);
+      print('vehicle parked in: ' + this.parkedIn.toString());
+      //open main page
+      Navigator.pushReplacementNamed(context, this.inAppKey);
+      ParkDialog.createParkOutFinishedDialog(context);
+
+      //vehicle not parking out anymore
+    }).whenComplete(() {
+      this.setParkIngOut(context, false);
+    });
   }
 
   //setter which includes database updating
@@ -143,6 +157,18 @@ abstract class Vehicle {
   void setParkedIn(BuildContext context, bool parkedIn) {
     this.parkedIn = parkedIn;
     this.parkedInObserver.value = this.parkedIn;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating and observer updating
+  void setParkIngIn(BuildContext context, bool parkingIn) {
+    this.parkingIn = parkingIn;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating and observer updating
+  void setParkIngOut(BuildContext context, bool parkingOut) {
+    this.parkingOut = parkingOut;
     DataHelper.updateVehicle(context, this);
   }
 

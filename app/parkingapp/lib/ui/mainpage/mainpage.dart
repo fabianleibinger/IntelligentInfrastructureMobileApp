@@ -19,10 +19,7 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
-final currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
-final parkingGarageImageHeight = 250;
-final bottomMargin = 80;
+ParkingGarage currentParkingGarage;
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -41,9 +38,20 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final _parkingGarageImageHeight = 250;
+  final _bottomMargin = 80;
+
+  int _parkingSpots;
+  bool _buttonIsDisabled;
+
   @override
   void initState() {
     super.initState();
+    setState(() {
+      currentParkingGarage.updateAllFreeParkingSpots();
+      _parkingSpots = currentParkingGarage.freeParkingSpots;
+    });
+    _setButtonIsDisabled();
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -52,6 +60,14 @@ class _MainPageState extends State<MainPage> {
         }
       },
     );
+  }
+
+  //disables button according to free parking spots
+  _setButtonIsDisabled() {
+    bool disable = _parkingSpots <= 0;
+    setState(() {
+      _buttonIsDisabled = disable;
+    });
   }
 
   @override
@@ -73,6 +89,8 @@ class _MainPageState extends State<MainPage> {
             vehicle.name +
             ' license plate: ' +
             vehicle.licensePlate);
+        //check which parking spots should be displayed
+        _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
         return Scaffold(
             appBar: AppBar(
               title: Text(vehicle.name, style: whiteHeader),
@@ -135,7 +153,7 @@ class _MainPageState extends State<MainPage> {
     // car park specific items
     List<String> _properties = [
       AppLocalizations.of(context).mainPageAvailableSpaces +
-          currentParkingGarage.freeParkingSpots.toString()
+          _parkingSpots.toString()
     ];
 
     List<Widget> widgets = [];
@@ -177,6 +195,12 @@ class _MainPageState extends State<MainPage> {
       onChanged: (bool newValue) {
         setState(() {
           vehicle.setDoCharge(context, newValue);
+          if(newValue) {
+            _parkingSpots = currentParkingGarage.freeChargeableParkingSpots;
+          } else {
+            _parkingSpots = currentParkingGarage.freeParkingSpots;
+          }
+          _setButtonIsDisabled();
         });
       },
       value: vehicle.doCharge,

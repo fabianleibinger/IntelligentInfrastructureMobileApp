@@ -15,6 +15,8 @@ class StandardVehicle extends Vehicle {
       this.parkingCard,
       this.parkedIn) {
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
   }
 
   //private constructor: only called by fromMap() method, database defines databaseId
@@ -30,6 +32,8 @@ class StandardVehicle extends Vehicle {
       this.parkingCard,
       this.parkedIn) {
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
   }
 
   static Vehicle fromMap(Map<String, dynamic> map) {

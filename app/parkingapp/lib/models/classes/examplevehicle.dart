@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 class ExampleVehicle {
   String name;
-  double width, height, length, turningCycle;
+  double height, width, length, turningCycle;
 
-  ExampleVehicle(this.name, this.width, this.height, this.length,
-      this.turningCycle);
+  ExampleVehicle(this.name, this.height, this.width, this.length, turningCycle);
 
   static ExampleVehicle fromJson(Map<String, dynamic> parsedJson) {
-    return new ExampleVehicle(
-        parsedJson['name'], parsedJson['width'], parsedJson['height'],
-        parsedJson['length'], parsedJson['turningCycle']);
+    return new ExampleVehicle(parsedJson['name'], parsedJson['height'],
+        parsedJson['width'], parsedJson['length'], parsedJson['turningCycle']);
   }
 }
