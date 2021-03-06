@@ -28,7 +28,7 @@ void main() {
 
 class Main extends StatelessWidget {
   //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
-  static MaterialApp getMaterialApp(String initialroute) {
+  static MaterialApp getMaterialApp(String initialRoute) {
     return MaterialApp(
       //Initialize Localization
       localizationsDelegates: [
@@ -42,7 +42,7 @@ class Main extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,
       theme: themeData,
-      initialRoute: initialroute,
+      initialRoute: initialRoute,
       //Routing of app
       onGenerateRoute: (settings) {
         //settings Route
@@ -61,16 +61,22 @@ class Main extends StatelessWidget {
             inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
           print('vehicle: ' + uri.pathSegments.first);
           //TODO generate vehicle Page with inAppKey
-          return MaterialPageRoute(
-              builder: (context) => MainPage(uri.pathSegments.first));
-        }
-        //parkIn route
-        if (settings.name == Routes.parkIn) {
-          return MaterialPageRoute(builder: (context) => ParkInPage());
-        }
-        //parkOut route
-        if (settings.name == Routes.parkOut) {
-          return MaterialPageRoute(builder: (context) => ParkOutPage());
+          if (uri.pathSegments.length == 2) {
+            //does only need the path behind /
+            if (uri.pathSegments.last == Routes.parkOut.split('/').last) {
+              //parkOut route
+              return MaterialPageRoute(
+                  builder: (context) => ParkOutPage(uri.pathSegments.first));
+            } else {
+              //parkIn route
+              return MaterialPageRoute(
+                  builder: (context) => ParkInPage(uri.pathSegments.first));
+            }
+          } else {
+            //mainPage route
+            return MaterialPageRoute(
+                builder: (context) => MainPage(uri.pathSegments.first));
+          }
         }
         //editVehicle route
         if (settings.name == Routes.createVehicle) {
