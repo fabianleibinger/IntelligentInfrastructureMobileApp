@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/models/global.dart';
@@ -82,7 +83,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   trailing: Icon(Icons.arrow_forward_ios),
                   onTap: () {
                     Navigator.pushNamed(context, Routes.agbPage);
-                  })
+                  }),
             ],
           ),
         ));

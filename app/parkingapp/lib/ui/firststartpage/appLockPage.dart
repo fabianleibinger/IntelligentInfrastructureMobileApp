@@ -7,17 +7,17 @@ import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 
-class FirstStartPage extends StatefulWidget {
+class AppLockPage extends StatefulWidget {
   final String apikey;
 
-  const FirstStartPage({Key key, this.apikey}) : super(key: key);
+  const AppLockPage({Key key, this.apikey}) : super(key: key);
   @override
-  _FirstStartPageState createState() => _FirstStartPageState();
+  _AppLockPageState createState() => _AppLockPageState();
 }
 
 const storedPasscode = '123456';
 
-class _FirstStartPageState extends State<FirstStartPage> {
+class _AppLockPageState extends State<AppLockPage> {
   //nötig??
   //TextEditingController usernameController = new TextEditingController();
 
@@ -63,31 +63,16 @@ class _FirstStartPageState extends State<FirstStartPage> {
     );
   }
 
-  _onPasscodeEntered(String enteredPasscode) {
-    bool isValid;
-
-    //for testing without saving passcode before
-    SharedPreferencesHelper.setPasscode('123456');
-    //AppLock.of(context).didUnlock();
-    FutureBuilder<String>(
-      future: SharedPreferencesHelper.getPasscode(),
-      builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-        String savedPasscode = snapshot.data.toString();
-        if (enteredPasscode.compareTo(savedPasscode) == 0) {
-          isValid = true;
-        } else {
-          isValid = false;
-        }
-        _verificationNotifier.add(isValid);
-        if (isValid) {
-          setState(() {
-            this.isAuthenticated = isValid;
-          });
-          AppLock.of(context).didUnlock();
-        }
-        return CircularProgressIndicator();
-      },
-    );
+  _onPasscodeEntered(String enteredPasscode) async {
+    String passcode = await SharedPreferencesHelper.getPasscode() ?? "123456";
+    bool isValid = passcode == enteredPasscode;
+    _verificationNotifier.add(isValid);
+    if (isValid) {
+      setState(() {
+        this.isAuthenticated = isValid;
+      });
+      AppLock.of(context).didUnlock();
+    }
   }
 
   _onPasscodeCancelled() {

@@ -8,7 +8,7 @@ import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
+import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
@@ -27,7 +27,7 @@ void main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(AppLock(
     builder: (args) => Main(),
-    lockScreen: FirstStartPage(),
+    lockScreen: AppLockPage(),
     enabled: false,
   ));
 }

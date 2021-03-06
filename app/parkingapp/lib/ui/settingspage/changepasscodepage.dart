@@ -31,34 +31,33 @@ class _PasscodePageState extends State<PasscodePage> {
 
   Widget showPasscodeScreen() {
     return PasscodeScreen(
-      title: Text(
-        'Neues App Passwort eingeben',
-        textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.white, fontSize: 28),
-      ),
-      circleUIConfig: CircleUIConfig(
-          borderColor: Theme.of(context).primaryColor,
-          fillColor: Theme.of(context).primaryColor,
-          circleSize: 30),
-      keyboardUIConfig: KeyboardUIConfig(
-          digitBorderWidth: 2, primaryColor: Theme.of(context).primaryColor),
-      passwordEnteredCallback: _onNewPasscodeEntered,
-      cancelButton: Icon(
-        Icons.arrow_back,
-        color: Theme.of(context).primaryColor,
-      ),
-      deleteButton: Text(
-        'Delete',
-        style: const TextStyle(fontSize: 16, color: Colors.white),
-        semanticsLabel: 'Delete',
-      ),
-      shouldTriggerVerification: _verificationNotifier.stream,
-      backgroundColor: Colors.black.withOpacity(0.8),
-      cancelCallback: _onPasscodeCancelled,
-      digits: digits,
-      passwordDigits: 6,
-      bottomWidget: _buildPasscodeRestoreButton(),
-    );
+        title: Text(
+          'Neues App Passwort eingeben',
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: 28),
+        ),
+        circleUIConfig: CircleUIConfig(
+            borderColor: Theme.of(context).primaryColor,
+            fillColor: Theme.of(context).primaryColor,
+            circleSize: 30),
+        keyboardUIConfig: KeyboardUIConfig(
+            digitBorderWidth: 2, primaryColor: Theme.of(context).primaryColor),
+        passwordEnteredCallback: _onNewPasscodeEntered,
+        cancelButton: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).primaryColor,
+        ),
+        deleteButton: Text(
+          'Delete',
+          style: const TextStyle(fontSize: 16, color: Colors.white),
+          semanticsLabel: 'Delete',
+        ),
+        bottomWidget: _buildPasscodeRestoreButton(),
+        shouldTriggerVerification: _verificationNotifier.stream,
+        backgroundColor: Colors.black.withOpacity(0.8),
+        cancelCallback: _onPasscodeCancelled,
+        digits: digits,
+        passwordDigits: 6);
   }
 
   _onNewPasscodeEntered(String enteredPasscode) {
@@ -74,7 +73,7 @@ class _PasscodePageState extends State<PasscodePage> {
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
-        //Navigator.pop(context);
+        //enables AppLock for next start of app
         AppLock.of(context).enable();
       });
     }
@@ -84,20 +83,13 @@ class _PasscodePageState extends State<PasscodePage> {
     Navigator.maybePop(context);
   }
 
-  @override
-  void dispose() {
-    _verificationNotifier.close();
-    super.dispose();
-  }
-
-  //do we really need the restore function??
   _buildPasscodeRestoreButton() => Align(
         alignment: Alignment.bottomCenter,
         child: Container(
           margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
           child: FlatButton(
             child: Text(
-              "Reset passcode",
+              "App Passwort ausschalten",
               textAlign: TextAlign.center,
               style: const TextStyle(
                   fontSize: 16,
@@ -112,51 +104,13 @@ class _PasscodePageState extends State<PasscodePage> {
       );
 
   _resetAppPassword() {
-    Navigator.maybePop(context).then((result) {
-      if (!result) {
-        return;
-      }
-      _showRestoreDialog(() {
-        Navigator.maybePop(context);
-        //TODO: Clear your stored passcode here
-      });
-    });
+    AppLock.of(context).disable();
+    Navigator.maybePop(context);
   }
 
-  _showRestoreDialog(VoidCallback onAccepted) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            "Reset passcode",
-            style: const TextStyle(color: Colors.black87),
-          ),
-          content: Text(
-            "Passcode reset is a non-secure operation!\n\nConsider removing all user data if this action performed.",
-            style: const TextStyle(color: Colors.black87),
-          ),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            FlatButton(
-              child: Text(
-                "Cancel",
-                style: const TextStyle(fontSize: 18),
-              ),
-              onPressed: () {
-                Navigator.maybePop(context);
-              },
-            ),
-            FlatButton(
-              child: Text(
-                "I understand",
-                style: const TextStyle(fontSize: 18),
-              ),
-              onPressed: onAccepted,
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  void dispose() {
+    _verificationNotifier.close();
+    super.dispose();
   }
 }
