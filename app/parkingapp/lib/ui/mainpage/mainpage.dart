@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/bloc/resources/subtitleformatter.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
+import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -62,6 +64,12 @@ class _MainPageState extends State<MainPage> {
         }
       },
     );
+    //get vehicle that shall be used from the list of vehicles
+    for (Vehicle currentVehicle
+        in BlocProvider.of<VehicleBloc>(context).state) {
+      if (currentVehicle.inAppKey == widget.carInAppKey)
+        vehicle = currentVehicle;
+    }
   }
 
   //disables button according to free parking spots
@@ -74,81 +82,76 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VehicleBloc, List<Vehicle>>(
-      buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
-        if (previous.hashCode != current.hashCode)
-          return true;
-        else
-          return false;
-      },
-      builder: (context, vehicleList) {
-        //get vehicle that shall be used from the list of vehicles
-        for (Vehicle currentVehicle in vehicleList) {
-          if (currentVehicle.inAppKey == widget.carInAppKey)
-            vehicle = currentVehicle;
-        }
-        print('MainPage: vehicle: ' +
-            vehicle.name +
-            ' license plate: ' +
-            vehicle.licensePlate);
-        //check which parking spots should be displayed and if button should be disabled
-        _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
-        _buttonIsDisabled = _parkingSpots <= 0;
-        return Scaffold(
-            appBar: AppBar(
-              title: Text(vehicle.name, style: whiteHeader),
-            ),
-            drawer: AppDrawer(),
-            floatingActionButton: FloatingActionButton.extended(
-              backgroundColor: _buttonIsDisabled ? grey : lightGreen,
-              onPressed: () {
-                _buttonIsDisabled
-                    ? ParkingGarageOccupiedDialog.createDialog(context)
-                    : ParkDialog.createParkInDialog(context);
-                //DatabaseProvider.db.clear();
-              },
-              label: Text(AppLocalizations.of(context).actionButtonPark),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            body: Column(
-              children: [
-                Expanded(
-                  child: Card(
-                    margin: EdgeInsets.all(0),
-                    elevation: 10,
-                    clipBehavior: Clip.antiAlias,
-                    child: Column(
-                      children: [
-                        ListTile(
-                          //leading: Icon(Icons.location_on),
-                          title: Text(currentParkingGarage.name),
-                          subtitle:
-                              Text(currentParkingGarage.type.toShortString()),
-                        ),
-                        Container(
-                          height: _parkingGarageImageHeight.toDouble(),
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                            image: AssetImage(currentParkingGarage.image),
-                            fit: BoxFit.cover,
-                          )),
-                        ),
-                        ListView(
-                          shrinkWrap: true,
-                          children: buildCarToggles(vehicle),
-                        ),
-                      ],
+    //check if button should be disabled
+    _setButtonIsDisabled();
+    //get vehicle that shall be used from the list of vehicles
+    for (Vehicle currentVehicle
+        in BlocProvider.of<VehicleBloc>(context).state) {
+      if (currentVehicle.inAppKey == widget.carInAppKey)
+        vehicle = currentVehicle;
+    }
+    print('MainPage: vehicle: ' +
+        vehicle.name +
+        ' license plate: ' +
+        vehicle.licensePlate);
+    //check which parking spots should be displayed and if button should be disabled
+    _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
+    _buttonIsDisabled = _parkingSpots <= 0;
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(vehicle.name, style: whiteHeader),
+        ),
+        drawer: AppDrawer(),
+        floatingActionButton: FloatingActionButton.extended(
+          backgroundColor: _buttonIsDisabled
+              ? Theme.of(context).disabledColor
+              : Theme.of(context).primaryColor,
+          onPressed: () {
+            _buttonIsDisabled
+                ? ParkingGarageOccupiedDialog.createDialog(context)
+                : ParkDialog.createParkInDialog(context);
+            //DatabaseProvider.db.clear();
+          },
+          label: Text(AppLocalizations.of(context).actionButtonPark),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: Column(
+          children: [
+            Expanded(
+              child: Card(
+                margin: EdgeInsets.all(0),
+                elevation: 10,
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: [
+                    ListTile(
+                      //leading: Icon(Icons.location_on),
+                      title: Text(currentParkingGarage.name),
+                      subtitle: Text(currentParkingGarage.type.toShortString()),
                     ),
-                  ),
+                    Container(
+                      height: _parkingGarageImageHeight.toDouble(),
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                        image: AssetImage(currentParkingGarage.image),
+                        fit: BoxFit.cover,
+                      )),
+                    ),
+                    Expanded(
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: buildCarToggles(vehicle),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  height: MediaQuery.of(context).padding.bottom + _bottomMargin,
-                )
-              ],
-            ));
-      },
-    );
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).padding.bottom + _bottomMargin,
+            )
+          ],
+        ));
   }
 
   List<Widget> buildCarToggles(Vehicle vehicle) {
@@ -166,21 +169,11 @@ class _MainPageState extends State<MainPage> {
         .toList());
 
     // vehicle specific toggles
-    widgets.add(SwitchListTile(
-      title: Text(AppLocalizations.of(context).nearExitPreference),
-      onChanged: (bool newValue) {
-        setState(() => vehicle.setNearExitPreference(context, newValue));
-      },
-      value: vehicle.nearExitPreference,
-    ));
-
-    widgets.add(SwitchListTile(
-      title: Text(AppLocalizations.of(context).parkingCard),
-      onChanged: (bool newValue) {
-        setState(() => vehicle.setParkingCard(context, newValue));
-      },
-      value: vehicle.parkingCard,
-    ));
+    widgets.add(ListTile(
+        title: Text(AppLocalizations.of(context).parkPreferences),
+        subtitle: SubtitleFormatter.vehicleParkPreferences(
+            context: context, vehicle: vehicle),
+        onTap: () => _showDialog(context, ParkPreferencesDialog())));
 
     // electric vehicle toggles
     if (vehicle.runtimeType == ChargeableVehicle)
@@ -197,7 +190,7 @@ class _MainPageState extends State<MainPage> {
       onChanged: (bool newValue) {
         setState(() {
           vehicle.setDoCharge(context, newValue);
-          if(newValue) {
+          if (newValue) {
             _parkingSpots = currentParkingGarage.freeChargeableParkingSpots;
           } else {
             _parkingSpots = currentParkingGarage.freeParkingSpots;
@@ -208,5 +201,10 @@ class _MainPageState extends State<MainPage> {
       value: vehicle.doCharge,
     ));
     return widgets;
+  }
+
+  void _showDialog(BuildContext context, Widget dialog) async {
+    await showDialog(context: context, builder: (context) => dialog);
+    setState(() {});
   }
 }

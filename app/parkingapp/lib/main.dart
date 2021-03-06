@@ -45,13 +45,20 @@ class Main extends StatelessWidget {
       initialRoute: initialRoute,
       //Routing of app
       onGenerateRoute: (settings) {
-        //settings Route
-        if (settings.name == Routes.settings) {
-          return MaterialPageRoute(builder: (context) => SettingsPage());
-        }
-        //edit vehicles route
-        if (settings.name == Routes.vehicle) {
-          return MaterialPageRoute(builder: (context) => VehiclePage());
+        //basic routes
+        switch (settings.name) {
+          case Routes.vehicle:
+            return MaterialPageRoute(builder: (context) => VehiclePage());
+          case Routes.settings:
+            return MaterialPageRoute(builder: (context) => SettingsPage());
+          case Routes.agb:
+            return MaterialPageRoute(builder: (context) => AGB());
+          case Routes.createVehicle:
+            return MaterialPageRoute(builder: (context) => CreateVehicle());
+          case Routes.landingPage:
+            return MaterialPageRoute(builder: (context) => LandingPage());
+          case Routes.routeLandingPage:
+            return MaterialPageRoute(builder: (context) => RouteLandingPage());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
@@ -77,20 +84,6 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(
                 builder: (context) => MainPage(uri.pathSegments.first));
           }
-        }
-        //editVehicle route
-        if (settings.name == Routes.createVehicle) {
-          return MaterialPageRoute(builder: (context) => CreateVehicle());
-        }
-        //first start route
-        if (settings.name == Routes.landingPage) {
-          return MaterialPageRoute(builder: (context) => LandingPage());
-        }
-        if (settings.name == Routes.routeLandingPage) {
-          return MaterialPageRoute(builder: (context) => RouteLandingPage());
-        }
-        if (settings.name == Routes.agb) {
-          return MaterialPageRoute(builder: (context) => AGB());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());

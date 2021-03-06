@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/examplevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -28,7 +26,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
         context,
         AppLocalizations.of(context).vehicleDimensionsDialogTitle,
         AppLocalizations.of(context).dialogFinishedButton,
-        _getRadioListTiles(context));
+        Column(children: [_getRadioListTiles(context), _customDimensions()]));
   }
 
   //returns a tile for every different dimension
@@ -117,5 +115,102 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
         .toList();
 
     return list;
+  }
+
+  //Dialog that allows entering of custom dimensions
+  ListTile _customDimensions() {
+    final _formKey = GlobalKey<FormState>();
+    return ListTile(
+      title: Text(AppLocalizations.of(context).customDimensions),
+      onTap: () async {
+        await showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  title: Text(AppLocalizations.of(context).customDimensions),
+                  content: Form(
+                    key: _formKey,
+                    child: ListView(
+                      children: [
+                        //length
+                        TextFormField(
+                          initialValue: vehicle.length.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context).length +
+                                  AppLocalizations.of(context).space +
+                                  AppLocalizations.of(context)
+                                      .additionalInMilimeters),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : AppLocalizations.of(context).requiredText,
+                          onSaved: (val) =>
+                              vehicle.length = double.tryParse(val),
+                        ),
+                        //width
+                        TextFormField(
+                          initialValue: vehicle.width.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context).width +
+                                  AppLocalizations.of(context).space +
+                                  AppLocalizations.of(context)
+                                      .additionalInMilimeters),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : AppLocalizations.of(context).requiredText,
+                          onSaved: (val) =>
+                              vehicle.width = double.tryParse(val),
+                        ),
+                        //height
+                        TextFormField(
+                          initialValue: vehicle.height.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context).height +
+                                  AppLocalizations.of(context).space +
+                                  AppLocalizations.of(context)
+                                      .additionalInMilimeters),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : AppLocalizations.of(context).requiredText,
+                          onSaved: (val) =>
+                              vehicle.height = double.tryParse(val),
+                        ),
+                        //turning circle
+                        TextFormField(
+                          initialValue: vehicle.turningCycle.round().toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText:
+                                  AppLocalizations.of(context).turningCircle +
+                                      AppLocalizations.of(context).space +
+                                      AppLocalizations.of(context)
+                                          .additionalInMilimeters),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : AppLocalizations.of(context).requiredText,
+                          onSaved: (val) =>
+                              vehicle.turningCycle = double.tryParse(val),
+                        )
+                      ],
+                    ),
+                  ),
+                  actions: [
+                    FlatButton(
+                      child: Text(AppLocalizations.of(context).buttonOk),
+                      onPressed: () {
+                        //validate form and exit on success
+                        if (_formKey.currentState.validate()) {
+                          _formKey.currentState.save();
+
+                          Navigator.of(context).pop();
+                        }
+                      },
+                    )
+                  ],
+                ));
+        Navigator.of(context).pop();
+      },
+    );
   }
 }

@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
+import 'package:parkingapp/dialogs/constants.dart';
+import 'package:parkingapp/dialogs/deletevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -64,7 +67,22 @@ class _VehiclePageState extends State<VehiclePage> {
 
               Vehicle vehicle = vehicleList[index];
               return Dismissible(
+                  confirmDismiss: (dismissDirection) =>
+                      //confirm to delete
+                      //will not allow deletion if vehicle is parked in
+                      showDialog(
+                          context: context,
+                          builder: (_) => vehicle.parkedIn
+                              ? CantDeleteVehicle()
+                              : ConfirmDelete()),
+                  direction: DismissDirection.endToStart,
                   background: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(Icons.delete,
+                          color: Theme.of(context).dialogBackgroundColor),
+                    ),
                     color: Colors.red,
                   ),
                   key: Key(vehicle.inAppKey),
@@ -77,7 +95,9 @@ class _VehiclePageState extends State<VehiclePage> {
                         .add(DeleteVehicle(vehicle));
                     //show snackbar that vehicle has been deleted
                     Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(vehicle.inAppKey + ' removed!'),
+                      content: Text(vehicle.name +
+                          AppLocalizations.of(context).space +
+                          AppLocalizations.of(context).deleted),
                     ));
                   },
                   child: ListTile(

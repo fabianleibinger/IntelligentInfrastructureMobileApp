@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:parkingapp/bloc/resources/subtitleformatter.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
@@ -139,17 +140,39 @@ class _VehicleFormState extends State<VehicleForm> {
                   Divider(),
                   ListTile(
                       title: Text(AppLocalizations.of(context).parkPreferences),
-                      subtitle: _vehicleParkPreferencesSubtitle(context),
+                      subtitle: SubtitleFormatter.vehicleParkPreferences(
+                        context: context,
+                        vehicle: vehicle,
+                      ),
                       onTap: () =>
                           _showDialog(context, ParkPreferencesDialog())),
                   Divider(),
-                  ListTile(
+                  FormField(
+                    builder: (FormFieldState<dynamic> field) {
+                      return ListTile(
                     title: Text(AppLocalizations.of(context)
                         .vehicleDimensionsDialogTitle),
-                    subtitle: _vehicleDimensionsSubtitle(context),
+                        subtitle: field.hasError
+                            ? Text(
+                                field.errorText,
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              )
+                            : _vehicleDimensionsSubtitle(),
                     onTap: () =>
-                        _showDialog(context, VehicleDimensionsDialog()),
-                  ),
+                            _showDialog(context, VehicleDimensionsDialog())
+                                .then((value) => field.validate()),
+                      );
+                    },
+                    validator: (value) => [
+                      vehicle.length,
+                      vehicle.width,
+                      vehicle.height,
+                      vehicle.turningCycle
+                    ].every((value) => value == _notSpecifiedDouble)
+                        ? AppLocalizations.of(context).requiredText
+                        : null,
+                  )
                 ],
               ),
             ),
@@ -169,11 +192,23 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  // TODO merge into one funciton
-  // select Time (used for start and end of charge)
-  void _showDialog(BuildContext context, Widget dialog) async {
+  // show a dialog, wait for it to finish and update state after finishing
+  // returns true when finished
+  Future<bool> _showDialog(BuildContext context, Widget dialog) async {
     await showDialog(context: context, builder: (context) => dialog);
     setState(() {});
+    return true;
+  }
+
+  Widget _vehicleDimensionsSubtitle() {
+    if (vehicle.height == _notSpecifiedDouble &&
+        vehicle.width == _notSpecifiedDouble &&
+        vehicle.height == _notSpecifiedDouble &&
+        vehicle.turningCycle == _notSpecifiedDouble) return null;
+    return SubtitleFormatter.vehicleDimensions(
+      context: context,
+      vehicle: vehicle,
+    );
   }
 
   //electric vehicle toggles
@@ -247,47 +282,6 @@ class _VehicleFormState extends State<VehicleForm> {
           ? Navigator.of(context).pushReplacement(widget.route)
           : Navigator.of(context).pop();
     }
-  }
-
-  Text _vehicleDimensionsSubtitle(BuildContext context) {
-    if (vehicle.height == _notSpecifiedDouble &&
-        vehicle.width == _notSpecifiedDouble &&
-        vehicle.height == _notSpecifiedDouble &&
-        vehicle.turningCycle == _notSpecifiedDouble) return null;
-    return Text(AppLocalizations.of(context).length +
-        AppLocalizations.of(context).colonSpace +
-        (vehicle.length / 1000).toStringAsPrecision(3) +
-        AppLocalizations.of(context).meterShort +
-        AppLocalizations.of(context).space +
-        AppLocalizations.of(context).width +
-        AppLocalizations.of(context).colonSpace +
-        (vehicle.width / 1000).toStringAsPrecision(3) +
-        AppLocalizations.of(context).meterShort +
-        AppLocalizations.of(context).space +
-        AppLocalizations.of(context).height +
-        AppLocalizations.of(context).colonSpace +
-        (vehicle.height / 1000).toStringAsPrecision(3) +
-        AppLocalizations.of(context).meterShort);
-  }
-
-  Text _vehicleParkPreferencesSubtitle(BuildContext context) {
-    StringBuffer text = StringBuffer();
-    if (vehicle.parkingCard) {
-      text.write(AppLocalizations.of(context).parkingCard);
-      text.write(AppLocalizations.of(context).commaSeperatedList);
-    }
-    if (vehicle.nearExitPreference) {
-      text.write(AppLocalizations.of(context).nearExitPreference);
-      text.write(AppLocalizations.of(context).commaSeperatedList);
-    }
-    if (text.length >= AppLocalizations.of(context).commaSeperatedList.length)
-      // remove the last comma and return
-      return Text(text.toString().substring(
-          0,
-          text.length -
-              AppLocalizations.of(context).commaSeperatedList.length));
-    else
-      return null;
   }
 }
 
