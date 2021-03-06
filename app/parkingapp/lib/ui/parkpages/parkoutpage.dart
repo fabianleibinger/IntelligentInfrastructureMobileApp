@@ -9,9 +9,9 @@ import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 class ParkOutPage extends StatefulWidget {
   static const String routeName = '/parkoutpage';
 
-  //final String carInAppKey;
+  final String carInAppKey;
 
-  //const ParkOutPage(this.carInAppKey);
+  const ParkOutPage(this.carInAppKey);
 
   @override
   _ParkOutPageState createState() => _ParkOutPageState();

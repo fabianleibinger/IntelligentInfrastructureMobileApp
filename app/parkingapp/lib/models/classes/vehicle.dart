@@ -4,6 +4,7 @@ import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //cannot be instantiated
@@ -46,7 +47,7 @@ abstract class Vehicle {
   //sends the park in inquiry to the parking garage management system
   void parkIn(BuildContext context) {
     //check if vehicle needs to be parked in
-    if (!this.parkedIn) {
+    if (!this.parkedIn && !this.parkingIn) {
       //try to park in
       if (currentParkingGarage.getFreeSpotsForVehicle(this) > 0) {
         //vehicle parking in
@@ -61,6 +62,11 @@ abstract class Vehicle {
           //vehicle not parking in anymore
         }).whenComplete(() {
           this.setParkIngIn(context, false);
+          //if park in didn't work search for correct page
+          if (!this.parkedIn) {
+            Navigator.pushReplacementNamed(
+                context, Routes.returnCorrectRouteForVehicle(this));
+          }
         });
       } else {
         //no parking spots available
@@ -75,22 +81,32 @@ abstract class Vehicle {
 
   //sends the park out inquiry to the parking garage management system
   void parkOut(BuildContext context) {
-    //park out or cancel park in process
-    this.setParkIngOut(context, true);
-    print(this.name + ' wird ausgeparkt');
+    //check if vehicle needs to be parked in
+    if (!this.parkingOut) {
+      //cancelling park in if needed
+      this.setParkIngIn(context, false);
+      //park out or cancel park in process
+      this.setParkIngOut(context, true);
+      print(this.name + ' wird ausgeparkt');
 
-    //try to contact server
-    ApiProvider.parkOut(this).then((value) {
-      this.setParkedIn(context, false);
-      print('vehicle parked in: ' + this.parkedIn.toString());
-      //open main page
-      Navigator.pushReplacementNamed(context, this.inAppKey);
-      ParkDialog.createParkOutFinishedDialog(context);
+      //try to contact server
+      ApiProvider.parkOut(this).then((value) {
+        this.setParkedIn(context, false);
+        print('vehicle parked in: ' + this.parkedIn.toString());
+        //open main page
+        Navigator.pushReplacementNamed(context, this.inAppKey);
+        ParkDialog.createParkOutFinishedDialog(context);
 
-      //vehicle not parking out anymore
-    }).whenComplete(() {
-      this.setParkIngOut(context, false);
-    });
+        //vehicle not parking out anymore
+      }).whenComplete(() {
+        this.setParkIngOut(context, false);
+        //if park out didn't work search for correct page
+        if (this.parkedIn) {
+          Navigator.pushReplacementNamed(
+              context, Routes.returnCorrectRouteForVehicle(this));
+        }
+      });
+    }
   }
 
   //setter which includes database updating

@@ -7,6 +7,8 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -89,16 +91,20 @@ class _MainPageState extends State<MainPage> {
             vehicle.name +
             ' license plate: ' +
             vehicle.licensePlate);
-        //check which parking spots should be displayed
+        //check which parking spots should be displayed and if button should be disabled
         _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
+        _buttonIsDisabled = _parkingSpots <= 0;
         return Scaffold(
             appBar: AppBar(
               title: Text(vehicle.name, style: whiteHeader),
             ),
             drawer: AppDrawer(),
             floatingActionButton: FloatingActionButton.extended(
+              backgroundColor: _buttonIsDisabled ? grey : lightGreen,
               onPressed: () {
-                Navigator.pushReplacementNamed(context, Routes.parkIn);
+                _buttonIsDisabled
+                    ? ParkingGarageOccupiedDialog.createDialog(context)
+                    : ParkDialog.createParkInDialog(context);
                 //DatabaseProvider.db.clear();
               },
               label: Text(AppLocalizations.of(context).actionButtonPark),
