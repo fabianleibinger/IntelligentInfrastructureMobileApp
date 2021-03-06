@@ -12,6 +12,7 @@ import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
+import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -83,6 +84,9 @@ class Main extends StatelessWidget {
         }
         if (settings.name == Routes.agbPage) {
           return MaterialPageRoute(builder: (context) => AGB());
+        }
+        if (settings.name == Routes.transferkeys) {
+          return MaterialPageRoute(builder: (context) => Transferkeys());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());

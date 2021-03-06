@@ -21,9 +21,9 @@ class ScrollableAGB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Padding(
+      /*Padding(
         padding: EdgeInsets.all(10),
-      ),
+      ),*/
       Expanded(
         child: SingleChildScrollView(
           child: Text(AppLocalizations.of(context).terms),
