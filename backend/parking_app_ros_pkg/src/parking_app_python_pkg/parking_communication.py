@@ -1,10 +1,34 @@
 from flask import jsonify
+from datetime import datetime
 import rospy
 import threading
+import enum
 
 from std_msgs.msg import String
 from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
 from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
+from parking_app_ros_pkg.msg import VehicleInformationMsg
+
+
+class ChargeableType(enum.Enum):
+    type_none = 0
+    type_electric = 1
+    type_electric_fast = 2
+    type_electric_inductive = 3
+
+
+class VehicleStatus(enum.Enum):
+    status_transfer = 0
+    status_parking_in = 1
+    status_parked = 2
+    status_parking_out = 3
+    status_drop_off = 4
+    status_picked_up = 5
+    status_unknown = 6
+
+
+class CommunicationRosServiceException(Exception):
+    pass
 
 
 ros_root_node = 'parking_node'
@@ -22,10 +46,6 @@ def retrieve_free_parking_spots_from_pms():
         return capacities
     except rospy.ServiceException as service_exception:
         raise CommunicationRosServiceException(str(service_exception))
-
-
-class CommunicationRosServiceException(Exception):
-    pass
 
 
 def request_free_parking_spots(electric):
@@ -58,5 +78,37 @@ def request_capacities(free):
                         'electric': electric,
                         'electric_fast': electric_fast,
                         'electric_inductive': electric_inductive})
+
+
+def communicate_park_in(park_in_parameters):
+    vehicle_message = generate_vehicle_message(park_in_parameters, vehicle_status=0)
+    try:
+        rospy.wait_for_service('register_vehicle_request', 5)
+    except rospy.exceptions.ROSException as ros_exception:
+        raise CommunicationRosServiceException(str(ros_exception))
+    try:
+        register_vehicle_request = rospy.ServiceProxy('register_vehicle_request', RegisterVehicleRequest)
+        response = register_vehicle_request(vehicle_message)
+        return jsonify({'pms_id': response.pms_id})
+    except rospy.ServiceException as service_exception:
+        raise CommunicationRosServiceException(str(service_exception))
+
+
+def generate_vehicle_message(park_in_parameters, vehicle_status):
+    vehicle_message = VehicleInformationMsg()
+
+    vehicle_message.app_id = int(park_in_parameters["id"])
+    vehicle_message.dimensions.length = float(park_in_parameters["length"])
+    vehicle_message.dimensions.width = float(park_in_parameters["width"])
+    vehicle_message.dimensions.turning_radius = float(park_in_parameters["turning_radius"])
+    vehicle_message.dimensions.dist_rear_axle_numberplate = float(park_in_parameters["dist_rear_axle_numberplate"])
+    if park_in_parameters["charge_type"] == "electric":
+        vehicle_message.type.type = ChargeableType.type_electric.value
+    else:
+        vehicle_message.type.type = ChargeableType.type_none.value
+    # vehicle_message.entry_time = datetime.now().time()
+    vehicle_message.status.status = vehicle_status
     
+    return vehicle_message
+
 

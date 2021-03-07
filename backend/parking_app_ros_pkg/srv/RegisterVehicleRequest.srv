@@ -1,2 +1,4 @@
-
 VehicleInformationMsg info
+---
+VehicleStatusMsg vehicle_status
+int16 pms_id
