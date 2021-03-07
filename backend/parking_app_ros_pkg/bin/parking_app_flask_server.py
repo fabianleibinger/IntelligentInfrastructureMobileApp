@@ -1,6 +1,6 @@
 import os
 import configparser
-from flask import Flask, jsonify, request, Response
+from flask import Flask, jsonify, request, Response, redirect
 
 # parking_communication python module provides the logic for
 # communication between flask server and ROS nodes
@@ -26,6 +26,7 @@ parking_garage_name = config['parking garage']['name']
 
 communication_failed_message = "The parking garage management system could not return the current capacity."
 
+
 ############################################################################
 # Routes
 @app.route('/')
@@ -50,7 +51,7 @@ def test_extract_content_from_json():
     return 'JSON posted'
 
 
-@app.route('/capacities')
+@app.route('/capacities', methods=['GET', 'POST'])
 def get_capacities():
     try:
         return communication.request_capacities(False)
@@ -58,7 +59,7 @@ def get_capacities():
         return Response({communication_failed_message}, status=503)
 
 
-@app.route('/free')
+@app.route('/free', methods=['GET', 'POST'])
 def get_free_capacities():
     try:
         return communication.request_capacities(True)
@@ -66,7 +67,7 @@ def get_free_capacities():
         return Response({communication_failed_message}, status=503)
 
 
-@app.route('/free/total')
+@app.route('/free/total', methods=['GET', 'POST'])
 def all_free_parking_spots():
     try:
         return communication.request_free_parking_spots(False)
@@ -74,7 +75,7 @@ def all_free_parking_spots():
         return Response({communication_failed_message}, status=503)
 
 
-@app.route('/free/electric')
+@app.route('/free/electric', methods=['GET', 'POST'])
 def electric_free_parking_spots():
     try:
         return communication.request_free_parking_spots(True)
@@ -82,14 +83,28 @@ def electric_free_parking_spots():
         return Response({communication_failed_message}, status=503)
 
 
-@app.route('/parkIn')
+@app.route('/parkIn', methods=['POST'])
 def perform_park_in_request():
-    return
+    if request.is_json:
+        park_in_parameters = request.get_json()
+        return communication.communicate_park_in(park_in_parameters)
+    else:
+        return 'No json'
 
 
-@app.route('/parkOut')
+@app.route('/parkin', methods=['POST'])
+def perform_redirect_park_in():
+    return perform_park_in_request()
+
+
+@app.route('/parkOut', methods=['POST'])
 def perform_park_out_request():
     return
+
+
+@app.route('/parkout', methods=['POST'])
+def perform_redirect_park_out():
+    return perform_park_out_request()
 
 
 @app.route('/getPosition')
@@ -106,5 +121,4 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
-
 
