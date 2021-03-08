@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/bloc/resources/subtitleformatter.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
@@ -47,6 +49,7 @@ class _MainPageState extends State<MainPage> {
 
   int _parkingSpots;
   bool _buttonIsDisabled;
+  bool _noConnection;
 
   @override
   void initState() {
@@ -54,6 +57,12 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       currentParkingGarage.updateAllFreeParkingSpots();
       _parkingSpots = currentParkingGarage.freeParkingSpots;
+      _noConnection = null;
+      ApiProvider.connect()
+          .then((value) => _noConnection = false);
+      if (_noConnection == null) {
+        _noConnection = true;
+      }
     });
     _setButtonIsDisabled();
     DataHelper.initVehicles(context);
@@ -72,9 +81,9 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  //disables button according to free parking spots
+  //disables button according to free parking spots and connection to server
   _setButtonIsDisabled() {
-    bool disable = _parkingSpots <= 0;
+    bool disable = _parkingSpots <= 0 && _noConnection;
     setState(() {
       _buttonIsDisabled = disable;
     });
@@ -96,7 +105,7 @@ class _MainPageState extends State<MainPage> {
         vehicle.licensePlate);
     //check which parking spots should be displayed and if button should be disabled
     _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
-    _buttonIsDisabled = _parkingSpots <= 0;
+    _buttonIsDisabled = _parkingSpots <= 0 && _noConnection;
     return Scaffold(
         appBar: AppBar(
           title: Text(vehicle.name, style: whiteHeader),
@@ -107,10 +116,15 @@ class _MainPageState extends State<MainPage> {
               ? Theme.of(context).disabledColor
               : Theme.of(context).primaryColor,
           onPressed: () {
-            _buttonIsDisabled
-                ? ParkingGarageOccupiedDialog.createDialog(context)
-                : ParkDialog.createParkInDialog(context);
-            //DatabaseProvider.db.clear();
+            if (_buttonIsDisabled) {
+              if (_noConnection) {
+                NoConnectionDialog.createDialog(context);
+              } else {
+                ParkingGarageOccupiedDialog.createDialog(context);
+              }
+            } else {
+              ParkDialog.createParkInDialog(context);
+            }
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),
         ),
