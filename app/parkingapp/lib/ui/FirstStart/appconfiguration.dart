@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/FirstStart/addvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
+import 'package:parkingapp/util/qrscanner.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
 class AppConfiguration extends StatefulWidget {
@@ -68,6 +69,17 @@ class _AppConfigurationState extends State<AppConfiguration> {
                                       PasscodePage()));
                         },
                       ),
+                      ListTile(
+                          title: Text("Daten importieren"),
+                          subtitle: Text(""),
+                          trailing: Icon(Icons.arrow_forward_ios),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        QRScanner()));
+                          })
                     ],
                   ),
                 ))));
