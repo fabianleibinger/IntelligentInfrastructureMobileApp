@@ -58,8 +58,7 @@ class _MainPageState extends State<MainPage> {
       currentParkingGarage.updateAllFreeParkingSpots();
       _parkingSpots = currentParkingGarage.freeParkingSpots;
       _noConnection = null;
-      ApiProvider.connect()
-          .then((value) => _noConnection = false);
+      ApiProvider.connect().then((value) => _noConnection = false);
       if (_noConnection == null) {
         _noConnection = true;
       }
