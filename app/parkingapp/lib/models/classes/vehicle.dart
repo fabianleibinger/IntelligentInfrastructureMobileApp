@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
+import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //cannot be instantiated
@@ -14,7 +14,7 @@ abstract class Vehicle {
   String inAppKey, name, licensePlate;
 
   //Dimensions
-  double width, height, length, turningCycle;
+  double width, height, length, turningCycle, distRearAxleLicensePlate;
 
   //Preferences
   bool nearExitPreference, parkingCard;
@@ -33,6 +33,8 @@ abstract class Vehicle {
       DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
       DatabaseProvider.COLUMN_LENGTH: length.toDouble(),
       DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
+      DatabaseProvider.COLUMN_DIST_REAR_AXLE_LICENSE_PLATE:
+          distRearAxleLicensePlate.toDouble(),
       DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
       DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0,
       DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0
@@ -62,10 +64,9 @@ abstract class Vehicle {
           //vehicle not parking in anymore
         }).whenComplete(() {
           this.setParkIngIn(context, false);
-          //if park in didn't work search for correct page
+          //if park in didn't work: connection to server failed
           if (!this.parkedIn) {
-            Navigator.pushReplacementNamed(
-                context, Routes.returnCorrectRouteForVehicle(this));
+            NoConnectionDialog.createDialog(context);
           }
         });
       } else {
@@ -100,10 +101,9 @@ abstract class Vehicle {
         //vehicle not parking out anymore
       }).whenComplete(() {
         this.setParkIngOut(context, false);
-        //if park out didn't work search for correct page
+        //if park out didn't work: connection to server failed
         if (this.parkedIn) {
-          Navigator.pushReplacementNamed(
-              context, Routes.returnCorrectRouteForVehicle(this));
+          NoConnectionDialog.createDialog(context);
         }
       });
     }
@@ -158,6 +158,12 @@ abstract class Vehicle {
   }
 
   //setter which includes database updating
+  void setDistRearAxleLicensePlate(BuildContext context, double distance) {
+    this.distRearAxleLicensePlate = distance;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
   void setNearExitPreference(BuildContext context, bool nearExitPreference) {
     this.nearExitPreference = nearExitPreference;
     DataHelper.updateVehicle(context, this);
@@ -190,11 +196,12 @@ abstract class Vehicle {
 
   //setter for all dimensions which includes database updating
   void setDimensions(BuildContext context, double width, double height,
-      double length, double turningCycle) {
+      double length, double turningCycle, double distRearAxleLicensePlate) {
     this.width = width;
     this.height = height;
     this.length = length;
     this.turningCycle = turningCycle;
+    this.distRearAxleLicensePlate = distRearAxleLicensePlate;
     DataHelper.updateVehicle(context, this);
   }
 }

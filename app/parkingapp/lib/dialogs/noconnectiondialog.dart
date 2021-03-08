@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 
@@ -7,10 +8,11 @@ import 'constants.dart';
 //button leads back to MainPage
 class NoConnectionDialog {
   static createDialog(BuildContext context) {
-    return Constants.createAlertDialogOneButtonNoTitle(
+    return Constants.createAlertDialogOneButton(
         context,
+        AppLocalizations.of(context).noConnectionDialogTitle,
         AppLocalizations.of(context).noConnectionDialogContent,
         AppLocalizations.of(context).parkDialogBackButton,
-        vehicle.inAppKey);
+        Routes.returnCorrectRouteForVehicle(vehicle));
   }
 }

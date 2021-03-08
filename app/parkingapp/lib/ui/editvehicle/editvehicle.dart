@@ -310,6 +310,7 @@ class UpdateMainPageVehicle {
         _notSpecifiedDouble,
         _notSpecifiedDouble,
         _notSpecifiedDouble,
+        _notSpecifiedDouble,
         _notSpecifiedBool,
         _notSpecifiedBool,
         _notSpecifiedBool,

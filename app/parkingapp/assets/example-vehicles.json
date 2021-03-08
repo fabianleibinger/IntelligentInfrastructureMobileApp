@@ -4,20 +4,23 @@
     "width": 2934.23,
     "height": 1233.93,
     "length": 4529.30,
-    "turningCycle": 0.0
+    "turningCycle": 0.0,
+    "distRearAxleLicensePlate": 0.0
   },
   {
     "name": "BMW",
     "width": 2745.23,
     "height": 1643.93,
     "length": 4463.30,
-    "turningCycle": 0.0
+    "turningCycle": 0.0,
+    "distRearAxleLicensePlate": 0.0
   },
   {
     "name": "Tesla",
     "width": 2934.23,
     "height": 1223.93,
     "length": 4529.30,
-    "turningCycle": 0.0
+    "turningCycle": 0.0,
+    "distRearAxleLicensePlate": 0.0
   }
 ]

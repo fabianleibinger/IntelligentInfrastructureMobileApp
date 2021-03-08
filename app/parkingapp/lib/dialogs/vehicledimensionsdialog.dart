@@ -41,7 +41,10 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
               _exampleVehicles.forEach((element) {
                 if (element.height == vehicle.height &&
                     element.width == vehicle.width &&
-                    element.length == vehicle.length) {
+                    element.length == vehicle.length &&
+                    element.turningCycle == vehicle.turningCycle &&
+                    element.distRearAxleLicensePlate ==
+                        vehicle.distRearAxleLicensePlate) {
                   _selectedRadioTile = element;
                 }
               });
@@ -80,12 +83,13 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
 
   void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
     //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
-    //TODO move this into an updateDimensions method within the vehicle
-    vehicle.height = exampleVehicle.height;
-    vehicle.length = exampleVehicle.length;
-    vehicle.width = exampleVehicle.width;
-    vehicle.height = exampleVehicle.height;
-    DataHelper.updateVehicle(context, vehicle);
+    vehicle.setDimensions(
+        context,
+        exampleVehicle.width,
+        exampleVehicle.height,
+        exampleVehicle.length,
+        exampleVehicle.turningCycle,
+        exampleVehicle.distRearAxleLicensePlate);
   }
 
   List<ExampleVehicle> _parseJson(String response) {
@@ -144,7 +148,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               ? null
                               : AppLocalizations.of(context).requiredText,
                           onSaved: (val) =>
-                              vehicle.length = double.tryParse(val),
+                              vehicle.setLength(context, double.tryParse(val)),
                         ),
                         //width
                         TextFormField(
@@ -159,7 +163,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               ? null
                               : AppLocalizations.of(context).requiredText,
                           onSaved: (val) =>
-                              vehicle.width = double.tryParse(val),
+                              vehicle.setWidth(context, double.tryParse(val)),
                         ),
                         //height
                         TextFormField(
@@ -174,7 +178,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               ? null
                               : AppLocalizations.of(context).requiredText,
                           onSaved: (val) =>
-                              vehicle.height = double.tryParse(val),
+                              vehicle.setHeight(context, double.tryParse(val)),
                         ),
                         //turning circle
                         TextFormField(
@@ -189,8 +193,26 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) =>
-                              vehicle.turningCycle = double.tryParse(val),
+                          onSaved: (val) => vehicle.setTurningCycle(
+                              context, double.tryParse(val)),
+                        ),
+                        //distance rear axle license plate
+                        TextFormField(
+                          initialValue: vehicle.distRearAxleLicensePlate
+                              .round()
+                              .toString(),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context)
+                                      .distRearAxleLicensePlate +
+                                  AppLocalizations.of(context).space +
+                                  AppLocalizations.of(context)
+                                      .additionalInMilimeters),
+                          validator: (val) => (num.tryParse(val) ?? 0) > 0
+                              ? null
+                              : AppLocalizations.of(context).requiredText,
+                          onSaved: (val) => vehicle.setDistRearAxleLicensePlate(
+                              context, double.tryParse(val)),
                         )
                       ],
                     ),
