@@ -4,7 +4,7 @@ import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //defines the qr code dialog
-class ScanQRDialog {
+class ScanQRDialog extends StatefulWidget {
   static createVehicleQRDialog(BuildContext context) {
     //TODO update next page
     return Constants.createAlertDialog(
@@ -14,5 +14,11 @@ class ScanQRDialog {
         AppLocalizations.of(context).scanQRDialogCancelButton,
         AppLocalizations.of(context).scanQRDialogConfirmButton,
         Routes.settings);
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }

@@ -69,6 +69,7 @@ class _AppConfigurationState extends State<AppConfiguration> {
                                       PasscodePage()));
                         },
                       ),
+                      Divider(),
                       ListTile(
                           title: Text("Daten importieren"),
                           subtitle: Text(""),
