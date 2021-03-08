@@ -86,8 +86,14 @@ def electric_free_parking_spots():
 @app.route('/parkIn', methods=['POST'])
 def perform_park_in_request():
     if request.is_json:
-        park_in_parameters = request.get_json()
-        return communication.communicate_park_in(park_in_parameters)
+        try:
+            park_in_parameters = request.get_json()
+            if "load" in park_in_parameters:
+                if park_in_parameters["load"]:
+                    load_vehicle = communication.communicate_load_vehicle(park_in_parameters)
+            return communication.communicate_park_in(park_in_parameters)
+        except communication.InternalCommunicationException as e:
+            return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
     else:
         return 'No json'
 
