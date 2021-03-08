@@ -3,6 +3,7 @@ import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/parkpage/parkpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
+import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
@@ -17,4 +18,5 @@ class Routes {
   static const String routeLandingPage = RouteLandingPage.routeName;
   static const String agbPage = AGB.routeName;
   static const String transferkeys = Transferkeys.routeName;
+  static const String qrpage = QRPage.routeName;
 }

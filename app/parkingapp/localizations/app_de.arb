@@ -206,5 +206,7 @@
     "welcomeText": "Herzlich Willkommen in der FZI Autopark App.\nIn den nächsten Schritten werden Dir die grundlegenden Funktionen der Anwendung näher gebracht und das erste Fahrzeug eingerichtet.",
     "@welcomeText": {},
     "appName": "FZI AutoPark",
-    "@appName": {}
+    "@appName": {},
+    "textQRPage": "Zum Übertragen der Daten scannen Sie den QR-Code mit einem anderen Gerät. Rufen Sie dafür unter Fahrzeuge bearbeiten den Import Dialog auf oder wählen Sie während der Einrichtung Daten Importieren auf.",
+    "@textQRPage": {}
 }

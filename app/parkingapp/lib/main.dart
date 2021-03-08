@@ -9,6 +9,7 @@ import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
+import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
@@ -83,6 +84,9 @@ class Main extends StatelessWidget {
         }
         if (settings.name == Routes.transferkeys) {
           return MaterialPageRoute(builder: (context) => Transferkeys());
+        }
+        if (settings.name == Routes.qrpage) {
+          return MaterialPageRoute(builder: (context) => QRPage());
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());

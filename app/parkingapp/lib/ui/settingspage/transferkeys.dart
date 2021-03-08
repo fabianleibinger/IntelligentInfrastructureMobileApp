@@ -6,6 +6,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
+import 'package:parkingapp/ui/settingspage/qrpage.dart';
 
 class Transferkeys extends StatelessWidget {
   static const routeName = '/transferkeys';
@@ -62,7 +63,7 @@ class Transferkeys extends StatelessWidget {
                         vehicle.databaseId.toString()),
                     // TO DO: Implement on Tap
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => EditVehicle(
+                        builder: (context) => QRPage(
                               vehicle: vehicle,
                             ))),
                   ));
