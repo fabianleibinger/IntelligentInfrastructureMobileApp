@@ -57,13 +57,13 @@ class _MainPageState extends State<MainPage> {
     setState(() {
       currentParkingGarage.updateAllFreeParkingSpots();
       _parkingSpots = currentParkingGarage.freeParkingSpots;
-      _noConnection = null;
-      ApiProvider.connect().then((value) => _noConnection = false);
-      if (_noConnection == null) {
-        _noConnection = true;
-      }
+      _noConnection = true;
+      ApiProvider.connect().then((value) {
+        _noConnection = false;
+      }).whenComplete(() {
+        _setButtonIsDisabled();
+      });
     });
-    _setButtonIsDisabled();
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -82,7 +82,7 @@ class _MainPageState extends State<MainPage> {
 
   //disables button according to free parking spots and connection to server
   _setButtonIsDisabled() {
-    bool disable = _parkingSpots <= 0 && _noConnection;
+    bool disable = _parkingSpots <= 0 || _noConnection;
     setState(() {
       _buttonIsDisabled = disable;
     });
@@ -104,7 +104,7 @@ class _MainPageState extends State<MainPage> {
         vehicle.licensePlate);
     //check which parking spots should be displayed and if button should be disabled
     _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
-    _buttonIsDisabled = _parkingSpots <= 0 && _noConnection;
+    _buttonIsDisabled = _parkingSpots <= 0 || _noConnection;
     return Scaffold(
         appBar: AppBar(
           title: Text(vehicle.name, style: whiteHeader),

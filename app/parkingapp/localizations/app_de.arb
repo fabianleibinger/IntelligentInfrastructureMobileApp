@@ -81,9 +81,13 @@
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
     },
-    "noConnectionDialogContent": "Leider besteht zur Zeit keine Verbindung zum Server",
+    "noConnectionDialogContent": "Leider besteht zur Zeit keine Verbindung zum Server.",
     "@noConnectionDialogContent": {
         "description": "Text for no connection dialog body"
+    },
+    "noConnectionDialogTitle": "Keine Verbindung!",
+    "@noConnectionDialogTitle": {
+        "description": "Text for no connection dialog title"
     },
     "parkDialogBackButton": "ZURÜCK",
     "@parkDialogBackButton": {
@@ -189,6 +193,8 @@
     "@height": {},
     "turningCircle": "Wendekreis",
     "@turningCircle": {},
+    "distRearAxleLicensePlate": "Abstand der Hinterachse zum Nummernschild",
+    "@distRearAxleLicensePlate": {},
     "addVehicleButton": "Fahrzeug hinzufügen",
     "@addVehicleButton": {},
     "editVehicleButton": "Fahrzeug bearbeiten",
@@ -239,7 +245,7 @@
     "@appName": {},
     "askDeleteVehicle": "Fahrzeug löschen?",
     "@askDeleteVehicle": {},
-    "askDeleteVehicleContent": "Alle Informationen über das Fahrzeug weden unwiederruflich gelöscht.",
+    "askDeleteVehicleContent": "Alle Informationen über das Fahrzeug werden unwiderruflich gelöscht.",
     "@askDeleteVehicleContent": {},
     "buttonOk": "OK",
     "@buttonOk": {},
