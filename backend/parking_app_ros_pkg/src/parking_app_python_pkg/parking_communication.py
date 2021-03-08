@@ -31,6 +31,10 @@ class CommunicationRosServiceException(Exception):
     pass
 
 
+class InternalCommunicationException(Exception):
+    pass
+
+
 ros_root_node = 'parking_node'
 threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
 
@@ -96,19 +100,39 @@ def communicate_park_in(park_in_parameters):
 
 def generate_vehicle_message(park_in_parameters, vehicle_status):
     vehicle_message = VehicleInformationMsg()
+    try:
+        vehicle_message.app_id = int(park_in_parameters["id"])
+        vehicle_message.number_plate = park_in_parameters["number_plate"]
+        vehicle_message.dimensions.length = float(park_in_parameters["length"])
+        vehicle_message.dimensions.width = float(park_in_parameters["width"])
+        vehicle_message.dimensions.turning_radius = float(park_in_parameters["turning_radius"])
+        vehicle_message.dimensions.dist_rear_axle_numberplate = float(park_in_parameters["dist_rear_axle_numberplate"])
+    except KeyError as keyErrorReadingJSON:
+        raise InternalCommunicationException(str(keyErrorReadingJSON))
 
-    vehicle_message.app_id = int(park_in_parameters["id"])
-    vehicle_message.dimensions.length = float(park_in_parameters["length"])
-    vehicle_message.dimensions.width = float(park_in_parameters["width"])
-    vehicle_message.dimensions.turning_radius = float(park_in_parameters["turning_radius"])
-    vehicle_message.dimensions.dist_rear_axle_numberplate = float(park_in_parameters["dist_rear_axle_numberplate"])
-    if park_in_parameters["charge_type"] == "electric":
-        vehicle_message.type.type = ChargeableType.type_electric.value
+    if "charge_type" in park_in_parameters:
+        if park_in_parameters["charge_type"] == "electric":
+            vehicle_message.type.type = ChargeableType.type_electric.value
+        elif park_in_parameters["charge_type"] == "electric_fast":
+            vehicle_message.type.type = ChargeableType.type_electric_fast.value
+        elif park_in_parameters["charge_type"] == "electric_inductive":
+            vehicle_message.type.type = ChargeableType.type_electric_inductive.value
     else:
         vehicle_message.type.type = ChargeableType.type_none.value
-    # vehicle_message.entry_time = datetime.now().time()
-    vehicle_message.status.status = vehicle_status
-    
-    return vehicle_message
 
+    if "near_exit" in park_in_parameters:
+        if park_in_parameters["near_exit"] == True:
+            vehicle_message.park_preferences.near_exit = 1
+        else:
+            vehicle_message.park_preferences.near_exit = 0
+
+    if "parking_card" in park_in_parameters:
+        if park_in_parameters["parking_card"] == True:
+            vehicle_message.park_preferences.parking_card = 1
+        else:
+            vehicle_message.park_preferences.near_exit = 0
+    vehicle_message.entry_time = rospy.get_rostime()
+    vehicle_message.status.status = vehicle_status
+
+    return vehicle_message
 
