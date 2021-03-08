@@ -69,7 +69,7 @@
     },
     "mainPageCarPreferenceShouldCharge": "Fahrzeug laden",
     "@mainPageCarPreferenceShouldCharge": {
-        "description": "Text shown on main s    creen with SwitchListTile to toggle vehicle charging"
+        "description": "Text shown on main screen with SwitchListTile to toggle vehicle charging"
     },
     "mainPageCarPreferences": "Fahrzeugpräferenzen: ",
     "@mainPageCarPreferences": {},
@@ -80,6 +80,10 @@
     "mainPageAvailableSpaces": "Freie Parkplätze: ",
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
+    },
+    "noConnectionDialogContent": "Leider besteht zur Zeit keine Verbindung zum Server",
+    "@noConnectionDialogContent": {
+        "description": "Text for no connection dialog body"
     },
     "parkDialogBackButton": "ZURÜCK",
     "@parkDialogBackButton": {

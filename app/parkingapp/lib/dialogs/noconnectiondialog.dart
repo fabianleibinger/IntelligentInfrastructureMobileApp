@@ -9,7 +9,7 @@ class NoConnectionDialog {
   static createDialog(BuildContext context) {
     return Constants.createAlertDialogOneButtonNoTitle(
         context,
-        'Leider besteht zur Zeit keine Verbindung zum Server',
+        AppLocalizations.of(context).noConnectionDialogContent,
         AppLocalizations.of(context).parkDialogBackButton,
         vehicle.inAppKey);
   }
