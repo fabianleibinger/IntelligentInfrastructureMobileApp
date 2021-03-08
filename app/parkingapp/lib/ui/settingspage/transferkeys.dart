@@ -60,6 +60,7 @@ class Transferkeys extends StatelessWidget {
                     subtitle: Text(vehicle.licensePlate +
                         "; " +
                         vehicle.databaseId.toString()),
+                    // TO DO: Implement on Tap
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditVehicle(
                               vehicle: vehicle,
