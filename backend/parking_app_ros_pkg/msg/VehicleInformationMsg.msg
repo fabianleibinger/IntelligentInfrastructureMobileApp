@@ -1,8 +1,6 @@
 # Vehicle information required to register to parking management system
 
-int16 app_id
-int16 pms_id
-string number_plate
+VehicleIdentificationMsg identifiers
 
 VehicleDimensionsMsg dimensions
 
