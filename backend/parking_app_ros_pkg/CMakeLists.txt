@@ -64,6 +64,7 @@ find_package(catkin REQUIRED COMPONENTS
 	PathMsg.msg
 	MultiPathMsg.msg
 	Pose2DStamped.msg
+	ParkPreferencesMsg.msg
 )
 
 ## Generate services in the 'srv' folder
