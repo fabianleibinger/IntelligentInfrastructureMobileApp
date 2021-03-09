@@ -1,20 +1,26 @@
 [
-    {
+  {
     "name": "Audi",
+    "width": 2934.23,
     "height": 1233.93,
-    "width": 2934.23,
-    "length": 4529.30
-    },
-    {
+    "length": 4529.30,
+    "turningCycle": 0.0,
+    "distRearAxleLicensePlate": 0.0
+  },
+  {
     "name": "BMW",
-    "height": 1643.93,
     "width": 2745.23,
-    "length": 4463.30
-},
-{
+    "height": 1643.93,
+    "length": 4463.30,
+    "turningCycle": 0.0,
+    "distRearAxleLicensePlate": 0.0
+  },
+  {
     "name": "Tesla",
-    "height": 1223.93,
     "width": 2934.23,
-    "length": 4529.30
-}
+    "height": 1223.93,
+    "length": 4529.30,
+    "turningCycle": 0.0,
+    "distRearAxleLicensePlate": 0.0
+  }
 ]

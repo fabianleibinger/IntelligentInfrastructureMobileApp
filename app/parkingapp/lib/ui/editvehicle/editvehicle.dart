@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/addvehicle.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/bloc/resources/subtitleformatter.dart';
+import 'package:parkingapp/dialogs/chargetimedialog.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
+import 'package:parkingapp/dialogs/vehicledimensionsdialog.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
-import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
+import 'package:parkingapp/models/enum/chargingprovider.dart';
+import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final double _notSpecifiedDouble = 0;
+final String _notSpecifiedString = '';
+final bool _notSpecifiedBool = false;
+final TimeOfDay _notSpecifiedTimeOfDay = TimeOfDay(hour: 0, minute: 0);
+final String _defaultChargingProvider =
+    ChargingProvider.Automatisch.toShortString();
 
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
@@ -25,12 +37,22 @@ class EditVehicle extends StatelessWidget {
             ', ' +
             vehicle.licensePlate)
         : null;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Edit Vehicle'),
-      ),
-      body: VehicleForm(
-        vehicle: vehicle,
+
+    //update vehicle in MainPage
+    UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
+    return WillPopScope(
+      onWillPop: () {
+        return UpdateMainPageVehicle.cleanUp(
+            context: context, parseVehicle: this.vehicle);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(AppLocalizations.of(context).editVehicleTitle),
+        ),
+        body: VehicleForm(
+          vehicle: vehicle,
+        ),
       ),
     );
   }
@@ -41,18 +63,25 @@ class CreateVehicle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Add Vehicle'),
+    //update vehicle in MainPage
+    UpdateMainPageVehicle.setUp(context: context);
+    return WillPopScope(
+      onWillPop: () => UpdateMainPageVehicle.cleanUp(context: context),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context).addVehicleTitle),
+        ),
+        body: VehicleForm(),
       ),
-      body: VehicleForm(),
     );
   }
 }
 
 class VehicleForm extends StatefulWidget {
   final Vehicle vehicle;
-  const VehicleForm({Key key, this.vehicle}) : super(key: key);
+  //this route will be called when the form is completed
+  final MaterialPageRoute route;
+  const VehicleForm({Key key, this.vehicle, this.route}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _VehicleFormState();
 }
@@ -61,91 +90,98 @@ class _VehicleFormState extends State<VehicleForm> {
   //global key for form validation
   final _formKey = GlobalKey<FormState>();
 
-  bool _vehicleChargeable = false,
-      _parkNearExit = false,
-      _parkingCard = false,
-      _vehicleDoCharge = true;
-  String _name, _licensePlate, _chargingProvider;
-  TimeOfDay _chargeBegin = TimeOfDay(hour: 0, minute: 0),
-      _chargeEnd = TimeOfDay(hour: 23, minute: 59);
-  List<Widget> _electricToggles = [];
+  //local variables for states
+  bool _vehicleChargeable;
+  //vehicle specific variables (these should be saved in the vehicle)
+  bool _vehicleDoCharge = false;
 
   @override
   Widget build(BuildContext context) {
+    //preselect if vehicle is chargeable or not
+    if (_vehicleChargeable == null)
+      _vehicleChargeable = widget.vehicle.runtimeType == ChargeableVehicle;
     return Form(
       key: _formKey,
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: ListView(
+        child: Column(
           children: [
-            TextFormField(
-              autocorrect: false,
-              decoration: InputDecoration(labelText: 'Fahrzeugname'),
-              validator: (str) => requiredValue(str),
-              onSaved: (str) => _name = str,
-            ),
-            TextFormField(
-              autocorrect: false,
-              decoration: InputDecoration(labelText: 'KFZ-Kennzeichen'),
-              validator: (str) => requiredValue(str),
-              onSaved: (str) => _licensePlate = str,
-              inputFormatters: [UpperCaseTextFormatter()],
-            ),
-            //when this is toggled add the electric toggles
-            //TODO animate expand
-            //TODO move this into a seperate Form
-            SwitchListTile(
-              title: Text('Fahrzeug ist ladefähig'),
-              onChanged: (bool newValue) => setState(() {
-                _vehicleChargeable = newValue;
-                if (_vehicleChargeable) {
-                  _electricToggles.addAll([
-                    Divider(),
-                    SwitchListTile(
-                      title: Text('Fahrzeug standardmäßig laden'),
-                      onChanged: (bool newValue) =>
-                          setState(() => _vehicleDoCharge = newValue),
-                      value: _vehicleDoCharge,
-                    ),
-                    Divider(),
-                    ListTile(
-                      title: Text('Charge Time Begin'),
-                      onTap: () => _selectChargeBeginTime(context),
-                    ),
-                    Divider(),
-                    ListTile(
-                      title: Text('Charge End Time'),
-                      onTap: () => _selectChargeEndTime(context),
-                    )
-                  ]);
-                } else {
-                  _electricToggles.clear();
-                }
-              }),
-              value: _vehicleChargeable,
-            ),
-            Column(
-              children: _electricToggles,
-            ),
-            //generic toggles for all vehicles
-            Divider(),
-            SwitchListTile(
-              title: Text('Nah am Ausgang Parken'),
-              onChanged: (bool newValue) =>
-                  setState(() => _parkNearExit = newValue),
-              value: _parkNearExit,
-            ),
-            Divider(),
-            SwitchListTile(
-              title: Text('Parkkarte'),
-              onChanged: (bool newValue) =>
-                  setState(() => _parkingCard = newValue),
-              value: _parkingCard,
+            Expanded(
+              child: ListView(
+                children: [
+                  TextFormField(
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context).vehicleName),
+                    initialValue: vehicle.name,
+                    validator: (str) => requiredValue(str),
+                    onSaved: (str) => vehicle.name = str,
+                  ),
+                  TextFormField(
+                    autocorrect: false,
+                    decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context).licensePlate),
+                    initialValue: vehicle.licensePlate,
+                    validator: (str) => requiredValue(str),
+                    onSaved: (str) => vehicle.licensePlate = str,
+                    inputFormatters: [UpperCaseTextFormatter()],
+                  ),
+                  //when this is toggled add the electric toggles
+                  //TODO animate expand
+                  //TODO move this into a seperate Form
+                  SwitchListTile(
+                    title: Text(AppLocalizations.of(context).vehicleCanCharge),
+                    onChanged: (bool newValue) =>
+                        setState(() => _vehicleChargeable = newValue),
+                    value: _vehicleChargeable,
+                  ),
+                  _getElectricToggles(_vehicleChargeable),
+                  //generic toggles for all vehicles
+                  Divider(),
+                  ListTile(
+                      title: Text(AppLocalizations.of(context).parkPreferences),
+                      subtitle: SubtitleFormatter.vehicleParkPreferences(
+                        context: context,
+                        vehicle: vehicle,
+                      ),
+                      onTap: () =>
+                          _showDialog(context, ParkPreferencesDialog())),
+                  Divider(),
+                  FormField(
+                    builder: (FormFieldState<dynamic> field) {
+                      return ListTile(
+                    title: Text(AppLocalizations.of(context)
+                        .vehicleDimensionsDialogTitle),
+                        subtitle: field.hasError
+                            ? Text(
+                                field.errorText,
+                                style: TextStyle(
+                                    color: Theme.of(context).errorColor),
+                              )
+                            : _vehicleDimensionsSubtitle(),
+                    onTap: () =>
+                            _showDialog(context, VehicleDimensionsDialog())
+                                .then((value) => field.validate()),
+                      );
+                    },
+                    validator: (value) => [
+                      vehicle.length,
+                      vehicle.width,
+                      vehicle.height,
+                      vehicle.turningCycle
+                    ].every((value) => value == _notSpecifiedDouble)
+                        ? AppLocalizations.of(context).requiredText
+                        : null,
+                  )
+                ],
+              ),
             ),
             //end of form
             RaisedButton(
-              child: Text('Fahrzeug hinzufügen'),
-              onPressed: () => onPressed(),
+              child: widget.vehicle == null
+                  ? Text(AppLocalizations.of(context).addVehicleButton)
+                  : Text(AppLocalizations.of(context).editVehicleButton),
+              onPressed: () => onPressed(_vehicleChargeable),
               highlightColor: Theme.of(context).accentColor,
               color: Theme.of(context).primaryColor,
               colorBrightness: Theme.of(context).primaryColorBrightness,
@@ -156,94 +192,95 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  // TODO merge into one funciton
-  // select Time (used for start and end of charge)
-  void _selectChargeBeginTime(BuildContext context) async {
-    TimeOfDay timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: _chargeBegin,
-        helpText: 'Fahrzeug bevorzugt laden ab: ');
-    setState(() => _chargeBegin = timeOfDay);
+  // show a dialog, wait for it to finish and update state after finishing
+  // returns true when finished
+  Future<bool> _showDialog(BuildContext context, Widget dialog) async {
+    await showDialog(context: context, builder: (context) => dialog);
+    setState(() {});
+    return true;
   }
 
-  // select Time (used for start and end of charge)
-  void _selectChargeEndTime(BuildContext context) async {
-    TimeOfDay timeOfDay = await showTimePicker(
-        context: context,
-        initialTime: _chargeEnd,
-        helpText: 'Fahrzeug bevorzugt laden ab: ');
-    setState(() => _chargeEnd = timeOfDay);
+  Widget _vehicleDimensionsSubtitle() {
+    if (vehicle.height == _notSpecifiedDouble &&
+        vehicle.width == _notSpecifiedDouble &&
+        vehicle.height == _notSpecifiedDouble &&
+        vehicle.turningCycle == _notSpecifiedDouble) return null;
+    return SubtitleFormatter.vehicleDimensions(
+      context: context,
+      vehicle: vehicle,
+    );
+  }
+
+  //electric vehicle toggles
+  Column _getElectricToggles(bool vehicleChargeable) {
+    //return no toggles if not chargeable
+    if (!vehicleChargeable) return Column();
+    //return toggles if chargeable
+    ChargeableVehicle tempVehicle = vehicle;
+    List<Widget> _electricToggles = [];
+    _electricToggles.addAll([
+      Divider(),
+      SwitchListTile(
+        title: Text(AppLocalizations.of(context).chargeVehicleByDefault),
+        onChanged: (bool newValue) =>
+            setState(() => _vehicleDoCharge = newValue),
+        value: _vehicleDoCharge,
+      ),
+      Divider(),
+      ListTile(
+        title: Text(AppLocalizations.of(context).chargingProviderDialogTitle),
+        subtitle: Text(tempVehicle.chargingProvider),
+        onTap: () => _showDialog(context, ChargingProviderDialog()),
+      ),
+      Divider(),
+      ListTile(
+        title: Text(AppLocalizations.of(context).chargeTimeDialogTitle),
+        subtitle: Text(AppLocalizations.of(context).begin +
+            AppLocalizations.of(context).colonSpace +
+            tempVehicle.chargeTimeBegin.format(context) +
+            AppLocalizations.of(context).space +
+            AppLocalizations.of(context).end +
+            AppLocalizations.of(context).colonSpace +
+            tempVehicle.chargeTimeEnd.format(context)),
+        onTap: () => _showDialog(context, ChargeTimeDialog()),
+      )
+    ]);
+    return Column(
+      children: _electricToggles,
+    );
   }
 
   // returns a string if no text is provided, otherwise null
   // if null is returned the validator accepts the string
   String requiredValue(String str) {
-    return str.isEmpty ? "Erforderlich" : null;
+    return str.isEmpty ? AppLocalizations.of(context).requiredText : null;
   }
 
   //validate the form
-  void onPressed() {
+  void onPressed(bool vehicleChargeable) async {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
 
-      // create the vehicle that shall be added to the database
-      Vehicle vehicle = widget.vehicle;
-      if (_vehicleChargeable) {
-        vehicle = LoadableVehicle(
-            Utility.generateKey(),
-            _name,
-            _licensePlate,
-            0,
-            0,
-            0,
-            0,
-            _parkNearExit,
-            _parkingCard,
-            _vehicleDoCharge,
-            _chargingProvider,
-            _chargeBegin,
-            _chargeEnd,
-            null);
-        /*
-       --- handly with VehiclesDimensionDialog 
-      this.height,
-      this.width,
-      this.length,
-      this.turningCycle,
-      ----
-      this.nearExitPreference,
-      this.parkingCard,
-      --- Electric specific
-      Extra toggle that allows for charge by default: this.doCharge,
-      this.chargingProvider,
-      this.chargeTimeBegin,
-      this.chargeTimeEnd,
-      this.charge*/
-      } else {
-        vehicle = StandardVehicle(Utility.generateKey(), _name, _licensePlate,
-            0, 0, 0, 0, _parkNearExit, _parkingCard);
-        /*this.inAppKey,
-      this.name,
-      this.licensePlate,
-
-      this.height,
-      this.width,
-      this.length,
-      this.turningCycle,
-
-      this.nearExitPreference,
-      this.parkingCard*/
+      //update does not work if the runtime type changes
+      DataHelper.deleteVehicle(context, vehicle);
+      //convert vehicle to standardvehicle if necessary
+      if (!vehicleChargeable) {
+        print('converting to standard vehicle');
+        ChargeableVehicle convertVehicle = vehicle;
+        vehicle = convertVehicle.toStandardVehicle();
       }
-
-      //TODO update vehicle if necessary
-      //TODO use new wrapper method
-      //addd vehicle to database
-      DatabaseProvider.db.insert(vehicle).then((vehicle) =>
-          BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle)));
+      // create/update the vehicle
+      //this will only "update" the vehicle because it has been created at the start
+      DataHelper.addVehicle(context, vehicle);
       form.reset();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setBool(RouteLandingPage.isSetUp, true);
       //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
-      Navigator.of(context).pop();
+      //navigate to supplied route or pop the page of no route was supplied
+      widget.route != null
+          ? Navigator.of(context).pushReplacement(widget.route)
+          : Navigator.of(context).pop();
     }
   }
 }
@@ -257,5 +294,76 @@ class UpperCaseTextFormatter extends TextInputFormatter {
       text: newValue.text?.toUpperCase(),
       selection: newValue.selection,
     );
+  }
+}
+
+class UpdateMainPageVehicle {
+  //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
+  static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
+    if (parseVehicle == null) {
+      print('set new electric vehicle on main page');
+      vehicle = ChargeableVehicle(
+        Utility.generateKey(),
+        _notSpecifiedString,
+        _notSpecifiedString,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
+        _notSpecifiedDouble,
+        _notSpecifiedBool,
+        _notSpecifiedBool,
+        _notSpecifiedBool,
+        _notSpecifiedBool,
+        _defaultChargingProvider,
+        _notSpecifiedTimeOfDay,
+        _notSpecifiedTimeOfDay,
+      );
+      print('adding dummy vehicle to database');
+      DataHelper.addVehicle(context, vehicle);
+    } else if (parseVehicle.runtimeType == ChargeableVehicle) {
+      print('parsedVehicle is electric; using parsed vehicle as is');
+      vehicle = parseVehicle;
+    } else if (parseVehicle.runtimeType == StandardVehicle) {
+      DataHelper.deleteVehicle(context, vehicle);
+      print('parsedVehicle is standard; converting into electric');
+      StandardVehicle convertVehicle = parseVehicle;
+      vehicle = convertVehicle.toElectricVehicle();
+      print('converting standard vehicle to electric vehicle in database');
+      DataHelper.addVehicle(context, vehicle);
+    }
+  }
+
+  static Future<bool> cleanUp(
+      {@required BuildContext context, Vehicle parseVehicle}) async {
+    print('starting clean up');
+    if (parseVehicle == null) {
+      print('removing dummy vehicle');
+      //the behicle did not exist before opening the form and needs to be removed
+      DataHelper.deleteVehicle(context, vehicle);
+    } else {
+      print('restoring previous state');
+      print('previous vehicle: inAppID: ' +
+          parseVehicle.inAppKey +
+          ' name: ' +
+          parseVehicle.name +
+          ' licensePlate: ' +
+          parseVehicle.licensePlate +
+          ' parkpreferences: ' +
+          parseVehicle.nearExitPreference.toString() +
+          parseVehicle.parkingCard.toString());
+      print('temporary vehicle: inAppID: ' +
+          vehicle.inAppKey +
+          ' name: ' +
+          vehicle.name +
+          ' licensePlate: ' +
+          vehicle.licensePlate +
+          ' parkpreferences: ' +
+          vehicle.nearExitPreference.toString() +
+          vehicle.parkingCard.toString());
+      //restore the previous state
+      DataHelper.updateVehicle(context, parseVehicle);
+    }
+    return true;
   }
 }

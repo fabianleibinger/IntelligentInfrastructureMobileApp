@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/dialogs/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //defines the different park-related dialogs
 class ParkDialog {
@@ -13,7 +13,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkInContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkInButton,
-        Routes.park);
+        vehicle.inAppKey + Routes.parkIn);
   }
 
   static createParkOutDialog(BuildContext context) {
@@ -22,7 +22,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.park);
+        vehicle.inAppKey + Routes.parkOut);
   }
 
   static createParkInCancelDialog(BuildContext context) {
@@ -31,7 +31,7 @@ class ParkDialog {
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
         AppLocalizations.of(context).parkDialogParkOutButton,
-        Routes.park);
+        vehicle.inAppKey + Routes.parkOut);
   }
 
   static createParkOutFinishedDialog(BuildContext context) {

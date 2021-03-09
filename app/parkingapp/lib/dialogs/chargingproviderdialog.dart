@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
@@ -14,13 +13,13 @@ class ChargingProviderDialog extends StatefulWidget {
 
 class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   List<ChargingProvider> _providers = ChargingProvider.values;
-  static ChargingProvider _selectedRadioTile;
+  ChargingProvider _selectedRadioTile;
 
   //sets the initially selected tile
   @override
   void initState() {
     super.initState();
-    if (vehicle.runtimeType == LoadableVehicle) {
+    if (vehicle.runtimeType == ChargeableVehicle) {
       _checkChargingProvider(vehicle);
     }
   }
@@ -30,7 +29,7 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
     setState(() {
       _selectedRadioTile = value;
     });
-    if (vehicle.runtimeType == LoadableVehicle) {
+    if (vehicle.runtimeType == ChargeableVehicle) {
       _setChargingProvider(vehicle);
     }
   }
@@ -61,16 +60,16 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
   }
 
   //selects the right charging Provider value for _selectedRadioTile
-  void _checkChargingProvider(LoadableVehicle vehicle) {
-    for (int i = 0; i < _providers.length; i++) {
-      if (vehicle.chargingProvider == _providers[i].toShortString()) {
-        _selectedRadioTile = _providers[i];
+  void _checkChargingProvider(ChargeableVehicle vehicle) {
+    _providers.forEach((provider) {
+      if(vehicle.chargingProvider == provider.toShortString()) {
+        _selectedRadioTile = provider;
       }
-    }
+    });
   }
 
   //sets vehicle charging provider value
-  void _setChargingProvider(LoadableVehicle vehicle) {
+  void _setChargingProvider(ChargeableVehicle vehicle) {
     vehicle.setChargingProvider(context, _selectedRadioTile.toShortString());
   }
 }

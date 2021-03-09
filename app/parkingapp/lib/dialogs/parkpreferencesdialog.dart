@@ -13,8 +13,8 @@ class ParkPreferencesDialog extends StatefulWidget {
 }
 
 class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
-  static bool _nearExitCheckBox;
-  static bool _parkingCardCheckBox;
+  bool _nearExitCheckBox;
+  bool _parkingCardCheckBox;
 
   //sets the initial check box values using the current vehicles attributes
   @override

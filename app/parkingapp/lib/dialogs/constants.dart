@@ -11,8 +11,7 @@ class Constants {
   static const double avatarRadius = 45;
 
   //creates an alert dialog with title, text and two buttons
-  static createAlertDialog(
-      BuildContext context,
+  static createAlertDialog(BuildContext context,
       String title,
       String content,
       String cancelButtonText,
@@ -34,8 +33,7 @@ class Constants {
   }
 
   //creates an alert dialog with text and two buttons
-  static createAlertDialogNoTitle(
-      BuildContext context,
+  static createAlertDialogNoTitle(BuildContext context,
       String content,
       String cancelButtonText,
       String confirmButtonText,
@@ -55,8 +53,23 @@ class Constants {
   }
 
   //creates an alert dialog with text and one button
-  static createAlertDialogOneBackButtonNoTitle(
-      BuildContext context, String content, String confirmButtonText) {
+  static createAlertDialogOneButtonNoTitle(BuildContext context, String content,
+      String confirmButtonText, String nextPage) {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text(content),
+            actions: [
+              createFlatButton(context, red, confirmButtonText, nextPage)
+            ],
+          );
+        });
+  }
+
+  //creates an alert dialog with text and one back button
+  static createAlertDialogOneBackButtonNoTitle(BuildContext context,
+      String content, String confirmButtonText) {
     return showDialog(
         context: context,
         builder: (context) {
@@ -94,8 +107,8 @@ class Constants {
   }
 
   //creates a button. [nextPage] defines the page to be called by button
-  static createFlatButton(
-      BuildContext context, Color color, String text, String nextPage) {
+  static createFlatButton(BuildContext context, Color color, String text,
+      String nextPage) {
     return FlatButton(
       textColor: color,
       onPressed: () => Navigator.pushReplacementNamed(context, nextPage),

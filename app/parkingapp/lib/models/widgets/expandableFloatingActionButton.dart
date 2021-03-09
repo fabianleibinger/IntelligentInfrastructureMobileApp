@@ -2,7 +2,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
-import 'package:parkingapp/models/classes/loadablevehicle.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -93,21 +93,22 @@ class _FancyFabState extends State<FancyFab>
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
           DatabaseProvider.db
-              .insert(LoadableVehicle(
+              .insert(ChargeableVehicle(
                   Utility.generateKey(),
                   "Tesla Model 3",
                   "KA-ST 930 E",
-                  93.0,
-                  93.4,
-                  29.3,
-                  84.0,
+                  2934.23,
+                  1223.93,
+                  4529.3,
+                  0,
+                  0,
                   true,
+                  false,
                   false,
                   true,
                   "EnBW",
                   TimeOfDay.now(),
-                  TimeOfDay.now(),
-                  "45"))
+                  TimeOfDay.now()))
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
           });

@@ -11,8 +11,8 @@ import 'databaseprovider.dart';
 
 class DataHelper {
   static addVehicle(BuildContext context, Vehicle vehicle) {
-    DatabaseProvider.db.insert(vehicle).then((dbvehicle) {
-      BlocProvider.of<VehicleBloc>(context).add(AddVehicle(dbvehicle));
+    DatabaseProvider.db.insert(vehicle).then((dbVehicle) {
+      BlocProvider.of<VehicleBloc>(context).add(AddVehicle(dbVehicle));
     });
   }
 
@@ -29,8 +29,8 @@ class DataHelper {
   }
 
   static initVehicles(BuildContext context) {
-    DatabaseProvider.db.getVehicles().then((dbvehicles) {
-      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(dbvehicles));
+    DatabaseProvider.db.getVehicles().then((dbVehicles) {
+      BlocProvider.of<VehicleBloc>(context).add(SetVehicles(dbVehicles));
     });
   }
 }
