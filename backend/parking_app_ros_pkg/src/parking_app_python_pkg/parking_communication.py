@@ -93,7 +93,7 @@ def communicate_park_in(park_in_parameters):
     try:
         register_vehicle_request = rospy.ServiceProxy('register_vehicle_request', RegisterVehicleRequest)
         response = register_vehicle_request(vehicle_message)
-        return jsonify({'pms_id': response.pms_id, 'load_vehicle': response.load_vehicle})
+        return generate_park_in_response(response, vehicle_message.identifiers.app_id)
     except rospy.ServiceException as service_exception:
         raise CommunicationRosServiceException(str(service_exception))
 
@@ -155,4 +155,18 @@ def generate_loading_message(park_in_parameters):
     # if "charge_time_end" in park_in_parameters:
 
     return loading_message
+
+
+def generate_park_in_response(response_from_pms, app_id):
+    if response_from_pms.vehicle_status.status == VehicleStatus.status_parking_in.value:
+        map_vehicle_ids(app_id, response_from_pms.pms_id)
+        return jsonify({'parking_in': True,
+                        'longitude': response_from_pms.target_parking_position.longitude,
+                        'latitude': response_from_pms.target_parking_position.latitude,
+                        'load_vehicle': response_from_pms.load_vehicle})
+
+
+def map_vehicle_ids(app_id, pms_id):
+    # TODO: save IDs in database
+    return
 

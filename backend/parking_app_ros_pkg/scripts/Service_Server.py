@@ -20,6 +20,8 @@ def handle_request_register(req):
     response = RegisterVehicleRequestResponse()
     response.vehicle_status.status = 1  # Parking in
     response.pms_id = 222
+    response.target_parking_position.longitude = 8.42011294615
+    response.target_parking_position.latitude = 49.0143771428
     if req.info.loadable.load_during_parking:
         response.load_vehicle = True
     return response
@@ -34,6 +36,4 @@ def start_server():
 
 if __name__ == "__main__":
     start_server()
-
-
 
