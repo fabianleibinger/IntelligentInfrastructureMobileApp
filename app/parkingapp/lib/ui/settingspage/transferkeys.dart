@@ -62,11 +62,8 @@ class Transferkeys extends StatelessWidget {
                       subtitle: Text(vehicle.licensePlate +
                           "; " +
                           vehicle.databaseId.toString()),
-                      onTap: () async {
-                        await showDialog(
-                            context: context,
-                            builder: (context) =>
-                                ScanQRDialog.createVehicleQRDialog(context)());
+                      onTap: () {
+                        ScanQRDialog.createVehicleQRDialog(context);
                       }
                       // TO DO: Implement on Tap
                       /*onTap: () => Navigator.of(context).push(MaterialPageRoute(

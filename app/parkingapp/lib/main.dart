@@ -27,11 +27,7 @@ import 'models/enum/parkinggaragetype.dart';
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
-  runApp(AppLock(
-    builder: (args) => Main(),
-    lockScreen: AppLockPage(),
-    enabled: false,
-  ));
+  runApp(Main());
 }
 
 class Main extends StatelessWidget {
@@ -67,6 +63,9 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => LandingPage());
           case Routes.routeLandingPage:
             return MaterialPageRoute(builder: (context) => RouteLandingPage());
+          case Routes.authPage:
+            return MaterialPageRoute(
+                builder: (context) => AuthentificationHandling());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
@@ -127,7 +126,7 @@ class Main extends StatelessWidget {
           create: (_) => DrawerStateInfo(Routes.vehicle),
         )
       ],
-      child: getMaterialApp(Routes.routeLandingPage),
+      child: getMaterialApp(Routes.authPage),
     );
   }
 }

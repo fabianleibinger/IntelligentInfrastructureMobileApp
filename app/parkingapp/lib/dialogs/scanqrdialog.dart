@@ -13,6 +13,6 @@ class ScanQRDialog {
         AppLocalizations.of(context).scanQRDialogContent,
         AppLocalizations.of(context).scanQRDialogCancelButton,
         AppLocalizations.of(context).scanQRDialogConfirmButton,
-        Routes.settings);
+        Routes.qrpage);
   }
 }

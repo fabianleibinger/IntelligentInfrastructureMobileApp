@@ -1,6 +1,7 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
+import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/parkpages/parkinpage.dart';
@@ -21,6 +22,7 @@ class Routes {
   static const String routeLandingPage = RouteLandingPage.routeName;
   static const String transferkeys = Transferkeys.routeName;
   static const String qrpage = QRPage.routeName;
+  static const String authPage = AuthentificationHandling.routeName;
 
   //returns the correct route for the AppDrawer according to vehicles values.
   //returns either MainPage, ParkInPage, ParkOutPage

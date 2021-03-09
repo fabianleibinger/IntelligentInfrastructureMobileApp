@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppLockPage extends StatefulWidget {
   final String apikey;
-
   const AppLockPage({Key key, this.apikey}) : super(key: key);
   @override
   _AppLockPageState createState() => _AppLockPageState();
@@ -71,8 +71,8 @@ class _AppLockPageState extends State<AppLockPage> {
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
+        Navigator.pushReplacementNamed(context, Routes.settings);
       });
-      AppLock.of(context).didUnlock();
     }
   }
 
@@ -84,5 +84,27 @@ class _AppLockPageState extends State<AppLockPage> {
   void dispose() {
     _verificationNotifier.close();
     super.dispose();
+  }
+}
+
+class AuthentificationHandling extends StatelessWidget {
+  static const String routeName = '/authPage';
+
+  @override
+  Widget build(BuildContext context) {
+    _isAuthentificated(context);
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  void _isAuthentificated(BuildContext context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isAuthentificated = prefs.getBool('authentification') ?? false;
+    isAuthentificated
+        ? Navigator.push(context,
+            MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
+        : Navigator.pushNamedAndRemoveUntil(
+            context, Routes.routeLandingPage, (Route<dynamic> route) => false);
   }
 }

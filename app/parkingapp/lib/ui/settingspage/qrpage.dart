@@ -16,7 +16,8 @@ class QRPage extends StatelessWidget {
         body: Column(
           children: [
             Center(
-              child: scannableQR(vehicle.inAppKey),
+              //vehicle.inAppKey kann noch nich übergeben werden
+              child: scannableQR("vehicle.inAppKey"),
             ),
             Center(child: Text(AppLocalizations.of(context).textQRPage)),
           ],

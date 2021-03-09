@@ -73,9 +73,8 @@ class _PasscodePageState extends State<PasscodePage> {
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
-        //enables AppLock for next start of app
-        AppLock.of(context).enable();
       });
+      SharedPreferencesHelper.enableAuthentification();
     }
   }
 
@@ -104,7 +103,7 @@ class _PasscodePageState extends State<PasscodePage> {
       );
 
   _resetAppPassword() {
-    AppLock.of(context).disable();
+    SharedPreferencesHelper.disableAuthentification();
     Navigator.maybePop(context);
   }
 
