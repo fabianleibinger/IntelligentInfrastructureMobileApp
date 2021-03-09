@@ -114,12 +114,11 @@ class ApiProvider {
       "length": vehicle.length,
       "width": vehicle.width,
       "turning_radius": vehicle.turningCycle,
-      //TODO change to correct attribute
-      "dist_rear_axle_numberplate": vehicle.turningCycle,
+      "dist_rear_axle_numberplate": vehicle.distRearAxleLicensePlate,
       "charge_type": "electric",
       "number_plate": vehicle.licensePlate,
-      "near_exit": vehicle.nearExitPreference.toString(),
-      "parkingCard": vehicle.parkingCard.toString()
+      "near_exit": vehicle.nearExitPreference,
+      "parkingCard": vehicle.parkingCard
     });
   }
 
@@ -129,11 +128,10 @@ class ApiProvider {
       "length": vehicle.length,
       "width": vehicle.width,
       "turning_radius": vehicle.turningCycle,
-      //TODO change to correct attribute
-      "dist_rear_axle_numberplate": vehicle.turningCycle,
+      "dist_rear_axle_numberplate": vehicle.distRearAxleLicensePlate,
       "number_plate": vehicle.licensePlate,
-      "near_exit": vehicle.nearExitPreference.toString(),
-      "parkingCard": vehicle.parkingCard.toString()
+      "near_exit": vehicle.nearExitPreference,
+      "parkingCard": vehicle.parkingCard
     });
   }
 }

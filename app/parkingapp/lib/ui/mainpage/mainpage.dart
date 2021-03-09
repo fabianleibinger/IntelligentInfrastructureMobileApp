@@ -169,10 +169,15 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> buildCarToggles(Vehicle vehicle) {
     // car park specific items
-    List<String> _properties = [
-      AppLocalizations.of(context).mainPageAvailableSpaces +
-          _parkingSpots.toString()
-    ];
+    List<String> _properties;
+    _noConnection
+        ? _properties = [
+            AppLocalizations.of(context).noConnectionDialogTitle
+          ]
+        : _properties = [
+            AppLocalizations.of(context).mainPageAvailableSpaces +
+                _parkingSpots.toString()
+          ];
 
     List<Widget> widgets = [];
     widgets.addAll(_properties

@@ -80,23 +80,6 @@ class Constants {
         });
   }
 
-  //creates an alert dialog with text, title and one button
-  static createAlertDialogOneButton(BuildContext context, String title,
-      String content,
-      String confirmButtonText, String nextPage) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(content),
-            actions: [
-              createFlatButton(context, red, confirmButtonText, nextPage)
-            ],
-          );
-        });
-  }
-
   //returns a confirmation dialog with title and one button,
   //[tiles] Widget defines the content.
   //this is the basic dialog template for this app
