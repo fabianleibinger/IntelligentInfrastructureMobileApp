@@ -88,14 +88,11 @@ def perform_park_in_request():
     if request.is_json:
         try:
             park_in_parameters = request.get_json()
-            if "load" in park_in_parameters:
-                if park_in_parameters["load"]:
-                    load_vehicle = communication.communicate_load_vehicle(park_in_parameters)
             return communication.communicate_park_in(park_in_parameters)
         except communication.InternalCommunicationException as e:
             return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
     else:
-        return 'No json'
+        return Response({'Request had no JSON fields.'}, status=406)
 
 
 @app.route('/parkin', methods=['POST'])
@@ -127,4 +124,5 @@ def show_garage_animation():
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 

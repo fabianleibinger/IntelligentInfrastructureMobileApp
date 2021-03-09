@@ -7,7 +7,6 @@ import enum
 from std_msgs.msg import String
 from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
 from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.srv import LoadVehicleRequest, LoadVehicleRequestResponse
 from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg
 
 
@@ -94,7 +93,7 @@ def communicate_park_in(park_in_parameters):
     try:
         register_vehicle_request = rospy.ServiceProxy('register_vehicle_request', RegisterVehicleRequest)
         response = register_vehicle_request(vehicle_message)
-        return jsonify({'pms_id': response.pms_id})
+        return jsonify({'pms_id': response.pms_id, 'load_vehicle': response.load_vehicle})
     except rospy.ServiceException as service_exception:
         raise CommunicationRosServiceException(str(service_exception))
 
@@ -121,6 +120,10 @@ def generate_vehicle_message(park_in_parameters, vehicle_status):
     else:
         vehicle_message.type.type = ChargeableType.type_none.value
 
+    if vehicle_message.type.type != 0 and "load" in park_in_parameters:
+        loading_message = generate_loading_message(park_in_parameters)
+        vehicle_message.loadable = loading_message
+
     if "near_exit" in park_in_parameters:
         if park_in_parameters["near_exit"] == True:
             vehicle_message.park_preferences.near_exit = 1
@@ -138,34 +141,10 @@ def generate_vehicle_message(park_in_parameters, vehicle_status):
     return vehicle_message
 
 
-def communicate_load_vehicle(park_in_parameters):
-    loading_message = generate_loading_message(park_in_parameters)
-    try:
-        rospy.wait_for_service('load_vehicle_request', 5)
-    except rospy.exceptions.ROSException as ros_exception:
-        raise CommunicationRosServiceException(str(ros_exception))
-    try:
-        load_vehicle_request = rospy.ServiceProxy('load_vehicle_request', LoadVehicleRequest)
-        response = load_vehicle_request(loading_message)
-        return response.load_request_received
-    except rospy.ServiceException as service_exception:
-        raise CommunicationRosServiceException(str(service_exception))
-
-
 def generate_loading_message(park_in_parameters):
     loading_message = VehicleLoadingMsg()
-    try:
-        loading_message.identifiers.app_id = int(park_in_parameters["id"])
-        loading_message.identifiers.number_plate = park_in_parameters["number_plate"]
 
-        if park_in_parameters["charge_type"] == "electric":
-            loading_message.type.type = ChargeableType.type_electric.value
-        elif park_in_parameters["charge_type"] == "electric_fast":
-            loading_message.type.type = ChargeableType.type_electric_fast.value
-        elif park_in_parameters["charge_type"] == "electric_inductive":
-            loading_message.type.type = ChargeableType.type_electric_inductive.value
-    except KeyError as keyErrorReadingJSON:
-        raise InternalCommunicationException(str(keyErrorReadingJSON))
+    loading_message.load_during_parking = park_in_parameters["load"]
 
     if "state_of_charge" in park_in_parameters:
         loading_message.state_of_charge = int(park_in_parameters["state_of_charge"])
