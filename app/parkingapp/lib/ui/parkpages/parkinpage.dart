@@ -49,10 +49,61 @@ class _ParkInPageState extends State<ParkInPage> {
             );
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListTile(
-        title: Text(currentParkingGarage.name),
-        subtitle: Text(currentParkingGarage.type.toShortString()),
+      body: Column(
+        children: [
+          ListTile(
+            title: Text(currentParkingGarage.name),
+            subtitle: Text(currentParkingGarage.type.toShortString()),
+          ),
+          getParkInAnimation(
+              context: context,
+              bottomLeftLongitude: 8.41950527853,
+              bottomLeftLattitude: 49.01388810447,
+              topRightLattitude: 49.0144759205,
+              topRightLongitude: 8.42059599234,
+              lattitude: 49.01431771428,
+              longitude: 8.42011294615)
+        ],
       ),
     );
+  }
+
+  Container getParkInAnimation(
+      {BuildContext context,
+      double bottomLeftLongitude,
+      double bottomLeftLattitude,
+      double topRightLongitude,
+      double topRightLattitude,
+      double longitude,
+      double lattitude}) {
+    final _imageDirectory = "assets/parkgarage-fasanengarten-map.jpg";
+    final AssetImage _garageImage = AssetImage(_imageDirectory);
+    final double _height = 250;
+    final double _width = MediaQuery.of(context).size.width;
+
+    //factor by which the image is scaled to fit the width of the device
+    //double _scaleFactor =
+    //    MediaQuery.of(context).size.width / Image.asset(_imageDirectory).width;
+
+    double _bottom = (_height /
+        (topRightLattitude - bottomLeftLattitude) *
+        (lattitude - bottomLeftLattitude));
+    double _left = (_width / (topRightLongitude - bottomLeftLongitude)) *
+        (longitude - bottomLeftLongitude);
+
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: _height, //this is the same as the main page image height
+        child: Stack(
+          children: [
+            Positioned(bottom: _bottom, left: _left, child: Icon(Icons.circle)),
+          ],
+        ),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: _garageImage,
+            fit: BoxFit.cover,
+          ),
+        ));
   }
 }
