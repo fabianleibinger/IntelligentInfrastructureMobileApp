@@ -63,6 +63,7 @@ find_package(catkin REQUIRED COMPONENTS
 	VehicleTypeMsg.msg
 	VehicleStatusMsg.msg
 	VehicleLoadingMsg.msg
+	GeographicalPositionMsg.msg
 	PathMsg.msg
 	MultiPathMsg.msg
 	Pose2DStamped.msg

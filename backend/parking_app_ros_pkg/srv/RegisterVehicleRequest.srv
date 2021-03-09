@@ -2,4 +2,5 @@ VehicleInformationMsg info
 ---
 VehicleStatusMsg vehicle_status
 int16 pms_id
+GeographicalPositionMsg target_parking_position
 bool load_vehicle
