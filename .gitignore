@@ -197,3 +197,4 @@ dmypy.json
 .DS_Store
 
 **/flask_server/*
+*.lock
