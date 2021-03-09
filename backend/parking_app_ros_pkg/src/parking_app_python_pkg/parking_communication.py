@@ -7,7 +7,8 @@ import enum
 from std_msgs.msg import String
 from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
 from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg
+from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
+from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
 
 
 class ChargeableType(enum.Enum):
@@ -169,4 +170,42 @@ def generate_park_in_response(response_from_pms, app_id):
 def map_vehicle_ids(app_id, pms_id):
     # TODO: save IDs in database
     return
+
+
+def get_corresponding_pms_id(app_id):
+    # TODO: get ID from database
+    return 12
+
+
+def request_current_position(app_id, number_plate):
+    vehicle_identification = VehicleIdentificationMsg()
+    vehicle_identification.app_id = app_id
+    vehicle_identification.pms_id = get_corresponding_pms_id(app_id)
+    vehicle_identification.number_plate = number_plate
+
+    try:
+        rospy.wait_for_service('vehicle_position_request', 5)
+    except rospy.exceptions.ROSException as ros_exception:
+        raise CommunicationRosServiceException(str(ros_exception))
+    try:
+        vehicle_position_request = rospy.ServiceProxy('vehicle_position_request', VehiclePositionRequest)
+        response = vehicle_position_request(vehicle_identification)
+
+        if response.vehicle_status.status == VehicleStatus.status_parking_in.value\
+                or response.vehicle_status.status == VehicleStatus.status_parking_out:
+            in_park_process = True
+        else:
+            in_park_process = False
+        if response.vehicle_status.status == VehicleStatus.status_parked.value\
+                or response.vehicle_status.status == VehicleStatus.status_drop_off:
+            reached_target_position = True
+        else:
+            reached_target_position = False
+
+        return jsonify({'longitude': response.position.longitude,
+                        'latitude': response.position.latitude,
+                        'moving': in_park_process,
+                        'reached_position': reached_target_position})
+    except rospy.ServiceException as service_exception:
+        raise CommunicationRosServiceException(str(service_exception))
 

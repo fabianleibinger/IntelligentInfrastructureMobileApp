@@ -110,19 +110,22 @@ def perform_redirect_park_out():
     return perform_park_out_request()
 
 
-@app.route('/getPosition')
-def get_position():
-    return
+@app.route('/getPosition', methods=['POST'])
+def perform_get_position():
+    if request.is_json:
+        get_position_parameters = request.get_json()
+        app_id = get_position_parameters["id"]
+        number_plate = get_position_parameters["number_plate"]
+        return communication.request_current_position(app_id, number_plate)
+    
 
-
-@app.route('/garageAnimation')
-def show_garage_animation():
-    return
+@app.route('/getposition', methods=['POST'])
+def perform_redirect_get_position():
+    return perform_get_position
 
 
 ############################################################################
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
-
 
