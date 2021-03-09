@@ -141,7 +141,7 @@
     "@parkPreferencesDialogTitle": {
         "description": "Park preferences title in park preferences dialog"
     },
-    "parkPreferencesDialogNearExitPreference": "Nahe am Ausgang",
+    "parkPreferencesDialogNearExitPreference": "Nah am Ausgang",
     "@parkPreferencesDialogNearExitPreference": {
         "description": "Text for near exit preference in park preferences dialog"
     },

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -22,7 +26,25 @@ class _ParkInPageState extends State<ParkInPage> {
   @override
   void initState() {
     super.initState();
+    //update parking spots
     currentParkingGarage.updateAllFreeParkingSpots();
+
+    //init vehicle list
+    DataHelper.initVehicles(context);
+    BlocListener<VehicleBloc, List<Vehicle>>(
+      listener: (context, vehicleList) {
+        for (Vehicle vehicle in vehicleList) {
+          print(vehicle.toString());
+        }
+      },
+    );
+    //get vehicle that shall be used from the list of vehicles
+    for (Vehicle currentVehicle
+    in BlocProvider.of<VehicleBloc>(context).state) {
+      if (currentVehicle.inAppKey == widget.carInAppKey)
+        vehicle = currentVehicle;
+    }
+
     //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
