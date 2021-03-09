@@ -5,6 +5,7 @@ VehicleIdentificationMsg identifiers
 VehicleDimensionsMsg dimensions
 
 VehicleTypeMsg type
+VehicleLoadingMsg loadable
 
 ParkPreferencesMsg park_preferences
 
