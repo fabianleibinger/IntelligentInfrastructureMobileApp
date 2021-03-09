@@ -9,7 +9,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 
 class ApiProvider {
   static final int httpGetStatusCodeSuccess = 200;
-  static final int httpPostStatusCodeSuccess = 201;
+  static final int httpPostStatusCodeSuccess = 200;
 
   // ['IP', 'Port', 'Parking garage']
   //tries to connect to server
@@ -65,8 +65,8 @@ class ApiProvider {
             ? parkInBodyChargeableVehicle(vehicle)
             : parkInBodyStandardVehicle(vehicle));
     if (response.statusCode == httpPostStatusCodeSuccess) {
-      final Map result = json.decode(response.body);
-      return result;
+      //final Map result = json.decode(response.body);
+      //return result;
     } else {
       throw Exception('Failed to park in');
     }
@@ -118,7 +118,9 @@ class ApiProvider {
       "charge_type": "electric",
       "number_plate": vehicle.licensePlate,
       "near_exit": vehicle.nearExitPreference,
-      "parkingCard": vehicle.parkingCard
+      "parking_card": vehicle.parkingCard,
+      "load": vehicle.doCharge,
+      "charge_service_provider": vehicle.chargingProvider
     });
   }
 
@@ -131,7 +133,7 @@ class ApiProvider {
       "dist_rear_axle_numberplate": vehicle.distRearAxleLicensePlate,
       "number_plate": vehicle.licensePlate,
       "near_exit": vehicle.nearExitPreference,
-      "parkingCard": vehicle.parkingCard
+      "parking_card": vehicle.parkingCard
     });
   }
 }
