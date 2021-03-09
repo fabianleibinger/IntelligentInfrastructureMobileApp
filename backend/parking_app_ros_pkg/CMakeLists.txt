@@ -63,6 +63,7 @@ find_package(catkin REQUIRED COMPONENTS
 	VehicleTypeMsg.msg
 	VehicleStatusMsg.msg
 	VehicleLoadingMsg.msg
+	GeographicalPositionMsg.msg
 	PathMsg.msg
 	MultiPathMsg.msg
 	Pose2DStamped.msg
@@ -74,7 +75,7 @@ find_package(catkin REQUIRED COMPONENTS
  	FILES
 	CapacityRequest.srv
 	RegisterVehicleRequest.srv
-	LoadVehicleRequest.srv
+	VehiclePositionRequest.srv
 )
 
 ## Generate actions in the 'action' folder
