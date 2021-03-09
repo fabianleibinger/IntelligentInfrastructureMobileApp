@@ -1,4 +1,3 @@
-from flask import jsonify
 from datetime import datetime
 import rospy
 import threading
@@ -57,10 +56,10 @@ def request_free_parking_spots(electric):
     current_capacities = retrieve_free_parking_spots_from_pms()
     if electric:
         free_electric = current_capacities.capacity_free.electric
-        return jsonify({'free_electric': free_electric})
+        return {'electric': free_electric}
     else:
         free_total = current_capacities.capacity_free.total
-        return jsonify({'free_total': free_total})
+        return {'total': free_total}
 
 
 def request_capacities(free):
@@ -70,19 +69,19 @@ def request_capacities(free):
         free_electric = current_capacities.capacity_free.electric
         free_electric_fast = current_capacities.capacity_free.electric_fast
         free_electric_inductive = current_capacities.capacity_free.electric_inductive
-        return jsonify({'free_total': free_total,
-                        'free_electric': free_electric,
-                        'free_electric_fast': free_electric_fast,
-                        'free_electric_inductive': free_electric_inductive})
+        return {'total': free_total,
+                'electric': free_electric,
+                'electric_fast': free_electric_fast,
+                'electric_inductive': free_electric_inductive}
     else:
         total = current_capacities.capacity_total.total
         electric = current_capacities.capacity_total.electric
         electric_fast = current_capacities.capacity_total.electric_fast
         electric_inductive = current_capacities.capacity_total.electric_inductive
-        return jsonify({'total': total,
-                        'electric': electric,
-                        'electric_fast': electric_fast,
-                        'electric_inductive': electric_inductive})
+        return {'total': total,
+                'electric': electric,
+                'electric_fast': electric_fast,
+                'electric_inductive': electric_inductive}
 
 
 def communicate_park_in(park_in_parameters):
@@ -161,10 +160,15 @@ def generate_loading_message(park_in_parameters):
 def generate_park_in_response(response_from_pms, app_id):
     if response_from_pms.vehicle_status.status == VehicleStatus.status_parking_in.value:
         map_vehicle_ids(app_id, response_from_pms.pms_id)
-        return jsonify({'parking_in': True,
-                        'longitude': response_from_pms.target_parking_position.longitude,
-                        'latitude': response_from_pms.target_parking_position.latitude,
-                        'load_vehicle': response_from_pms.load_vehicle})
+        return {'parking_in': True,
+                'longitude': response_from_pms.target_parking_position.longitude,
+                'latitude': response_from_pms.target_parking_position.latitude,
+                'load_vehicle': response_from_pms.load_vehicle}
+    else:
+        return {'parking_in': False,
+                'longitude': float('NaN'),
+                'latitude': float('NaN'),
+                'load_vehicle': False}
 
 
 def map_vehicle_ids(app_id, pms_id):
@@ -202,10 +206,10 @@ def request_current_position(app_id, number_plate):
         else:
             reached_target_position = False
 
-        return jsonify({'longitude': response.position.longitude,
-                        'latitude': response.position.latitude,
-                        'moving': in_park_process,
-                        'reached_position': reached_target_position})
+        return {'longitude': response.position.longitude,
+                'latitude': response.position.latitude,
+                'moving': in_park_process,
+                'reached_position': reached_target_position}
     except rospy.ServiceException as service_exception:
         raise CommunicationRosServiceException(str(service_exception))
 
