@@ -88,14 +88,11 @@ def perform_park_in_request():
     if request.is_json:
         try:
             park_in_parameters = request.get_json()
-            if "load" in park_in_parameters:
-                if park_in_parameters["load"]:
-                    load_vehicle = communication.communicate_load_vehicle(park_in_parameters)
             return communication.communicate_park_in(park_in_parameters)
         except communication.InternalCommunicationException as e:
             return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
     else:
-        return 'No json'
+        return Response({'Request had no JSON fields.'}, status=406)
 
 
 @app.route('/parkin', methods=['POST'])
@@ -113,14 +110,18 @@ def perform_redirect_park_out():
     return perform_park_out_request()
 
 
-@app.route('/getPosition')
-def get_position():
-    return
+@app.route('/getPosition', methods=['POST'])
+def perform_get_position():
+    if request.is_json:
+        get_position_parameters = request.get_json()
+        app_id = get_position_parameters["id"]
+        number_plate = get_position_parameters["number_plate"]
+        return communication.request_current_position(app_id, number_plate)
+    
 
-
-@app.route('/garageAnimation')
-def show_garage_animation():
-    return
+@app.route('/getposition', methods=['POST'])
+def perform_redirect_get_position():
+    return perform_get_position
 
 
 ############################################################################
