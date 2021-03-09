@@ -43,6 +43,22 @@
     "@actionButtonPark": {
         "description": "Park vehicle action button on main page"
     },
+    "actionButtonParkOut": "Fahrzeug ausparken",
+    "@actionButtonParkOut": {
+        "description": "Park out vehicle action button on park in page"
+    },
+    "actionButtonParkOutProcess": "Fahrzeug wird ausgeparkt",
+    "@actionButtonParkOutProcess": {
+        "description": "Park out process action button on park out page "
+    },
+    "actionButtonCancelPark": "Einparkvorgang abbrechen",
+    "@actionButtonCancelPark": {
+        "description": "Cancel parking action button on park in page"
+    },
+    "actionButtonCancelParkProcess": "Einparkvorgang wird abgebrochen",
+    "@actionButtonCancelParkProcess": {
+        "description": "Cancelling park in process action button on park out page "
+    },
     "mainPageCarParkTitle": "Parkgarage am Fasanengarten",
     "@mainPageCarParkTitle": {
         "description": "The name of the car park"
@@ -53,7 +69,7 @@
     },
     "mainPageCarPreferenceShouldCharge": "Fahrzeug laden",
     "@mainPageCarPreferenceShouldCharge": {
-        "description": "Text shown on main s    creen with SwitchListTile to toggle vehicle charging"
+        "description": "Text shown on main screen with SwitchListTile to toggle vehicle charging"
     },
     "mainPageCarPreferences": "Fahrzeugpräferenzen: ",
     "@mainPageCarPreferences": {},
@@ -65,6 +81,18 @@
     "@mainPageAvailableSpaces": {
         "description": "Available Spaces text on main Page"
     },
+    "noConnectionDialogContent": "Leider besteht zur Zeit keine Verbindung zum Server.",
+    "@noConnectionDialogContent": {
+        "description": "Text for no connection dialog body"
+    },
+    "noConnectionDialogTitle": "Keine Verbindung",
+    "@noConnectionDialogTitle": {
+        "description": "Text for no connection dialog title"
+    },
+    "networkButton": "Netzwerkeinstellungen öffnen",
+    "@networkButton": {
+        "description": "Text on network settings button"
+    },
     "parkDialogBackButton": "ZURÜCK",
     "@parkDialogBackButton": {
         "description": "Text for back button in park dialog"
@@ -72,6 +100,10 @@
     "parkDialogCancelButton": "ABBRECHEN",
     "@parkDialogCancelButton": {
         "description": "Text for cancel button in park dialog"
+    },
+    "parkingGarageOccupiedDialogContent": "Leider sind gerade keine freien Parkplätze verfügbar.",
+    "@parkingGarageOccupiedDialogContent": {
+        "description": "Text body for parking garage occupied dialog"
     },
     "dialogFinishedButton": "FERTIG",
     "@dialogFinishedButton": {
@@ -109,7 +141,7 @@
     "@parkPreferencesDialogTitle": {
         "description": "Park preferences title in park preferences dialog"
     },
-    "parkPreferencesDialogNearExitPreference": "Nahe am Ausgang",
+    "parkPreferencesDialogNearExitPreference": "Nah am Ausgang",
     "@parkPreferencesDialogNearExitPreference": {
         "description": "Text for near exit preference in park preferences dialog"
     },
@@ -141,6 +173,10 @@
     "@vehicleDimensionsDialogTitle": {
         "description": "Title in vehicle dimensions dialog"
     },
+    "vehiclePageTitle": "Fahrzeuge",
+    "@vehiclePageTitle": {
+        "description": "Title on vehicle page"
+    },
     "nearExitPreference": "Nah am Ausgang parken",
     "@nearExitPreference": {},
     "parkingCard": "Parkkarte",
@@ -159,6 +195,10 @@
     "@width": {},
     "height": "Höhe",
     "@height": {},
+    "turningCircle": "Wendekreis",
+    "@turningCircle": {},
+    "distRearAxleLicensePlate": "Abstand der Hinterachse zum Nummernschild",
+    "@distRearAxleLicensePlate": {},
     "addVehicleButton": "Fahrzeug hinzufügen",
     "@addVehicleButton": {},
     "editVehicleButton": "Fahrzeug bearbeiten",
@@ -209,4 +249,22 @@
     "@appName": {},
     "textQRPage": "Zum Übertragen der Daten scannen Sie den QR-Code mit einem anderen Gerät. Rufen Sie dafür unter Fahrzeuge bearbeiten den Import Dialog auf oder wählen Sie während der Einrichtung Daten Importieren auf.",
     "@textQRPage": {}
+    "askDeleteVehicle": "Fahrzeug löschen?",
+    "@askDeleteVehicle": {},
+    "askDeleteVehicleContent": "Alle Informationen über das Fahrzeug werden unwiderruflich gelöscht.",
+    "@askDeleteVehicleContent": {},
+    "buttonOk": "OK",
+    "@buttonOk": {},
+    "vehicleIsParkedInTitle": "Fahrzeug ist eingeparkt",
+    "@vehicleIsParkedInTitle": {},
+    "vehicleIsParkedInBody": "Während das Fahrzeug eingeparkt ist, kann es nicht entfernt werden. Parken Sie das Fahrzeug aus, um es zu löschen.",
+    "@vehicleIsParkedInBody": {},
+    "deleted": "gelöscht!",
+    "@deleted": {},
+    "customDimensions": "Eigene Abmessungen",
+    "@customDimensions": {},
+    "additionalInMilimeters": "(in mm)",
+    "@additionalInMilimeters": {
+        "description": "hint that a dimension shall be specified in milimeters"
+    }
 }

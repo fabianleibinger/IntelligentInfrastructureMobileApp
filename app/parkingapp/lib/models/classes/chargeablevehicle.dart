@@ -13,17 +13,22 @@ class ChargeableVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
+      this.distRearAxleLicensePlate,
       this.nearExitPreference,
       this.parkingCard,
       this.parkedIn,
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd);
+      this.chargeTimeEnd) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
+  }
 
   //private constructor: only called by fromMap() method, database defines databaseId
   ChargeableVehicle._(
@@ -31,17 +36,22 @@ class ChargeableVehicle extends Vehicle {
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
+      this.distRearAxleLicensePlate,
       this.nearExitPreference,
       this.parkingCard,
       this.parkedIn,
       this.doCharge,
       this.chargingProvider,
       this.chargeTimeBegin,
-      this.chargeTimeEnd);
+      this.chargeTimeEnd) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
+  }
 
   @override
   Map<String, dynamic> toMap() {
@@ -53,6 +63,8 @@ class ChargeableVehicle extends Vehicle {
       DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
       DatabaseProvider.COLUMN_LENGTH: length.toDouble(),
       DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
+      DatabaseProvider.COLUMN_DIST_REAR_AXLE_LICENSE_PLATE:
+          distRearAxleLicensePlate.toDouble(),
       DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
       DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0,
       DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0,
@@ -83,6 +95,7 @@ class ChargeableVehicle extends Vehicle {
         map[DatabaseProvider.COLUMN_HEIGHT],
         map[DatabaseProvider.COLUMN_LENGTH],
         map[DatabaseProvider.COLUMN_TURNING_CYCLE],
+        map[DatabaseProvider.COLUMN_DIST_REAR_AXLE_LICENSE_PLATE],
         map[DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE] == 1,
         map[DatabaseProvider.COLUMN_PARKING_CARD] == 1,
         map[DatabaseProvider.COLUMN_PARKED_IN] == 1,
@@ -123,7 +136,7 @@ class ChargeableVehicle extends Vehicle {
   //convert to standard vehicle
   StandardVehicle toStandardVehicle() {
     return StandardVehicle(inAppKey, name, licensePlate, height, width, length,
-        turningCycle, nearExitPreference, parkingCard, false);
+        turningCycle, distRearAxleLicensePlate, nearExitPreference, parkingCard, false);
   }
 
   @override
@@ -133,7 +146,7 @@ class ChargeableVehicle extends Vehicle {
   String inAppKey, name, licensePlate;
 
   @override
-  double height, width, length, turningCycle;
+  double width, height, length, turningCycle, distRearAxleLicensePlate;
 
   @override
   bool nearExitPreference, parkingCard;

@@ -4,31 +4,39 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle extends Vehicle {
-  StandardVehicle(
-      this.inAppKey,
+  StandardVehicle(this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
+      this.distRearAxleLicensePlate,
       this.nearExitPreference,
       this.parkingCard,
-      this.parkedIn);
+      this.parkedIn) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
+  }
 
   //private constructor: only called by fromMap() method, database defines databaseId
-  StandardVehicle._(
-      this.databaseId,
+  StandardVehicle._(this.databaseId,
       this.inAppKey,
       this.name,
       this.licensePlate,
-      this.height,
       this.width,
+      this.height,
       this.length,
       this.turningCycle,
+      this.distRearAxleLicensePlate,
       this.nearExitPreference,
       this.parkingCard,
-      this.parkedIn);
+      this.parkedIn) {
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.parkingIn = false;
+    this.parkingOut = false;
+  }
 
   static Vehicle fromMap(Map<String, dynamic> map) {
     return StandardVehicle._(
@@ -40,6 +48,7 @@ class StandardVehicle extends Vehicle {
         map[DatabaseProvider.COLUMN_HEIGHT],
         map[DatabaseProvider.COLUMN_LENGTH],
         map[DatabaseProvider.COLUMN_TURNING_CYCLE],
+        map[DatabaseProvider.COLUMN_DIST_REAR_AXLE_LICENSE_PLATE],
         map[DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE] == 1,
         map[DatabaseProvider.COLUMN_PARKING_CARD] == 1,
         map[DatabaseProvider.COLUMN_PARKED_IN] == 1);
@@ -52,13 +61,14 @@ class StandardVehicle extends Vehicle {
   String inAppKey, name, licensePlate;
 
   @override
-  double height, width, length, turningCycle;
+  double width, height, length, turningCycle, distRearAxleLicensePlate;
 
   @override
   bool nearExitPreference, parkingCard;
 
   @override
   bool parkedIn;
+
   Vehicle toElectricVehicle() {
     return ChargeableVehicle(
         inAppKey,
@@ -68,6 +78,7 @@ class StandardVehicle extends Vehicle {
         width,
         length,
         turningCycle,
+        distRearAxleLicensePlate,
         nearExitPreference,
         parkingCard,
         false,
