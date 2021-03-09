@@ -284,13 +284,13 @@ def request_current_position(app_id, number_plate):
         response = vehicle_position_request(vehicle_identification)
 
         if response.vehicle_status.status == VehicleStatus.status_parking_in.value\
-                or response.vehicle_status.status == VehicleStatus.status_parking_out:
+                or response.vehicle_status.status == VehicleStatus.status_parking_out.value:
             in_park_process = True
         else:
             in_park_process = False
 
         if response.vehicle_status.status == VehicleStatus.status_parked.value\
-                or response.vehicle_status.status == VehicleStatus.status_drop_off:
+                or response.vehicle_status.status == VehicleStatus.status_drop_off.value:
             reached_target_position = True
         else:
             reached_target_position = False
