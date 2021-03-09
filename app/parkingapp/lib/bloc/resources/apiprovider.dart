@@ -96,10 +96,11 @@ class ApiProvider {
     }
   }
 
-  //TODO add body
   //tries to get position of the vehicle
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
-    final response = await http.post("http://10.0.2.2:2525/getPosition");
+    final response = await http.post("http://10.0.2.2:2525/getPosition",
+        body: jsonEncode(
+            {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate}));
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
