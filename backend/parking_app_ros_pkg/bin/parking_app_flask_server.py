@@ -101,7 +101,7 @@ def all_free_parking_spots():
     """
     try:
         capacity = communication.request_free_parking_spots(False)
-        return jsonify({'free_total': capacity["total"]})
+        return jsonify({'free_total': capacity})
     except communication.CommunicationRosServiceException:
         return Response({communication_failed_message}, status=503)
 
@@ -116,7 +116,7 @@ def electric_free_parking_spots():
     """
     try:
         capacity = communication.request_free_parking_spots(True)
-        return jsonify({'free_electric': capacity["electric"]})
+        return jsonify({'free_electric': capacity})
     except communication.CommunicationRosServiceException:
         return Response({communication_failed_message}, status=503)
 
