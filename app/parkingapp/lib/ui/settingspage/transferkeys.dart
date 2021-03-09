@@ -58,16 +58,21 @@ class Transferkeys extends StatelessWidget {
                     ));
                   },
                   child: ListTile(
-                    title: Text(vehicle.name),
-                    subtitle: Text(vehicle.licensePlate +
-                        "; " +
-                        vehicle.databaseId.toString()),
-                    // TO DO: Implement on Tap
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      title: Text(vehicle.name),
+                      subtitle: Text(vehicle.licensePlate +
+                          "; " +
+                          vehicle.databaseId.toString()),
+                      onTap: () async {
+                        await showDialog(
+                            context: context,
+                            builder: (context) => ScanQRDialog());
+                      }
+                      // TO DO: Implement on Tap
+                      /*onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => QRPage(
                               vehicle: vehicle,
-                            ))),
-                  ));
+                            ))),*/
+                      ));
             },
             itemCount: vehicleList.length);
       },

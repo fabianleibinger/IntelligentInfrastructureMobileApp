@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
+import 'package:parkingapp/models/global.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
@@ -30,20 +31,20 @@ class _AppLockPageState extends State<AppLockPage> {
   bool isAuthenticated = false;
   @override
   Widget build(BuildContext context) {
-    return _passCodeLockScreen();
+    return _passCodeLockScreen(context);
   }
 
-  _passCodeLockScreen() {
+  _passCodeLockScreen(BuildContext context) {
     return PasscodeScreen(
       title: Text(
         'App Passwort eingeben',
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white, fontSize: 28),
       ),
-      circleUIConfig: CircleUIConfig(
-          borderColor: Colors.green, fillColor: Colors.green, circleSize: 30),
+      circleUIConfig:
+          CircleUIConfig(borderColor: green, fillColor: green, circleSize: 30),
       keyboardUIConfig:
-          KeyboardUIConfig(digitBorderWidth: 2, primaryColor: Colors.green),
+          KeyboardUIConfig(digitBorderWidth: 2, primaryColor: green),
       passwordEnteredCallback: _onPasscodeEntered,
       cancelButton: Text(
         'Delete',
