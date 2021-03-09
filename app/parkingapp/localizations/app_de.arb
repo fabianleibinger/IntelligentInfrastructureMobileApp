@@ -85,9 +85,13 @@
     "@noConnectionDialogContent": {
         "description": "Text for no connection dialog body"
     },
-    "noConnectionDialogTitle": "Keine Verbindung!",
+    "noConnectionDialogTitle": "Keine Verbindung",
     "@noConnectionDialogTitle": {
         "description": "Text for no connection dialog title"
+    },
+    "networkButton": "Netzwerkeinstellungen öffnen",
+    "@networkButton": {
+        "description": "Text on network settings button"
     },
     "parkDialogBackButton": "ZURÜCK",
     "@parkDialogBackButton": {
