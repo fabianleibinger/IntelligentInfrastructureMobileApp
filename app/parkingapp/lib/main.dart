@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
+import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/parkpages/parkinpage.dart';
 import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
+import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
@@ -56,7 +59,7 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => VehiclePage());
           case Routes.settings:
             return MaterialPageRoute(builder: (context) => SettingsPage());
-          case Routes.agb:
+          case Routes.agbPage:
             return MaterialPageRoute(builder: (context) => AGB());
           case Routes.createVehicle:
             return MaterialPageRoute(builder: (context) => CreateVehicle());

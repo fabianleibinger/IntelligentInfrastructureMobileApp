@@ -248,7 +248,7 @@
     "appName": "FZI AutoPark",
     "@appName": {},
     "textQRPage": "Zum Übertragen der Daten scannen Sie den QR-Code mit einem anderen Gerät. Rufen Sie dafür unter Fahrzeuge bearbeiten den Import Dialog auf oder wählen Sie während der Einrichtung Daten Importieren auf.",
-    "@textQRPage": {}
+    "@textQRPage": {},
     "askDeleteVehicle": "Fahrzeug löschen?",
     "@askDeleteVehicle": {},
     "askDeleteVehicleContent": "Alle Informationen über das Fahrzeug werden unwiderruflich gelöscht.",
