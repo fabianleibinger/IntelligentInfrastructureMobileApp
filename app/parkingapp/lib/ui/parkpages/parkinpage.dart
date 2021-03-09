@@ -68,7 +68,7 @@ class _ParkInPageState extends State<ParkInPage> {
     );
   }
 
-  Container getParkInAnimation(
+  getParkInAnimation(
       {BuildContext context,
       double bottomLeftLongitude,
       double bottomLeftLattitude,
@@ -76,34 +76,40 @@ class _ParkInPageState extends State<ParkInPage> {
       double topRightLattitude,
       double longitude,
       double lattitude}) {
+    //identify the Image
+    GlobalKey _garageImageKey = GlobalKey();
+    //images and dimensions
     final _imageDirectory = "assets/parkgarage-fasanengarten-map.jpg";
-    final AssetImage _garageImage = AssetImage(_imageDirectory);
+    final Image _garageImage = Image.asset(_imageDirectory);
     final double _height = 250;
     final double _width = MediaQuery.of(context).size.width;
-
-    //factor by which the image is scaled to fit the width of the device
-    //double _scaleFactor =
-    //    MediaQuery.of(context).size.width / Image.asset(_imageDirectory).width;
-
+    //position of icon
     double _bottom = (_height /
         (topRightLattitude - bottomLeftLattitude) *
         (lattitude - bottomLeftLattitude));
     double _left = (_width / (topRightLongitude - bottomLeftLongitude)) *
         (longitude - bottomLeftLongitude);
 
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        height: _height, //this is the same as the main page image height
-        child: Stack(
-          children: [
-            Positioned(bottom: _bottom, left: _left, child: Icon(Icons.circle)),
-          ],
-        ),
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: _garageImage,
-            fit: BoxFit.cover,
-          ),
-        ));
+    //icon
+    Icon _icon = Icon(Icons.circle);
+    //change position considering icons dimensions
+    //icons are square
+    //_bottom = _bottom - (_icon.size / 2);
+    //_left -= _left - (_icon.size / 2);
+
+    //factor by which the image is scaled to fit the width of the device
+    //double _scaleFactor =
+    //    MediaQuery.of(context).size.width / Image.asset(_imageDirectory).width;
+    //Overlay();
+    return Stack(alignment: Alignment.center, children: [
+      Container(
+        key: _garageImageKey,
+//          height: _height, //this is the same as the main page image height
+        child: _garageImage,
+      ),
+      Positioned(
+        child: _icon,
+      ),
+    ]);
   }
 }
