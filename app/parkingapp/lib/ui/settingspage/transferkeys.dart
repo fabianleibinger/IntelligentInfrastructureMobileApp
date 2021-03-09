@@ -65,7 +65,8 @@ class Transferkeys extends StatelessWidget {
                       onTap: () async {
                         await showDialog(
                             context: context,
-                            builder: (context) => ScanQRDialog());
+                            builder: (context) =>
+                                ScanQRDialog.createVehicleQRDialog(context)());
                       }
                       // TO DO: Implement on Tap
                       /*onTap: () => Navigator.of(context).push(MaterialPageRoute(
