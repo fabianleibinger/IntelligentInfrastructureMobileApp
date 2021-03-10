@@ -40,37 +40,14 @@ class Transferkeys extends StatelessWidget {
               print("vehicleList: $vehicleList");
 
               Vehicle vehicle = vehicleList[index];
-              return Dismissible(
-                  background: Container(
-                    color: Colors.red,
-                  ),
-                  key: Key(vehicle.inAppKey),
-                  onDismissed: (direction) {
-                    //remove vehicle from displayed list
-                    vehicleList.remove(vehicle.inAppKey);
-                    //remove vehicle from database and bloc
-                    DatabaseProvider.db.delete(vehicle.databaseId);
-                    BlocProvider.of<VehicleBloc>(context)
-                        .add(DeleteVehicle(vehicle));
-                    //show snackbar that vehicle has been deleted
-                    Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text(vehicle.inAppKey + ' removed!'),
-                    ));
-                  },
-                  child: ListTile(
-                      title: Text(vehicle.name),
-                      subtitle: Text(vehicle.licensePlate +
-                          "; " +
-                          vehicle.databaseId.toString()),
-                      onTap: () {
-                        ScanQRDialog.createVehicleQRDialog(context);
-                      }
-                      // TO DO: Implement on Tap
-                      /*onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => QRPage(
-                              vehicle: vehicle,
-                            ))),*/
-                      ));
+              return ListTile(
+                  title: Text(vehicle.name),
+                  subtitle: Text(vehicle.licensePlate +
+                      "; " +
+                      vehicle.databaseId.toString()),
+                  onTap: () {
+                    ScanQRDialog.createVehicleQRDialog(context);
+                  });
             },
             itemCount: vehicleList.length);
       },
