@@ -61,12 +61,16 @@ class ApiProvider {
   //tries to park in vehicle
   static Future<Map<String, dynamic>> parkIn(Vehicle vehicle) async {
     final response = await http.post("http://10.0.2.2:2525/parkIn",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
         body: vehicle.runtimeType == ChargeableVehicle
             ? parkInBodyChargeableVehicle(vehicle)
             : parkInBodyStandardVehicle(vehicle));
     if (response.statusCode == httpPostStatusCodeSuccess) {
-      //final Map result = json.decode(response.body);
-      //return result;
+      final Map result = json.decode(response.body);
+      print(result);
+      return result;
     } else {
       throw Exception('Failed to park in');
     }
@@ -75,7 +79,12 @@ class ApiProvider {
   //TODO add body
   //tries to park out vehicle or cancel park in
   static Future<Map<String, dynamic>> parkOut(Vehicle vehicle) async {
-    final response = await http.get("http://10.0.2.2:2525/parkOut");
+    final response = await http.get(
+      "http://10.0.2.2:2525/parkOut",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
@@ -87,7 +96,12 @@ class ApiProvider {
   //TODO add body
   //tries to get parked in confirmation
   static Future<Map<String, dynamic>> getParkedIn(Vehicle vehicle) async {
-    final response = await http.post("http://10.0.2.2:2525/parkedIn");
+    final response = await http.post(
+      "http://10.0.2.2:2525/parkedIn",
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
@@ -99,6 +113,9 @@ class ApiProvider {
   //tries to get position of the vehicle
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
     final response = await http.post("http://10.0.2.2:2525/getPosition",
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
         body: jsonEncode(
             {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate}));
     if (response.statusCode == httpPostStatusCodeSuccess) {
@@ -110,8 +127,8 @@ class ApiProvider {
   }
 
   static String parkInBodyChargeableVehicle(ChargeableVehicle vehicle) {
-    return jsonEncode({
-      "id": vehicle.inAppKey,
+    String json = jsonEncode(<String, dynamic>{
+      "id": vehicle.databaseId,
       "length": vehicle.length,
       "width": vehicle.width,
       "turning_radius": vehicle.turningCycle,
@@ -123,11 +140,14 @@ class ApiProvider {
       "load": vehicle.doCharge,
       "charge_service_provider": vehicle.chargingProvider
     });
+    print(json.runtimeType);
+    print(json);
+    return json;
   }
 
   static String parkInBodyStandardVehicle(StandardVehicle vehicle) {
-    return jsonEncode({
-      "id": vehicle.inAppKey,
+    return jsonEncode(<String, dynamic>{
+      "id": vehicle.databaseId,
       "length": vehicle.length,
       "width": vehicle.width,
       "turning_radius": vehicle.turningCycle,
