@@ -2,6 +2,10 @@ import os
 import configparser
 from flask import Flask, jsonify, request, Response, redirect
 
+# database python module provides the logic for the IDMapping
+# for app_id and parkhaus_id
+from parking_app_python_pkg.database import db, IDMapping
+
 # parking_communication python module provides the logic for
 # communication between flask server and ROS nodes
 import parking_app_python_pkg.parking_communication as communication
@@ -22,6 +26,12 @@ port = config.getint('server', 'port')
 
 # Load parking garage name from configuration file
 parking_garage_name = config['parking garage']['name']
+
+############################################################################
+
+# Defines the place of the database and init the connection between app and database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db.db.init_app(app)
 
 ############################################################################
 
