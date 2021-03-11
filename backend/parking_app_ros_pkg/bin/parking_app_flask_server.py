@@ -41,6 +41,7 @@ app.app_context().push()
 # This message should be sent to the client when the ROS service did not return a valid capacity value.
 communication_failed_message = "The parking garage management system could not return the current capacity."
 
+
 ############################################################################
 
 
@@ -224,6 +225,19 @@ def perform_redirect_get_position():
     This route exists to avoid problems with CamelCase style of route getPosition.
     """
     return perform_get_position
+
+
+@app.route('/resetDatabase')
+def perform_reset_database():
+    """
+    Route for operators to influence database content.
+    It clears all content from the ID mapping database and initializes a new empty database.
+    :return: Success message and status code 205 if database could be cleared
+    """
+    id_mapping.clear_db()
+    id_mapping.init_db()
+    return Response({"Database has been cleared. All IDs have been deleted. Vehicles must be registered again."},
+                    status=205)
 
 
 ############################################################################
