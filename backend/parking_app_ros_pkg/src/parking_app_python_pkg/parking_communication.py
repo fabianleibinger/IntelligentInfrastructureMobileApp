@@ -2,12 +2,20 @@ from datetime import datetime
 import rospy
 import threading
 import enum
+import parking_app_python_pkg.database as id_database
 
 from std_msgs.msg import String
 from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
 from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
 from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
 from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
+
+
+# Initialise a ROS node to allow ROS publisher/subscriber or requesting ROS services.
+# Use threading to avoid collision with flask server.
+ros_root_node = 'parking_node'
+threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
+max_secs_to_wait_for_ros_service = 5
 
 
 class ChargeableType(enum.Enum):
@@ -45,18 +53,15 @@ class CommunicationRosServiceException(Exception):
 
 class InternalCommunicationException(Exception):
     """
-    Unify exceptions occurring due to different parameters or return types between flask server 
+    Unify exceptions occurring due to different parameters or return types between flask server
     and parking communication.
     Catch this exception in flask server to provide an appropriate response to the frontend.
     """
     pass
 
 
-# Initialise a ROS node to allow ROS publisher/subscriber or requesting ROS services.
-# Use threading to avoid collision with flask server.
-ros_root_node = 'parking_node'
-threading.Thread(target=lambda: rospy.init_node(ros_root_node, disable_signals=True)).start()
-max_secs_to_wait_for_ros_service = 5
+class VehicleIdentificationException(Exception):
+    pass
 
 
 def retrieve_capacity_from_pms():
@@ -249,13 +254,29 @@ def generate_park_in_response(response_from_pms, app_id):
 
 
 def map_vehicle_ids(app_id, pms_id):
-    # TODO: save IDs in database
-    return
+    """
+    This method adds the pair of app id and parking management system id to the database.
+    In the database, IDs can be stored permanently. IDs are used to identify vehicles uniquely. 
+    :param app_id: The key used for a vehicle in parking app
+    :param pms_id: The key used for a vehicle in parking management system
+    """
+    id_database.add(app_id, pms_id)
 
 
 def get_corresponding_pms_id(app_id):
-    # TODO: get ID from database
-    return 12
+    """
+    This method returns the corresponding parking management system´s ID to the given app id.
+    The value will be requested from the id mapping database.
+    :param app_id: The key used for a vehicle in parking app
+    :return: Parking management system´s ID as integer
+    :exception: VehicleIdentificationException if no vehicle with this app_id is registered
+    """
+    pms_id = id_database.get_parking_garage_id(app_id)
+    if pms_id is None:
+        raise VehicleIdentificationException(
+            'Database could not find a corresponding ID in parking garage´s system. Vehicle ist not registered.')
+    else:
+        return int(pms_id)
 
 
 def request_current_position(app_id, number_plate):
@@ -283,13 +304,13 @@ def request_current_position(app_id, number_plate):
         vehicle_position_request = rospy.ServiceProxy('vehicle_position_request', VehiclePositionRequest)
         response = vehicle_position_request(vehicle_identification)
 
-        if response.vehicle_status.status == VehicleStatus.status_parking_in.value\
+        if response.vehicle_status.status == VehicleStatus.status_parking_in.value \
                 or response.vehicle_status.status == VehicleStatus.status_parking_out.value:
             in_park_process = True
         else:
             in_park_process = False
 
-        if response.vehicle_status.status == VehicleStatus.status_parked.value\
+        if response.vehicle_status.status == VehicleStatus.status_parked.value \
                 or response.vehicle_status.status == VehicleStatus.status_drop_off.value:
             reached_target_position = True
         else:
