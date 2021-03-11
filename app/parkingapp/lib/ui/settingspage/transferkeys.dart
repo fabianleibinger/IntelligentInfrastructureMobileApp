@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/deletevehicle.dart';
+import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/dialogs/scanqrdialog.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/settingspage/qrpage.dart';
 
 class Transferkeys extends StatelessWidget {
@@ -18,11 +16,11 @@ class Transferkeys extends StatelessWidget {
           title: Text('Daten übertragen', style: whiteHeader),
         ),
         body: Container(
-          child: createListView(),
+          child: createTransferKeysView(),
         ));
   }
 
-  Widget createListView() {
+  Widget createTransferKeysView() {
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
         return true;
@@ -46,7 +44,16 @@ class Transferkeys extends StatelessWidget {
                       "; " +
                       vehicle.databaseId.toString()),
                   onTap: () {
-                    ScanQRDialog.createVehicleQRDialog(context);
+                    //show QR Code not possible if vehicle is currently parking in or out
+                    if (vehicle.parkingIn || vehicle.parkingOut) {
+                      NoConnectionDialog.createDialog(context);
+                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => QRPage(
+                                vehicle: vehicle, useOnDiffDevices: true)));
+                    //ScanQRDialog.createVehicleQRDialog(context);
                   });
             },
             itemCount: vehicleList.length);

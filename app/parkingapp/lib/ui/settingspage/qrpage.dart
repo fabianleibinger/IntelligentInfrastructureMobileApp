@@ -6,7 +6,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class QRPage extends StatelessWidget {
   static const routeName = '/qrpage';
   final Vehicle vehicle;
-  const QRPage({Key key, this.vehicle}) : super(key: key);
+  final bool useOnDiffDevices;
+  const QRPage({Key key, this.vehicle, this.useOnDiffDevices})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,21 +16,44 @@ class QRPage extends StatelessWidget {
           title: Text('Daten übertragen'),
         ),
         body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Center(
               //vehicle.inAppKey kann noch nich übergeben werden
-              child: scannableQR("vehicle.inAppKey"),
+              child: scannableQR(vehicle),
             ),
-            Center(child: Text(AppLocalizations.of(context).textQRPage)),
+            Padding(
+              padding: EdgeInsets.only(top: 80.0),
+            ),
+            Padding(
+              padding: EdgeInsets.all(7.5),
+              child:
+                  Center(child: Text(AppLocalizations.of(context).textQRPage)),
+            ),
           ],
         ));
   }
 
-  Widget scannableQR(String data) {
+  Widget scannableQR(Vehicle vehicle) {
+    String data;
+    if (useOnDiffDevices) {
+      data = _getCompleteData();
+    } else {
+      data = _getData();
+    }
     return QrImage(
       data: data,
       version: QrVersions.auto,
-      size: 200.0,
+      size: 300.0,
     );
+  }
+
+  String _getCompleteData() {
+    return vehicle.toMap().toString();
+  }
+
+  String _getData() {
+    return vehicle.toMap().toString();
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class QRScanner extends StatefulWidget {
   static const String routeName = '/qrscanner';
@@ -50,7 +51,7 @@ class _QRScannerState extends State<QRScanner> {
               child: (result != null)
                   ? Navigator.of(context).push(
                       MaterialPageRoute(builder: (context) => SettingsPage()))
-                  : Text('Scan a code'),
+                  : Text(AppLocalizations.of(context).scanQRText),
             ),
           )
         ],

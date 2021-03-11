@@ -266,5 +266,7 @@
     "additionalInMilimeters": "(in mm)",
     "@additionalInMilimeters": {
         "description": "hint that a dimension shall be specified in milimeters"
-    }
+    },
+    "scanQRText": "Rufen Sie den QR Code eines anderen Geräts unter Einstellungen > Daten exportieren auf und scannen Sie diesen.",
+    "@scanQRText": {}
 }
