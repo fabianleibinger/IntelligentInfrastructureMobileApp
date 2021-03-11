@@ -254,10 +254,23 @@ def generate_park_in_response(response_from_pms, app_id):
 
 
 def map_vehicle_ids(app_id, pms_id):
+    """
+    This method adds the pair of app id and parking management system id to the database.
+    In the database, IDs can be stored permanently. IDs are used to identify vehicles uniquely. 
+    :param app_id: The key used for a vehicle in parking app
+    :param pms_id: The key used for a vehicle in parking management system
+    """
     id_database.add(app_id, pms_id)
 
 
 def get_corresponding_pms_id(app_id):
+    """
+    This method returns the corresponding parking management system´s ID to the given app id.
+    The value will be requested from the id mapping database.
+    :param app_id: The key used for a vehicle in parking app
+    :return: Parking management system´s ID as integer
+    :exception: VehicleIdentificationException if no vehicle with this app_id is registered
+    """
     pms_id = id_database.get_parking_garage_id(app_id)
     if pms_id is None:
         raise VehicleIdentificationException(
