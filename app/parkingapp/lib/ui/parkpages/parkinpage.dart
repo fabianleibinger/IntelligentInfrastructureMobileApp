@@ -76,6 +76,14 @@ class _ParkInPageState extends State<ParkInPage> {
       double topRightLattitude,
       double longitude,
       double lattitude}) {
+    //create Coordinates
+    Coordinate bottomLeft = Coordinate(
+        lattitude: bottomLeftLattitude, longitude: bottomLeftLongitude);
+    Coordinate topRight =
+        Coordinate(lattitude: topRightLattitude, longitude: topRightLongitude);
+    Coordinate vehiclePosition =
+        Coordinate(lattitude: lattitude, longitude: longitude);
+
     //identify the Image
     GlobalKey _garageImageKey = GlobalKey();
     //images and dimensions
@@ -83,33 +91,54 @@ class _ParkInPageState extends State<ParkInPage> {
     final Image _garageImage = Image.asset(_imageDirectory);
     final double _height = 250;
     final double _width = MediaQuery.of(context).size.width;
+
     //position of icon
-    double _bottom = (_height /
-        (topRightLattitude - bottomLeftLattitude) *
-        (lattitude - bottomLeftLattitude));
-    double _left = (_width / (topRightLongitude - bottomLeftLongitude)) *
-        (longitude - bottomLeftLongitude);
+    //assume 0x0 to be the bottom left
+    Coordinate _topRightAdjusted = Coordinate(
+        longitude: topRight.longitude - bottomLeft.longitude,
+        lattitude: topRight.lattitude - bottomLeft.lattitude);
+    print(_topRightAdjusted);
+    Coordinate _vehiclePositionAdjusted = Coordinate(
+        lattitude: topRight.lattitude - vehiclePosition.lattitude,
+        longitude: topRight.longitude - vehiclePosition.longitude);
+    print(_vehiclePositionAdjusted);
+
+    //factor by which the coordinates need to be multiplied to get pixel refferences
+    //double scaleFactor =
+    //    MediaQuery.of(context).size.width / _topRightAdjusted.longitude;
+    double scaleFactorHeight = _garageImage.width / _topRightAdjusted.lattitude;
+    double scaleFactorWidth = _garageImage.width / _topRightAdjusted.longitude;
+    print('width: ' +
+        (scaleFactorWidth * _topRightAdjusted.longitude).toString());
+    print('height: ' +
+        (scaleFactorHeight * _topRightAdjusted.lattitude).toString());
 
     //icon
     Icon _icon = Icon(Icons.circle);
-    //change position considering icons dimensions
-    //icons are square
-    //_bottom = _bottom - (_icon.size / 2);
-    //_left -= _left - (_icon.size / 2);
 
-    //factor by which the image is scaled to fit the width of the device
-    //double _scaleFactor =
-    //    MediaQuery.of(context).size.width / Image.asset(_imageDirectory).width;
-    //Overlay();
     return Stack(alignment: Alignment.center, children: [
       Container(
+        width: scaleFactorWidth * _topRightAdjusted.longitude,
+        height: scaleFactorHeight * _topRightAdjusted.lattitude,
         key: _garageImageKey,
-//          height: _height, //this is the same as the main page image height
-        child: _garageImage,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(_imageDirectory), fit: BoxFit.fill)),
       ),
       Positioned(
+        left: scaleFactorWidth * _vehiclePositionAdjusted.longitude,
+        bottom: scaleFactorHeight * _vehiclePositionAdjusted.lattitude,
         child: _icon,
       ),
     ]);
+  }
+}
+
+class Coordinate {
+  final double lattitude, longitude;
+  Coordinate({@required this.lattitude, @required this.longitude});
+
+  toString() {
+    return lattitude.toString() + ', ' + longitude.toString();
   }
 }
