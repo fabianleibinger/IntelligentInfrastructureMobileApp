@@ -6,19 +6,21 @@ class Notifications {
 
   //needs to be called in every method that creates a new notification.
   //sets the initial notification settings
-  static _initialize() {
+  static _initialize(Future<dynamic> Function(String) onSelectedNotification) {
     var androidInitialize =
-    new AndroidInitializationSettings('@mipmap/ic_launcher');
+        new AndroidInitializationSettings('@mipmap/ic_launcher');
     var iOSInitialize = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         android: androidInitialize, iOS: iOSInitialize);
 
     localNotification = new FlutterLocalNotificationsPlugin();
-    localNotification.initialize(initializationSettings);
+    localNotification.initialize(initializationSettings,
+        onSelectNotification: onSelectedNotification);
   }
 
-  static Future createNotification() async {
-    _initialize();
+  static Future createNotification(
+      Future<dynamic> Function(String) onSelectedNotification) async {
+    _initialize(onSelectedNotification);
     var androidDetails = new AndroidNotificationDetails(
         'channelId', 'local notification', 'basic notification',
         importance: Importance.high);
@@ -26,7 +28,7 @@ class Notifications {
     var generalNotificationDetails =
         new NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
-    await localNotification.show(
-        0, 'title', 'body', generalNotificationDetails);
+    await localNotification.show(0, 'title', 'body', generalNotificationDetails,
+        payload: 'ok');
   }
 }

@@ -2,7 +2,9 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/notifications.dart';
+import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -86,10 +88,25 @@ class _FancyFabState extends State<FancyFab>
     isOpened = !isOpened;
   }
 
+  Future<dynamic> onSelectedNotification(String payload) async {
+    if (payload == 'ok') {
+      print('ok');
+      showDialog(
+        context: context,
+        builder: (_) {
+          return ChargingProviderDialog();
+        },
+      );
+    } else {
+      print('wrong payload');
+    }
+  }
+
   Widget inbox() {
     return Container(
       child: FloatingActionButton(
-        onPressed: () { Notifications.createNotification();
+        onPressed: () {
+          Notifications.createNotification(onSelectedNotification);
           // DatabaseProvider.db.delete(2).then((index) {
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
