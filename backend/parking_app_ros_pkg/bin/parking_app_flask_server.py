@@ -32,13 +32,14 @@ parking_garage_name = config['parking garage']['name']
 
 # Defines the place of the database and init the connection between app and database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 database_vehicle_ids.init_app(app)
 app.app_context().push()
+
 ############################################################################
 
 # This message should be sent to the client when the ROS service did not return a valid capacity value.
 communication_failed_message = "The parking garage management system could not return the current capacity."
-
 
 ############################################################################
 
