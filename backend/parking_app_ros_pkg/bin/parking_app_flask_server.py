@@ -3,8 +3,9 @@ import configparser
 from flask import Flask, jsonify, request, Response, redirect
 
 # database python module provides the logic for the IDMapping
-# for app_id and parkhaus_id
-from parking_app_python_pkg.database import db, IDMapping
+# for app_id and pms_id
+import parking_app_python_pkg.database as id_mapping
+from parking_app_python_pkg.database import db as database_vehicle_ids
 
 # parking_communication python module provides the logic for
 # communication between flask server and ROS nodes
@@ -31,12 +32,13 @@ parking_garage_name = config['parking garage']['name']
 
 # Defines the place of the database and init the connection between app and database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db.db.init_app(app)
-
+database_vehicle_ids.init_app(app)
+app.app_context().push()
 ############################################################################
 
 # This message should be sent to the client when the ROS service did not return a valid capacity value.
 communication_failed_message = "The parking garage management system could not return the current capacity."
+
 
 ############################################################################
 
@@ -120,7 +122,7 @@ def all_free_parking_spots():
 def electric_free_parking_spots():
     """
     Request the currently free parking spots in the parking garage which have the possibility of electric charging.
-    :return: HTTP response with status code 200 and JSON field 'free_electric' providing the currently free parking 
+    :return: HTTP response with status code 200 and JSON field 'free_electric' providing the currently free parking
         spots with electric charging as integer value
         or HTTP response with status code 503 if the service did not return a valid response.
     """
@@ -200,16 +202,19 @@ def perform_get_position():
     :return: HTTP response with status code 200 and JSON fields 'longitude' and 'latitude', which provide the
         geographical coordinates of the vehicle´s position as well as boolean values for 'moving' and 'reached_position'
     """
-    if request.is_json:
-        get_position_parameters = request.get_json()
-        app_id = get_position_parameters["id"]
-        number_plate = get_position_parameters["number_plate"]
-        position = communication.request_current_position(app_id, number_plate)
-        return jsonify({'longitude': position["longitude"],
-                        'latitude': position["latitude"],
-                        'moving': position["moving"],
-                        'reached_position': position["reached_position"]})
-    
+    try:
+        if request.is_json:
+            get_position_parameters = request.get_json()
+            app_id = get_position_parameters["id"]
+            number_plate = get_position_parameters["number_plate"]
+            position = communication.request_current_position(app_id, number_plate)
+            return jsonify({'longitude': position["longitude"],
+                            'latitude': position["latitude"],
+                            'moving': position["moving"],
+                            'reached_position': position["reached_position"]})
+    except communication.VehicleIdentificationException as e:
+        return Response({str(e)}, status=406)
+
 
 @app.route('/getposition', methods=['POST'])
 def perform_redirect_get_position():
@@ -223,5 +228,6 @@ def perform_redirect_get_position():
 ############################################################################
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
+    id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
 
