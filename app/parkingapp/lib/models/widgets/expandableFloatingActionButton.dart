@@ -2,6 +2,7 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
+import 'package:parkingapp/dialogs/notifications.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -88,10 +89,11 @@ class _FancyFabState extends State<FancyFab>
   Widget inbox() {
     return Container(
       child: FloatingActionButton(
-        onPressed: () {
+        onPressed: () { Notifications.createNotification();
           // DatabaseProvider.db.delete(2).then((index) {
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
+          /*
           DatabaseProvider.db
               .insert(ChargeableVehicle(
                   Utility.generateKey(),
@@ -112,6 +114,7 @@ class _FancyFabState extends State<FancyFab>
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
           });
+           */
           // DatabaseProvider.db.clear().then((value) {
           //   BlocProvider.of<VehicleBloc>(context).add(ResetVehicles());
           // });

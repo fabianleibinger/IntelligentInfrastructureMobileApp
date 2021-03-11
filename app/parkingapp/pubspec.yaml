@@ -32,6 +32,7 @@ dependencies:
   shared_preferences_settings: ^1.2.0
   passcode_screen: ^1.2.2+1
   flutter_app_lock: ^1.4.0
+  flutter_local_notifications: ^4.0.1+2
 
 
   # The following adds the Cupertino Icons font to your application.
