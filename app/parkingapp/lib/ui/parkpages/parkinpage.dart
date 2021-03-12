@@ -90,19 +90,14 @@ class _ParkInPageState extends State<ParkInPage> {
                 controller: controller,
                 itemCount: 1,
                 itemBuilder: (context, index) {
-                  if (index == 0)
-                    return ListTile(
-                      key: stickyKey,
-                      title: Image(
-                          image: AssetImage(
-                              "assets/parkgarage-fasanengarten-map.jpg")),
-                    );
-                  else
-                    return ListTile(
-                        title: Text(
-                      'Hello $index',
-                      style: const TextStyle(color: Colors.white),
-                    ));
+                  return ListTile(
+                    key: stickyKey,
+                    title: Image(
+                      image:
+                          AssetImage("assets/parkgarage-fasanengarten-map.jpg"),
+                      fit: BoxFit.fill,
+                    ),
+                  );
                 }),
           ),
 
