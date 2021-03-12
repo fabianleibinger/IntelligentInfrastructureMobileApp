@@ -43,6 +43,11 @@ class ParkingGarage {
             .last));
   }
 
+  //returns true when spots for specific preferences are available
+  bool vehicleSpecificSpotsAvailable(Vehicle vehicle) {
+    return this.getFreeSpotsForVehicle(vehicle) > 0;
+  }
+
   //vehicles preferences decide if chargeable or normal parking spots are returned
   int getFreeSpotsForVehicle(Vehicle vehicle) {
     if (vehicle.runtimeType == ChargeableVehicle) {

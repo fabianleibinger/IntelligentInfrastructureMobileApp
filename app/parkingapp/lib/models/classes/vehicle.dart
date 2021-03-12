@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
+import 'package:parkingapp/dialogs/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -46,13 +47,15 @@ abstract class Vehicle {
     return map;
   }
 
+  //return if vehicle needs to be parked in
+  bool needsToParkIn() {
+    return !this.parkedIn && !this.parkingIn;
+  }
+
   //sends the park in inquiry to the parking garage management system
   void parkIn(BuildContext context) {
-    //check if vehicle needs to be parked in
-    if (!this.parkedIn && !this.parkingIn) {
-      //try to park in
-      if (currentParkingGarage.getFreeSpotsForVehicle(this) > 0) {
-        //vehicle parking in
+    if (this.needsToParkIn()) {
+      if (currentParkingGarage.vehicleSpecificSpotsAvailable(this)) {
         this.setParkIngIn(context, true);
         print(this.name + ' wird eingeparkt');
 
@@ -64,8 +67,13 @@ abstract class Vehicle {
           //vehicle not parking in anymore
         }).whenComplete(() {
           this.setParkIngIn(context, false);
-          //if park in didn't work: connection to server failed
-          if (!this.parkedIn) {
+          if (this.parkedIn) {
+            //if park in worked: notification
+            //TODO redirect to correct page
+            Notifications.createNotification(
+                'Fahrzeug ' + this.licensePlate, 'Hier klicken zum Ausparken');
+          } else {
+            //if park in didn't work: connection to server failed
             showDialog(
                 context: context,
                 builder: (context) {
@@ -88,20 +96,24 @@ abstract class Vehicle {
     }
   }
 
+  //return if vehicle needs to be parked out
+  bool needsToParkOut() {
+    return !this.parkingOut;
+  }
+
   //sends the park out inquiry to the parking garage management system
   void parkOut(BuildContext context) {
-    //check if vehicle needs to be parked in
-    if (!this.parkingOut) {
+    if (this.needsToParkOut()) {
       //cancelling park in if needed
       this.setParkIngIn(context, false);
-      //park out or cancel park in process
+
       this.setParkIngOut(context, true);
       print(this.name + ' wird ausgeparkt');
 
       //try to contact server
       ApiProvider.parkOut(this).then((value) {
         this.setParkedIn(context, false);
-        print('vehicle parked in: ' + this.parkedIn.toString());
+        print('vehicle parked out: ' + this.parkedIn.toString());
         //open main page
         Navigator.pushReplacementNamed(context, this.inAppKey);
         showDialog(
@@ -113,8 +125,14 @@ abstract class Vehicle {
         //vehicle not parking out anymore
       }).whenComplete(() {
         this.setParkIngOut(context, false);
-        //if park out didn't work: connection to server failed
-        if (this.parkedIn) {
+        if (!this.parkedIn) {
+          //if park out worked: notification
+          Notifications.createNotification(
+              'Fahrzeug erfolgreich ausgeparkt',
+              'Ihr Fahrzeug steht in der '
+                  'Übergabezone zum Abholen bereit');
+        } else {
+          //if park out didn't work: connection to server failed
           showDialog(
               context: context,
               builder: (context) {
@@ -124,6 +142,20 @@ abstract class Vehicle {
       });
     }
   }
+
+  /*Future<dynamic> onSelectedNotification(String payload) async {
+    if (payload == 'ok') {
+      print('ok');
+      showDialog(
+        context: context,
+        builder: (context) {
+          return ParkDialog.getParkOutDialog(context);
+        },
+      );
+    } else {
+      print('wrong payload');
+    }
+  }*/
 
   //setter which includes database updating
   void setDatabaseID(BuildContext context, int id) {

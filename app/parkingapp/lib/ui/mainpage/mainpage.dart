@@ -80,12 +80,16 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  //disables button according to free parking spots and connection to server
+  //disables button
   _setButtonIsDisabled() {
-    bool disable = _parkingSpots <= 0 || _noConnection;
     setState(() {
-      _buttonIsDisabled = disable;
+      _buttonIsDisabled = disableButton();
     });
+  }
+
+  //return bool that checks if button needs to be disabled
+  bool disableButton() {
+    return _parkingSpots <= 0 || _noConnection;
   }
 
   @override
@@ -104,7 +108,7 @@ class _MainPageState extends State<MainPage> {
         vehicle.licensePlate);
     //check which parking spots should be displayed and if button should be disabled
     _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
-    _buttonIsDisabled = _parkingSpots <= 0 || _noConnection;
+    _buttonIsDisabled = disableButton();
     return Scaffold(
         appBar: AppBar(
           title: Text(vehicle.name, style: whiteHeader),

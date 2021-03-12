@@ -88,29 +88,13 @@ class _FancyFabState extends State<FancyFab>
     isOpened = !isOpened;
   }
 
-  Future<dynamic> onSelectedNotification(String payload) async {
-    if (payload == 'ok') {
-      print('ok');
-      showDialog(
-        context: context,
-        builder: (_) {
-          return ChargingProviderDialog();
-        },
-      );
-    } else {
-      print('wrong payload');
-    }
-  }
-
   Widget inbox() {
     return Container(
       child: FloatingActionButton(
         onPressed: () {
-          Notifications.createNotification(onSelectedNotification);
           // DatabaseProvider.db.delete(2).then((index) {
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
-          /*
           DatabaseProvider.db
               .insert(ChargeableVehicle(
                   Utility.generateKey(),
@@ -131,7 +115,6 @@ class _FancyFabState extends State<FancyFab>
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
           });
-           */
           // DatabaseProvider.db.clear().then((value) {
           //   BlocProvider.of<VehicleBloc>(context).add(ResetVehicles());
           // });
