@@ -114,18 +114,11 @@ class _ParkInPageState extends State<ParkInPage> {
           // widget is visible
           final box = keyContext.findRenderObject() as RenderBox;
           final pos = box.localToGlobal(Offset.zero);
+          //position the icon
           return Positioned(
             top: pos.dy + box.size.height,
-            left: 50.0,
-            right: 50.0,
-            height: box.size.height,
-            child: Material(
-              child: Container(
-                alignment: Alignment.center,
-                color: Colors.purple,
-                child: const Text("^ Nah I think you're okay"),
-              ),
-            ),
+            left: 20,
+            child: Icon(Icons.circle),
           );
         }
         return Container();
