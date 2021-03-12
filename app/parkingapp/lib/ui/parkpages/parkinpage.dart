@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
@@ -22,12 +23,36 @@ class ParkInPage extends StatefulWidget {
 }
 
 class _ParkInPageState extends State<ParkInPage> {
+  //variables needed for the overlay
+  final controller = ScrollController();
+  OverlayEntry sticky;
+  GlobalKey stickyKey = GlobalKey();
+
   @override
   void initState() {
+    //add the vehicle overlay
+    if (sticky != null) {
+      sticky.remove();
+    }
+    sticky = OverlayEntry(
+      builder: (context) => stickyBuilder(context),
+    );
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Overlay.of(context).insert(sticky);
+    });
+
     super.initState();
     //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
+  }
+
+  @override
+  void dispose() {
+    //remove the vehicle overlay
+    sticky.remove();
+    super.dispose();
   }
 
   //TODO: setState when parkedIn switches
@@ -60,8 +85,28 @@ class _ParkInPageState extends State<ParkInPage> {
             title: Text(currentParkingGarage.name),
             subtitle: Text(currentParkingGarage.type.toShortString()),
           ),
-          //FutureBuilder(
-          //    future:
+          Expanded(
+            child: ListView.builder(
+                controller: controller,
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  if (index == 0)
+                    return ListTile(
+                      key: stickyKey,
+                      title: Image(
+                          image: AssetImage(
+                              "assets/parkgarage-fasanengarten-map.jpg")),
+                    );
+                  else
+                    return ListTile(
+                        title: Text(
+                      'Hello $index',
+                      style: const TextStyle(color: Colors.white),
+                    ));
+                }),
+          ),
+
+          /*
           getParkInAnimation(
               context: context,
               bottomLeftLongitude: 8.41950527853,
@@ -69,15 +114,37 @@ class _ParkInPageState extends State<ParkInPage> {
               topRightLattitude: 49.0144759205,
               topRightLongitude: 8.42059599234,
               lattitude: 49.01431771428,
-              longitude: 8.42011294615),
-          //    builder: (context, snapshot) {
-          //      if (snapshot.hasData)
-          //        return snapshot.data;
-          //      else
-          //        return CircularProgressIndicator();
-          //    }),
+              longitude: 8.42011294615),*/
         ],
       ),
+    );
+  }
+
+  Widget stickyBuilder(BuildContext context) {
+    return AnimatedBuilder(
+      animation: controller,
+      builder: (_, Widget child) {
+        final keyContext = stickyKey.currentContext;
+        if (keyContext != null) {
+          // widget is visible
+          final box = keyContext.findRenderObject() as RenderBox;
+          final pos = box.localToGlobal(Offset.zero);
+          return Positioned(
+            top: pos.dy + box.size.height,
+            left: 50.0,
+            right: 50.0,
+            height: box.size.height,
+            child: Material(
+              child: Container(
+                alignment: Alignment.center,
+                color: Colors.purple,
+                child: const Text("^ Nah I think you're okay"),
+              ),
+            ),
+          );
+        }
+        return Container();
+      },
     );
   }
 
@@ -120,12 +187,8 @@ class _ParkInPageState extends State<ParkInPage> {
     //factor by which the coordinates need to be multiplied to get pixel refferences
     //double scaleFactor =
     //    MediaQuery.of(context).size.width / _topRightAdjusted.longitude;
-    double scaleFactorHeight =
-        ImageSizeGetter.getSize(FileInput(_imageFile)).height /
-            _topRightAdjusted.lattitude;
-    double scaleFactorWidth =
-        ImageSizeGetter.getSize(FileInput(_imageFile)).width /
-            _topRightAdjusted.longitude;
+    double scaleFactorHeight = 200 / _topRightAdjusted.lattitude;
+    double scaleFactorWidth = 300 / _topRightAdjusted.longitude;
     print('width: ' +
         (scaleFactorWidth * _topRightAdjusted.longitude).toString());
     print('height: ' +
@@ -134,23 +197,22 @@ class _ParkInPageState extends State<ParkInPage> {
     //icon
     Icon _icon = Icon(Icons.circle);
 
-    //Image Container
-    var _imageContainer = Container(
-      width: scaleFactorWidth * _topRightAdjusted.longitude,
-      height: scaleFactorHeight * _topRightAdjusted.lattitude,
-      key: _garageImageKey,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(_imageDirectory), fit: BoxFit.fill)),
-    );
-
     return Stack(alignment: Alignment.center, children: [
-      _imageContainer,
-      Positioned(
-        left: scaleFactorWidth * _vehiclePositionAdjusted.longitude,
-        bottom: scaleFactorHeight * _vehiclePositionAdjusted.lattitude,
-        child: _icon,
+      Container(
+        key: stickyKey,
+        width: scaleFactorWidth * _topRightAdjusted.longitude,
+        height: scaleFactorHeight * _topRightAdjusted.lattitude,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage(_imageDirectory), fit: BoxFit.fill)),
       ),
+      FutureBuilder(builder: (context, snapshot) {
+        return Positioned(
+          left: scaleFactorWidth * _vehiclePositionAdjusted.longitude,
+          bottom: scaleFactorHeight * _vehiclePositionAdjusted.lattitude,
+          child: _icon,
+        );
+      })
     ]);
   }
 }
