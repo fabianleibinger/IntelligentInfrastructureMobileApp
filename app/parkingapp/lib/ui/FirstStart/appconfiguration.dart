@@ -79,7 +79,7 @@ class _AppConfigurationState extends State<AppConfiguration> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        QRScanner()));
+                                        ScanScreen()));
                           })
                     ],
                   ),

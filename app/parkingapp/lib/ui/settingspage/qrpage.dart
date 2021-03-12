@@ -7,7 +7,8 @@ class QRPage extends StatelessWidget {
   static const routeName = '/qrpage';
   final Vehicle vehicle;
   final bool useOnDiffDevices;
-  const QRPage({Key key, this.vehicle, this.useOnDiffDevices})
+  const QRPage(Vehicle convertIntoVehicle, bool bool,
+      {Key key, this.vehicle, this.useOnDiffDevices})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -36,17 +37,26 @@ class QRPage extends StatelessWidget {
   }
 
   Widget scannableQR(Vehicle vehicle) {
-    String data;
-    if (useOnDiffDevices) {
-      data = _getCompleteData();
+    if (vehicle != null) {
+      String data;
+      if (useOnDiffDevices) {
+        data = _getCompleteData();
+      } else {
+        data = _getData();
+      }
+      return QrImage(
+        data: data,
+        version: QrVersions.auto,
+        size: 300.0,
+      );
     } else {
-      data = _getData();
+      String data = "Nothing to show";
+      return QrImage(
+        data: data,
+        version: QrVersions.auto,
+        size: 300.0,
+      );
     }
-    return QrImage(
-      data: data,
-      version: QrVersions.auto,
-      size: 300.0,
-    );
   }
 
   String _getCompleteData() {

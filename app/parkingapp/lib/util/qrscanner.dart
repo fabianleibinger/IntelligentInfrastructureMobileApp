@@ -1,97 +1,91 @@
+import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
 import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class QRScanner extends StatefulWidget {
+class ScanScreen extends StatefulWidget {
   static const String routeName = '/qrscanner';
-  final String id;
-  QRScanner({Key key, this.id}) : super(key: key);
-
   @override
-  State<StatefulWidget> createState() => _QRScannerState();
+  _ScanState createState() => new _ScanState();
 }
 
-class _QRScannerState extends State<QRScanner> {
-  Barcode result;
-  QRViewController controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-  var scannedVehicle;
+class _ScanState extends State<ScanScreen> {
+  String barcode = "";
 
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
   @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller.resumeCamera();
-    }
+  initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Daten importieren')),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
-            ),
+        appBar: new AppBar(
+          title: new Text('QR Code Scanner'),
+        ),
+        body: new Center(
+          child: new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: RaisedButton(
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    splashColor: Colors.blueGrey,
+                    onPressed: scan,
+                    child: const Text('START CAMERA SCAN')),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: RaisedButton(
+                    onPressed: () {
+                      Vehicle transfer = _convertIntoVehicle();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  QRPage(null, true)));
+                    },
+                    child: Text(
+                      barcode,
+                      textAlign: TextAlign.center,
+                    )),
+              ),
+            ],
           ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? ListTile(
-                      title: Text(""),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) =>
-                                    SettingsPage()));
-                      })
-                  : Text(AppLocalizations.of(context).scanQRText),
-            ),
-          )
-        ],
-      ),
-    );
+        ));
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    this.controller = controller;
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-        //Map values = json.decode(scanData.toString());
-        //scannedVehicle = Vehicle.fromMap(values);
-        print(scanData.toString());
-      });
-    });
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() => this.barcode = barcode);
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        setState(() {
+          this.barcode = 'The user did not grant the camera permission!';
+        });
+      } else {
+        setState(() => this.barcode = 'Unknown error: $e');
+      }
+    } on FormatException {
+      setState(() => this.barcode =
+          'null (User returned using the "back"-button before scanning anything. Result)');
+    } catch (e) {
+      setState(() => this.barcode = 'Unknown error: $e');
+    }
   }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
-  Future<Widget> afterBuild() {
-    return Navigator.pushNamedAndRemoveUntil(
-        context, Routes.settings, (Route<dynamic> route) => false);
+  Vehicle _convertIntoVehicle() {
+    //var json = jsonDecode(barcode.toString());
+    //return Vehicle.fromMap(json);
+    return null;
   }
 }
