@@ -1,7 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/routes/routes.dart';
+import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
+import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,6 +24,7 @@ class _QRScannerState extends State<QRScanner> {
   Barcode result;
   QRViewController controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  var scannedVehicle;
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -49,8 +55,15 @@ class _QRScannerState extends State<QRScanner> {
             flex: 1,
             child: Center(
               child: (result != null)
-                  ? Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => SettingsPage()))
+                  ? ListTile(
+                      title: Text(""),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    SettingsPage()));
+                      })
                   : Text(AppLocalizations.of(context).scanQRText),
             ),
           )
@@ -64,6 +77,9 @@ class _QRScannerState extends State<QRScanner> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        //Map values = json.decode(scanData.toString());
+        //scannedVehicle = Vehicle.fromMap(values);
+        print(scanData.toString());
       });
     });
   }
@@ -72,5 +88,10 @@ class _QRScannerState extends State<QRScanner> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  Future<Widget> afterBuild() {
+    return Navigator.pushNamedAndRemoveUntil(
+        context, Routes.settings, (Route<dynamic> route) => false);
   }
 }
