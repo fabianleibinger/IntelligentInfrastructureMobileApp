@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_size_getter/file_input.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
@@ -55,6 +60,8 @@ class _ParkInPageState extends State<ParkInPage> {
             title: Text(currentParkingGarage.name),
             subtitle: Text(currentParkingGarage.type.toShortString()),
           ),
+          //FutureBuilder(
+          //    future:
           getParkInAnimation(
               context: context,
               bottomLeftLongitude: 8.41950527853,
@@ -62,7 +69,13 @@ class _ParkInPageState extends State<ParkInPage> {
               topRightLattitude: 49.0144759205,
               topRightLongitude: 8.42059599234,
               lattitude: 49.01431771428,
-              longitude: 8.42011294615)
+              longitude: 8.42011294615),
+          //    builder: (context, snapshot) {
+          //      if (snapshot.hasData)
+          //        return snapshot.data;
+          //      else
+          //        return CircularProgressIndicator();
+          //    }),
         ],
       ),
     );
@@ -88,6 +101,7 @@ class _ParkInPageState extends State<ParkInPage> {
     GlobalKey _garageImageKey = GlobalKey();
     //images and dimensions
     final _imageDirectory = "assets/parkgarage-fasanengarten-map.jpg";
+    final _imageFile = File(_imageDirectory);
     final Image _garageImage = Image.asset(_imageDirectory);
     final double _height = 250;
     final double _width = MediaQuery.of(context).size.width;
@@ -106,8 +120,12 @@ class _ParkInPageState extends State<ParkInPage> {
     //factor by which the coordinates need to be multiplied to get pixel refferences
     //double scaleFactor =
     //    MediaQuery.of(context).size.width / _topRightAdjusted.longitude;
-    double scaleFactorHeight = _garageImage.width / _topRightAdjusted.lattitude;
-    double scaleFactorWidth = _garageImage.width / _topRightAdjusted.longitude;
+    double scaleFactorHeight =
+        ImageSizeGetter.getSize(FileInput(_imageFile)).height /
+            _topRightAdjusted.lattitude;
+    double scaleFactorWidth =
+        ImageSizeGetter.getSize(FileInput(_imageFile)).width /
+            _topRightAdjusted.longitude;
     print('width: ' +
         (scaleFactorWidth * _topRightAdjusted.longitude).toString());
     print('height: ' +
@@ -116,15 +134,18 @@ class _ParkInPageState extends State<ParkInPage> {
     //icon
     Icon _icon = Icon(Icons.circle);
 
+    //Image Container
+    var _imageContainer = Container(
+      width: scaleFactorWidth * _topRightAdjusted.longitude,
+      height: scaleFactorHeight * _topRightAdjusted.lattitude,
+      key: _garageImageKey,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage(_imageDirectory), fit: BoxFit.fill)),
+    );
+
     return Stack(alignment: Alignment.center, children: [
-      Container(
-        width: scaleFactorWidth * _topRightAdjusted.longitude,
-        height: scaleFactorHeight * _topRightAdjusted.lattitude,
-        key: _garageImageKey,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage(_imageDirectory), fit: BoxFit.fill)),
-      ),
+      _imageContainer,
       Positioned(
         left: scaleFactorWidth * _vehiclePositionAdjusted.longitude,
         bottom: scaleFactorHeight * _vehiclePositionAdjusted.lattitude,
