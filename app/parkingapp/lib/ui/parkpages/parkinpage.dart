@@ -100,16 +100,6 @@ class _ParkInPageState extends State<ParkInPage> {
                   );
                 }),
           ),
-
-          /*
-          getParkInAnimation(
-              context: context,
-              bottomLeftLongitude: 8.41950527853,
-              bottomLeftLattitude: 49.01388810447,
-              topRightLattitude: 49.0144759205,
-              topRightLongitude: 8.42059599234,
-              lattitude: 49.01431771428,
-              longitude: 8.42011294615),*/
         ],
       ),
     );
