@@ -90,9 +90,9 @@ class _ParkInPageState extends State<ParkInPage> {
                 controller: controller,
                 itemCount: 1,
                 itemBuilder: (context, index) {
-                  return ListTile(
+                  return Container(
                     key: stickyKey,
-                    title: Image(
+                    child: Image(
                       image:
                           AssetImage("assets/parkgarage-fasanengarten-map.jpg"),
                       fit: BoxFit.fill,
