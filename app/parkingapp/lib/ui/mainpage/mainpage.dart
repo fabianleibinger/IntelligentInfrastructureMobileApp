@@ -117,12 +117,24 @@ class _MainPageState extends State<MainPage> {
           onPressed: () {
             if (_buttonIsDisabled) {
               if (_noConnection) {
-                NoConnectionDialog.createDialog(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return NoConnectionDialog.getDialog(context);
+                    });
               } else {
-                ParkingGarageOccupiedDialog.createDialog(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ParkingGarageOccupiedDialog.getDialog(context);
+                    });
               }
             } else {
-              ParkDialog.createParkInDialog(context);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ParkDialog.getParkInDialog(context);
+                  });
             }
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),

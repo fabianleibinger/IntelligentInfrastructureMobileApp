@@ -12,30 +12,27 @@ class NoConnectionDialog {
 
   //raised button opens wifi settings
   //button leads back to MainPage or Park page
-  static createDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(AppLocalizations.of(context).noConnectionDialogTitle),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(AppLocalizations.of(context).noConnectionDialogContent),
-                Divider(thickness: _dividerThickness),
-                ElevatedButton(
-                    onPressed: AppSettings.openWIFISettings,
-                    child: Text(AppLocalizations.of(context).networkButton))
-              ],
-            ),
-            actions: [
-              Constants.createFlatButton(
-                  context,
-                  red,
-                  AppLocalizations.of(context).parkDialogBackButton,
-                  Routes.returnCorrectRouteForVehicle(vehicle))
-            ],
-          );
-        });
+  //returns dialog, use when no connection to parking garage server
+  static getDialog(BuildContext context) {
+    return AlertDialog(
+      title: Text(AppLocalizations.of(context).noConnectionDialogTitle),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(AppLocalizations.of(context).noConnectionDialogContent),
+          Divider(thickness: _dividerThickness),
+          ElevatedButton(
+              onPressed: AppSettings.openWIFISettings,
+              child: Text(AppLocalizations.of(context).networkButton))
+        ],
+      ),
+      actions: [
+        Constants.createFlatButton(
+            context,
+            red,
+            AppLocalizations.of(context).parkDialogBackButton,
+            Routes.returnCorrectRouteForVehicle(vehicle))
+      ],
+    );
   }
 }

@@ -40,7 +40,7 @@ class _ParkInPageState extends State<ParkInPage> {
     );
     //get vehicle that shall be used from the list of vehicles
     for (Vehicle currentVehicle
-    in BlocProvider.of<VehicleBloc>(context).state) {
+        in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
@@ -49,8 +49,6 @@ class _ParkInPageState extends State<ParkInPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
   }
-
-  //TODO: setState when parkedIn switches
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +66,17 @@ class _ParkInPageState extends State<ParkInPage> {
                   : Text(AppLocalizations.of(context).actionButtonCancelPark),
               backgroundColor: red,
               //park out dialog or cancel dialog
-              onPressed: vehicle.parkedIn
-                  ? () => ParkDialog.createParkOutDialog(context)
-                  : () => ParkDialog.createParkInCancelDialog(context),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      if (vehicle.parkedIn) {
+                        return ParkDialog.getParkOutDialog(context);
+                      } else {
+                        return ParkDialog.getParkInCancelDialog(context);
+                      }
+                    });
+              },
             );
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

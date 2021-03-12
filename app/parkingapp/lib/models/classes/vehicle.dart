@@ -66,13 +66,21 @@ abstract class Vehicle {
           this.setParkIngIn(context, false);
           //if park in didn't work: connection to server failed
           if (!this.parkedIn) {
-            NoConnectionDialog.createDialog(context);
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return NoConnectionDialog.getDialog(context);
+                });
           }
         });
       } else {
         //no parking spots available
         print('no parking spots available');
-        ParkingGarageOccupiedDialog.createDialog(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ParkingGarageOccupiedDialog.getDialog(context);
+            });
       }
     } else {
       //vehicle is already parked in
@@ -96,14 +104,22 @@ abstract class Vehicle {
         print('vehicle parked in: ' + this.parkedIn.toString());
         //open main page
         Navigator.pushReplacementNamed(context, this.inAppKey);
-        ParkDialog.createParkOutFinishedDialog(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ParkDialog.getParkOutFinishedDialog(context);
+            });
 
         //vehicle not parking out anymore
       }).whenComplete(() {
         this.setParkIngOut(context, false);
         //if park out didn't work: connection to server failed
         if (this.parkedIn) {
-          NoConnectionDialog.createDialog(context);
+          showDialog(
+              context: context,
+              builder: (context) {
+                return NoConnectionDialog.getDialog(context);
+              });
         }
       });
     }
