@@ -6,8 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class QRPage extends StatelessWidget {
   static const routeName = '/qrpage';
   final Vehicle vehicle;
-  const QRPage(Vehicle convertIntoVehicle, {Key key, this.vehicle})
-      : super(key: key);
+  const QRPage({Key key, this.vehicle}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,14 +44,6 @@ class QRPage extends StatelessWidget {
       version: QrVersions.auto,
       size: 300.0,
     );
-    /*} else {
-      String data = "Nothing to show";
-      return QrImage(
-        data: data,
-        version: QrVersions.auto,
-        size: 300.0,
-      );
-    }*/
   }
 
   String _getCompleteData() {

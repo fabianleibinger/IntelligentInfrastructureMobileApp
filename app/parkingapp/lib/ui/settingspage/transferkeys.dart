@@ -54,7 +54,7 @@ class Transferkeys extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                QRPage(vehicle)));
+                                QRPage(vehicle: vehicle)));
                     //ScanQRDialog.createVehicleQRDialog(context);
                   });
             },
