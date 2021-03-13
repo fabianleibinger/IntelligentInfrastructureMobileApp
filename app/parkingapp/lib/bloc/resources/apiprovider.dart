@@ -11,6 +11,8 @@ class ApiProvider {
   static final int httpGetStatusCodeSuccess = 200;
   static final int httpPostStatusCodeSuccess = 200;
 
+  static final Duration _timeOutAfter = Duration(seconds: 10);
+
   // ['IP', 'Port', 'Parking garage']
   //tries to connect to server
   static Future<Map<String, dynamic>> connect() async {
@@ -48,7 +50,7 @@ class ApiProvider {
   //http get request that returns the response body
   static Future<Map<String, dynamic>> httpGet(
       String url, String failureText) async {
-    final response = await http.get(url);
+    final response = await http.get(url).timeout(_timeOutAfter);
     if (response.statusCode == httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       print(result.entries.toString());
@@ -60,13 +62,15 @@ class ApiProvider {
 
   //tries to park in vehicle
   static Future<Map<String, dynamic>> parkIn(Vehicle vehicle) async {
-    final response = await http.post("http://10.0.2.2:2525/parkIn",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: vehicle.runtimeType == ChargeableVehicle
-            ? parkInBodyChargeableVehicle(vehicle)
-            : parkInBodyStandardVehicle(vehicle));
+    final response = await http
+        .post("http://10.0.2.2:2525/parkIn",
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: vehicle.runtimeType == ChargeableVehicle
+                ? parkInBodyChargeableVehicle(vehicle)
+                : parkInBodyStandardVehicle(vehicle))
+        .timeout(_timeOutAfter);
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       print(result);
@@ -84,7 +88,7 @@ class ApiProvider {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-    );
+    ).timeout(_timeOutAfter);
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
@@ -101,7 +105,7 @@ class ApiProvider {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-    );
+    ).timeout(_timeOutAfter);
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
@@ -112,12 +116,14 @@ class ApiProvider {
 
   //tries to get position of the vehicle
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
-    final response = await http.post("http://10.0.2.2:2525/getPosition",
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(
-            {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate}));
+    final response = await http
+        .post("http://10.0.2.2:2525/getPosition",
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(
+                {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate}))
+        .timeout(_timeOutAfter);
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;

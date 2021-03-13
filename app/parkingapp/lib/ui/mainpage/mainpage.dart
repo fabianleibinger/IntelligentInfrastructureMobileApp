@@ -44,8 +44,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _parkingGarageImageHeight = 250;
-  final _bottomMargin = 80;
+  final int _parkingGarageImageHeight = 250;
+  final int _bottomMargin = 80;
 
   int _parkingSpots;
   bool _buttonIsDisabled;

@@ -9,6 +9,10 @@ class SettingsPage extends StatelessWidget {
   final String apikey;
   const SettingsPage({Key key, this.apikey}) : super(key: key);
 
+  static final String notificationSettingKey = 'pushNotifications';
+  static final String notificationLoadSettingKey = 'pushLoad';
+  static final String notificationParkSettingKey = 'pushPark';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,18 +42,18 @@ class _SettingsFormState extends State<SettingsForm> {
             children: <Widget>[
               Padding(padding: EdgeInsets.symmetric(vertical: 0.5)),
               SwitchSettingsTile(
-                settingKey: 'pushNotifications',
+                settingKey: SettingsPage.notificationSettingKey,
                 title: 'Push Nachrichten',
                 subtitle: 'Hinweise erhalten, bei wichtigen Hinweisen',
               ),
               SwitchSettingsTile(
-                settingKey: 'pushLoad',
+                settingKey: SettingsPage.notificationLoadSettingKey,
                 title: 'Ladevorgang',
                 subtitle: 'Push Benachrichtigungen zum Ladevorgang erhalten',
                 visibleIfKey: 'pushNotifications',
               ),
               SwitchSettingsTile(
-                settingKey: 'pushPark',
+                settingKey: SettingsPage.notificationParkSettingKey,
                 title: 'Parkvorgänge',
                 subtitle:
                     'Push Benachrichtigungen bei abgeschlossenen Parkvorgängen',
