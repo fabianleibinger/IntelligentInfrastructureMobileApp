@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
+import 'package:parkingapp/dialogs/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -46,13 +47,15 @@ abstract class Vehicle {
     return map;
   }
 
+  //return if vehicle needs to be parked in
+  bool needsToParkIn() {
+    return !this.parkedIn && !this.parkingIn;
+  }
+
   //sends the park in inquiry to the parking garage management system
   void parkIn(BuildContext context) {
-    //check if vehicle needs to be parked in
-    if (!this.parkedIn && !this.parkingIn) {
-      //try to park in
-      if (currentParkingGarage.getFreeSpotsForVehicle(this) > 0) {
-        //vehicle parking in
+    if (this.needsToParkIn()) {
+      if (currentParkingGarage.vehicleSpecificSpotsAvailable(this)) {
         this.setParkIngIn(context, true);
         print(this.name + ' wird eingeparkt');
 
@@ -64,15 +67,16 @@ abstract class Vehicle {
           //vehicle not parking in anymore
         }).whenComplete(() {
           this.setParkIngIn(context, false);
-          //if park in didn't work: connection to server failed
-          if (!this.parkedIn) {
-            NoConnectionDialog.createDialog(context);
-          }
+          _checkAndReactParkInWorked(context);
         });
       } else {
         //no parking spots available
         print('no parking spots available');
-        ParkingGarageOccupiedDialog.createDialog(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ParkingGarageOccupiedDialog.getDialog(context);
+            });
       }
     } else {
       //vehicle is already parked in
@@ -80,32 +84,76 @@ abstract class Vehicle {
     }
   }
 
+  //checks if park in worked, creates parked in notification or opens dialog
+  void _checkAndReactParkInWorked(BuildContext context) {
+    if (this.parkedIn) {
+      //if park in worked: notification, that triggers parkOut method
+      Notifications.createNotificationClickable(
+          'Fahrzeug ' + this.name + ' ' + this.licensePlate,
+          'Hier klicken zum Ausparken',
+          this.inAppKey, (value) {
+        this.parkOut(context);
+        return null;
+      });
+    } else {
+      //if park in didn't work: connection to server failed
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
+    }
+  }
+
+  //return if vehicle needs to be parked out
+  bool needsToParkOut() {
+    return !this.parkingOut;
+  }
+
   //sends the park out inquiry to the parking garage management system
   void parkOut(BuildContext context) {
-    //check if vehicle needs to be parked in
-    if (!this.parkingOut) {
+    if (this.needsToParkOut()) {
       //cancelling park in if needed
       this.setParkIngIn(context, false);
-      //park out or cancel park in process
+
       this.setParkIngOut(context, true);
       print(this.name + ' wird ausgeparkt');
 
       //try to contact server
       ApiProvider.parkOut(this).then((value) {
         this.setParkedIn(context, false);
-        print('vehicle parked in: ' + this.parkedIn.toString());
+        print('vehicle parked out: ' + this.parkedIn.toString());
         //open main page
         Navigator.pushReplacementNamed(context, this.inAppKey);
-        ParkDialog.createParkOutFinishedDialog(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ParkDialog.getParkOutFinishedDialog(context);
+            });
 
         //vehicle not parking out anymore
       }).whenComplete(() {
         this.setParkIngOut(context, false);
-        //if park out didn't work: connection to server failed
-        if (this.parkedIn) {
-          NoConnectionDialog.createDialog(context);
-        }
+        _checkAndReactParkOutWorked(context);
       });
+    }
+  }
+
+  //checks if park out worked, creates parked out notification or opens dialog
+  void _checkAndReactParkOutWorked(BuildContext context) {
+    if (!this.parkedIn) {
+      //if park out worked: notification
+      Notifications.createNotification(
+          'Fahrzeug ' + this.name + ' erfolgreich ausgeparkt',
+          'Ihr Fahrzeug steht in der '
+          'Übergabezone zum Abholen bereit');
+    } else {
+      //if park out didn't work: connection to server failed
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
     }
   }
 

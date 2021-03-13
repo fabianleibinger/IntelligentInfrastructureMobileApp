@@ -6,8 +6,10 @@ import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //defines the different park-related dialogs
 class ParkDialog {
-  static createParkInDialog(BuildContext context) {
-    return Constants.createAlertDialog(
+
+  //returns dialog, use prior to park in page
+  static getParkInDialog(BuildContext context) {
+    return Constants.getAlertDialog(
         context,
         AppLocalizations.of(context).parkDialogParkInTitle,
         AppLocalizations.of(context).parkDialogParkInContent,
@@ -16,8 +18,9 @@ class ParkDialog {
         vehicle.inAppKey + Routes.parkIn);
   }
 
-  static createParkOutDialog(BuildContext context) {
-    return Constants.createAlertDialogNoTitle(
+  //returns dialog, use prior to park out page
+  static getParkOutDialog(BuildContext context) {
+    return Constants.getAlertDialogNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutContent,
         AppLocalizations.of(context).parkDialogCancelButton,
@@ -25,8 +28,9 @@ class ParkDialog {
         vehicle.inAppKey + Routes.parkOut);
   }
 
-  static createParkInCancelDialog(BuildContext context) {
-    return Constants.createAlertDialogNoTitle(
+  //returns dialog, use prior to park out page cancel park in
+  static getParkInCancelDialog(BuildContext context) {
+    return Constants.getAlertDialogNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkCancelContent,
         AppLocalizations.of(context).parkDialogBackButton,
@@ -34,8 +38,9 @@ class ParkDialog {
         vehicle.inAppKey + Routes.parkOut);
   }
 
-  static createParkOutFinishedDialog(BuildContext context) {
-    return Constants.createAlertDialogOneBackButtonNoTitle(
+  //returns dialog, use after park out finished
+  static getParkOutFinishedDialog(BuildContext context) {
+    return Constants.getAlertDialogOneBackButtonNoTitle(
         context,
         AppLocalizations.of(context).parkDialogParkOutFinishedContent,
         AppLocalizations.of(context).dialogFinishedButton);
