@@ -157,7 +157,7 @@
     "@scanQRDialogTitle": {
         "description": "Title in vehicle QR dialog"
     },
-    "scanQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / sdie Fahrzeuge haben?",
+    "scanQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / die Fahrzeuge haben?",
     "@scanQRDialogContent": {
         "description": "Text body in vehicle QR dialog"
     },
