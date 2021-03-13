@@ -75,8 +75,9 @@ class Notifications {
   }
 
   static bool _checkEnabled() {
-    _getEnabledValues();
-    return _enabled;
+    //_getEnabledValues();
+    //todo change to enabled
+    return true;
   }
 
   static bool _checkEnabledForCharge() {
@@ -92,7 +93,7 @@ class Notifications {
   //gets values for the enabled attributes from Settings
   static _getEnabledValues() {
     _enabled =
-        Settings().getBool(SettingsPage.notificationSettingKey, false) ?? false;
+        Settings().getBool(SettingsPage.notificationSettingKey, true) ?? false;
     _enabledForPark =
         Settings().getBool(SettingsPage.notificationParkSettingKey, false) ??
             false;

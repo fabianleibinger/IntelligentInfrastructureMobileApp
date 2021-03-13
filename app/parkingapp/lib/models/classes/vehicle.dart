@@ -67,19 +67,7 @@ abstract class Vehicle {
           //vehicle not parking in anymore
         }).whenComplete(() {
           this.setParkIngIn(context, false);
-          if (this.parkedIn) {
-            //if park in worked: notification
-            //TODO redirect to correct page (depends on vehicle)
-            Notifications.createNotification(
-                'Fahrzeug ' + this.licensePlate, 'Hier klicken zum Ausparken');
-          } else {
-            //if park in didn't work: connection to server failed
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return NoConnectionDialog.getDialog(context);
-                });
-          }
+          _checkAndReactParkInWorked(context);
         });
       } else {
         //no parking spots available
@@ -93,6 +81,27 @@ abstract class Vehicle {
     } else {
       //vehicle is already parked in
       print('vehicle ' + this.name + ' is already parked in');
+    }
+  }
+
+  //checks if park in worked, creates parked in notification or opens dialog
+  void _checkAndReactParkInWorked(BuildContext context) {
+    if (this.parkedIn) {
+      //if park in worked: notification, that triggers parkOut method
+      Notifications.createNotificationClickable(
+          'Fahrzeug ' + this.name + ' ' + this.licensePlate,
+          'Hier klicken zum Ausparken',
+          this.inAppKey, (value) {
+        this.parkOut(context);
+        return null;
+      });
+    } else {
+      //if park in didn't work: connection to server failed
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
     }
   }
 
@@ -125,37 +134,28 @@ abstract class Vehicle {
         //vehicle not parking out anymore
       }).whenComplete(() {
         this.setParkIngOut(context, false);
-        if (!this.parkedIn) {
-          //if park out worked: notification
-          Notifications.createNotification(
-              'Fahrzeug erfolgreich ausgeparkt',
-              'Ihr Fahrzeug steht in der '
-                  'Übergabezone zum Abholen bereit');
-        } else {
-          //if park out didn't work: connection to server failed
-          showDialog(
-              context: context,
-              builder: (context) {
-                return NoConnectionDialog.getDialog(context);
-              });
-        }
+        _checkAndReactParkOutWorked(context);
       });
     }
   }
 
-  /*Future<dynamic> onSelectedNotification(String payload) async {
-    if (payload == 'ok') {
-      print('ok');
-      showDialog(
-        context: context,
-        builder: (context) {
-          return ParkDialog.getParkOutDialog(context);
-        },
-      );
+  //checks if park out worked, creates parked out notification or opens dialog
+  void _checkAndReactParkOutWorked(BuildContext context) {
+    if (!this.parkedIn) {
+      //if park out worked: notification
+      Notifications.createNotification(
+          'Fahrzeug ' + this.name + ' erfolgreich ausgeparkt',
+          'Ihr Fahrzeug steht in der '
+          'Übergabezone zum Abholen bereit');
     } else {
-      print('wrong payload');
+      //if park out didn't work: connection to server failed
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
     }
-  }*/
+  }
 
   //setter which includes database updating
   void setDatabaseID(BuildContext context, int id) {
