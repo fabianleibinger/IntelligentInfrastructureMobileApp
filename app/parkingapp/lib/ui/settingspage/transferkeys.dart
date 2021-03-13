@@ -5,6 +5,7 @@ import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/dialogs/scanqrdialog.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/qrpage.dart';
 
 class Transferkeys extends StatelessWidget {
@@ -48,11 +49,12 @@ class Transferkeys extends StatelessWidget {
                     if (vehicle.parkingIn || vehicle.parkingOut) {
                       NoConnectionDialog.createDialog(context);
                     }
+
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                QRPage(vehicle, true)));
+                                QRPage(vehicle)));
                     //ScanQRDialog.createVehicleQRDialog(context);
                   });
             },

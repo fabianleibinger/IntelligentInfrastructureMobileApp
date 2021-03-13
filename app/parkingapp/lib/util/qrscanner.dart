@@ -50,8 +50,7 @@ class _ScanState extends State<ScanScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  QRPage(null, true)));
+                              builder: (BuildContext context) => QRPage(null)));
                     },
                     child: Text(
                       barcode,

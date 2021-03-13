@@ -6,9 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class QRPage extends StatelessWidget {
   static const routeName = '/qrpage';
   final Vehicle vehicle;
-  final bool useOnDiffDevices;
-  const QRPage(Vehicle convertIntoVehicle, bool bool,
-      {Key key, this.vehicle, this.useOnDiffDevices})
+  const QRPage(Vehicle convertIntoVehicle, {Key key, this.vehicle})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -37,33 +35,27 @@ class QRPage extends StatelessWidget {
   }
 
   Widget scannableQR(Vehicle vehicle) {
-    if (vehicle != null) {
-      String data;
-      if (useOnDiffDevices) {
-        data = _getCompleteData();
-      } else {
-        data = _getData();
-      }
-      return QrImage(
-        data: data,
-        version: QrVersions.auto,
-        size: 300.0,
-      );
-    } else {
+    //if (vehicle != null) {
+    String data;
+
+    data = _getCompleteData();
+
+    return QrImage(
+      data: data,
+      version: QrVersions.auto,
+      size: 300.0,
+    );
+    /*} else {
       String data = "Nothing to show";
       return QrImage(
         data: data,
         version: QrVersions.auto,
         size: 300.0,
       );
-    }
+    }*/
   }
 
   String _getCompleteData() {
-    return vehicle.toMap().toString();
-  }
-
-  String _getData() {
     return vehicle.toMap().toString();
   }
 }

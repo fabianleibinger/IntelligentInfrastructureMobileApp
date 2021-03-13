@@ -98,9 +98,10 @@ class Main extends StatelessWidget {
         if (settings.name == Routes.transferkeys) {
           return MaterialPageRoute(builder: (context) => Transferkeys());
         }
-        if (settings.name == Routes.qrpage) {
-          return MaterialPageRoute(builder: (context) => QRPage(null, true));
-        }
+        //if (settings.name == Routes.qrpage) {
+        //return MaterialPageRoute(builder: (context) => QRPage(null));
+        //}
+
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
       },
