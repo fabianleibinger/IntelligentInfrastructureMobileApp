@@ -50,10 +50,11 @@ class _SettingsFormState extends State<SettingsForm> {
               ),
               SwitchSettingsTile(
                 settingKey: 'pushPark',
-                title: 'Einparkvorgang',
+                title: 'Parkvorgänge',
                 subtitle:
-                    'Push Benachrichtigungen bei abgeschlossenem Einparkvorgang',
+                    'Push Benachrichtigungen bei abgeschlossenen Parkvorgängen',
                 visibleIfKey: 'pushNotifications',
+
               ),
               ListTile(
                 title: Text('Passwort'),

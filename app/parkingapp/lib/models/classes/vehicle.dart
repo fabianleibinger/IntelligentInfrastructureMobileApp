@@ -69,7 +69,7 @@ abstract class Vehicle {
           this.setParkIngIn(context, false);
           if (this.parkedIn) {
             //if park in worked: notification
-            //TODO redirect to correct page
+            //TODO redirect to correct page (depends on vehicle)
             Notifications.createNotification(
                 'Fahrzeug ' + this.licensePlate, 'Hier klicken zum Ausparken');
           } else {

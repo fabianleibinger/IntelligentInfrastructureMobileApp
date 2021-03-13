@@ -4,6 +4,10 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 class Notifications {
   static FlutterLocalNotificationsPlugin localNotification;
 
+  static bool enabled;
+  static bool enabledForPark;
+  static bool enabledForCharge;
+
   //needs to be called in every method that creates a new notification.
   //sets the initial notification settings
   static _initialize() {
