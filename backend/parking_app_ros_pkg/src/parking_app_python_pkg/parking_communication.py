@@ -1,4 +1,4 @@
-from datetime import datetime
+import datetime
 import rospy
 import threading
 import enum
@@ -200,7 +200,7 @@ def generate_vehicle_message(park_in_parameters, vehicle_status):
         if park_in_parameters["parking_card"] == True:
             vehicle_message.park_preferences.parking_card = 1
         else:
-            vehicle_message.park_preferences.near_exit = 0
+            vehicle_message.park_preferences.parking_card = 0
     # TODO: Work with appropriate time format
     vehicle_message.entry_time = rospy.get_rostime()
     vehicle_message.status.status = vehicle_status
@@ -224,9 +224,17 @@ def generate_loading_message(park_in_parameters):
         loading_message.state_of_charge = int(park_in_parameters["state_of_charge"])
     if "charge_service_provider" in park_in_parameters:
         loading_message.preferred_charge_service_provider = park_in_parameters["charge_service_provider"]
-    # TODO: Implement by resolving to rospy.time
-    # if "charge_time_begin" in park_in_parameters:
-    # if "charge_time_end" in park_in_parameters:
+
+    charge_time_delimiter = ":"
+    if "charge_time_begin" in park_in_parameters and "charge_time_end" in park_in_parameters:
+        begin_hour_min = park_in_parameters["charge_time_begin"].split(charge_time_delimiter)
+        end_hour_min = park_in_parameters["charge_time_end"].split(charge_time_delimiter)
+        time_span = generate_charge_time_span(int(begin_hour_min[0]), int(begin_hour_min[1]),
+                                              int(end_hour_min[0]), int(end_hour_min[1]))
+        loading_message.preferred_charge_time_begin = rospy.Time.from_sec(
+            time_span[0].replace(tzinfo=datetime.timezone.utc).timestamp())
+        loading_message.preferred_charge_time_end = rospy.Time.from_sec(
+            time_span[1].replace(tzinfo=datetime.timezone.utc).timestamp())
     return loading_message
 
 
@@ -322,4 +330,56 @@ def request_current_position(app_id, number_plate):
                 'reached_position': reached_target_position}
     except rospy.ServiceException as service_exception:
         raise CommunicationRosServiceException(str(service_exception))
+
+
+def generate_charge_time_span(start_hour: int, start_minute: int, end_hour: int, end_minute: int):
+    """
+    This method generates a time span which modifies the vehicle´s charge process.
+    The time span will be the next clock hands´ stand with the borders of start and end.
+    The time span will be today or tomorrow.
+    :param start_hour: Time span not before HH:MM, HH in [0,24]
+    :param start_minute: Time span not before HH:MM, MM in [0,59]
+    :param end_hour: Time span not after HH:MM, HH in [0,24]
+    :param end_minute: Time span not after HH:MM, MM in [0,59]
+    :return: A list with first entry begin (type: time) and second entry end (type: time)
+    """
+    if start_hour > 24 or end_hour > 24 or start_minute > 59 or end_minute > 59 or\
+            (start_hour == 24 and start_minute > 0) or (end_hour == 24 and end_minute > 0):
+        raise KeyError("Not an appropriate time format for HH:MM.")
+
+    start_time = datetime.time(hour=start_hour, minute=start_minute)
+    end_time = datetime.time(hour=end_hour, minute=end_minute)
+    today = datetime.datetime.today()
+    tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+    current_time = datetime.time(hour=today.hour, minute=today.minute)
+
+    # if time span is unlimited (00:00-24:00)
+    if start_hour == 0 and start_minute == 0 and end_hour == 24 and end_minute == 0:
+        begin = datetime.datetime.combine(today, current_time)
+        end = datetime.datetime.combine(tomorrow, current_time)
+        return [begin, end]
+
+    # next time span fitting the limits of start and end time
+    if start_time <= end_time:  # start_time and end_time on same day
+        if current_time <= end_time:  # time span can be today
+            end = datetime.datetime.combine(today, end_time)
+            if current_time <= start_time:
+                begin = datetime.datetime.combine(today, start_time)
+            else:
+                begin = datetime.datetime.combine(today, current_time)
+        else:
+            begin = datetime.datetime.combine(tomorrow, start_time)
+            end = datetime.datetime.combine(tomorrow, end_time)
+    else:  # end_time refers to a time of tomorrow
+        if current_time <= end_time:
+            begin = datetime.datetime.combine(today, current_time)
+            end = datetime.datetime.combine(today, end_time)
+        else:
+            end = datetime.datetime.combine(tomorrow, end_time)
+            if current_time <= start_time:
+                begin = datetime.datetime.combine(today, start_time)
+
+            else:
+                begin = datetime.datetime.combine(today, current_time)
+    return [begin, end]
 
