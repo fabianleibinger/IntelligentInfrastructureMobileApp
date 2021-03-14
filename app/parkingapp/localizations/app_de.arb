@@ -89,6 +89,26 @@
     "@noConnectionDialogTitle": {
         "description": "Text for no connection dialog title"
     },
+    "notificationParkInTitle": "Fahrzeug ",
+    "@notificationParkInTitle": {
+        "description": "title of park in notification"
+    },
+    "notificationParkInBody": "Hier klicken zum Ausparken",
+    "@notificationParkInBody": {
+        "description": "body of park in notification"
+    },
+    "notificationParkOutTitleOne": "Fahrzeug ",
+    "@notificationParkInTitleOne": {
+        "description": "first title part of park out notification"
+    },
+    "notificationParkOutTitleTwo": " erfolgreich ausgeparkt",
+    "@notificationParkInTitleTwo": {
+        "description": "Second title part of park out notification"
+    },
+    "notificationParkOutBody": "Ihr Fahrzeug steht in der Übergabezone zum Abholen bereit",
+    "@notificationParkOutBody": {
+        "description": "body of park out notification"
+    },
     "networkButton": "Netzwerkeinstellungen öffnen",
     "@networkButton": {
         "description": "Text on network settings button"

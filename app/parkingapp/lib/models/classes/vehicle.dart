@@ -7,6 +7,7 @@ import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //cannot be instantiated
 abstract class Vehicle {
@@ -57,7 +58,7 @@ abstract class Vehicle {
     if (this.needsToParkIn()) {
       if (currentParkingGarage.vehicleSpecificSpotsAvailable(this)) {
         this.setParkIngIn(context, true);
-        print(this.name + ' wird eingeparkt');
+        print(this.name + ' parking in');
 
         //try to contact server
         ApiProvider.parkIn(this).then((value) {
@@ -95,8 +96,11 @@ abstract class Vehicle {
     if (this.parkedIn) {
       //if park in worked: notification, that triggers parkOut method
       Notifications.createNotificationClickable(
-          'Fahrzeug ' + this.name + ' ' + this.licensePlate,
-          'Hier klicken zum Ausparken',
+          AppLocalizations.of(context).notificationParkInTitle +
+              this.name +
+              ' ' +
+              this.licensePlate,
+          AppLocalizations.of(context).notificationParkInBody,
           this.inAppKey, (value) {
         this.parkOut(context);
         return null;
@@ -123,7 +127,7 @@ abstract class Vehicle {
       this.setParkIngIn(context, false);
 
       this.setParkIngOut(context, true);
-      print(this.name + ' wird ausgeparkt');
+      print(this.name + ' parking out');
 
       //try to contact server
       ApiProvider.parkOut(this).then((value) {
@@ -150,9 +154,10 @@ abstract class Vehicle {
     if (!this.parkedIn) {
       //if park out worked: notification
       Notifications.createNotification(
-          'Fahrzeug ' + this.name + ' erfolgreich ausgeparkt',
-          'Ihr Fahrzeug steht in der '
-          'Übergabezone zum Abholen bereit');
+          AppLocalizations.of(context).notificationParkOutTitleOne +
+              this.name +
+              AppLocalizations.of(context).notificationParkOutTitleTwo,
+          AppLocalizations.of(context).notificationParkOutBody);
     } else {
       //if park out didn't work: connection to server failed
       showDialog(
