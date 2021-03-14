@@ -143,7 +143,7 @@ def perform_park_in_request():
     After the park in request, the vehicle will be registered to the parking management system and the parking
     management system will select an appropriate parking spot.
     :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
-        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate;
+        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
         Optional JSON fields:  'charge_type' (string), 'load' (boolean), 'near_exit' (boolean)
         and 'parking_card' (boolean).
     :return: HTTP response with status code 200 and JSON fields 'parking_in', which is set to true if the parking garage
@@ -154,7 +154,7 @@ def perform_park_in_request():
         try:
             park_in_parameters = request.get_json()
             park_in_response = communication.communicate_park_in(park_in_parameters)
-            return jsonify({'parking_in': park_in_response["parking_in"],
+            return jsonify({'parking_in': park_in_response["parking"],
                             'longitude': park_in_response["longitude"],
                             'latitude': park_in_response["latitude"],
                             'load_vehicle': park_in_response["load_vehicle"]})
@@ -178,10 +178,24 @@ def perform_park_out_request():
     """
     This app route is called when an app user wants to park his vehicle out from the parking garage.
     The request must provide information about the vehicle to allow an identification.
-    :return: Coordinates of the drop off zone
+    After the park out request, the parking management system will locate the vehicle and provide the coordinates of
+    the zone where the car can be picked-up.
+    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
+        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
+    :return: HTTP response with status code 200 and JSON fields 'parking_out', which is set to true if the parking
+        garage could locate the vehicle, 'longitude' and 'latitude' representing the coordinates of the transfer zone.
     """
-    # TODO: Implement park out
-    return
+    if request.is_json:
+        try:
+            park_out_parameters = request.get_json()
+            park_out_response = communication.communicate_park_out(park_out_parameters)
+            return jsonify({'parking_out': park_out_response["parking"],
+                            'longitude': park_out_response["longitude"],
+                            'latitude': park_out_response["latitude"]})
+        except communication.InternalCommunicationException as e:
+            return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
+    else:
+        return Response({'Request had no JSON fields.'}, status=406)
 
 
 @app.route('/parkout', methods=['POST'])
@@ -245,4 +259,5 @@ def perform_reset_database():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 

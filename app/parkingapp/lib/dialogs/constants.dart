@@ -88,8 +88,8 @@ class Constants {
   }
 
   //creates a button. [nextPage] defines the page to be called by button
-  static createFlatButton(
-      BuildContext context, Color color, String text, String nextPage) {
+  static createFlatButton(BuildContext context, Color color, String text,
+      String nextPage) {
     return FlatButton(
       textColor: color,
       onPressed: () => Navigator.pushReplacementNamed(context, nextPage),
