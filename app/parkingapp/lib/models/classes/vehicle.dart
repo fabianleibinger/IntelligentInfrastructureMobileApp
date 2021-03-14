@@ -61,6 +61,12 @@ abstract class Vehicle {
 
         //try to contact server
         ApiProvider.parkIn(this).then((value) {
+          /*while (!this.parkedIn) {
+            //TODO add functionality
+            ApiProvider.getPosition(this).then((value) => null);
+            ApiProvider.getParkedIn(this).then((value) => null);
+          }*/
+          //TODO remove
           this.setParkedIn(context, true);
           print('vehicle parked in: ' + this.parkedIn.toString());
 

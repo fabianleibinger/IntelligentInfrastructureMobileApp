@@ -100,12 +100,14 @@ class ApiProvider {
   //TODO add body
   //tries to get parked in confirmation
   static Future<Map<String, dynamic>> getParkedIn(Vehicle vehicle) async {
-    final response = await http.post(
-      "http://10.0.2.2:2525/parkedIn",
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-    ).timeout(_timeOutAfter);
+    final response = await http
+        .post("http://10.0.2.2:2525/parkedIn",
+            headers: <String, String>{
+              'Content-Type': 'application/json; charset=UTF-8',
+            },
+            body: jsonEncode(
+                {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate}))
+        .timeout(_timeOutAfter);
     if (response.statusCode == httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
