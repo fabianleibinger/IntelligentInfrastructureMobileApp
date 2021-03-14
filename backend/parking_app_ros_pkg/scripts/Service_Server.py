@@ -33,10 +33,14 @@ def handle_request_register(req):
     :return: RegisterVehicleRequestResponse
     """
     response = RegisterVehicleRequestResponse()
-    response.vehicle_status.status = 1  # Parking in
+    response.vehicle_status.status = req.info.status.status
     response.pms_id = 222
-    response.target_parking_position.longitude = 8.4202020245
-    response.target_parking_position.latitude = 49.0141414141
+    if req.info.status.status == 1: # park in
+        response.target_parking_position.longitude = 8.4202020245
+        response.target_parking_position.latitude = 49.0141414141
+    if req.info.status.status == 3:  # park out
+        response.target_parking_position.longitude = 8.4204040404
+        response.target_parking_position.latitude = 49.013999999
     if req.info.loadable.load_during_parking:
         response.load_vehicle = True
     return response
@@ -69,4 +73,5 @@ def start_server():
 if __name__ == "__main__":
     # Entry point of the programme. The ROS service server will be setup.
     start_server()
+
 

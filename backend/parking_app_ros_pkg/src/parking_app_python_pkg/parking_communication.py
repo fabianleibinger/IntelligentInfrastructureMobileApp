@@ -130,16 +130,33 @@ def request_capacities(free: bool):
 
 
 def communicate_park_in(park_in_parameters):
+    return register_vehicle_to_pms(True, park_in_parameters)
+
+
+def communicate_park_out(park_out_parameters):
+    return register_vehicle_to_pms(False, park_out_parameters)
+
+
+def register_vehicle_to_pms(park_in: bool, vehicle_parameters):
     """
-    This method should be called when the flask server retrieves a park in request.
-    From the given parameters, it generates a suitable ROS message and calls ROS service RegisterVehicleRequest.
-    If the vehicle could be registered successfully, the parking management system chooses an appropriate parking spots
-    and communicates its coordinates.
-    :param park_in_parameters: A dictionary providing values which fit the VehicleInformationMsg
-    :return: A park in response @see: generate_park_in_response()
-    :exception: CommunicationRosServiceException if the ROS service is unavailable
-    """
-    vehicle_message = generate_vehicle_message(park_in_parameters, vehicle_status=0)
+        This method should be called when the flask server retrieves a park in or park out request.
+        From the given parameters, it generates a suitable ROS message and calls ROS service RegisterVehicleRequest.
+        If the vehicle could be registered successfully, the parking management system chooses an appropriate parking
+        spot (for park in) and communicates its coordinates or communicates the coordinates of the transfer zone.
+        The parking management system can differ between the request by VehicleStatusMsg.
+        :param park_in: True if the vehicle should be parked in. False if park out
+        :param vehicle_parameters: A dictionary providing values which fit the VehicleInformationMsg
+        :return: A parking response @see: generate_park_response()
+        :exception: CommunicationRosServiceException if the ROS service is unavailable
+        """
+    if park_in:
+        vehicle_message = generate_vehicle_message(
+            vehicle_parameters, vehicle_status=VehicleStatus.status_parking_in.value)
+        vehicle_message.entry_time = rospy.get_rostime()
+    else:  # park out
+        vehicle_message = generate_vehicle_message(
+            vehicle_parameters, vehicle_status=VehicleStatus.status_parking_out.value)
+        vehicle_message.pickup_time = rospy.get_rostime()
     try:
         rospy.wait_for_service('register_vehicle_request', max_secs_to_wait_for_ros_service)
     except rospy.exceptions.ROSException as ros_exception:
@@ -147,65 +164,77 @@ def communicate_park_in(park_in_parameters):
     try:
         register_vehicle_request = rospy.ServiceProxy('register_vehicle_request', RegisterVehicleRequest)
         response = register_vehicle_request(vehicle_message)
-        return generate_park_in_response(response, vehicle_message.identifiers.app_id)
+        return generate_park_response(response, vehicle_message.identifiers.app_id)
     except rospy.ServiceException as service_exception:
         raise CommunicationRosServiceException(str(service_exception))
 
 
-def generate_vehicle_message(park_in_parameters, vehicle_status):
+def generate_vehicle_message(vehicle_parameters, vehicle_status):
     """
     This method generates a VehicleInformationMsg from the given parameters.
     There are necessary and optional parameters. If an optional parameter is not given, the value will be default.
-    :param park_in_parameters: A dictionary which must have following keys:
+    :param vehicle_parameters: A dictionary which must have following keys:
         'id', 'number_plate', 'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate'
         @see: VehicleIdentificationMsg & VehicleDimensionsMsg
         and can have following keys: 'charge_type', 'near_exit', 'parking_card'
         @see: ParkPreferencesMsg
     :param vehicle_status: @see: VehicleStatus
     :return: VehicleInformationMsg generated from the parameters
-    :exception: InternatCommunicationException if a necessary parameter is missing.
+    :exception: InternalCommunicationException if a necessary parameter is missing.
     """
     vehicle_message = VehicleInformationMsg()
     try:
-        vehicle_message.identifiers.app_id = int(park_in_parameters["id"])
-        vehicle_message.identifiers.number_plate = park_in_parameters["number_plate"]
-        vehicle_message.dimensions.length = float(park_in_parameters["length"])
-        vehicle_message.dimensions.width = float(park_in_parameters["width"])
-        vehicle_message.dimensions.turning_radius = float(park_in_parameters["turning_radius"])
-        vehicle_message.dimensions.dist_rear_axle_numberplate = float(park_in_parameters["dist_rear_axle_numberplate"])
+        vehicle_message.identifiers.app_id = int(vehicle_parameters["id"])
+        vehicle_message.identifiers.number_plate = vehicle_parameters["number_plate"]
+        vehicle_message.dimensions.length = float(vehicle_parameters["length"])
+        vehicle_message.dimensions.width = float(vehicle_parameters["width"])
+        vehicle_message.dimensions.turning_radius = float(vehicle_parameters["turning_radius"])
+        vehicle_message.dimensions.dist_rear_axle_numberplate = float(vehicle_parameters["dist_rear_axle_numberplate"])
     except KeyError as keyErrorReadingJSON:
         raise InternalCommunicationException(str(keyErrorReadingJSON))
 
-    if "charge_type" in park_in_parameters:
-        if park_in_parameters["charge_type"] == "electric":
-            vehicle_message.type.type = ChargeableType.type_electric.value
-        elif park_in_parameters["charge_type"] == "electric_fast":
-            vehicle_message.type.type = ChargeableType.type_electric_fast.value
-        elif park_in_parameters["charge_type"] == "electric_inductive":
-            vehicle_message.type.type = ChargeableType.type_electric_inductive.value
-    else:
-        vehicle_message.type.type = ChargeableType.type_none.value
+    try:
+        vehicle_message.identifiers.pms_id = get_corresponding_pms_id(vehicle_message.identifiers.app_id)
+    except VehicleIdentificationException:
+        pass  # Parking management system´s ID unset
 
-    if vehicle_message.type.type != 0 and "load" in park_in_parameters:
-        loading_message = generate_loading_message(park_in_parameters)
-        vehicle_message.loadable = loading_message
-
-    if "near_exit" in park_in_parameters:
-        if park_in_parameters["near_exit"] == True:
-            vehicle_message.park_preferences.near_exit = 1
-        else:
-            vehicle_message.park_preferences.near_exit = 0
-
-    if "parking_card" in park_in_parameters:
-        if park_in_parameters["parking_card"] == True:
-            vehicle_message.park_preferences.parking_card = 1
-        else:
-            vehicle_message.park_preferences.parking_card = 0
-    # TODO: Work with appropriate time format
-    vehicle_message.entry_time = rospy.get_rostime()
+    vehicle_message = add_optional_vehicle_parameters(vehicle_parameters, vehicle_message)
     vehicle_message.status.status = vehicle_status
 
     return vehicle_message
+
+
+def add_optional_vehicle_parameters(vehicle_parameters, vehicle_message):
+    """
+    This method adds the values from the optional vehicle parameters to the given vehicle message.  
+    :param vehicle_parameters: dictionary with keys 'charge_type', 'near_exit', 'parking_card'
+    :param vehicle_message: The VehicleInformationMsg which should be modified
+    :return: VehicleInformationMsg as a combination of param vehicle_message and values from vehicle_parameters
+    """
+    modified_vehicle_message = vehicle_message
+    if "charge_type" in vehicle_parameters:
+        if vehicle_parameters["charge_type"] == "electric":
+            modified_vehicle_message.type.type = ChargeableType.type_electric.value
+        elif vehicle_parameters["charge_type"] == "electric_fast":
+            modified_vehicle_message.type.type = ChargeableType.type_electric_fast.value
+        elif vehicle_parameters["charge_type"] == "electric_inductive":
+            modified_vehicle_message.type.type = ChargeableType.type_electric_inductive.value
+    else:
+        modified_vehicle_message.type.type = ChargeableType.type_none.value
+
+    if modified_vehicle_message.type.type != 0 and "load" in vehicle_parameters:
+        loading_message = generate_loading_message(vehicle_parameters)
+        modified_vehicle_message.loadable = loading_message
+
+    if "near_exit" in vehicle_parameters:
+        if vehicle_parameters["near_exit"] == True:
+            modified_vehicle_message.park_preferences.near_exit = 1
+
+    if "parking_card" in vehicle_parameters:
+        if vehicle_parameters["parking_card"] == True:
+            modified_vehicle_message.park_preferences.parking_card = 1
+
+    return modified_vehicle_message
 
 
 def generate_loading_message(park_in_parameters):
@@ -238,24 +267,27 @@ def generate_loading_message(park_in_parameters):
     return loading_message
 
 
-def generate_park_in_response(response_from_pms, app_id):
+def generate_park_response(response_from_pms, app_id):
     """
     This method generates a dictionary from the RegisterVehicleRequestResponse.
     If the vehicle was successfully registered and the parking management system started the park process,
-    this method provides information about the target parking position and whether the vehicle will be charged.
+    this method provides information about the target parking or transfer position and whether the vehicle will be
+    charged.
     :param response_from_pms: RegisterVehicleRequestResponse
     :param app_id: the identification used in the parking app to identify this vehicle
-    :return: A dictionary with keys 'parking_in', 'load_vehicle' (both boolean), 'longitude' and 'latitude'
-        (both double, coordinates of the target parking position, NaN if registration failed).
+    :return: A dictionary with keys 'parking', 'load_vehicle' (both boolean), 'longitude' and 'latitude'
+        (both double, coordinates of the target parking position if park in process or of the transfer zone if park out
+        process, NaN if registration failed).
     """
-    if response_from_pms.vehicle_status.status == VehicleStatus.status_parking_in.value:
+    if response_from_pms.vehicle_status.status == VehicleStatus.status_parking_in.value\
+            or response_from_pms.vehicle_status.status == VehicleStatus.status_parking_out.value:
         map_vehicle_ids(app_id, response_from_pms.pms_id)
-        return {'parking_in': True,
+        return {'parking': True,
                 'longitude': response_from_pms.target_parking_position.longitude,
                 'latitude': response_from_pms.target_parking_position.latitude,
                 'load_vehicle': response_from_pms.load_vehicle}
     else:
-        return {'parking_in': False,
+        return {'parking': False,
                 'longitude': float('NaN'),
                 'latitude': float('NaN'),
                 'load_vehicle': False}
