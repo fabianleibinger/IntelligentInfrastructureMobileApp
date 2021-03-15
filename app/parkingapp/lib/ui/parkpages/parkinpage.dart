@@ -134,20 +134,26 @@ class _ParkInPageState extends State<ParkInPage> {
           //TODO add position of coordinate
           final box = keyContext.findRenderObject() as RenderBox;
           final pos = box.localToGlobal(Offset.zero);
+          //icon (done here for dimensions)
+          double _iconSize = 16;
+          Container _icon = Container(
+              width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
           //scale the icons position
           double iconOffsetHeight =
               (box.size.height / _topRightAdjusted.lattitude) *
-                  _vehiclePositionAdjusted.lattitude;
+                      _vehiclePositionAdjusted.lattitude +
+                  (_iconSize / 2);
           double iconOffsetWidth =
               (box.size.width / _topRightAdjusted.longitude) *
-                  _vehiclePositionAdjusted.longitude;
+                      _vehiclePositionAdjusted.longitude -
+                  (_iconSize / 2);
           //position the icon
           return Positioned(
             // pos.dy + box.size.height is the bottom left of the map
             //TODO account for Icon size
-            child: Icon(Icons.circle),
             top: pos.dy + box.size.height - iconOffsetHeight,
             left: iconOffsetWidth,
+            child: _icon,
           );
         }
         return Container();
