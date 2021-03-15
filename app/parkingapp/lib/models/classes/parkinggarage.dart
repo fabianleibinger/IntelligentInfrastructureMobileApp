@@ -6,8 +6,17 @@ class ParkingGarage {
   ParkingGarageType type;
   int freeParkingSpots;
   String image;
+  String map;
+  Coordinate bottomLeft, topRight;
 
-  ParkingGarage({this.name, this.type, this.freeParkingSpots, this.image});
+  ParkingGarage(
+      {this.name,
+      this.type,
+      this.freeParkingSpots,
+      this.image,
+      this.map,
+      this.bottomLeft,
+      this.topRight});
 
   int getFreeParkingSpots() {
     _updateFreeParkingSpots();
