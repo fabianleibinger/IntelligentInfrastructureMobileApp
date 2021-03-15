@@ -6,7 +6,7 @@ class ParkingGarage {
   int freeParkingSpots;
   String image;
 
-  ParkingGarage(this.name, this.type, this.freeParkingSpots, this.image);
+  ParkingGarage({this.name, this.type, this.freeParkingSpots, this.image});
 
   int getFreeParkingSpots() {
     _updateFreeParkingSpots();

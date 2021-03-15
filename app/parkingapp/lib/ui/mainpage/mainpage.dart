@@ -13,8 +13,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 
 Vehicle vehicle;
-ParkingGarage currentParkingGarage = ParkingGarage('Parkgarage Fasanengarten',
-    ParkingGarageType.Tiefgarage, 79, 'assets/parkgarage-fasanengarten.jpg');
+ParkingGarage currentParkingGarage = ParkingGarage(
+    name: 'Parkgarage Fasanengarten',
+    type: ParkingGarageType.Tiefgarage,
+    freeParkingSpots: 79,
+    image: 'assets/parkgarage-fasanengarten.jpg');
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
