@@ -35,7 +35,7 @@ class _ParkInPageState extends State<ParkInPage> {
       sticky.remove();
     }
     sticky = OverlayEntry(
-      builder: (context) => stickyBuilder(context),
+      builder: (context) => stickyBuilder(context, vehicle.inAppKey),
     );
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
@@ -85,6 +85,7 @@ class _ParkInPageState extends State<ParkInPage> {
             title: Text(currentParkingGarage.name),
             subtitle: Text(currentParkingGarage.type.toShortString()),
           ),
+          //add the map
           Expanded(
             child: ListView.builder(
                 controller: controller,
@@ -105,19 +106,45 @@ class _ParkInPageState extends State<ParkInPage> {
     );
   }
 
-  Widget stickyBuilder(BuildContext context) {
+  Widget stickyBuilder(BuildContext context, String inAppKey) {
+    //TODO move somewhere else
+    Coordinate bottomLeft =
+        Coordinate(lattitude: 49.01388810447, longitude: 8.41950527853);
+    Coordinate topRight =
+        Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234);
+    Coordinate vehiclePosition =
+        Coordinate(lattitude: 49.01431771428, longitude: 8.42011294615);
+
+    //assume 0x0 to be the bottom left
+    Coordinate _topRightAdjusted = Coordinate(
+        longitude: topRight.longitude - bottomLeft.longitude,
+        lattitude: topRight.lattitude - bottomLeft.lattitude);
+    print(_topRightAdjusted);
+    Coordinate _vehiclePositionAdjusted = Coordinate(
+        lattitude: topRight.lattitude - vehiclePosition.lattitude,
+        longitude: topRight.longitude - vehiclePosition.longitude);
+    print(_vehiclePositionAdjusted);
+
+    double scaleFactorHeight = 200 / _topRightAdjusted.lattitude;
+    double scaleFactorWidth = 300 / _topRightAdjusted.longitude;
+
     return AnimatedBuilder(
       animation: controller,
       builder: (_, Widget child) {
         final keyContext = stickyKey.currentContext;
         if (keyContext != null) {
           // widget is visible
+          //TODO add position of coordinate
           final box = keyContext.findRenderObject() as RenderBox;
           final pos = box.localToGlobal(Offset.zero);
           //position the icon
           return Positioned(
-            top: pos.dy + box.size.height,
-            left: 20,
+            // pos.dy + box.size.height is the bottom left of the map
+            //TODO account for Icon size
+            top: pos.dy +
+                box.size.height -
+                (scaleFactorHeight * _vehiclePositionAdjusted.lattitude),
+            left: scaleFactorWidth * _vehiclePositionAdjusted.longitude,
             child: Icon(Icons.circle),
           );
         }
