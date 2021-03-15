@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 
 class ParkingGarage {
@@ -16,5 +17,14 @@ class ParkingGarage {
   //sends the getFreeParkingSpots inquiry to the parking garage management system
   void _updateFreeParkingSpots() {
     //TODO add inquiry for parking spots
+  }
+}
+
+class Coordinate {
+  final double lattitude, longitude;
+  Coordinate({@required this.lattitude, @required this.longitude});
+
+  toString() {
+    return lattitude.toString() + ', ' + longitude.toString();
   }
 }

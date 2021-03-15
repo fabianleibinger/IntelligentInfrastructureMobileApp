@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -159,14 +160,5 @@ class _ParkInPageState extends State<ParkInPage> {
         return Container();
       },
     );
-  }
-}
-
-class Coordinate {
-  final double lattitude, longitude;
-  Coordinate({@required this.lattitude, @required this.longitude});
-
-  toString() {
-    return lattitude.toString() + ', ' + longitude.toString();
   }
 }
