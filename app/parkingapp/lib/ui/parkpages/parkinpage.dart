@@ -107,6 +107,7 @@ class _ParkInPageState extends State<ParkInPage> {
     );
   }
 
+  //the vehicle icon overlay
   Widget stickyBuilder(BuildContext context, String inAppKey) {
     //TODO move somewhere else
     Coordinate bottomLeft =
