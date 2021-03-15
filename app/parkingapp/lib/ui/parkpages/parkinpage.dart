@@ -121,12 +121,9 @@ class _ParkInPageState extends State<ParkInPage> {
         lattitude: topRight.lattitude - bottomLeft.lattitude);
     print(_topRightAdjusted);
     Coordinate _vehiclePositionAdjusted = Coordinate(
-        lattitude: topRight.lattitude - vehiclePosition.lattitude,
-        longitude: topRight.longitude - vehiclePosition.longitude);
+        lattitude: vehiclePosition.lattitude - bottomLeft.lattitude,
+        longitude: vehiclePosition.longitude - bottomLeft.longitude);
     print(_vehiclePositionAdjusted);
-
-    double scaleFactorHeight = 200 / _topRightAdjusted.lattitude;
-    double scaleFactorWidth = 300 / _topRightAdjusted.longitude;
 
     return AnimatedBuilder(
       animation: controller,
@@ -137,15 +134,20 @@ class _ParkInPageState extends State<ParkInPage> {
           //TODO add position of coordinate
           final box = keyContext.findRenderObject() as RenderBox;
           final pos = box.localToGlobal(Offset.zero);
+          //scale the icons position
+          double iconOffsetHeight =
+              (box.size.height / _topRightAdjusted.lattitude) *
+                  _vehiclePositionAdjusted.lattitude;
+          double iconOffsetWidth =
+              (box.size.width / _topRightAdjusted.longitude) *
+                  _vehiclePositionAdjusted.longitude;
           //position the icon
           return Positioned(
             // pos.dy + box.size.height is the bottom left of the map
             //TODO account for Icon size
-            top: pos.dy +
-                box.size.height -
-                (scaleFactorHeight * _vehiclePositionAdjusted.lattitude),
-            left: scaleFactorWidth * _vehiclePositionAdjusted.longitude,
             child: Icon(Icons.circle),
+            top: pos.dy + box.size.height - iconOffsetHeight,
+            left: iconOffsetWidth,
           );
         }
         return Container();
