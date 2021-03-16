@@ -95,8 +95,7 @@ class _ParkInPageState extends State<ParkInPage> {
                   return Container(
                     key: stickyKey,
                     child: Image(
-                      image:
-                          AssetImage("assets/parkgarage-fasanengarten-map.jpg"),
+                      image: AssetImage(currentParkingGarage.map),
                       fit: BoxFit.fill,
                     ),
                   );
@@ -110,21 +109,21 @@ class _ParkInPageState extends State<ParkInPage> {
   //the vehicle icon overlay
   Widget stickyBuilder(BuildContext context, String inAppKey) {
     //TODO move somewhere else
-    Coordinate bottomLeft =
-        Coordinate(lattitude: 49.01388810447, longitude: 8.41950527853);
-    Coordinate topRight =
-        Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234);
     Coordinate vehiclePosition =
         Coordinate(lattitude: 49.01431771428, longitude: 8.42011294615);
 
     //assume 0x0 to be the bottom left
     Coordinate _topRightAdjusted = Coordinate(
-        longitude: topRight.longitude - bottomLeft.longitude,
-        lattitude: topRight.lattitude - bottomLeft.lattitude);
+        longitude: currentParkingGarage.topRight.longitude -
+            currentParkingGarage.bottomLeft.longitude,
+        lattitude: currentParkingGarage.topRight.lattitude -
+            currentParkingGarage.bottomLeft.lattitude);
     print(_topRightAdjusted);
     Coordinate _vehiclePositionAdjusted = Coordinate(
-        lattitude: vehiclePosition.lattitude - bottomLeft.lattitude,
-        longitude: vehiclePosition.longitude - bottomLeft.longitude);
+        lattitude: vehiclePosition.lattitude -
+            currentParkingGarage.bottomLeft.lattitude,
+        longitude: vehiclePosition.longitude -
+            currentParkingGarage.bottomLeft.longitude);
     print(_vehiclePositionAdjusted);
 
     return AnimatedBuilder(

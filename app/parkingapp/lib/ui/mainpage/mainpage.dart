@@ -17,7 +17,10 @@ ParkingGarage currentParkingGarage = ParkingGarage(
     name: 'Parkgarage Fasanengarten',
     type: ParkingGarageType.Tiefgarage,
     freeParkingSpots: 79,
-    image: 'assets/parkgarage-fasanengarten.jpg');
+    image: 'assets/parkgarage-fasanengarten.jpg',
+    map: "assets/parkgarage-fasanengarten-map.jpg",
+    bottomLeft: Coordinate(lattitude: 49.01388810447, longitude: 8.41950527853),
+    topRight: Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234));
 
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
