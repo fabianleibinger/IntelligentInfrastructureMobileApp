@@ -24,7 +24,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
+ catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -56,14 +56,18 @@ find_package(catkin REQUIRED COMPONENTS
 	CapacityMsg.msg
 	VehicleDimensionsMsg.msg
 	VehicleInformationMsg.msg
+	VehicleIdentificationMsg.msg
 	ParkingGarageInformation.msg
 	VehicleMotionInstructionMsg.msg
 	VehicleAutonomousGradeMsg.msg
 	VehicleTypeMsg.msg
 	VehicleStatusMsg.msg
+	VehicleLoadingMsg.msg
+	GeographicalPositionMsg.msg
 	PathMsg.msg
 	MultiPathMsg.msg
 	Pose2DStamped.msg
+	ParkPreferencesMsg.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -71,6 +75,7 @@ find_package(catkin REQUIRED COMPONENTS
  	FILES
 	CapacityRequest.srv
 	RegisterVehicleRequest.srv
+	VehiclePositionRequest.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -123,7 +128,7 @@ catkin_package(
 #  DEPENDS system_lib
 )
 
-catkin_install_python(PROGRAMS scripts/ParkApp_Flask_Server.py scripts/listener.py scripts/Service_Server.py
+catkin_install_python(PROGRAMS bin/parking_app_flask_server.py scripts/Service_Server.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

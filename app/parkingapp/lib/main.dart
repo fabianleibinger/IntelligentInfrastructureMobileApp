@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/ui/firststartpage/firststartpage.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/parkpages/parkinpage.dart';
 import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:provider/provider.dart';
+import 'models/classes/parkinggarage.dart';
+import 'models/enum/parkinggaragetype.dart';
 
 // Main: From here you call all u'r widgets.
 
@@ -28,7 +28,7 @@ void main() {
 
 class Main extends StatelessWidget {
   //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
-  static MaterialApp getMaterialApp(String initialroute) {
+  static MaterialApp getMaterialApp(String initialRoute) {
     return MaterialApp(
       //Initialize Localization
       localizationsDelegates: [
@@ -42,24 +42,23 @@ class Main extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,
       theme: themeData,
-      initialRoute: initialroute,
+      initialRoute: initialRoute,
       //Routing of app
       onGenerateRoute: (settings) {
-        //settings Route
-        if (settings.name == Routes.settings) {
-          return MaterialPageRoute(builder: (context) => SettingsPage());
-        }
-        //edit vehicles route
-        if (settings.name == Routes.vehicle) {
-          return MaterialPageRoute(builder: (context) => VehiclePage());
-        }
-        //parkInPage route
-        if (settings.name == Routes.parkIn) {
-          return MaterialPageRoute(builder: (context) => ParkInPage());
-        }
-        //parkOutPage route
-        if (settings.name == Routes.parkOut) {
-          return MaterialPageRoute(builder: (context) => ParkOutPage());
+        //basic routes
+        switch (settings.name) {
+          case Routes.vehicle:
+            return MaterialPageRoute(builder: (context) => VehiclePage());
+          case Routes.settings:
+            return MaterialPageRoute(builder: (context) => SettingsPage());
+          case Routes.agb:
+            return MaterialPageRoute(builder: (context) => AGB());
+          case Routes.createVehicle:
+            return MaterialPageRoute(builder: (context) => CreateVehicle());
+          case Routes.landingPage:
+            return MaterialPageRoute(builder: (context) => LandingPage());
+          case Routes.routeLandingPage:
+            return MaterialPageRoute(builder: (context) => RouteLandingPage());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
@@ -69,12 +68,22 @@ class Main extends StatelessWidget {
             inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
           print('vehicle: ' + uri.pathSegments.first);
           //TODO generate vehicle Page with inAppKey
-          return MaterialPageRoute(
-              builder: (context) => MainPage(uri.pathSegments.first));
-        }
-        //editVehicle route
-        if (settings.name == Routes.createVehicle) {
-          return MaterialPageRoute(builder: (context) => CreateVehicle());
+          if (uri.pathSegments.length == 2) {
+            //does only need the path behind /
+            if (uri.pathSegments.last == Routes.parkOut.split('/').last) {
+              //parkOut route
+              return MaterialPageRoute(
+                  builder: (context) => ParkOutPage(uri.pathSegments.first));
+            } else {
+              //parkIn route
+              return MaterialPageRoute(
+                  builder: (context) => ParkInPage(uri.pathSegments.first));
+            }
+          } else {
+            //mainPage route
+            return MaterialPageRoute(
+                builder: (context) => MainPage(uri.pathSegments.first));
+          }
         }
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
@@ -85,6 +94,16 @@ class Main extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    currentParkingGarage = ParkingGarage(
+        name: 'Parkgarage Fasanengarten',
+        type: ParkingGarageType.Tiefgarage,
+        freeParkingSpots: 79,
+        image: 'assets/parkgarage-fasanengarten.jpg',
+        map: "assets/parkgarage-fasanengarten-map.jpg",
+        bottomLeft:
+            Coordinate(lattitude: 49.01388810447, longitude: 8.41950527853),
+        topRight:
+            Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234));
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
     return MultiProvider(
       providers: [
@@ -95,7 +114,7 @@ class Main extends StatelessWidget {
           create: (_) => DrawerStateInfo(Routes.vehicle),
         )
       ],
-      child: getMaterialApp(Routes.vehicle),
+      child: getMaterialApp(Routes.routeLandingPage),
     );
   }
 }

@@ -89,7 +89,27 @@ ListTile generateTile(BuildContext context, String currentDrawer, String route,
       });
 }
 
+//generates vehicle tiles, displaying vehicle.name, and routing to next page
+ListTile generateVehicleTile(BuildContext context, String currentDrawer,
+    Vehicle vehicle, IconData icon) {
+  return ListTile(
+    selected: currentDrawer == vehicle.inAppKey ? true : false,
+    leading: Icon(icon),
+    title: Text(vehicle.name),
+    onTap: () {
+      currentDrawer == vehicle.inAppKey
+          ? Navigator.pop(context)
+          : Navigator.pushReplacementNamed(
+              context, Routes.returnCorrectRouteForVehicle(vehicle));
+      //This may be added to the Class itself to update the [DrawerStateInfo] every time the respective widget is built
+      Provider.of<DrawerStateInfo>(context, listen: false)
+          .setCurrentDrawer(vehicle.inAppKey);
+    },
+  );
+}
+
 Widget generateVehicles(BuildContext context, String currentDrawer) {
+  //TODO this needs to be removed or replaced by something that will not allways regcreate the drawer
   // get vehicleList
   DatabaseProvider.db.getVehicles().then((vehicleList) {
     BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));
@@ -126,8 +146,8 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
         vehicle.runtimeType == ChargeableVehicle
             ? icon = Icons.electric_car
             : icon = Icons.directions_car;
-        listTiles.add(generateTile(
-            context, currentDrawer, vehicle.inAppKey, vehicle.name, icon));
+        listTiles.add(generateVehicleTile(
+            context, currentDrawer, vehicle, icon));
       }
       return Column(
         children: listTiles,
@@ -143,6 +163,7 @@ class DrawerStateInfo with ChangeNotifier {
   DrawerStateInfo([this._currentDrawer]);
 
   String _currentDrawer;
+
   String get getCurrentDrawer => _currentDrawer;
 
   void setCurrentDrawer(String drawer) {

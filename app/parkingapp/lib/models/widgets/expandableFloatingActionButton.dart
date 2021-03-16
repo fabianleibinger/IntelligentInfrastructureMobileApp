@@ -2,6 +2,9 @@ import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/bloc/events/resetvehicles.dart';
+import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
+import 'package:parkingapp/dialogs/notifications.dart';
+import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -100,6 +103,7 @@ class _FancyFabState extends State<FancyFab>
                   2934.23,
                   1223.93,
                   4529.3,
+                  0,
                   0,
                   true,
                   false,

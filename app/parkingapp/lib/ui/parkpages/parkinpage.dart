@@ -1,12 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
+import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -17,7 +19,9 @@ import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 class ParkInPage extends StatefulWidget {
   static const String routeName = '/parkinpage';
 
-  const ParkInPage({Key key}) : super(key: key);
+  final String carInAppKey;
+
+  ParkInPage(this.carInAppKey);
 
   @override
   _ParkInPageState createState() => _ParkInPageState();
@@ -33,15 +37,34 @@ class _ParkInPageState extends State<ParkInPage> {
   void initState() {
     //add the vehicle overlay
     if (sticky != null) {
-      sticky.remove();
-    }
-    sticky = OverlayEntry(
-      builder: (context) => stickyBuilder(context, vehicle.inAppKey),
-    );
+      //get vehicle that shall be used from the list of vehicles
+      for (Vehicle currentVehicle
+          in BlocProvider.of<VehicleBloc>(context).state) {
+        sticky.remove();
+        if (currentVehicle.inAppKey == widget.carInAppKey)
+          vehicle = currentVehicle;
+      }
+      sticky = OverlayEntry(
+        builder: (context) => stickyBuilder(context, vehicle.inAppKey),
+      );
 
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Overlay.of(context).insert(sticky);
-    });
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        Overlay.of(context).insert(sticky);
+      });
+    }
+
+    //update parking spots
+    currentParkingGarage.updateAllFreeParkingSpots();
+
+    //init vehicle list
+    DataHelper.initVehicles(context);
+    BlocListener<VehicleBloc, List<Vehicle>>(
+      listener: (context, vehicleList) {
+        for (Vehicle vehicle in vehicleList) {
+          print(vehicle.toString());
+        }
+      },
+    );
 
     super.initState();
     //wait until build finished to call method
@@ -74,9 +97,17 @@ class _ParkInPageState extends State<ParkInPage> {
                   : Text(AppLocalizations.of(context).actionButtonCancelPark),
               backgroundColor: red,
               //park out dialog or cancel dialog
-              onPressed: vehicle.parkedIn
-                  ? () => ParkDialog.createParkOutDialog(context)
-                  : () => ParkDialog.createParkInCancelDialog(context),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      if (vehicle.parkedIn) {
+                        return ParkDialog.getParkOutDialog(context);
+                      } else {
+                        return ParkDialog.getParkInCancelDialog(context);
+                      }
+                    });
+              },
             );
           }),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

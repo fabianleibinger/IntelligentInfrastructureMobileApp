@@ -1,16 +1,15 @@
 # Vehicle information required to register to parking management system
 
-int16 id
+VehicleIdentificationMsg identifiers
 
 VehicleDimensionsMsg dimensions
 
 VehicleTypeMsg type
+VehicleLoadingMsg loadable
 
-float32 state_of_charge
+ParkPreferencesMsg park_preferences
 
 time entry_time
 time pickup_time
-
-VehicleAutonomousGradeMsg autonomous_grade
 
 VehicleStatusMsg status

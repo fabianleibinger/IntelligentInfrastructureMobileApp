@@ -5,9 +5,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //defines the qr code dialog
 class ScanQRDialog {
-  static createVehicleQRDialog(BuildContext context) {
+
+  //returns dialog, use prior to qr code creation
+  static getVehicleQRDialog(BuildContext context) {
     //TODO update next page
-    return Constants.createAlertDialog(
+    return Constants.getAlertDialog(
         context,
         AppLocalizations.of(context).scanQRDialogTitle,
         AppLocalizations.of(context).scanQRDialogContent,

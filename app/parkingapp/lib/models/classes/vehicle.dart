@@ -1,7 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:parkingapp/bloc/resources/apiprovider.dart';
+import 'package:parkingapp/dialogs/noconnectiondialog.dart';
+import 'package:parkingapp/dialogs/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
@@ -15,12 +15,12 @@ abstract class Vehicle {
   String inAppKey, name, licensePlate;
 
   //Dimensions
-  double width, height, length, turningCycle;
+  double width, height, length, turningCycle, distRearAxleLicensePlate;
 
   //Preferences
   bool nearExitPreference, parkingCard;
 
-  bool parkedIn;
+  bool parkedIn, parkingIn, parkingOut;
 
   //observer for parkedIn
   ValueNotifier<bool> parkedInObserver;
@@ -34,6 +34,8 @@ abstract class Vehicle {
       DatabaseProvider.COLUMN_HEIGHT: height.toDouble(),
       DatabaseProvider.COLUMN_LENGTH: length.toDouble(),
       DatabaseProvider.COLUMN_TURNING_CYCLE: turningCycle.toDouble(),
+      DatabaseProvider.COLUMN_DIST_REAR_AXLE_LICENSE_PLATE:
+          distRearAxleLicensePlate.toDouble(),
       DatabaseProvider.COLUMN_NEAR_EXIT_PREFERENCE: nearExitPreference ? 1 : 0,
       DatabaseProvider.COLUMN_PARKING_CARD: parkingCard ? 1 : 0,
       DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0
@@ -45,22 +47,36 @@ abstract class Vehicle {
     return map;
   }
 
+  //return if vehicle needs to be parked in
+  bool needsToParkIn() {
+    return !this.parkedIn && !this.parkingIn;
+  }
+
   //sends the park in inquiry to the parking garage management system
   void parkIn(BuildContext context) {
-    //check if vehicle needs to be parked in
-    if (!this.parkedIn) {
-      //try to park in
-      if (currentParkingGarage.getFreeParkingSpots() > 0) {
-
-        //TODO implement
-
+    if (this.needsToParkIn()) {
+      if (currentParkingGarage.vehicleSpecificSpotsAvailable(this)) {
+        this.setParkIngIn(context, true);
         print(this.name + ' wird eingeparkt');
-        this.setParkedIn(context, true);
-        print('vehicle parked in: ' + this.parkedIn.toString());
+
+        //try to contact server
+        ApiProvider.parkIn(this).then((value) {
+          this.setParkedIn(context, true);
+          print('vehicle parked in: ' + this.parkedIn.toString());
+
+          //vehicle not parking in anymore
+        }).whenComplete(() {
+          this.setParkIngIn(context, false);
+          _checkAndReactParkInWorked(context);
+        });
       } else {
         //no parking spots available
         print('no parking spots available');
-        ParkingGarageOccupiedDialog.createDialog(context);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ParkingGarageOccupiedDialog.getDialog(context);
+            });
       }
     } else {
       //vehicle is already parked in
@@ -68,16 +84,77 @@ abstract class Vehicle {
     }
   }
 
+  //checks if park in worked, creates parked in notification or opens dialog
+  void _checkAndReactParkInWorked(BuildContext context) {
+    if (this.parkedIn) {
+      //if park in worked: notification, that triggers parkOut method
+      Notifications.createNotificationClickable(
+          'Fahrzeug ' + this.name + ' ' + this.licensePlate,
+          'Hier klicken zum Ausparken',
+          this.inAppKey, (value) {
+        this.parkOut(context);
+        return null;
+      });
+    } else {
+      //if park in didn't work: connection to server failed
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
+    }
+  }
+
+  //return if vehicle needs to be parked out
+  bool needsToParkOut() {
+    return !this.parkingOut;
+  }
+
   //sends the park out inquiry to the parking garage management system
   void parkOut(BuildContext context) {
-    //park out or cancel park in process
+    if (this.needsToParkOut()) {
+      //cancelling park in if needed
+      this.setParkIngIn(context, false);
 
-    //TODO implement
+      this.setParkIngOut(context, true);
+      print(this.name + ' wird ausgeparkt');
 
-    print(this.name + ' wird ausgeparkt');
-    this.setParkedIn(context, false);
-    print('vehicle parked in: ' + this.parkedIn.toString());
-    ParkDialog.createParkOutFinishedDialog(context);
+      //try to contact server
+      ApiProvider.parkOut(this).then((value) {
+        this.setParkedIn(context, false);
+        print('vehicle parked out: ' + this.parkedIn.toString());
+        //open main page
+        Navigator.pushReplacementNamed(context, this.inAppKey);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return ParkDialog.getParkOutFinishedDialog(context);
+            });
+
+        //vehicle not parking out anymore
+      }).whenComplete(() {
+        this.setParkIngOut(context, false);
+        _checkAndReactParkOutWorked(context);
+      });
+    }
+  }
+
+  //checks if park out worked, creates parked out notification or opens dialog
+  void _checkAndReactParkOutWorked(BuildContext context) {
+    if (!this.parkedIn) {
+      //if park out worked: notification
+      Notifications.createNotification(
+          'Fahrzeug ' + this.name + ' erfolgreich ausgeparkt',
+          'Ihr Fahrzeug steht in der '
+          'Übergabezone zum Abholen bereit');
+    } else {
+      //if park out didn't work: connection to server failed
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
+    }
   }
 
   //setter which includes database updating
@@ -129,6 +206,12 @@ abstract class Vehicle {
   }
 
   //setter which includes database updating
+  void setDistRearAxleLicensePlate(BuildContext context, double distance) {
+    this.distRearAxleLicensePlate = distance;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating
   void setNearExitPreference(BuildContext context, bool nearExitPreference) {
     this.nearExitPreference = nearExitPreference;
     DataHelper.updateVehicle(context, this);
@@ -147,13 +230,26 @@ abstract class Vehicle {
     DataHelper.updateVehicle(context, this);
   }
 
+  //setter which includes database updating and observer updating
+  void setParkIngIn(BuildContext context, bool parkingIn) {
+    this.parkingIn = parkingIn;
+    DataHelper.updateVehicle(context, this);
+  }
+
+  //setter which includes database updating and observer updating
+  void setParkIngOut(BuildContext context, bool parkingOut) {
+    this.parkingOut = parkingOut;
+    DataHelper.updateVehicle(context, this);
+  }
+
   //setter for all dimensions which includes database updating
-  void setDimensions(BuildContext context, double height, double width,
-      double length, double turningCycle) {
+  void setDimensions(BuildContext context, double width, double height,
+      double length, double turningCycle, double distRearAxleLicensePlate) {
     this.width = width;
     this.height = height;
     this.length = length;
     this.turningCycle = turningCycle;
+    this.distRearAxleLicensePlate = distRearAxleLicensePlate;
     DataHelper.updateVehicle(context, this);
   }
 }
