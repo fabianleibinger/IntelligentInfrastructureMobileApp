@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/chargeablevehicle.dart';
+import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,10 +36,15 @@ class QRPage extends StatelessWidget {
   }
 
   Widget scannableQR(Vehicle vehicle) {
-    //if (vehicle != null) {
-    String data;
+    String data = 'type:';
 
-    data = _getCompleteData();
+    if (vehicle.runtimeType == StandardVehicle) {
+      data = data + 'standard,';
+    } else if (vehicle.runtimeType == ChargeableVehicle) {
+      data = data + 'chargeable,';
+    }
+
+    data = data + _getCompleteData();
 
     return QrImage(
       data: data,

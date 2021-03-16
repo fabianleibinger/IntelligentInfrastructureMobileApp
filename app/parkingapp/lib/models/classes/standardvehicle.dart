@@ -4,7 +4,8 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle extends Vehicle {
-  StandardVehicle(this.inAppKey,
+  StandardVehicle(
+      this.inAppKey,
       this.name,
       this.licensePlate,
       this.width,
@@ -21,7 +22,8 @@ class StandardVehicle extends Vehicle {
   }
 
   //private constructor: only called by fromMap() method, database defines databaseId
-  StandardVehicle._(this.databaseId,
+  StandardVehicle._(
+      this.databaseId,
       this.inAppKey,
       this.name,
       this.licensePlate,

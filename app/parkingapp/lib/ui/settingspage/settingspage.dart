@@ -4,6 +4,7 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/util/qrscanner.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 import 'package:parkingapp/routes/routes.dart';
 
@@ -84,6 +85,16 @@ class _SettingsFormState extends State<SettingsForm> {
                   onTap: () {
                     Navigator.pushNamed(context, Routes.agbPage);
                   }),
+              ListTile(
+                  title: Text("Daten importieren"),
+                  subtitle: Text(""),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => ScanScreen()));
+                  })
             ],
           ),
         ));

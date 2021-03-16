@@ -46,8 +46,6 @@ abstract class Vehicle {
     return map;
   }
 
-  static Vehicle fromMap(Map<String, dynamic> map) {}
-
   //sends the park in inquiry to the parking garage management system
   void parkIn(BuildContext context) {
     //check if vehicle needs to be parked in
