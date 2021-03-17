@@ -36,18 +36,6 @@ class _ParkInPageState extends State<ParkInPage> {
 
   @override
   void initState() {
-    //add the vehicle overlay
-    if (sticky != null) {
-      sticky.remove();
-    }
-    sticky = OverlayEntry(
-      builder: (context) => stickyBuilder(context, vehicle.inAppKey),
-    );
-
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      Overlay.of(context).insert(sticky);
-    });
-
     //update parking spots
     currentParkingGarage.updateAllFreeParkingSpots();
 
@@ -71,13 +59,6 @@ class _ParkInPageState extends State<ParkInPage> {
     //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
-  }
-
-  @override
-  void dispose() {
-    //remove the vehicle overlay
-    sticky.remove();
-    super.dispose();
   }
 
   //TODO: setState when parkedIn switches
@@ -119,28 +100,19 @@ class _ParkInPageState extends State<ParkInPage> {
             subtitle: Text(currentParkingGarage.type.toShortString()),
           ),
           //add the map
-          Expanded(
-            child: ListView.builder(
-                controller: controller,
-                itemCount: 1,
-                itemBuilder: (context, index) {
-                  return Container(
-                    key: stickyKey,
-                    child: Image(
-                      image: AssetImage(currentParkingGarage.map),
-                      fit: BoxFit.fill,
-                    ),
-                  );
-                }),
-          ),
+          getParkInAnimation(context: context)
         ],
       ),
     );
   }
 
   //the vehicle icon overlay
-  Widget stickyBuilder(BuildContext context, String inAppKey) {
-    //TODO move somewhere else
+  Stack getParkInAnimation({BuildContext context}) {
+    //TODO height must be calculated from aspect ratio of mapp
+    final double _width = MediaQuery.of(context).size.width;
+    final double _height = (200 * _width) / 244;
+    print(_width.toString() + ' x ' + _height.toString());
+
     Coordinate vehiclePosition =
         Coordinate(lattitude: 49.0143176865, longitude: 8.42011460801);
 
@@ -158,39 +130,33 @@ class _ParkInPageState extends State<ParkInPage> {
             currentParkingGarage.bottomLeft.longitude);
     print(_vehiclePositionAdjusted);
 
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (_, Widget child) {
-        final keyContext = stickyKey.currentContext;
-        if (keyContext != null) {
-          // widget is visible
-          //TODO add position of coordinate
-          final box = keyContext.findRenderObject() as RenderBox;
-          final pos = box.localToGlobal(Offset.zero);
-          //icon (done here for dimensions)
-          double _iconSize = 16;
-          Container _icon = Container(
-              width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
-          //scale the icons position
-          double iconOffsetHeight =
-              (box.size.height / _topRightAdjusted.lattitude) *
-                      _vehiclePositionAdjusted.lattitude +
-                  (_iconSize / 2);
-          double iconOffsetWidth =
-              (box.size.width / _topRightAdjusted.longitude) *
-                      _vehiclePositionAdjusted.longitude -
-                  (_iconSize / 2);
-          //position the icon
-          return Positioned(
-            // pos.dy + box.size.height is the bottom left of the map
-            //TODO account for Icon size
-            top: pos.dy + box.size.height - iconOffsetHeight,
-            left: iconOffsetWidth,
-            child: _icon,
-          );
-        }
-        return Container();
-      },
-    );
+    double _iconSize = 16;
+    Container _icon = Container(
+        width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
+    //scale the icons position
+    double iconOffsetHeight = (_height / _topRightAdjusted.lattitude) *
+            _vehiclePositionAdjusted.lattitude -
+        (_iconSize / 2);
+    double iconOffsetWidth = (_width / _topRightAdjusted.longitude) *
+            _vehiclePositionAdjusted.longitude -
+        (_iconSize / 2);
+
+    return Stack(alignment: Alignment.center, children: [
+      //map
+      Container(
+        width: _width,
+        height: _height,
+        child: Image(
+          image: AssetImage(currentParkingGarage.map),
+          fit: BoxFit.fill,
+        ),
+      ),
+      //icon
+      Positioned(
+        left: iconOffsetWidth,
+        bottom: iconOffsetHeight,
+        child: _icon,
+      ),
+    ]);
   }
 }
