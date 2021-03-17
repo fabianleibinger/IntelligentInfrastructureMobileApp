@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
-import 'package:parkingapp/dialogs/notifications.dart';
+import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
