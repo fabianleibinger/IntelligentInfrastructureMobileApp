@@ -155,7 +155,7 @@ abstract class Vehicle {
       //if park out worked: notification
       Notifications.createNotification(
           AppLocalizations.of(context).notificationParkOutTitleOne +
-              this.name +
+              this.name + ' ' + this.licensePlate +
               AppLocalizations.of(context).notificationParkOutTitleTwo,
           AppLocalizations.of(context).notificationParkOutBody);
     } else {
