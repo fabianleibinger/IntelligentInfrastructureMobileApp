@@ -56,6 +56,7 @@ class _ParkInPageState extends State<ParkInPage> {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
+    new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
 
     super.initState();
     //wait until build finished to call method
@@ -116,8 +117,6 @@ class _ParkInPageState extends State<ParkInPage> {
 
   //the vehicle icon overlay
   getParkInAnimation({BuildContext context}) {
-    //TODO this does not work how it should
-    new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
     //TODO height must be calculated from aspect ratio of mapp
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (1473 * _width) / 1000;
