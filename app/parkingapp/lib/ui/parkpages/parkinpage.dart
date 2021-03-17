@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/parkdialog.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -37,21 +38,15 @@ class _ParkInPageState extends State<ParkInPage> {
   void initState() {
     //add the vehicle overlay
     if (sticky != null) {
-      //get vehicle that shall be used from the list of vehicles
-      for (Vehicle currentVehicle
-          in BlocProvider.of<VehicleBloc>(context).state) {
-        sticky.remove();
-        if (currentVehicle.inAppKey == widget.carInAppKey)
-          vehicle = currentVehicle;
-      }
-      sticky = OverlayEntry(
-        builder: (context) => stickyBuilder(context, vehicle.inAppKey),
-      );
-
-      SchedulerBinding.instance.addPostFrameCallback((_) {
-        Overlay.of(context).insert(sticky);
-      });
+      sticky.remove();
     }
+    sticky = OverlayEntry(
+      builder: (context) => stickyBuilder(context, vehicle.inAppKey),
+    );
+
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      Overlay.of(context).insert(sticky);
+    });
 
     //update parking spots
     currentParkingGarage.updateAllFreeParkingSpots();
