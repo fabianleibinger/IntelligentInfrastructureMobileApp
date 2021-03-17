@@ -12,7 +12,6 @@ class Notifications {
   static String _androidDetailsLocalNotification = 'local notification';
   static String _androidDetailsBasicNotification = 'basic notification';
 
-  static bool _enabled;
   static bool _enabledForPark;
   static bool _enabledForCharge;
 
@@ -47,19 +46,17 @@ class Notifications {
 
   //creates notification with [title], [body]
   static Future createNotification(String title, String body) async {
-    if (_checkEnabled()) {
-      _initialize();
-      var androidDetails = new AndroidNotificationDetails(
-          _androidDetailsChannelID,
-          _androidDetailsLocalNotification,
-          _androidDetailsBasicNotification,
-          importance: Importance.high);
-      var iOSDetails = new IOSNotificationDetails();
-      var generalNotificationDetails =
-          new NotificationDetails(android: androidDetails, iOS: iOSDetails);
+    _initialize();
+    var androidDetails = new AndroidNotificationDetails(
+        _androidDetailsChannelID,
+        _androidDetailsLocalNotification,
+        _androidDetailsBasicNotification,
+        importance: Importance.high);
+    var iOSDetails = new IOSNotificationDetails();
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
-      await _localNotification.show(0, title, body, generalNotificationDetails);
-    }
+    await _localNotification.show(0, title, body, generalNotificationDetails);
   }
 
   //creates notification with [title], [body], [payload], [onSelectedNotification]
@@ -68,26 +65,18 @@ class Notifications {
       String body,
       String payload,
       Future<dynamic> Function(String) onSelectedNotification) async {
-    if (_checkEnabled()) {
-      _initializeClickable(onSelectedNotification);
-      var androidDetails = new AndroidNotificationDetails(
-          _androidDetailsChannelID,
-          _androidDetailsLocalNotification,
-          _androidDetailsBasicNotification,
-          importance: Importance.high);
-      var iOSDetails = new IOSNotificationDetails();
-      var generalNotificationDetails =
-          new NotificationDetails(android: androidDetails, iOS: iOSDetails);
+    _initializeClickable(onSelectedNotification);
+    var androidDetails = new AndroidNotificationDetails(
+        _androidDetailsChannelID,
+        _androidDetailsLocalNotification,
+        _androidDetailsBasicNotification,
+        importance: Importance.high);
+    var iOSDetails = new IOSNotificationDetails();
+    var generalNotificationDetails =
+        new NotificationDetails(android: androidDetails, iOS: iOSDetails);
 
-      await _localNotification.show(0, title, body, generalNotificationDetails,
-          payload: payload);
-    }
-  }
-
-  static bool _checkEnabled() {
-    //_getEnabledValues();
-    //todo change to enabled
-    return true;
+    await _localNotification.show(0, title, body, generalNotificationDetails,
+        payload: payload);
   }
 
   static bool _checkEnabledForCharge() {
@@ -102,8 +91,6 @@ class Notifications {
 
   //gets values for the enabled attributes from Settings
   static _getEnabledValues() {
-    _enabled =
-        Settings().getBool(SettingsPage.notificationSettingKey, true) ?? false;
     _enabledForPark =
         Settings().getBool(SettingsPage.notificationParkSettingKey, false) ??
             false;

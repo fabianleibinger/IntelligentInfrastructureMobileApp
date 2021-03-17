@@ -69,7 +69,8 @@ class StandardVehicle extends Vehicle {
   @override
   bool parkedIn;
 
-  Vehicle toElectricVehicle() {
+  //convert to ChargeableVehicle
+  Vehicle toChargeableVehicle() {
     return ChargeableVehicle(
         inAppKey,
         name,
@@ -85,6 +86,6 @@ class StandardVehicle extends Vehicle {
         false,
         '',
         TimeOfDay(hour: 0, minute: 0),
-        TimeOfDay(hour: 23, minute: 59));
+        TimeOfDay(hour: 0, minute: 0));
   }
 }

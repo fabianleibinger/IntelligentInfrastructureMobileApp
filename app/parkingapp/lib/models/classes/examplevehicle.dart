@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class ExampleVehicle {
   String name;
   double height, width, length, turningCycle, distRearAxleLicensePlate;

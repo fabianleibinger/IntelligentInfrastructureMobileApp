@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../global.dart';
-
 // With such a class u can define a widget that can be used as a list element
 
 class IntrayTodo extends StatelessWidget {
