@@ -7,4 +7,4 @@ The created system can be divided in a frontend in terms of an app, which can be
 ## Frontend: Flutter app
 Users of the intelligent infrastructure can use the services with an installable mobile application. The app was developed using Flutter and is a so-called cross-platform application meaning its source can be converted to both IOS and Android system´s code. Using this technology, we could combine the advantages of a native app being better performance and use of system´s internal services (e.g. push notifications) as well as the wide range of devices the app can be deployed on.
 
-##Backend: Python Flask server using ROS for communication
+## Backend: Python Flask server using ROS for communication
