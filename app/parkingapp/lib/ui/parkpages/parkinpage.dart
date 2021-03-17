@@ -125,52 +125,48 @@ class _ParkInPageState extends State<ParkInPage> {
 
     Coordinate vehiclePosition =
         Coordinate(lattitude: 49.0143176865, longitude: 8.42011460801);
-    return FutureBuilder(
-      future: ApiProvider.getPosition(vehicle),
-      builder: (context, value) {
-        //assume 0x0 to be the bottom left
-        Coordinate _topRightAdjusted = Coordinate(
-            longitude: currentParkingGarage.topRight.longitude -
-                currentParkingGarage.bottomLeft.longitude,
-            lattitude: currentParkingGarage.topRight.lattitude -
-                currentParkingGarage.bottomLeft.lattitude);
-        print(_topRightAdjusted);
-        Coordinate _vehiclePositionAdjusted = Coordinate(
-            lattitude: vehiclePosition.lattitude -
-                currentParkingGarage.bottomLeft.lattitude,
-            longitude: vehiclePosition.longitude -
-                currentParkingGarage.bottomLeft.longitude);
-        print(_vehiclePositionAdjusted);
 
-        double _iconSize = 16;
-        Container _icon = Container(
-            width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
-        //scale the icons position
-        double iconOffsetHeight = (_height / _topRightAdjusted.lattitude) *
-                _vehiclePositionAdjusted.lattitude -
-            (_iconSize / 2);
-        double iconOffsetWidth = (_width / _topRightAdjusted.longitude) *
-                _vehiclePositionAdjusted.longitude -
-            (_iconSize / 2);
+    //assume 0x0 to be the bottom left
+    Coordinate _topRightAdjusted = Coordinate(
+        longitude: currentParkingGarage.topRight.longitude -
+            currentParkingGarage.bottomLeft.longitude,
+        lattitude: currentParkingGarage.topRight.lattitude -
+            currentParkingGarage.bottomLeft.lattitude);
+    print(_topRightAdjusted);
+    Coordinate _vehiclePositionAdjusted = Coordinate(
+        lattitude: vehiclePosition.lattitude -
+            currentParkingGarage.bottomLeft.lattitude,
+        longitude: vehiclePosition.longitude -
+            currentParkingGarage.bottomLeft.longitude);
+    print(_vehiclePositionAdjusted);
 
-        return Stack(alignment: Alignment.center, children: [
-          //map
-          Container(
-            width: _width,
-            height: _height,
-            child: Image(
-              image: AssetImage(currentParkingGarage.map),
-              fit: BoxFit.fill,
-            ),
-          ),
-          //icon
-          Positioned(
-            left: iconOffsetWidth,
-            bottom: iconOffsetHeight,
-            child: _icon,
-          ),
-        ]);
-      },
-    );
+    double _iconSize = 16;
+    Container _icon = Container(
+        width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
+    //scale the icons position
+    double iconOffsetHeight = (_height / _topRightAdjusted.lattitude) *
+            _vehiclePositionAdjusted.lattitude -
+        (_iconSize / 2);
+    double iconOffsetWidth = (_width / _topRightAdjusted.longitude) *
+            _vehiclePositionAdjusted.longitude -
+        (_iconSize / 2);
+
+    return Stack(alignment: Alignment.center, children: [
+      //map
+      Container(
+        width: _width,
+        height: _height,
+        child: Image(
+          image: AssetImage(currentParkingGarage.map),
+          fit: BoxFit.fill,
+        ),
+      ),
+      //icon
+      Positioned(
+        left: iconOffsetWidth,
+        bottom: iconOffsetHeight,
+        child: _icon,
+      ),
+    ]);
   }
 }
