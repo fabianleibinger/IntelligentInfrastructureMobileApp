@@ -92,17 +92,6 @@ class _SettingsFormState extends State<SettingsForm> {
                   }),
               Divider(),
               ListTile(
-                  title: Text("Daten importieren"),
-                  subtitle: Text(""),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => ScanScreen()));
-                  }),
-              Divider(),
-              ListTile(
                 title: Text('Push Notifications'),
                 onTap: () {
                   AppSettings.openNotificationSettings();
