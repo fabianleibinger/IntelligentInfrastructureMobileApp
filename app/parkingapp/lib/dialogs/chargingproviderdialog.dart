@@ -24,16 +24,6 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
     }
   }
 
-  //saves the selected tile and changes vehicles value
-  void _setSelectedRadioTile(ChargingProvider value) {
-    setState(() {
-      _selectedRadioTile = value;
-    });
-    if (vehicle.runtimeType == ChargeableVehicle) {
-      _setChargingProvider(vehicle);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
@@ -57,6 +47,16 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
               })
       ],
     );
+  }
+
+  //saves the selected tile and changes vehicles value
+  void _setSelectedRadioTile(ChargingProvider value) {
+    setState(() {
+      _selectedRadioTile = value;
+    });
+    if (vehicle.runtimeType == ChargeableVehicle) {
+      _setChargingProvider(vehicle);
+    }
   }
 
   //selects the right charging Provider value for _selectedRadioTile
