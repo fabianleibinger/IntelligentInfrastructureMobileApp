@@ -102,7 +102,13 @@ class _ParkInPageState extends State<ParkInPage> {
             subtitle: Text(currentParkingGarage.type.toShortString()),
           ),
           //add the map
-          getParkInAnimation(context: context)
+          Expanded(
+            child: ListView(
+              children: [
+                getParkInAnimation(context: context),
+              ],
+            ),
+          )
         ],
       ),
     );
