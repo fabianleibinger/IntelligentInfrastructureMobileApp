@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -108,6 +110,7 @@ class _ParkInPageState extends State<ParkInPage> {
 
   //the vehicle icon overlay
   Stack getParkInAnimation({BuildContext context}) {
+    new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
     //TODO height must be calculated from aspect ratio of mapp
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (200 * _width) / 244;
