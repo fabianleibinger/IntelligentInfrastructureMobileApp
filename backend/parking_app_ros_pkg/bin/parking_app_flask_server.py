@@ -2,6 +2,11 @@ import os
 import configparser
 from flask import Flask, jsonify, request, Response, redirect
 
+# database python module provides the logic for the IDMapping
+# for app_id and pms_id
+import parking_app_python_pkg.database as id_mapping
+from parking_app_python_pkg.database import db as database_vehicle_ids
+
 # parking_communication python module provides the logic for
 # communication between flask server and ROS nodes
 import parking_app_python_pkg.parking_communication as communication
@@ -25,8 +30,17 @@ parking_garage_name = config['parking garage']['name']
 
 ############################################################################
 
+# Defines the place of the database and init the connection between app and database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+database_vehicle_ids.init_app(app)
+app.app_context().push()
+
+############################################################################
+
 # This message should be sent to the client when the ROS service did not return a valid capacity value.
 communication_failed_message = "The parking garage management system could not return the current capacity."
+
 
 ############################################################################
 
@@ -101,7 +115,7 @@ def all_free_parking_spots():
     """
     try:
         capacity = communication.request_free_parking_spots(False)
-        return jsonify({'free_total': capacity["total"]})
+        return jsonify({'free_total': capacity})
     except communication.CommunicationRosServiceException:
         return Response({communication_failed_message}, status=503)
 
@@ -110,13 +124,13 @@ def all_free_parking_spots():
 def electric_free_parking_spots():
     """
     Request the currently free parking spots in the parking garage which have the possibility of electric charging.
-    :return: HTTP response with status code 200 and JSON field 'free_electric' providing the currently free parking 
+    :return: HTTP response with status code 200 and JSON field 'free_electric' providing the currently free parking
         spots with electric charging as integer value
         or HTTP response with status code 503 if the service did not return a valid response.
     """
     try:
         capacity = communication.request_free_parking_spots(True)
-        return jsonify({'free_electric': capacity["electric"]})
+        return jsonify({'free_electric': capacity})
     except communication.CommunicationRosServiceException:
         return Response({communication_failed_message}, status=503)
 
@@ -129,7 +143,7 @@ def perform_park_in_request():
     After the park in request, the vehicle will be registered to the parking management system and the parking
     management system will select an appropriate parking spot.
     :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
-        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate;
+        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
         Optional JSON fields:  'charge_type' (string), 'load' (boolean), 'near_exit' (boolean)
         and 'parking_card' (boolean).
     :return: HTTP response with status code 200 and JSON fields 'parking_in', which is set to true if the parking garage
@@ -140,7 +154,7 @@ def perform_park_in_request():
         try:
             park_in_parameters = request.get_json()
             park_in_response = communication.communicate_park_in(park_in_parameters)
-            return jsonify({'parking_in': park_in_response["parking_in"],
+            return jsonify({'parking_in': park_in_response["parking"],
                             'longitude': park_in_response["longitude"],
                             'latitude': park_in_response["latitude"],
                             'load_vehicle': park_in_response["load_vehicle"]})
@@ -164,10 +178,24 @@ def perform_park_out_request():
     """
     This app route is called when an app user wants to park his vehicle out from the parking garage.
     The request must provide information about the vehicle to allow an identification.
-    :return: Coordinates of the drop off zone
+    After the park out request, the parking management system will locate the vehicle and provide the coordinates of
+    the zone where the car can be picked-up.
+    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
+        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
+    :return: HTTP response with status code 200 and JSON fields 'parking_out', which is set to true if the parking
+        garage could locate the vehicle, 'longitude' and 'latitude' representing the coordinates of the transfer zone.
     """
-    # TODO: Implement park out
-    return
+    if request.is_json:
+        try:
+            park_out_parameters = request.get_json()
+            park_out_response = communication.communicate_park_out(park_out_parameters)
+            return jsonify({'parking_out': park_out_response["parking"],
+                            'longitude': park_out_response["longitude"],
+                            'latitude': park_out_response["latitude"]})
+        except communication.InternalCommunicationException as e:
+            return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
+    else:
+        return Response({'Request had no JSON fields.'}, status=406)
 
 
 @app.route('/parkout', methods=['POST'])
@@ -190,16 +218,19 @@ def perform_get_position():
     :return: HTTP response with status code 200 and JSON fields 'longitude' and 'latitude', which provide the
         geographical coordinates of the vehicle´s position as well as boolean values for 'moving' and 'reached_position'
     """
-    if request.is_json:
-        get_position_parameters = request.get_json()
-        app_id = get_position_parameters["id"]
-        number_plate = get_position_parameters["number_plate"]
-        position = communication.request_current_position(app_id, number_plate)
-        return jsonify({'longitude': position["longitude"],
-                        'latitude': position["latitude"],
-                        'moving': position["moving"],
-                        'reached_position': position["reached_position"]})
-    
+    try:
+        if request.is_json:
+            get_position_parameters = request.get_json()
+            app_id = get_position_parameters["id"]
+            number_plate = get_position_parameters["number_plate"]
+            position = communication.request_current_position(app_id, number_plate)
+            return jsonify({'longitude': position["longitude"],
+                            'latitude': position["latitude"],
+                            'moving': position["moving"],
+                            'reached_position': position["reached_position"]})
+    except communication.VehicleIdentificationException as e:
+        return Response({str(e)}, status=406)
+
 
 @app.route('/getposition', methods=['POST'])
 def perform_redirect_get_position():
@@ -210,8 +241,23 @@ def perform_redirect_get_position():
     return perform_get_position
 
 
+@app.route('/resetDatabase')
+def perform_reset_database():
+    """
+    Route for operators to influence database content.
+    It clears all content from the ID mapping database and initializes a new empty database.
+    :return: Success message and status code 205 if database could be cleared
+    """
+    id_mapping.clear_db()
+    id_mapping.init_db()
+    return Response({"Database has been cleared. All IDs have been deleted. Vehicles must be registered again."},
+                    status=205)
+
+
 ############################################################################
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
+    id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 
