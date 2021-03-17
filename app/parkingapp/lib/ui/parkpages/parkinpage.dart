@@ -110,10 +110,11 @@ class _ParkInPageState extends State<ParkInPage> {
 
   //the vehicle icon overlay
   Stack getParkInAnimation({BuildContext context}) {
+    //TODO this does not work how it should
     new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
     //TODO height must be calculated from aspect ratio of mapp
     final double _width = MediaQuery.of(context).size.width;
-    final double _height = (200 * _width) / 244;
+    final double _height = (1473 * _width) / 1000;
     print(_width.toString() + ' x ' + _height.toString());
 
     Coordinate vehiclePosition =

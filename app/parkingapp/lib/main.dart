@@ -101,8 +101,7 @@ class Main extends StatelessWidget {
         freeChargeableParkingSpots: 0,
         image: 'assets/parkgarage-fasanengarten.jpg',
         map: "assets/parkgarage-fasanengarten-map.jpg",
-        bottomLeft:
-            Coordinate(lattitude: 49.01388810447, longitude: 8.41950527853),
+        bottomLeft: Coordinate(lattitude: 49.0134227, longitude: 8.41950527853),
         topRight:
             Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234));
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
