@@ -23,7 +23,6 @@ class ParkManager {
           /*while (!this.parkedIn) {
             //TODO add functionality
             ApiProvider.getPosition(this).then((value) => null);
-            ApiProvider.getParkedIn(this).then((value) => null);
           }*/
           //TODO remove
           vehicle.setParkedIn(context, true);

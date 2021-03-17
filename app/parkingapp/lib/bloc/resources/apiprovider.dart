@@ -118,15 +118,6 @@ class ApiProvider {
   }
 
   //TODO add body
-  //tries to get parked in confirmation
-  static Future<Map<String, dynamic>> getParkedIn(Vehicle vehicle) async {
-    return httpPost(
-        _serverUrl + _serverPort + "/parkedIn",
-        {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate},
-        'Failed to get parked in confirmation');
-  }
-
-  //TODO add body
   //['longitude', 'latitude', 'moving', 'reached_position']
   //tries to get position of the vehicle
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
