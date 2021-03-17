@@ -8,6 +8,7 @@ import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
+import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
@@ -20,6 +21,8 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanState extends State<ScanScreen> {
   String barcode = "";
+  String vehicleScanned = "Noch keinen QR Code gescannt!";
+  bool scanned = false;
 
   @override
   initState() {
@@ -40,25 +43,27 @@ class _ScanState extends State<ScanScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: RaisedButton(
-                    color: Colors.blue,
+                    color: green,
                     textColor: Colors.white,
                     splashColor: Colors.blueGrey,
                     onPressed: scan,
-                    child: const Text('START CAMERA SCAN')),
+                    child: const Text('Kamera zum Scannen starten')),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: RaisedButton(
                     onPressed: () {
-                      Vehicle transfer = _convertIntoVehicle();
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  VehiclePage()));
+                      if (scanned) {
+                        Vehicle transfer = _convertIntoVehicle();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext context) =>
+                                    VehiclePage()));
+                      }
                     },
                     child: Text(
-                      barcode,
+                      vehicleScanned,
                       textAlign: TextAlign.center,
                     )),
               ),
@@ -70,7 +75,10 @@ class _ScanState extends State<ScanScreen> {
   Future scan() async {
     try {
       String barcode = await BarcodeScanner.scan();
-      setState(() => this.barcode = barcode);
+      setState(() {
+        this.barcode = barcode;
+        this.scanned = true;
+      });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
@@ -150,6 +158,8 @@ class _ScanState extends State<ScanScreen> {
           parkedIn[1] == '1');
     }
     DataHelper.addVehicle(context, vehicle);
+    vehicleScanned = "Zum Hinzufügen des gescannten Fahrzeugs hier klicken!";
+    scanned = true;
     return vehicle;
   }
 

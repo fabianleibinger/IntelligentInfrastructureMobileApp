@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/dialogs/scanqrdialog.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/util/qrscanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 import 'package:parkingapp/routes/routes.dart';
+import 'package:app_settings/app_settings.dart';
 
 import 'changepasscodepage.dart';
 
@@ -33,6 +36,8 @@ class SettingsForm extends StatefulWidget {
 class _SettingsFormState extends State<SettingsForm> {
   //global key for form validation
   final _formKey = GlobalKey<FormState>();
+
+  bool _pushNotifications;
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +90,7 @@ class _SettingsFormState extends State<SettingsForm> {
                   onTap: () {
                     Navigator.pushNamed(context, Routes.agbPage);
                   }),
+              Divider(),
               ListTile(
                   title: Text("Daten importieren"),
                   subtitle: Text(""),
@@ -94,7 +100,14 @@ class _SettingsFormState extends State<SettingsForm> {
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) => ScanScreen()));
-                  })
+                  }),
+              Divider(),
+              ListTile(
+                title: Text('Push Notifications'),
+                onTap: () {
+                  AppSettings.openNotificationSettings();
+                },
+              )
             ],
           ),
         ));
