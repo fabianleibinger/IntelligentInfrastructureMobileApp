@@ -142,7 +142,7 @@ class _ParkInPageState extends State<ParkInPage> {
   Widget stickyBuilder(BuildContext context, String inAppKey) {
     //TODO move somewhere else
     Coordinate vehiclePosition =
-        Coordinate(lattitude: 49.01431771428, longitude: 8.42011294615);
+        Coordinate(lattitude: 49.0143176865, longitude: 8.42011460801);
 
     //assume 0x0 to be the bottom left
     Coordinate _topRightAdjusted = Coordinate(
