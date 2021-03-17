@@ -97,8 +97,8 @@ class Main extends StatelessWidget {
     currentParkingGarage = ParkingGarage(
         name: 'Parkgarage Fasanengarten',
         type: ParkingGarageType.Tiefgarage,
-        freeParkingSpots: 79,
-        0,
+        freeParkingSpots: 0,
+        freeChargeableParkingSpots: 0,
         image: 'assets/parkgarage-fasanengarten.jpg',
         map: "assets/parkgarage-fasanengarten-map.jpg",
         bottomLeft:
