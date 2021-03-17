@@ -95,11 +95,15 @@ class Main extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     currentParkingGarage = ParkingGarage(
-        'Parkgarage Fasanengarten',
-        ParkingGarageType.Tiefgarage,
-        0,
-        0,
-        'assets/parkgarage-fasanengarten.jpg');
+        name: 'Parkgarage Fasanengarten',
+        type: ParkingGarageType.Tiefgarage,
+        freeParkingSpots: 0,
+        freeChargeableParkingSpots: 0,
+        image: 'assets/parkgarage-fasanengarten.jpg',
+        map: "assets/parkgarage-fasanengarten-map.jpg",
+        bottomLeft: Coordinate(lattitude: 49.0134227, longitude: 8.41950527853),
+        topRight:
+            Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234));
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
     return MultiProvider(
       providers: [
