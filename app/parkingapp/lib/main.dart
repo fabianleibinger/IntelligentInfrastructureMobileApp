@@ -98,6 +98,7 @@ class Main extends StatelessWidget {
         name: 'Parkgarage Fasanengarten',
         type: ParkingGarageType.Tiefgarage,
         freeParkingSpots: 79,
+        0,
         image: 'assets/parkgarage-fasanengarten.jpg',
         map: "assets/parkgarage-fasanengarten-map.jpg",
         bottomLeft:

@@ -65,6 +65,12 @@ class _ParkInPageState extends State<ParkInPage> {
         }
       },
     );
+    //get vehicle that shall be used from the list of vehicles
+    for (Vehicle currentVehicle
+        in BlocProvider.of<VehicleBloc>(context).state) {
+      if (currentVehicle.inAppKey == widget.carInAppKey)
+        vehicle = currentVehicle;
+    }
 
     super.initState();
     //wait until build finished to call method

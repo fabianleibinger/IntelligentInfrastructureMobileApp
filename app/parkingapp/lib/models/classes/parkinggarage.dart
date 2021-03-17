@@ -35,16 +35,23 @@ class ParkingGarage {
   //sends the getFreeParkingSpots inquiry to the parking garage management system
   //updates freeParkingSpots
   void updateFreeParkingSpots() {
-    ApiProvider.getFreeParkingSpots().then((value) => this.freeParkingSpots =
-        int.parse(value.values.single.toString().split(' ').last));
+    ApiProvider.getFreeParkingSpots().then((value) =>
+    this.freeParkingSpots =
+        int.parse(value.values.single
+            .toString()
+            .split(' ')
+            .last));
   }
 
   //sends the getFreeChargeableParkingSpots inquiry to the parking garage management system
   //updates freeParkingSpots
   void updateFreeChargeableParkingSpots() {
     ApiProvider.getFreeChargeableParkingSpots().then((value) =>
-        this.freeChargeableParkingSpots =
-            int.parse(value.values.single.toString().split(' ').last));
+    this.freeChargeableParkingSpots =
+        int.parse(value.values.single
+            .toString()
+            .split(' ')
+            .last));
   }
 
   //returns true when spots for specific preferences are available
