@@ -49,12 +49,18 @@ class Transferkeys extends StatelessWidget {
                     if (vehicle.parkingIn || vehicle.parkingOut) {
                       NoConnectionDialog.createDialog(context);
                     }
-
-                    Navigator.push(
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ScanQRDialog.getVehicleQRDialog(
+                            context, vehicle);
+                      },
+                    );
+                    /*Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) =>
-                                QRPage(vehicle: vehicle)));
+                                QRPage(vehicle: vehicle)));*/
                     //ScanQRDialog.createVehicleQRDialog(context);
                   });
             },
