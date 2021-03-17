@@ -6,6 +6,12 @@ import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 class Notifications {
   static FlutterLocalNotificationsPlugin _localNotification;
 
+  static String _notificationIcon = '@mipmap/ic_launcher';
+
+  static String _androidDetailsChannelID = 'channelId';
+  static String _androidDetailsLocalNotification = 'local notification';
+  static String _androidDetailsBasicNotification = 'basic notification';
+
   static bool _enabled;
   static bool _enabledForPark;
   static bool _enabledForCharge;
@@ -14,7 +20,7 @@ class Notifications {
   //sets the initial notification settings
   static _initialize() {
     var androidInitialize =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
+        new AndroidInitializationSettings(_notificationIcon);
     var iOSInitialize = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         android: androidInitialize, iOS: iOSInitialize);
@@ -29,7 +35,7 @@ class Notifications {
   static _initializeClickable(
       Future<dynamic> Function(String) onSelectedNotification) {
     var androidInitialize =
-        new AndroidInitializationSettings('@mipmap/ic_launcher');
+        new AndroidInitializationSettings(_notificationIcon);
     var iOSInitialize = new IOSInitializationSettings();
     var initializationSettings = new InitializationSettings(
         android: androidInitialize, iOS: iOSInitialize);
@@ -44,7 +50,9 @@ class Notifications {
     if (_checkEnabled()) {
       _initialize();
       var androidDetails = new AndroidNotificationDetails(
-          'channelId', 'local notification', 'basic notification',
+          _androidDetailsChannelID,
+          _androidDetailsLocalNotification,
+          _androidDetailsBasicNotification,
           importance: Importance.high);
       var iOSDetails = new IOSNotificationDetails();
       var generalNotificationDetails =
@@ -63,7 +71,9 @@ class Notifications {
     if (_checkEnabled()) {
       _initializeClickable(onSelectedNotification);
       var androidDetails = new AndroidNotificationDetails(
-          'channelId', 'local notification', 'basic notification',
+          _androidDetailsChannelID,
+          _androidDetailsLocalNotification,
+          _androidDetailsBasicNotification,
           importance: Importance.high);
       var iOSDetails = new IOSNotificationDetails();
       var generalNotificationDetails =
