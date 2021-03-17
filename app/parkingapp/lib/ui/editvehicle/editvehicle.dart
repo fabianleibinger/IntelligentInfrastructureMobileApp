@@ -326,9 +326,9 @@ class UpdateMainPageVehicle {
       vehicle = parseVehicle;
     } else if (parseVehicle.runtimeType == StandardVehicle) {
       DataHelper.deleteVehicle(context, vehicle);
-      print('parsedVehicle is standard; converting into electric');
+      print('parsedVehicle is standard; converting into chargeable');
       StandardVehicle convertVehicle = parseVehicle;
-      vehicle = convertVehicle.toElectricVehicle();
+      vehicle = convertVehicle.toChargeableVehicle();
       print('converting standard vehicle to electric vehicle in database');
       DataHelper.addVehicle(context, vehicle);
     }

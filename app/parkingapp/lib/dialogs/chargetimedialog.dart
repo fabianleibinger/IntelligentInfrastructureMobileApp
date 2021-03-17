@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -29,50 +28,6 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     super.initState();
     if (vehicle.runtimeType == ChargeableVehicle) {
       _checkChargeTimes(vehicle);
-    }
-  }
-
-  //switches current vehicles value and listTile values
-  void _setSwitchListTileValue(bool value) {
-    setState(() {
-      _chargeAllDay = value;
-      if (value) {
-        _chargeTimeBegin = _midnight;
-        _chargeTimeEnd = _midnight;
-        if(vehicle.runtimeType == ChargeableVehicle) {
-          _setChargeTimeVehicle(vehicle);
-        }
-      }
-    });
-  }
-
-  //selects charge time begin in vehicle and listTile
-  void _selectChargeTimeBegin(BuildContext context) async {
-    _picked =
-        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
-    if (_picked != null) {
-      setState(() {
-        _chargeTimeBegin = _picked;
-        if(vehicle.runtimeType == ChargeableVehicle) {
-          _setChargeTimeVehicle(vehicle);
-          _checkHoleDay();
-        }
-      });
-    }
-  }
-
-  //selects charge time end in vehicle and listTile
-  void _selectChargeTimeEnd(BuildContext context) async {
-    _picked =
-        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
-    if (_picked != null) {
-      setState(() {
-        _chargeTimeEnd = _picked;
-        if(vehicle.runtimeType == ChargeableVehicle) {
-          _setChargeTimeVehicle(vehicle);
-          _checkHoleDay();
-        }
-      });
     }
   }
 
@@ -115,6 +70,50 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
             })
       ],
     );
+  }
+
+  //switches current vehicles value and listTile values
+  void _setSwitchListTileValue(bool value) {
+    setState(() {
+      _chargeAllDay = value;
+      if (value) {
+        _chargeTimeBegin = _midnight;
+        _chargeTimeEnd = _midnight;
+        if(vehicle.runtimeType == ChargeableVehicle) {
+          _setChargeTimeVehicle(vehicle);
+        }
+      }
+    });
+  }
+
+  //selects charge time begin in vehicle and listTile
+  void _selectChargeTimeBegin(BuildContext context) async {
+    _picked =
+    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+    if (_picked != null) {
+      setState(() {
+        _chargeTimeBegin = _picked;
+        if(vehicle.runtimeType == ChargeableVehicle) {
+          _setChargeTimeVehicle(vehicle);
+          _checkHoleDay();
+        }
+      });
+    }
+  }
+
+  //selects charge time end in vehicle and listTile
+  void _selectChargeTimeEnd(BuildContext context) async {
+    _picked =
+    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+    if (_picked != null) {
+      setState(() {
+        _chargeTimeEnd = _picked;
+        if(vehicle.runtimeType == ChargeableVehicle) {
+          _setChargeTimeVehicle(vehicle);
+          _checkHoleDay();
+        }
+      });
+    }
   }
 
   //sets vehicles charge time values

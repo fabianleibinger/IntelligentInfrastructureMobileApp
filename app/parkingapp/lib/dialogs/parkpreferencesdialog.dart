@@ -24,24 +24,6 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
     _parkingCardCheckBox = vehicle.parkingCard;
   }
 
-  //switches current vehicles value and checkbox value
-  void _setNearExitCheckboxValue(bool value) {
-    vehicle.setNearExitPreference(context, value);
-    setState(() {
-      vehicle.nearExitPreference = value;
-      _nearExitCheckBox = vehicle.nearExitPreference;
-    });
-  }
-
-  //switches current vehicles value and checkbox value
-  void _setParkingCardCheckboxValue(bool value) {
-    vehicle.setParkingCard(context, value);
-    setState(() {
-      vehicle.parkingCard = value;
-      _parkingCardCheckBox = vehicle.parkingCard;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Constants.getConfirmationDialog(
@@ -78,5 +60,23 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
         )
       ],
     );
+  }
+
+  //switches current vehicles value and checkbox value
+  void _setNearExitCheckboxValue(bool value) {
+    vehicle.setNearExitPreference(context, value);
+    setState(() {
+      vehicle.nearExitPreference = value;
+      _nearExitCheckBox = vehicle.nearExitPreference;
+    });
+  }
+
+  //switches current vehicles value and checkbox value
+  void _setParkingCardCheckboxValue(bool value) {
+    vehicle.setParkingCard(context, value);
+    setState(() {
+      vehicle.parkingCard = value;
+      _parkingCardCheckBox = vehicle.parkingCard;
+    });
   }
 }
