@@ -105,6 +105,7 @@ class VehicleStatus(enum.Enum):
 
 
 class ParkProcess:
+    """ The ParkProcess bundles methods for park in and park out requests. """
     def register_vehicle_to_pms(self, vehicle_parameters):
         """
             This method should be called when the flask server retrieves a park in request.
@@ -348,6 +349,7 @@ class ParkProcess:
 
 
 class LocalizationProcess:
+    """ The LocalizationProcess bundles methods for get position requests."""
     def request_current_position(self, app_id: int, number_plate: str):
         """
         This method communicates with the parking management system to get the current position of the vehicle
@@ -397,6 +399,7 @@ class LocalizationProcess:
         
 
 class CapacityProcess:
+    """ The CapacityProcess bundles methods for capacity requests. """
     def retrieve_capacity_from_pms(self):
         """
         This method communicates with the parking management system and retrieves all capacities.
@@ -461,6 +464,7 @@ class CapacityProcess:
 
 
 class IdMapper:
+    """ The IdMapper provides the possibility to save app ID with corresponding parking management system´s ID. """
     @staticmethod
     def map_vehicle_ids(app_id: int, pms_id: int):
         """
@@ -511,4 +515,5 @@ class VehicleIdentificationException(Exception):
     Unify exceptions occurring due to unknown app identifiers in the ID mapping database.
     """
     pass
+
 
