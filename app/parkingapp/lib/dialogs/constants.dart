@@ -3,7 +3,7 @@ import 'package:parkingapp/models/global.dart';
 
 //basic building blocks for dialogs
 class Constants {
-  //TODO remove
+
   static const double padding = 20;
   static const double avatarRadius = 45;
 
@@ -19,8 +19,8 @@ class Constants {
       title: Text(title),
       content: Text(content),
       actions: [
-        createBackFlatButton(context, red, cancelButtonText),
-        createFlatButton(
+        createBackTextButton(context, red, cancelButtonText),
+        createTextButton(
             context, green, confirmButtonText, confirmButtonNextPage)
       ],
     );
@@ -36,8 +36,8 @@ class Constants {
     return AlertDialog(
       content: Text(content),
       actions: [
-        createBackFlatButton(context, red, cancelButtonText),
-        createFlatButton(
+        createBackTextButton(context, red, cancelButtonText),
+        createTextButton(
             context, green, confirmButtonText, confirmButtonNextPage)
       ],
     );
@@ -48,7 +48,7 @@ class Constants {
       String confirmButtonText, String nextPage) {
     return AlertDialog(
       content: Text(content),
-      actions: [createFlatButton(context, red, confirmButtonText, nextPage)],
+      actions: [createTextButton(context, red, confirmButtonText, nextPage)],
     );
   }
 
@@ -57,7 +57,7 @@ class Constants {
       BuildContext context, String content, String confirmButtonText) {
     return AlertDialog(
       content: Text(content),
-      actions: [createBackFlatButton(context, green, confirmButtonText)],
+      actions: [createBackTextButton(context, green, confirmButtonText)],
     );
   }
 
@@ -73,25 +73,25 @@ class Constants {
         children: [tiles],
       ),
       actions: [
-        createBackFlatButton(context, green, confirmButtonText),
+        createBackTextButton(context, green, confirmButtonText),
       ],
     );
   }
 
   //creates a button that closes a dialog
-  static createBackFlatButton(BuildContext context, Color color, String text) {
-    return FlatButton(
-      textColor: color,
+  static TextButton createBackTextButton(BuildContext context, Color color, String text) {
+    return TextButton(
+      style: TextButton.styleFrom(primary: color),
       onPressed: () => Navigator.pop(context),
       child: Text(text),
     );
   }
 
   //creates a button. [nextPage] defines the page to be called by button
-  static createFlatButton(BuildContext context, Color color, String text,
-      String nextPage) {
-    return FlatButton(
-      textColor: color,
+  static TextButton createTextButton(
+      BuildContext context, Color color, String text, String nextPage) {
+    return TextButton(
+      style: TextButton.styleFrom(primary: color),
       onPressed: () => Navigator.pushReplacementNamed(context, nextPage),
       child: Text(text),
     );

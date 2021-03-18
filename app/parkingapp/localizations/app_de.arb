@@ -113,6 +113,10 @@
     "@networkButton": {
         "description": "Text on network settings button"
     },
+    "noScanPossibleDialogText": "Diese Funktion ist aktuell leider nicht verfügbar, da das Auto ein- oder ausparkt",
+    "@noScanPossibleDialogText": {
+        "description": "Text on no scan possible dialog"
+    },
     "parkDialogBackButton": "ZURÜCK",
     "@parkDialogBackButton": {
         "description": "Text for back button in park dialog"

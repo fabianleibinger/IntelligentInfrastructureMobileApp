@@ -10,7 +10,7 @@ import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
@@ -137,7 +137,7 @@ class _MainPageState extends State<MainPage> {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return ParkDialog.getParkInDialog(context);
+                    return ParkDialogs.getParkInDialog(context);
                   });
             }
           },

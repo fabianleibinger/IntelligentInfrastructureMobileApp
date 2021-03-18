@@ -27,7 +27,7 @@ class NoConnectionDialog {
         ],
       ),
       actions: [
-        Constants.createFlatButton(
+        Constants.createTextButton(
             context,
             red,
             AppLocalizations.of(context).parkDialogBackButton,

@@ -5,7 +5,7 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 
 //defines the different park-related dialogs
-class ParkDialog {
+class ParkDialogs {
 
   //returns dialog, use prior to park in page
   static getParkInDialog(BuildContext context) {
