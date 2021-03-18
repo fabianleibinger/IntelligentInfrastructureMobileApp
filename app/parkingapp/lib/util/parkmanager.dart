@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/notifications/notifications.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -95,7 +95,7 @@ class ParkManager {
         showDialog(
             context: context,
             builder: (context) {
-              return ParkDialog.getParkOutFinishedDialog(context);
+              return ParkDialogs.getParkOutFinishedDialog(context);
             });
 
         //vehicle not parking out anymore
