@@ -179,27 +179,27 @@ class ParkManager {
   }
 
   static Positioned _getPositionedIcon(
-      Coordinate vehiclePosition,
-      double _height,
-      Coordinate _topRightAdjusted,
+      Coordinate iconPosition,
+      double containerHeight,
+      Coordinate topRight,
       double _iconSize,
-      double _width,
+      double containerWidth,
       Container _icon) {
     Coordinate _vehiclePositionAdjusted;
     double iconOffsetHeight, iconOffsetWidth;
     Positioned _positionedIcon;
-    if (vehiclePosition != null) {
+    if (iconPosition != null) {
       _vehiclePositionAdjusted = Coordinate(
-          lattitude: vehiclePosition.lattitude -
+          lattitude: iconPosition.lattitude -
               currentParkingGarage.bottomLeft.lattitude,
-          longitude: vehiclePosition.longitude -
+          longitude: iconPosition.longitude -
               currentParkingGarage.bottomLeft.longitude);
 
       //scale the icons position
-      iconOffsetHeight = (_height / _topRightAdjusted.lattitude) *
+      iconOffsetHeight = (containerHeight / topRight.lattitude) *
               _vehiclePositionAdjusted.lattitude -
           (_iconSize / 2);
-      iconOffsetWidth = (_width / _topRightAdjusted.longitude) *
+      iconOffsetWidth = (containerWidth / topRight.longitude) *
               _vehiclePositionAdjusted.longitude -
           (_iconSize / 2);
 
