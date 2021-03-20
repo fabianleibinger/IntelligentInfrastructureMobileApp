@@ -67,6 +67,10 @@ class _ParkOutPageState extends State<ParkOutPage> {
 
   @override
   Widget build(BuildContext context) {
+    //update position
+    ParkManager.getVehiclePosition(vehicle)
+        .then((coordinate) => widget.vehiclePosition = coordinate);
+
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkOut),
