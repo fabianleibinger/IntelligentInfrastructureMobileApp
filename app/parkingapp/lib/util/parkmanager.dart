@@ -159,10 +159,6 @@ class ParkManager {
     Container _icon = Container(
         width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
 
-    //set adjusted vehicle position if not null
-    Positioned _positionedIcon = _getPositionedIcon(
-        vehiclePosition, _height, _topRightAdjusted, _iconSize, _width, _icon);
-
     return Stack(alignment: Alignment.center, children: [
       //map
       Container(
@@ -173,8 +169,9 @@ class ParkManager {
           fit: BoxFit.fill,
         ),
       ),
-      //icon
-      _positionedIcon
+      //vehicleIcon
+      _getPositionedIcon(
+          vehiclePosition, _height, _topRightAdjusted, _iconSize, _width, _icon)
     ]);
   }
 
