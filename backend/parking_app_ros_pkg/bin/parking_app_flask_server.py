@@ -1,4 +1,5 @@
 import os
+import math
 import configparser
 from flask import Flask, jsonify, request, Response, redirect
 
@@ -38,7 +39,7 @@ app.app_context().push()
 
 ############################################################################
 
-# This message should be sent to the client when the ROS service did not return a valid capacity value.
+# This message should be sent to the client when the ROS service did not return a valid value.
 communication_failed_message = \
     "The parking garage management system could not return a valid response or is unavailable."
 
@@ -155,6 +156,8 @@ def perform_park_in_request():
         try:
             park_in_parameters = request.get_json()
             park_in_response = communication.communicate_park_in(park_in_parameters)
+            if math.isnan(park_in_response["longitude"]) or math.isnan(park_in_response["latitude"]):
+                return Response({'Vehicle status indicates an unsuccessful registration.'}, status=409)
             return jsonify({'parking_in': park_in_response["parking_in"],
                             'longitude': park_in_response["longitude"],
                             'latitude': park_in_response["latitude"],
@@ -270,4 +273,5 @@ def perform_reset_database():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 
