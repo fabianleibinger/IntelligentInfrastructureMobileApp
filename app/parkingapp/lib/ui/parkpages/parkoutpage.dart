@@ -27,6 +27,8 @@ class ParkOutPage extends StatefulWidget {
 }
 
 class _ParkOutPageState extends State<ParkOutPage> {
+  Timer _timer;
+
   @override
   void initState() {
     super.initState();
@@ -48,11 +50,17 @@ class _ParkOutPageState extends State<ParkOutPage> {
     }
 
     //add timer to update map
-    new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
 
     //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkOut(context));
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   //TODO: switch _firstBuild to false in setState()

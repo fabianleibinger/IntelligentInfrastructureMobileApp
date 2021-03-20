@@ -32,6 +32,8 @@ class ParkInPage extends StatefulWidget {
 }
 
 class _ParkInPageState extends State<ParkInPage> {
+  Timer _timer;
+
   @override
   void initState() {
     //update parking spots
@@ -54,12 +56,19 @@ class _ParkInPageState extends State<ParkInPage> {
     }
 
     //add timer to update map
-    new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
 
     super.initState();
     //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
+  }
+
+  //TODO the timer will not be canceled (a propper check if parked in is needed)
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   //TODO: setState when parkedIn switches
