@@ -17,6 +17,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
+import 'package:parkingapp/util/parkmanager.dart';
 
 class ParkInPage extends StatefulWidget {
   static const String routeName = '/parkinpage';
@@ -114,7 +115,7 @@ class _ParkInPageState extends State<ParkInPage> {
           Expanded(
             child: ListView(
               children: [
-                getParkInAnimation(
+                ParkManager.getParkInAnimation(
                     context: context, vehiclePosition: widget.vehiclePosition),
               ],
             ),
@@ -122,72 +123,5 @@ class _ParkInPageState extends State<ParkInPage> {
         ],
       ),
     );
-  }
-
-  //the vehicle icon overlay
-  getParkInAnimation({BuildContext context, Coordinate vehiclePosition}) {
-    //TODO height must be calculated from aspect ratio of mapp
-    final double _width = MediaQuery.of(context).size.width;
-    final double _height = (1473 * _width) / 1000;
-    print(_width.toString() + ' x ' + _height.toString());
-
-    //assume 0x0 to be the bottom left
-    Coordinate _topRightAdjusted = Coordinate(
-        longitude: currentParkingGarage.topRight.longitude -
-            currentParkingGarage.bottomLeft.longitude,
-        lattitude: currentParkingGarage.topRight.lattitude -
-            currentParkingGarage.bottomLeft.lattitude);
-    print(_topRightAdjusted);
-
-    double _iconSize = 16;
-    Container _icon = Container(
-        width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
-
-    //set adjusted vehicle position if not null
-    Coordinate _vehiclePositionAdjusted;
-    double iconOffsetHeight, iconOffsetWidth;
-    Positioned _positionedIcon;
-    if (vehiclePosition != null) {
-      _vehiclePositionAdjusted = Coordinate(
-          lattitude: vehiclePosition.lattitude -
-              currentParkingGarage.bottomLeft.lattitude,
-          longitude: vehiclePosition.longitude -
-              currentParkingGarage.bottomLeft.longitude);
-
-      //scale the icons position
-      iconOffsetHeight = (_height / _topRightAdjusted.lattitude) *
-              _vehiclePositionAdjusted.lattitude -
-          (_iconSize / 2);
-      iconOffsetWidth = (_width / _topRightAdjusted.longitude) *
-              _vehiclePositionAdjusted.longitude -
-          (_iconSize / 2);
-
-      //icon
-      _positionedIcon = Positioned(
-        left: iconOffsetWidth,
-        bottom: iconOffsetHeight,
-        child: _icon,
-      );
-    }
-
-    //empty positioned
-    if (_positionedIcon == null)
-      _positionedIcon = Positioned(
-        child: Container(),
-      );
-
-    return Stack(alignment: Alignment.center, children: [
-      //map
-      Container(
-        width: _width,
-        height: _height,
-        child: Image(
-          image: AssetImage(currentParkingGarage.map),
-          fit: BoxFit.fill,
-        ),
-      ),
-      //icon
-      _positionedIcon
-    ]);
   }
 }
