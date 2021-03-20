@@ -206,4 +206,12 @@ class ParkManager {
       _positionedIcon
     ]);
   }
+
+  ///get the specified vehicles position
+  static Future<Coordinate> getVehiclePosition(Vehicle vehicle) async {
+    var position = await ApiProvider.getPosition(vehicle);
+    double latitude = position["latitude"];
+    double longitude = position["longitude"];
+    return Coordinate(lattitude: latitude, longitude: longitude);
+  }
 }

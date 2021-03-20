@@ -69,13 +69,9 @@ class _ParkInPageState extends State<ParkInPage> {
 
   @override
   Widget build(BuildContext context) {
-    ApiProvider.getPosition(vehicle).then((value) {
-      double latitude = value["latitude"];
-      double longitude = value["longitude"];
-      widget.vehiclePosition =
-          Coordinate(lattitude: latitude, longitude: longitude);
-      print(widget.vehiclePosition);
-    });
+    //update position
+    ParkManager.getVehiclePosition(vehicle)
+        .then((coordinate) => widget.vehiclePosition = coordinate);
 
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
