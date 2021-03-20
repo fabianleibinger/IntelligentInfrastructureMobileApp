@@ -134,9 +134,14 @@ class ParkManager {
     }
   }
 
-  //the vehicle icon overlay
+  ///Widget showing the parking garages map and an overlay for
+  ///the vehicle
+  ///and the destination
+  ///both of them are optional and if neither are specified an empty map will be returned
   static Widget getParkInAnimation(
-      {BuildContext context, Coordinate vehiclePosition}) {
+      {@required BuildContext context,
+      Coordinate vehiclePosition,
+      Coordinate destination}) {
     //TODO height must be calculated from aspect ratio of mapp
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (1473 * _width) / 1000;
