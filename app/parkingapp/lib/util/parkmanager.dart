@@ -160,6 +160,31 @@ class ParkManager {
         width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
 
     //set adjusted vehicle position if not null
+    Positioned _positionedIcon = _getPositionedIcon(
+        vehiclePosition, _height, _topRightAdjusted, _iconSize, _width, _icon);
+
+    return Stack(alignment: Alignment.center, children: [
+      //map
+      Container(
+        width: _width,
+        height: _height,
+        child: Image(
+          image: AssetImage(currentParkingGarage.map),
+          fit: BoxFit.fill,
+        ),
+      ),
+      //icon
+      _positionedIcon
+    ]);
+  }
+
+  static Positioned _getPositionedIcon(
+      Coordinate vehiclePosition,
+      double _height,
+      Coordinate _topRightAdjusted,
+      double _iconSize,
+      double _width,
+      Container _icon) {
     Coordinate _vehiclePositionAdjusted;
     double iconOffsetHeight, iconOffsetWidth;
     Positioned _positionedIcon;
@@ -191,20 +216,7 @@ class ParkManager {
       _positionedIcon = Positioned(
         child: Container(),
       );
-
-    return Stack(alignment: Alignment.center, children: [
-      //map
-      Container(
-        width: _width,
-        height: _height,
-        child: Image(
-          image: AssetImage(currentParkingGarage.map),
-          fit: BoxFit.fill,
-        ),
-      ),
-      //icon
-      _positionedIcon
-    ]);
+    return _positionedIcon;
   }
 
   ///get the specified vehicles position
