@@ -57,6 +57,8 @@ class _ParkInPageState extends State<ParkInPage> {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
+
+    //add timer to update map
     new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
 
     super.initState();
