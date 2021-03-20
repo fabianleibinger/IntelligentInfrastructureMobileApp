@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
@@ -9,13 +12,15 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
+import 'package:parkingapp/util/parkmanager.dart';
 
 class ParkOutPage extends StatefulWidget {
   static const String routeName = '/parkoutpage';
+  Coordinate vehiclePosition;
 
   final String carInAppKey;
 
-  const ParkOutPage(this.carInAppKey);
+  ParkOutPage(this.carInAppKey);
 
   @override
   _ParkOutPageState createState() => _ParkOutPageState();
@@ -37,10 +42,13 @@ class _ParkOutPageState extends State<ParkOutPage> {
     );
     //get vehicle that shall be used from the list of vehicles
     for (Vehicle currentVehicle
-    in BlocProvider.of<VehicleBloc>(context).state) {
+        in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
+
+    //add timer to update map
+    new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
 
     //wait until build finished to call method
     WidgetsBinding.instance
@@ -70,9 +78,22 @@ class _ParkOutPageState extends State<ParkOutPage> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListTile(
-        title: Text(currentParkingGarage.name),
-        subtitle: Text(currentParkingGarage.type.toShortString()),
+      body: Column(
+        children: [
+          ListTile(
+            title: Text(currentParkingGarage.name),
+            subtitle: Text(currentParkingGarage.type.toShortString()),
+          ),
+          //add the map
+          Expanded(
+            child: ListView(
+              children: [
+                ParkManager.getParkInAnimation(
+                    context: context, vehiclePosition: widget.vehiclePosition),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
