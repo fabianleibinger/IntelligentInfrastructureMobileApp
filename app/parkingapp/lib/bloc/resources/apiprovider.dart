@@ -165,6 +165,6 @@ class ApiProvider {
 
   //chooses and returns http post body for park out call
   static Map<String, dynamic> _chooseGetPositionBody(Vehicle vehicle) {
-    return {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate};
+    return {"id": vehicle.databaseId, "number_plate": vehicle.licensePlate};
   }
 }
