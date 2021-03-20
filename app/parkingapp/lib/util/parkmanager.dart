@@ -10,7 +10,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //communicates with API provider to manage park processes for vehicles
 class ParkManager {
-
   //sends the park in inquiry to the parking garage management system
   static void parkInRequest(BuildContext context, Vehicle vehicle) {
     if (needsToParkIn(vehicle)) {
@@ -54,7 +53,8 @@ class ParkManager {
   }
 
   //checks if park in worked, creates parked in notification or opens dialog
-  static void _checkAndReactParkInWorked(BuildContext context, Vehicle vehicle) {
+  static void _checkAndReactParkInWorked(
+      BuildContext context, Vehicle vehicle) {
     if (vehicle.parkedIn) {
       //if park in worked: notification, that triggers parkOut method
       Notifications.createNotificationClickable(
@@ -112,12 +112,15 @@ class ParkManager {
   }
 
   //checks if park out worked, creates parked out notification or opens dialog
-  static void _checkAndReactParkOutWorked(BuildContext context, Vehicle vehicle) {
+  static void _checkAndReactParkOutWorked(
+      BuildContext context, Vehicle vehicle) {
     if (!vehicle.parkedIn) {
       //if park out worked: notification
       Notifications.createNotification(
           AppLocalizations.of(context).notificationParkOutTitleOne +
-              vehicle.name + ' ' + vehicle.licensePlate +
+              vehicle.name +
+              ' ' +
+              vehicle.licensePlate +
               AppLocalizations.of(context).notificationParkOutTitleTwo,
           AppLocalizations.of(context).notificationParkOutBody);
     } else {
