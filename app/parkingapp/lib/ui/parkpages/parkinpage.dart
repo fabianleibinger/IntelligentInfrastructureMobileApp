@@ -32,11 +32,6 @@ class ParkInPage extends StatefulWidget {
 }
 
 class _ParkInPageState extends State<ParkInPage> {
-  //variables needed for the overlay
-  final controller = ScrollController();
-  OverlayEntry sticky;
-  GlobalKey stickyKey = GlobalKey();
-
   @override
   void initState() {
     //update parking spots
