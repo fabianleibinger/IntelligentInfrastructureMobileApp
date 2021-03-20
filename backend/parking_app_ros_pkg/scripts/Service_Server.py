@@ -37,7 +37,7 @@ def handle_request_register(req):
     response = RegisterVehicleRequestResponse()
     response.vehicle_status.status = req.info.status.status
     response.pms_id = random.randint(1, 1000)
-    if req.info.status.status == 0 or req.info.status.status == 1:  # park in
+    if req.info.status.status == 0 or req.info.status.status == 1 or req.info.status.status == 4:  # park in
         response.target_parking_position.longitude = 8.4202020245
         response.target_parking_position.latitude = 49.0141414141
     if req.info.loadable.load_during_parking:
