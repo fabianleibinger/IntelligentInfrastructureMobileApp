@@ -7,7 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //defines the qr code dialog
 class ScanQRDialog {
-
   //returns qr dialog for specific vehicle
   static getVehicleQRDialog(BuildContext context, Vehicle vehicle) {
     return AlertDialog(
@@ -18,7 +17,7 @@ class ScanQRDialog {
             AppLocalizations.of(context).scanQRDialogCancelButton),
         FlatButton(
           textColor: green,
-          onPressed: () => Navigator.push(
+          onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (BuildContext context) => QRPage(vehicle: vehicle))),
