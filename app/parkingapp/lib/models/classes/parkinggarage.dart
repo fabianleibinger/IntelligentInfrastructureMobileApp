@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -9,9 +10,19 @@ class ParkingGarage {
   int freeParkingSpots;
   int freeChargeableParkingSpots;
   String image;
+  String map;
+  Coordinate bottomLeft, topRight;
 
-  ParkingGarage(this.name, this.type, this.freeParkingSpots,
-      this.freeChargeableParkingSpots, this.image) {
+  ParkingGarage({
+    this.name,
+    this.type,
+    this.freeParkingSpots,
+    this.freeChargeableParkingSpots,
+    this.image,
+    this.map,
+    this.bottomLeft,
+    this.topRight,
+  }) {
     this.updateAllFreeParkingSpots();
   }
 
@@ -64,5 +75,13 @@ class ParkingGarage {
     } else {
       return this.freeParkingSpots;
     }
+  }
+}
+
+class Coordinate {
+  final double lattitude, longitude;
+  Coordinate({@required this.lattitude, @required this.longitude});
+  toString() {
+    return lattitude.toString() + ', ' + longitude.toString();
   }
 }

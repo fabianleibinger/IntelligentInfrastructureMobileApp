@@ -76,6 +76,7 @@ find_package(catkin REQUIRED COMPONENTS
 	CapacityRequest.srv
 	RegisterVehicleRequest.srv
 	VehiclePositionRequest.srv
+	ParkoutVehicleRequest.srv
 )
 
 ## Generate actions in the 'action' folder

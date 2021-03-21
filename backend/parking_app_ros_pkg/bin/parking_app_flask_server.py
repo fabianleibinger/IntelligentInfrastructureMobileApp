@@ -39,7 +39,8 @@ app.app_context().push()
 ############################################################################
 
 # This message should be sent to the client when the ROS service did not return a valid capacity value.
-communication_failed_message = "The parking garage management system could not return the current capacity."
+communication_failed_message = \
+    "The parking garage management system could not return a valid response or is unavailable."
 
 
 ############################################################################
@@ -77,7 +78,7 @@ def get_capacities():
         or HTTP response with status code 503 if the service did not return a valid response.
     """
     try:
-        capacities = communication.request_capacities(False)
+        capacities = communication.communicate_capacities(False)
         return jsonify({'total': capacities["total"],
                         'electric': capacities["electric"],
                         'electric_fast': capacities["electric_fast"],
@@ -96,7 +97,7 @@ def get_free_capacities():
         or HTTP response with status code 503 if the service did not return a valid response.
     """
     try:
-        capacities = communication.request_capacities(True)
+        capacities = communication.communicate_capacities(True)
         return jsonify({'free_total': capacities["total"],
                         'free_electric': capacities["electric"],
                         'free_electric_fast': capacities["electric_fast"],
@@ -114,7 +115,7 @@ def all_free_parking_spots():
         or HTTP response with status code 503 if the service did not return a valid response.
     """
     try:
-        capacity = communication.request_free_parking_spots(False)
+        capacity = communication.communicate_free_parking_spots(False)
         return jsonify({'free_total': capacity})
     except communication.CommunicationRosServiceException:
         return Response({communication_failed_message}, status=503)
@@ -129,7 +130,7 @@ def electric_free_parking_spots():
         or HTTP response with status code 503 if the service did not return a valid response.
     """
     try:
-        capacity = communication.request_free_parking_spots(True)
+        capacity = communication.communicate_free_parking_spots(True)
         return jsonify({'free_electric': capacity})
     except communication.CommunicationRosServiceException:
         return Response({communication_failed_message}, status=503)
@@ -154,12 +155,14 @@ def perform_park_in_request():
         try:
             park_in_parameters = request.get_json()
             park_in_response = communication.communicate_park_in(park_in_parameters)
-            return jsonify({'parking_in': park_in_response["parking"],
+            return jsonify({'parking_in': park_in_response["parking_in"],
                             'longitude': park_in_response["longitude"],
                             'latitude': park_in_response["latitude"],
                             'load_vehicle': park_in_response["load_vehicle"]})
         except communication.InternalCommunicationException as e:
             return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
+        except communication.CommunicationRosServiceException:
+            return Response({communication_failed_message}, status=503)
     else:
         return Response({'Request had no JSON fields.'}, status=406)
 
@@ -188,12 +191,18 @@ def perform_park_out_request():
     if request.is_json:
         try:
             park_out_parameters = request.get_json()
-            park_out_response = communication.communicate_park_out(park_out_parameters)
-            return jsonify({'parking_out': park_out_response["parking"],
+            app_id = park_out_parameters["id"]
+            number_plate = park_out_parameters["number_plate"]
+            park_out_response = communication.communicate_park_out(app_id, number_plate)
+            return jsonify({'parking_out': park_out_response["parking_out"],
                             'longitude': park_out_response["longitude"],
                             'latitude': park_out_response["latitude"]})
         except communication.InternalCommunicationException as e:
             return Response({'Missing parameter in sent JSON: ' + str(e)}, status=422)
+        except communication.VehicleIdentificationException as e:
+            return Response({str(e)}, status=406)
+        except communication.CommunicationRosServiceException:
+            return Response({communication_failed_message}, status=503)          
     else:
         return Response({'Request had no JSON fields.'}, status=406)
 
@@ -223,13 +232,15 @@ def perform_get_position():
             get_position_parameters = request.get_json()
             app_id = get_position_parameters["id"]
             number_plate = get_position_parameters["number_plate"]
-            position = communication.request_current_position(app_id, number_plate)
+            position = communication.communicate_vehicle_position(app_id, number_plate)
             return jsonify({'longitude': position["longitude"],
                             'latitude': position["latitude"],
                             'moving': position["moving"],
                             'reached_position': position["reached_position"]})
     except communication.VehicleIdentificationException as e:
         return Response({str(e)}, status=406)
+    except communication.CommunicationRosServiceException:
+        return Response({communication_failed_message}, status=503)
 
 
 @app.route('/getposition', methods=['POST'])
@@ -259,5 +270,4 @@ def perform_reset_database():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
-
 
