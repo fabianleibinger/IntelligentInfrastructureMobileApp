@@ -25,4 +25,19 @@ class SharedPreferencesHelper {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setBool('authentification', false);
   }
+
+  static Future<bool> enableNotifications() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('notifications', true);
+  }
+
+  static Future<bool> disableNotifications() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('notifications', false);
+  }
+
+  static getNotifications() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('notifications');
+  }
 }

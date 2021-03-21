@@ -7,6 +7,7 @@ import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/parkpages/parkinpage.dart';
 import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
 import 'package:parkingapp/ui/settingspage/qrpage.dart';
+import 'package:parkingapp/ui/settingspage/settings.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';

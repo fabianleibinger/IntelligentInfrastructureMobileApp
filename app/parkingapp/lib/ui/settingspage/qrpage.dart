@@ -14,12 +14,8 @@ class QRPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            title: Text('Daten übertragen'),
-            leading: new IconButton(
-                icon: new Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.popAndPushNamed(context, Routes.transferkeys);
-                })),
+          title: Text('Daten übertragen'),
+        ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
