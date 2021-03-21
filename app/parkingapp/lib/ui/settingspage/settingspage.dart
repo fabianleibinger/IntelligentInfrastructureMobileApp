@@ -35,46 +35,16 @@ class SettingsForm extends StatefulWidget {
 }
 
 class _SettingsFormState extends State<SettingsForm> {
-  bool _pushNotifications;
-  bool _pushNotificationsParked;
-  bool _pushNotificationsCharge;
+  bool _pushNotifications = false;
+  bool _pushNotificationsParked = false;
+  bool _pushNotificationsCharge = false;
 
-  SharedPreferences preferences;
+  Future<SharedPreferences> preferences = SharedPreferences.getInstance();
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      _pushNotifications = false;
-      _pushNotificationsCharge = false;
-      _pushNotificationsParked = false;
-    });
-    /*setState(() {
-      SharedPreferencesHelper.getNotifications().then((value) {
-        _pushNotifications = value;
-      }).whenComplete(() {
-        //set value if it was not set before
-        if (_pushNotifications == null) {
-          _pushNotifications = true;
-        }
-      });
-      SharedPreferencesHelper.getNotificationsCharged()().then((value) {
-        _pushNotificationsCharge = value;
-      }).whenComplete(() {
-        //set value if it was not set before
-        if (_pushNotificationsCharge == null) {
-          _pushNotificationsCharge = true;
-        }
-      });
-      SharedPreferencesHelper.getNotificationsParked()().then((value) {
-        _pushNotificationsParked = value;
-      }).whenComplete(() {
-        //set value if it was not set before
-        if (_pushNotificationsParked == null) {
-          _pushNotificationsParked = true;
-        }
-      });
-    });*/
+    getPushNotifications();
   }
 
   @override
@@ -105,6 +75,7 @@ class _SettingsFormState extends State<SettingsForm> {
             subtitle: Text(AppLocalizations.of(context).pushMessagesParkedText),
             value: _pushNotificationsParked && _pushNotifications,
             onChanged: (value) {
+              SharedPreferencesHelper.setNotificationsParked(value);
               setState(() {
                 _pushNotificationsParked = value;
               });
@@ -115,6 +86,7 @@ class _SettingsFormState extends State<SettingsForm> {
             subtitle: Text(AppLocalizations.of(context).pushMessagesChargeText),
             value: _pushNotificationsCharge && _pushNotifications,
             onChanged: (value) {
+              SharedPreferencesHelper.setNotificationsCharged(value);
               setState(() {
                 _pushNotificationsCharge = value;
               });
@@ -154,7 +126,28 @@ class _SettingsFormState extends State<SettingsForm> {
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
   }
 
-  _getPushNotifications() async {
-    return await SharedPreferencesHelper.getNotifications() ?? false;
+  //get all the shared prefernces for initstate
+  Future<Null> getPushNotifications() async {
+    final SharedPreferences prefs = await preferences;
+    bool notifications = prefs.getBool('notifications');
+    bool notificationsCharge = prefs.getBool('notificationsCharged');
+    bool notificationsParked = prefs.getBool('notificationsParked');
+
+    //check if values are already initialized
+    if (notifications == null) {
+      notifications = true;
+    }
+    if (notificationsCharge == null) {
+      notificationsCharge = true;
+    }
+    if (notificationsParked == null) {
+      notificationsParked = true;
+    }
+
+    setState(() {
+      _pushNotifications = notifications;
+      _pushNotificationsCharge = notificationsCharge;
+      _pushNotificationsParked = notificationsParked;
+    });
   }
 }
