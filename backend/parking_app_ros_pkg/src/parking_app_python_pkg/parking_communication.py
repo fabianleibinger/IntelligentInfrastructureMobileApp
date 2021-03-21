@@ -406,7 +406,7 @@ class LocalizationProcess:
 
         return {'longitude': response.position.longitude,
                 'latitude': response.position.latitude,
-                'moving': in_park_process,
+                'parking': in_park_process,
                 'reached_position': reached_target_position}
         
 
@@ -527,4 +527,3 @@ class VehicleIdentificationException(Exception):
     Unify exceptions occurring due to unknown app identifiers in the ID mapping database.
     """
     pass
-
