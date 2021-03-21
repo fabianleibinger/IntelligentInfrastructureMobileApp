@@ -34,22 +34,22 @@ class SettingsForm extends StatefulWidget {
 }
 
 class _SettingsFormState extends State<SettingsForm> {
-  bool pushNotifications = false;
-  bool pushParkIn;
+  bool _pushNotifications = false;
+  bool _pushParkIn = false;
+  bool _push3 = false;
 
   SharedPreferences preferences;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       SharedPreferences.getInstance().then((SharedPreferences prefs) {
         preferences = prefs;
-        this.pushNotifications = prefs.getBool('notifications');
+        this._pushNotifications = prefs.getBool('notifications');
       }).whenComplete(() {
-        if (this.pushNotifications == null) {
-          this.pushNotifications = true;
+        if (this._pushNotifications == null) {
+          this._pushNotifications = true;
         }
       });
     });
@@ -61,24 +61,36 @@ class _SettingsFormState extends State<SettingsForm> {
       children: <Widget>[
         SwitchListTile(
             title: Text('Push Nachrichten I'),
-            value: this.pushNotifications,
+            value: _pushNotifications,
             onChanged: (value) {
+              if (value) {
+                AppSettings.openNotificationSettings();
+              }
               if (value) {
                 SharedPreferencesHelper.enableNotifications();
               } else {
                 SharedPreferencesHelper.disableNotifications();
               }
               setState(() {
-                this.pushNotifications = value;
+                this._pushNotifications = value;
               });
             }),
         Divider(),
         SwitchListTile(
             title: Text('Push Nachrichten II'),
-            value: this.pushNotifications,
+            value: _pushParkIn && _pushNotifications,
             onChanged: (value) {
               setState(() {
-                this.pushParkIn = value;
+                this._pushParkIn = value;
+              });
+            }),
+        Divider(),
+        SwitchListTile(
+            title: Text('Push Nachrichten III'),
+            value: _push3 && _pushNotifications,
+            onChanged: (value) {
+              setState(() {
+                _push3 = value;
               });
             }),
         Divider(),
@@ -105,14 +117,7 @@ class _SettingsFormState extends State<SettingsForm> {
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.pushNamed(context, Routes.agbPage);
-            }),
-        Divider(),
-        ListTile(
-          title: Text('Push Notifications'),
-          onTap: () {
-            AppSettings.openNotificationSettings();
-          },
-        )
+            })
       ],
     );
   }
@@ -124,7 +129,8 @@ class _SettingsFormState extends State<SettingsForm> {
 
   _getNotifications() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    this.pushNotifications = prefs.getBool('authentification') ?? false;
+    bool notifications = prefs.getBool('authentification') ?? false;
+    return notifications ? true : false;
   }
 
   void setNotifications(bool value) {
