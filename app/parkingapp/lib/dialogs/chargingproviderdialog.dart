@@ -73,6 +73,6 @@ class _ChargingProviderDialogState extends State<ChargingProviderDialog> {
 
   /// Sets [vehicle] charging provider value.
   void _setChargingProvider(ChargeableVehicle vehicle) {
-    vehicle.setChargingProvider(context, _selected.toShortString());
+    vehicle.setAndUpdateChargingProvider(context, _selected.toShortString());
   }
 }

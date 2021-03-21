@@ -3,21 +3,21 @@ import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/util/parkmanager.dart';
 
-//cannot be instantiated
+/// A Class that can't be instantiated.
 abstract class Vehicle {
   int databaseId;
 
   String inAppKey, name, licensePlate;
 
-  //Dimensions
+  /// The Dimensions.
   double width, height, length, turningCycle, distRearAxleLicensePlate;
 
-  //Preferences
+  /// The Preferences.
   bool nearExitPreference, parkingCard;
 
   bool parkedIn, parkingIn, parkingOut;
 
-  //observer for parkedIn
+  /// Notifier for [parkedIn].
   ValueNotifier<bool> parkedInObserver;
 
   Map<String, dynamic> toMap() {
@@ -36,109 +36,110 @@ abstract class Vehicle {
       DatabaseProvider.COLUMN_PARKED_IN: parkedIn ? 1 : 0
     };
 
+    // When [databaseId] exists, use the value
     if (databaseId != null) {
       map[DatabaseProvider.COLUMN_DATABASE_ID] = databaseId;
     }
     return map;
   }
 
-  //sends a parkIn request to the park manager
+  /// Sends a park in request to the [ParkManager].
   void parkIn(BuildContext context) {
     ParkManager.parkInRequest(context, this);
   }
 
-  //sends a parkIn request to the park manager
+  /// Sends a park out request to the [ParkManager].
   void parkOut(BuildContext context) {
     ParkManager.parkOutRequest(context, this);
   }
 
-  //setter which includes database updating
-  void setDatabaseID(BuildContext context, int id) {
+  /// Setter which includes database updating.
+  void setAndUpdateDatabaseID(BuildContext context, int id) {
     this.databaseId = id;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setInAppKey(BuildContext context, String key) {
+  /// Setter which includes database updating.
+  void setAndUpdateInAppKey(BuildContext context, String key) {
     this.inAppKey = key;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setName(BuildContext context, String name) {
+  /// Setter which includes database updating.
+  void setAndUpdateName(BuildContext context, String name) {
     this.name = name;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setLicensePlate(BuildContext context, String licensePlate) {
+  /// Setter which includes database updating.
+  void setAndUpdateLicensePlate(BuildContext context, String licensePlate) {
     this.licensePlate = licensePlate;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setWidth(BuildContext context, double width) {
+  /// Setter which includes database updating.
+  void setAndUpdateWidth(BuildContext context, double width) {
     this.width = width;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setHeight(BuildContext context, double height) {
+  /// Setter which includes database updating.
+  void setAndUpdateHeight(BuildContext context, double height) {
     this.height = height;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setLength(BuildContext context, double length) {
+  /// Setter which includes database updating.
+  void setAndUpdateLength(BuildContext context, double length) {
     this.length = length;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setTurningCycle(BuildContext context, double turningCycle) {
+  /// Setter which includes database updating.
+  void setAndUpdateTurningCycle(BuildContext context, double turningCycle) {
     this.turningCycle = turningCycle;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setDistRearAxleLicensePlate(BuildContext context, double distance) {
+  /// Setter which includes database updating.
+  void setAndUpdateDistRearAxleLicensePlate(BuildContext context, double distance) {
     this.distRearAxleLicensePlate = distance;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setNearExitPreference(BuildContext context, bool nearExitPreference) {
+  /// Setter which includes database updating.
+  void setAndUpdateNearExitPreference(BuildContext context, bool nearExitPreference) {
     this.nearExitPreference = nearExitPreference;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setParkingCard(BuildContext context, bool parkingCard) {
+  /// Setter which includes database updating.
+  void setAndUpdateParkingCard(BuildContext context, bool parkingCard) {
     this.parkingCard = parkingCard;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating and observer updating
-  void setParkedIn(BuildContext context, bool parkedIn) {
+  /// Setter which includes database updating and observer updating.
+  void setAndUpdateParkedIn(BuildContext context, bool parkedIn) {
     this.parkedIn = parkedIn;
     this.parkedInObserver.value = this.parkedIn;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating and observer updating
-  void setParkIngIn(BuildContext context, bool parkingIn) {
+  /// Setter which includes database updating.
+  void setAndUpdateParkIngIn(BuildContext context, bool parkingIn) {
     this.parkingIn = parkingIn;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating and observer updating
-  void setParkIngOut(BuildContext context, bool parkingOut) {
+  /// Setter which includes database updating.
+  void setAndUpdateParkIngOut(BuildContext context, bool parkingOut) {
     this.parkingOut = parkingOut;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter for all dimensions which includes database updating
-  void setDimensions(BuildContext context, double width, double height,
+  /// Setter for all dimensions which includes database updating.
+  void setAndUpdateDimensions(BuildContext context, double width, double height,
       double length, double turningCycle, double distRearAxleLicensePlate) {
     this.width = width;
     this.height = height;

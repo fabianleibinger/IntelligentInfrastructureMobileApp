@@ -223,7 +223,7 @@ class _MainPageState extends State<MainPage> {
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          vehicle.setDoCharge(context, newValue);
+          vehicle.setAndUpdateDoCharge(context, newValue);
           if (newValue) {
             _parkingSpots = currentParkingGarage.freeChargeableParkingSpots;
           } else {

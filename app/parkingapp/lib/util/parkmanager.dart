@@ -15,7 +15,7 @@ class ParkManager {
   static void parkInRequest(BuildContext context, Vehicle vehicle) {
     if (needsToParkIn(vehicle)) {
       if (currentParkingGarage.vehicleSpecificSpotsAvailable(vehicle)) {
-        vehicle.setParkIngIn(context, true);
+        vehicle.setAndUpdateParkIngIn(context, true);
         print(vehicle.name + ' parking in');
 
         //try to contact server
@@ -25,12 +25,12 @@ class ParkManager {
             ApiProvider.getPosition(this).then((value) => null);
           }*/
           //TODO remove
-          vehicle.setParkedIn(context, true);
+          vehicle.setAndUpdateParkedIn(context, true);
           print('vehicle parked in: ' + vehicle.parkedIn.toString());
 
           //vehicle not parking in anymore
         }).whenComplete(() {
-          vehicle.setParkIngIn(context, false);
+          vehicle.setAndUpdateParkIngIn(context, false);
           _checkAndReactParkInWorked(context, vehicle);
         });
       } else {
@@ -81,14 +81,14 @@ class ParkManager {
   static void parkOutRequest(BuildContext context, Vehicle vehicle) {
     if (needsToParkOut(vehicle)) {
       //cancelling park in if needed
-      vehicle.setParkIngIn(context, false);
+      vehicle.setAndUpdateParkIngIn(context, false);
 
-      vehicle.setParkIngOut(context, true);
+      vehicle.setAndUpdateParkIngOut(context, true);
       print(vehicle.name + ' parking out');
 
       //try to contact server
       ApiProvider.parkOut(vehicle).then((value) {
-        vehicle.setParkedIn(context, false);
+        vehicle.setAndUpdateParkedIn(context, false);
         print('vehicle parked out: ' + vehicle.parkedIn.toString());
         //open main page
         Navigator.pushReplacementNamed(context, vehicle.inAppKey);
@@ -100,7 +100,7 @@ class ParkManager {
 
         //vehicle not parking out anymore
       }).whenComplete(() {
-        vehicle.setParkIngOut(context, false);
+        vehicle.setAndUpdateParkIngOut(context, false);
         _checkAndReactParkOutWorked(context, vehicle);
       });
     }

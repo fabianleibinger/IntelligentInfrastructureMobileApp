@@ -69,7 +69,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
       vehicle.nearExitPreference = value;
       _nearExit = vehicle.nearExitPreference;
     });
-    vehicle.setNearExitPreference(context, value);
+    vehicle.setAndUpdateNearExitPreference(context, value);
   }
 
   /// Switches [CheckBox] value and sets [vehicle.parkingCard].
@@ -78,6 +78,6 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
       vehicle.parkingCard = value;
       _parkingCard = vehicle.parkingCard;
     });
-    vehicle.setParkingCard(context, value);
+    vehicle.setAndUpdateParkingCard(context, value);
   }
 }

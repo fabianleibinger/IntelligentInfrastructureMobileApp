@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/classes/examplevehicle.dart';
+import 'package:parkingapp/models/classes/examplevehicledimension.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,8 +16,8 @@ class VehicleDimensionsDialog extends StatefulWidget {
 }
 
 class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
-  ExampleVehicle _selectedRadioTile;
-  List<ExampleVehicle> _exampleVehicles;
+  ExampleVehicleDimension _selectedRadioTile;
+  List<ExampleVehicleDimension> _exampleVehicles;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                     itemCount:
                         _exampleVehicles == null ? 0 : _exampleVehicles.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return RadioListTile<ExampleVehicle>(
+                      return RadioListTile<ExampleVehicleDimension>(
                         value: _exampleVehicles[index],
                         groupValue: _selectedRadioTile,
                         onChanged: (value) {
@@ -77,16 +77,16 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
     ]);
   }
 
-  void _setSelectedRadioTile(ExampleVehicle exampleVehicle) {
+  void _setSelectedRadioTile(ExampleVehicleDimension exampleVehicle) {
     _setExampleVehicle(vehicle, exampleVehicle);
     setState(() {
       _selectedRadioTile = exampleVehicle;
     });
   }
 
-  void _setExampleVehicle(Vehicle vehicle, ExampleVehicle exampleVehicle) {
+  void _setExampleVehicle(Vehicle vehicle, ExampleVehicleDimension exampleVehicle) {
     //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
-    vehicle.setDimensions(
+    vehicle.setAndUpdateDimensions(
         context,
         exampleVehicle.width,
         exampleVehicle.height,
@@ -95,30 +95,30 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
         exampleVehicle.distRearAxleLicensePlate);
   }
 
-  List<ExampleVehicle> _parseJson(String response) {
+  List<ExampleVehicleDimension> _parseJson(String response) {
     if (response == null) {
       return [];
     }
-    List<ExampleVehicle> list;
+    List<ExampleVehicleDimension> list;
 
     list = (json.decode(response) as List)
-        .map((e) => ExampleVehicle.fromJson(e))
+        .map((e) => ExampleVehicleDimension.fromJson(e))
         .toList();
 
     return list;
   }
 
-  List<ExampleVehicle> parseJson(String response) {
+  List<ExampleVehicleDimension> parseJson(String response) {
     if (response == null) {
       return [];
     }
-    List<ExampleVehicle> list;
+    List<ExampleVehicleDimension> list;
     /*final parsed = json.decode(response);
     list = List<ExampleVehicle>.from(
         parsed.map((model) => ExampleVehicle.fromJson(model)));*/
 
     list = (json.decode(response) as List)
-        .map((e) => ExampleVehicle.fromJson(e))
+        .map((e) => ExampleVehicleDimension.fromJson(e))
         .toList();
 
     return list;
@@ -151,7 +151,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               ? null
                               : AppLocalizations.of(context).requiredText,
                           onSaved: (val) =>
-                              vehicle.setLength(context, double.tryParse(val)),
+                              vehicle.setAndUpdateLength(context, double.tryParse(val)),
                         ),
                         //width
                         TextFormField(
@@ -166,7 +166,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               ? null
                               : AppLocalizations.of(context).requiredText,
                           onSaved: (val) =>
-                              vehicle.setWidth(context, double.tryParse(val)),
+                              vehicle.setAndUpdateWidth(context, double.tryParse(val)),
                         ),
                         //height
                         TextFormField(
@@ -181,7 +181,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               ? null
                               : AppLocalizations.of(context).requiredText,
                           onSaved: (val) =>
-                              vehicle.setHeight(context, double.tryParse(val)),
+                              vehicle.setAndUpdateHeight(context, double.tryParse(val)),
                         ),
                         //turning circle
                         TextFormField(
@@ -196,7 +196,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setTurningCycle(
+                          onSaved: (val) => vehicle.setAndUpdateTurningCycle(
                               context, double.tryParse(val)),
                         ),
                         //distance rear axle license plate
@@ -214,7 +214,7 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setDistRearAxleLicensePlate(
+                          onSaved: (val) => vehicle.setAndUpdateDistRearAxleLicensePlate(
                               context, double.tryParse(val)),
                         )
                       ],
