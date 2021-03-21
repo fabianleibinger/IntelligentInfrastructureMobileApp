@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:app_settings/app_settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'changepasscodepage.dart';
 
@@ -35,24 +36,40 @@ class SettingsForm extends StatefulWidget {
 
 class _SettingsFormState extends State<SettingsForm> {
   bool _pushNotifications = false;
-  bool _pushParkIn = false;
-  bool _push3 = false;
+  bool _pushNotificationsParked = false;
+  bool _pushNotificationsCharge = false;
 
   SharedPreferences preferences;
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      SharedPreferences.getInstance().then((SharedPreferences prefs) {
-        preferences = prefs;
-        this._pushNotifications = prefs.getBool('notifications');
+    /*setState(() {
+      SharedPreferencesHelper.getNotifications().then((value) {
+        _pushNotifications = value;
       }).whenComplete(() {
-        if (this._pushNotifications == null) {
-          this._pushNotifications = true;
+        //set value if it was not set before
+        if (_pushNotifications == null) {
+          _pushNotifications = true;
         }
       });
-    });
+      SharedPreferencesHelper.getNotificationsCharged()().then((value) {
+        _pushNotificationsCharge = value;
+      }).whenComplete(() {
+        //set value if it was not set before
+        if (_pushNotificationsCharge == null) {
+          _pushNotificationsCharge = true;
+        }
+      });
+      SharedPreferencesHelper.getNotificationsParked()().then((value) {
+        _pushNotificationsParked = value;
+      }).whenComplete(() {
+        //set value if it was not set before
+        if (_pushNotificationsParked == null) {
+          _pushNotificationsParked = true;
+        }
+      });
+    });*/
   }
 
   @override
@@ -60,37 +77,41 @@ class _SettingsFormState extends State<SettingsForm> {
     return ListView(
       children: <Widget>[
         SwitchListTile(
-            title: Text('Push Nachrichten I'),
+            title: Text(AppLocalizations.of(context).pushMessages),
+            subtitle: Text(AppLocalizations.of(context).pushMessagesText),
             value: _pushNotifications,
             onChanged: (value) {
               if (value) {
                 AppSettings.openNotificationSettings();
               }
+              //update change in Sharedpreferences
               if (value) {
                 SharedPreferencesHelper.enableNotifications();
               } else {
                 SharedPreferencesHelper.disableNotifications();
               }
               setState(() {
-                this._pushNotifications = value;
+                _pushNotifications = value;
               });
             }),
         Divider(),
         SwitchListTile(
-            title: Text('Push Nachrichten II'),
-            value: _pushParkIn && _pushNotifications,
+            title: Text(AppLocalizations.of(context).pushMessagesParked),
+            subtitle: Text(AppLocalizations.of(context).pushMessagesParkedText),
+            value: _pushNotificationsParked && _pushNotifications,
             onChanged: (value) {
               setState(() {
-                this._pushParkIn = value;
+                _pushNotificationsParked = value;
               });
             }),
         Divider(),
         SwitchListTile(
-            title: Text('Push Nachrichten III'),
-            value: _push3 && _pushNotifications,
+            title: Text(AppLocalizations.of(context).pushMessagesCharge),
+            subtitle: Text(AppLocalizations.of(context).pushMessagesChargeText),
+            value: _pushNotificationsCharge && _pushNotifications,
             onChanged: (value) {
               setState(() {
-                _push3 = value;
+                _pushNotificationsCharge = value;
               });
             }),
         Divider(),
@@ -125,19 +146,5 @@ class _SettingsFormState extends State<SettingsForm> {
   _passCodeSettings() {
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
-  }
-
-  _getNotifications() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool notifications = prefs.getBool('authentification') ?? false;
-    return notifications ? true : false;
-  }
-
-  void setNotifications(bool value) {
-    if (value) {
-      SharedPreferencesHelper.enableAuthentification();
-    } else {
-      SharedPreferencesHelper.disableAuthentification();
-    }
   }
 }

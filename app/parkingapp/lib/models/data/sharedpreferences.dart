@@ -40,4 +40,24 @@ class SharedPreferencesHelper {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('notifications');
   }
+
+  static setNotificationsParked(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('notificationsParked', value);
+  }
+
+  static setNotificationsCharged(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('notificationsCharged', value);
+  }
+
+  static getNotificationsParked() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('notificationsParked');
+  }
+
+  static getNotificationsCharged() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('notificationsCharged');
+  }
 }

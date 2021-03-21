@@ -270,5 +270,17 @@
     "scanQRText": "Rufen Sie den QR Code eines anderen Geräts unter Einstellungen > Daten exportieren auf und scannen Sie diesen.",
     "@scanQRText": {},
     "scannedQRText": "QR Code erfolgreich gescannt! Durch Tippen auf dieses Feld wird ihr Fahrzeug hinzugefügt.",
-    "@scannedQRText": {}
+    "@scannedQRText": {},
+    "pushMessages": "Push Nachrichten",
+    "@pushMessages": {},
+    "pushMessagesCharge": "Ladevorgang",
+    "@pushMessagesCharge": {},
+    "pushMessagesParked": "Einparkvorgang",
+    "@pushMessagesParked": {},
+    "pushMessagesText": "Hinweise erhalten, bei wichtigen Hinweisen",
+    "@pushMessagesText": {},
+    "pushMessagesChargeText": "Bei Informationen zum Ladestand",
+    "@pushMessagesChargeText": {},
+    "pushMessagesParkedText": "Wenn der Einparkvorgang abgeschlossen ist",
+    "@pushMessagesParkedText": {}
 }
