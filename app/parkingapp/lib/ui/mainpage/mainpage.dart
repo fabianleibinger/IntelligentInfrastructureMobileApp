@@ -47,10 +47,12 @@ class _MainPageState extends State<MainPage> {
   final int _parkingGarageImageHeight = 250;
   final int _bottomMargin = 80;
 
+  /// The variables that define the current state of the page.
   int _parkingSpots;
   bool _buttonIsDisabled;
   bool _noConnection;
 
+  /// Sets initial state variables values and selects current vehicle.
   @override
   void initState() {
     super.initState();
@@ -80,14 +82,14 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  //disables button
+  /// Disables button.
   _setButtonIsDisabled() {
     setState(() {
       _buttonIsDisabled = disableButton();
     });
   }
 
-  //return bool that checks if button needs to be disabled
+  /// Check if button needs to be disabled.
   bool disableButton() {
     return _parkingSpots <= 0 || _noConnection;
   }
@@ -223,7 +225,7 @@ class _MainPageState extends State<MainPage> {
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          vehicle.setDoCharge(context, newValue);
+          vehicle.setAndUpdateDoCharge(context, newValue);
           if (newValue) {
             _parkingSpots = currentParkingGarage.freeChargeableParkingSpots;
           } else {

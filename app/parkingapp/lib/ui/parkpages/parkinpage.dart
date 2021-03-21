@@ -4,8 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:image_size_getter/file_input.dart';
-import 'package:image_size_getter/image_size_getter.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
@@ -22,6 +20,7 @@ class ParkInPage extends StatefulWidget {
   static const String routeName = '/parkinpage';
   Coordinate vehiclePosition;
 
+  /// The inAppKey of the currently selected vehicle on [MainPage].
   final String carInAppKey;
 
   ParkInPage(this.carInAppKey);
@@ -36,12 +35,13 @@ class _ParkInPageState extends State<ParkInPage> {
   OverlayEntry sticky;
   GlobalKey stickyKey = GlobalKey();
 
+  /// Initializes selected vehicle and calls [vehicle.parkIn(context)].
   @override
   void initState() {
-    //update parking spots
+    // Update parking spots.
     currentParkingGarage.updateAllFreeParkingSpots();
 
-    //init vehicle list
+    // Init vehicle list.
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -50,7 +50,7 @@ class _ParkInPageState extends State<ParkInPage> {
         }
       },
     );
-    //get vehicle that shall be used from the list of vehicles
+    // Get vehicle that shall be used from the list of vehicles.
     for (Vehicle currentVehicle
         in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
@@ -59,37 +59,38 @@ class _ParkInPageState extends State<ParkInPage> {
     new Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
 
     super.initState();
-    //wait until build finished to call method
+    // Wait until build finished to call method.
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
   }
 
   //TODO: setState when parkedIn switches
 
+  /// Returns [Scaffold], Animation, park out button [FloatingActionButton].
   @override
   Widget build(BuildContext context) {
     ApiProvider.getPosition(vehicle).then((value) {
       double latitude = value["latitude"];
       double longitude = value["longitude"];
       widget.vehiclePosition =
-          Coordinate(lattitude: latitude, longitude: longitude);
+          Coordinate(latitude: latitude, longitude: longitude);
       print(widget.vehiclePosition);
     });
 
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkIn),
-      //button observes parkedIn value of car
+      // Button observes parkedIn value of car.
       floatingActionButton: ValueListenableBuilder(
           valueListenable: vehicle.parkedInObserver,
           builder: (BuildContext context, bool, Widget child) {
             return FloatingActionButton.extended(
-              //cancel or park out button
+              // Cancel or park out button.
               label: vehicle.parkedIn
                   ? Text(AppLocalizations.of(context).actionButtonParkOut)
                   : Text(AppLocalizations.of(context).actionButtonCancelPark),
               backgroundColor: red,
-              //park out dialog or cancel dialog
+              // Park out dialog or cancel dialog
               onPressed: () {
                 showDialog(
                     context: context,
@@ -135,8 +136,8 @@ class _ParkInPageState extends State<ParkInPage> {
     Coordinate _topRightAdjusted = Coordinate(
         longitude: currentParkingGarage.topRight.longitude -
             currentParkingGarage.bottomLeft.longitude,
-        lattitude: currentParkingGarage.topRight.lattitude -
-            currentParkingGarage.bottomLeft.lattitude);
+        latitude: currentParkingGarage.topRight.latitude -
+            currentParkingGarage.bottomLeft.latitude);
     print(_topRightAdjusted);
 
     double _iconSize = 16;
@@ -149,14 +150,14 @@ class _ParkInPageState extends State<ParkInPage> {
     Positioned _positionedIcon;
     if (vehiclePosition != null) {
       _vehiclePositionAdjusted = Coordinate(
-          lattitude: vehiclePosition.lattitude -
-              currentParkingGarage.bottomLeft.lattitude,
+          latitude: vehiclePosition.latitude -
+              currentParkingGarage.bottomLeft.latitude,
           longitude: vehiclePosition.longitude -
               currentParkingGarage.bottomLeft.longitude);
 
       //scale the icons position
-      iconOffsetHeight = (_height / _topRightAdjusted.lattitude) *
-              _vehiclePositionAdjusted.lattitude -
+      iconOffsetHeight = (_height / _topRightAdjusted.latitude) *
+              _vehiclePositionAdjusted.latitude -
           (_iconSize / 2);
       iconOffsetWidth = (_width / _topRightAdjusted.longitude) *
               _vehiclePositionAdjusted.longitude -

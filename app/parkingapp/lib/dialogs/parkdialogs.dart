@@ -3,11 +3,20 @@ import 'package:parkingapp/dialogs/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
+import 'package:parkingapp/ui/parkpages/parkinpage.dart';
+import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
 
-//defines the different park-related dialogs
+/// The different park-related dialogs.
+///
+/// ```showDialog(
+///             context: context,
+///             builder: (context) {
+///               return ParkDialogs.getParkInDialog(context);
+///             });
+/// ```
 class ParkDialogs {
 
-  //returns dialog, use prior to park in page
+  /// Returns park in dialog that opens [ParkInPage].
   static getParkInDialog(BuildContext context) {
     return Constants.getAlertDialog(
         context,
@@ -18,7 +27,7 @@ class ParkDialogs {
         vehicle.inAppKey + Routes.parkIn);
   }
 
-  //returns dialog, use prior to park out page
+  /// Returns park out dialog that opens [ParkOutPage].
   static getParkOutDialog(BuildContext context) {
     return Constants.getAlertDialogNoTitle(
         context,
@@ -28,7 +37,7 @@ class ParkDialogs {
         vehicle.inAppKey + Routes.parkOut);
   }
 
-  //returns dialog, use prior to park out page cancel park in
+  /// Returns cancel park in dialog that opens [ParkOutPage].
   static getParkInCancelDialog(BuildContext context) {
     return Constants.getAlertDialogNoTitle(
         context,
@@ -38,7 +47,6 @@ class ParkDialogs {
         vehicle.inAppKey + Routes.parkOut);
   }
 
-  //returns dialog, use after park out finished
   static getParkOutFinishedDialog(BuildContext context) {
     return Constants.getAlertDialogOneBackButtonNoTitle(
         context,
