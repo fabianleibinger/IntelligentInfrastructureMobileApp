@@ -4,8 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:image_size_getter/file_input.dart';
-import 'package:image_size_getter/image_size_getter.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';

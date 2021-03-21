@@ -3,10 +3,18 @@ import 'package:parkingapp/routes/routes.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-//defines the qr code dialogs
+/// The QR code dialogs
+///
+/// ```showDialog(
+///             context: context,
+///             builder: (context) {
+///               return ScanQRDialogs.getVehicleQRDialog(context);
+///             });
+/// ```
 class ScanQRDialogs {
 
-  //returns dialog, use prior to qr code creation
+  //TODO: comment
+  /// Returns dialog that opens [].
   static getVehicleQRDialog(BuildContext context) {
     //TODO update next page
     return Constants.getAlertDialog(
@@ -18,7 +26,8 @@ class ScanQRDialogs {
         Routes.settings);
   }
 
-  //returns the dialog for vehicles currently parking in or out
+  /// Returns the dialog that tells the User that a QR Code can't be created
+  /// because the vehicle ist currently parking in or out.
   static getNoScanQRPossibleDialog(BuildContext context) {
     return Constants.getAlertDialogOneBackButtonNoTitle(
         context,

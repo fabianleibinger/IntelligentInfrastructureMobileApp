@@ -6,7 +6,7 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'dart:convert';
 import 'package:parkingapp/models/classes/vehicle.dart';
 
-/// A Service that defines the calls to the backend server
+/// A Service that defines the calls to the backend server.
 class ApiProvider {
   /// The Backend Server Address.
   //TODO new url 192.168.4.1
@@ -116,7 +116,8 @@ class ApiProvider {
     }
   }
 
-  /// Chooses and returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.parkIn(vehicle)].
+  /// Chooses and returns the correct HTTP Post body for a [vehicle]
+  /// used in [ApiProvider.parkIn(vehicle)].
   static Map<String, dynamic> _chooseParkInBody(Vehicle vehicle) {
     if (vehicle.runtimeType == ChargeableVehicle) {
       return _parkInBodyChargeableVehicle(vehicle);
@@ -158,7 +159,8 @@ class ApiProvider {
     };
   }
 
-  /// Chooses and returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.parkOut(vehicle)].
+  /// Chooses and returns the correct HTTP Post body for a [vehicle]
+  /// used in [ApiProvider.parkOut(vehicle)].
   static Map<String, dynamic> _chooseParkOutBody(Vehicle vehicle) {
     return {
       "id": vehicle.databaseId,
@@ -170,7 +172,8 @@ class ApiProvider {
     };
   }
 
-  /// Chooses and returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.getPosition(vehicle)].
+  /// Chooses and returns the correct HTTP Post body for a [vehicle]
+  /// used in [ApiProvider.getPosition(vehicle)].
   static Map<String, dynamic> _chooseGetPositionBody(Vehicle vehicle) {
     return {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate};
   }

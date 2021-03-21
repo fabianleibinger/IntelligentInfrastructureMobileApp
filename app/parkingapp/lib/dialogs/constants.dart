@@ -61,7 +61,7 @@ class Constants {
     );
   }
 
-  /// Returns a confirmation dialog with [title], Widget content [tiles] and one button.
+  /// Returns a confirmation dialog with [title], widget content [tiles] and one button.
   static getConfirmationDialog(BuildContext context, String title,
       String buttonText, Widget tiles) {
     return AlertDialog(
