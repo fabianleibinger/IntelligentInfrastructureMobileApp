@@ -35,15 +35,20 @@ class SettingsForm extends StatefulWidget {
 }
 
 class _SettingsFormState extends State<SettingsForm> {
-  bool _pushNotifications = false;
-  bool _pushNotificationsParked = false;
-  bool _pushNotificationsCharge = false;
+  bool _pushNotifications;
+  bool _pushNotificationsParked;
+  bool _pushNotificationsCharge;
 
   SharedPreferences preferences;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _pushNotifications = false;
+      _pushNotificationsCharge = false;
+      _pushNotificationsParked = false;
+    });
     /*setState(() {
       SharedPreferencesHelper.getNotifications().then((value) {
         _pushNotifications = value;
@@ -116,8 +121,8 @@ class _SettingsFormState extends State<SettingsForm> {
             }),
         Divider(),
         ListTile(
-          title: Text('Passwort'),
-          subtitle: Text('App mit einem Passwort schützen'),
+          title: Text(AppLocalizations.of(context).password),
+          subtitle: Text(AppLocalizations.of(context).passwordSubtitle),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {
             _passCodeSettings();
@@ -125,16 +130,17 @@ class _SettingsFormState extends State<SettingsForm> {
         ),
         Divider(),
         ListTile(
-            title: Text('Daten übertragen'),
-            subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
+            title: Text(AppLocalizations.of(context).transferData),
+            subtitle: Text(AppLocalizations.of(context).transferDataText),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.pushNamed(context, Routes.transferkeys);
             }),
         Divider(),
         ListTile(
-            title: Text('AGB und Nutzungsbedingungen'),
-            subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
+            title: Text(AppLocalizations.of(context).showTermsAndConditions),
+            subtitle: Text(
+                AppLocalizations.of(context).showTermsAndConditionsSubtitle),
             trailing: Icon(Icons.arrow_forward_ios),
             onTap: () {
               Navigator.pushNamed(context, Routes.agbPage);
@@ -146,5 +152,9 @@ class _SettingsFormState extends State<SettingsForm> {
   _passCodeSettings() {
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
+  }
+
+  _getPushNotifications() async {
+    return await SharedPreferencesHelper.getNotifications() ?? false;
   }
 }

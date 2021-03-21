@@ -282,5 +282,20 @@
     "pushMessagesChargeText": "Bei Informationen zum Ladestand",
     "@pushMessagesChargeText": {},
     "pushMessagesParkedText": "Wenn der Einparkvorgang abgeschlossen ist",
-    "@pushMessagesParkedText": {}
+    "@pushMessagesParkedText": {},
+    "password": "Passwort",
+    "@password": {},
+    "passwordSubtitle": "App mit einem Passwort schützen",
+    "@passwordSubtitle": {},
+    "transferData": "Daten übertragen",
+    "@transferData": {},
+    "transferDataText": "Fahrzeuge auf andere Geräte übertragen",
+    "@transferDataText": {},
+    "showTermsAndConditions": "AGB und Nutzungsbedingungen",
+    "@showTermsAndConditions": {},
+    "showTermsAndConditionsSubtitle": "AGB und Nutzungsbedingungen anzeigen",
+    "@showTermsAndConditionsSubtitle": {}
+
+
+
 }
