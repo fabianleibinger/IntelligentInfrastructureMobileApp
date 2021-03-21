@@ -13,6 +13,7 @@ import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 class ParkOutPage extends StatefulWidget {
   static const String routeName = '/parkoutpage';
 
+  /// The inAppKey of the currently selected vehicle on [MainPage].
   final String carInAppKey;
 
   const ParkOutPage(this.carInAppKey);
@@ -22,11 +23,13 @@ class ParkOutPage extends StatefulWidget {
 }
 
 class _ParkOutPageState extends State<ParkOutPage> {
+
+  /// Initializes selected vehicle and calls [vehicle.parkOut(context)].
   @override
   void initState() {
     super.initState();
 
-    //init vehicle list
+    // Init vehicle list.
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -35,31 +38,30 @@ class _ParkOutPageState extends State<ParkOutPage> {
         }
       },
     );
-    //get vehicle that shall be used from the list of vehicles
+    // Get vehicle that shall be used from the list of vehicles.
     for (Vehicle currentVehicle
     in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
 
-    //wait until build finished to call method
+    // Wait until build finished to call method.
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkOut(context));
   }
 
-  //TODO: switch _firstBuild to false in setState()
-
+  /// Returns [Scaffold], Animation, [FloatingActionButton].
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkOut),
-      //button observes parkedIn value of car
+      // Button observes parkedIn value of car.
       floatingActionButton: ValueListenableBuilder(
         valueListenable: vehicle.parkedInObserver,
         builder: (BuildContext context, bool, Widget child) {
           return FloatingActionButton.extended(
-            //cancel or park out process button, not clickable
+            // Cancel or park out process button, not clickable.
             label: vehicle.parkedIn
                 ? Text(AppLocalizations.of(context).actionButtonParkOutProcess)
                 : Text(

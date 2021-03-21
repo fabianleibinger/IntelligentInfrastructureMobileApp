@@ -2,21 +2,24 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
-//local notifications
+/// The local notifications.
 class Notifications {
   static FlutterLocalNotificationsPlugin _localNotification;
 
+  /// The icon path.
   static String _notificationIcon = '@mipmap/ic_launcher';
 
+  /// The Android-specific settings.
   static String _androidDetailsChannelID = 'channelId';
   static String _androidDetailsLocalNotification = 'local notification';
   static String _androidDetailsBasicNotification = 'basic notification';
 
+  /// enable notifications.
   static bool _enabledForPark;
   static bool _enabledForCharge;
 
-  //needs to be called in every method that creates a new notification.
-  //sets the initial notification settings
+  /// Sets the initial notification settings.
+  /// Needs to be called in every method that creates a new notification.
   static _initialize() {
     var androidInitialize =
         new AndroidInitializationSettings(_notificationIcon);
@@ -28,9 +31,9 @@ class Notifications {
     _localNotification.initialize(initializationSettings);
   }
 
-  //needs to be called in every method that creates a new notification.
-  //sets the initial notification settings
-  //[onSelectedNotification]
+  /// Sets the initial clickable notification settings.
+  /// The Function to be called by notification [onSelectedNotification].
+  /// Needs to be called in every method that creates a new clickable notification.
   static _initializeClickable(
       Future<dynamic> Function(String) onSelectedNotification) {
     var androidInitialize =
@@ -44,7 +47,7 @@ class Notifications {
         onSelectNotification: onSelectedNotification);
   }
 
-  //creates notification with [title], [body]
+  /// Creates a notification with [title], [body].
   static Future createNotification(String title, String body) async {
     _initialize();
     var androidDetails = new AndroidNotificationDetails(
@@ -59,7 +62,8 @@ class Notifications {
     await _localNotification.show(0, title, body, generalNotificationDetails);
   }
 
-  //creates notification with [title], [body], [payload], [onSelectedNotification]
+  /// Creates a clickable notification
+  /// with [title], [body], [payload], [onSelectedNotification].
   static Future createNotificationClickable(
       String title,
       String body,
@@ -79,17 +83,19 @@ class Notifications {
         payload: payload);
   }
 
+  /// Checks if notifications are enabled for charge information.
   static bool _checkEnabledForCharge() {
     _getEnabledValues();
     return _enabledForCharge;
   }
 
+  /// Checks if notifications are enabled for park operations.
   static bool _checkEnabledForPark() {
     _getEnabledValues();
     return _enabledForPark;
   }
 
-  //gets values for the enabled attributes from Settings
+  /// Gets values for the enabled attributes from [SettingsPage].
   static _getEnabledValues() {
     _enabledForPark =
         Settings().getBool(SettingsPage.notificationParkSettingKey, false) ??
