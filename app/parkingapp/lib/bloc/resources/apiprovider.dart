@@ -116,7 +116,7 @@ class ApiProvider {
     }
   }
 
-  /// Returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.parkIn(vehicle)].
+  /// Chooses and returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.parkIn(vehicle)].
   static Map<String, dynamic> _chooseParkInBody(Vehicle vehicle) {
     if (vehicle.runtimeType == ChargeableVehicle) {
       return _parkInBodyChargeableVehicle(vehicle);
@@ -158,7 +158,7 @@ class ApiProvider {
     };
   }
 
-  /// Returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.parkOut(vehicle)].
+  /// Chooses and returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.parkOut(vehicle)].
   static Map<String, dynamic> _chooseParkOutBody(Vehicle vehicle) {
     return {
       "id": vehicle.databaseId,
@@ -170,7 +170,7 @@ class ApiProvider {
     };
   }
 
-  /// Returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.getPosition(vehicle)].
+  /// Chooses and returns the correct HTTP Post body for a [vehicle] used in [ApiProvider.getPosition(vehicle)].
   static Map<String, dynamic> _chooseGetPositionBody(Vehicle vehicle) {
     return {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate};
   }
