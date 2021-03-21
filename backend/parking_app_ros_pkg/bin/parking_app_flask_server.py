@@ -238,7 +238,7 @@ def perform_get_position():
             position = communication.communicate_vehicle_position(app_id, number_plate)
             return jsonify({'longitude': position["longitude"],
                             'latitude': position["latitude"],
-                            'moving': position["moving"],
+                            'parking': position["parking"],
                             'reached_position': position["reached_position"]})
     except communication.VehicleIdentificationException as e:
         return Response({str(e)}, status=406)
@@ -273,5 +273,3 @@ def perform_reset_database():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
-
-
