@@ -21,7 +21,7 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanState extends State<ScanScreen> {
   String barcode = "";
-  String vehicleScanned = "Noch keinen QR Code gescannt!";
+  String textButton = "Noch keinen QR Code gescannt!";
   bool scanned = false;
 
   @override
@@ -42,19 +42,18 @@ class _ScanState extends State<ScanScreen> {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
-                    color: green,
-                    textColor: Colors.white,
-                    splashColor: Colors.blueGrey,
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: green, onPrimary: white, shadowColor: grey),
                     onPressed: scan,
                     child: const Text('Kamera zum Scannen starten')),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: RaisedButton(
+                child: ElevatedButton(
                     onPressed: () {
                       if (scanned) {
-                        Vehicle transfer = _convertIntoVehicle();
+                        _addTransferedVehicle();
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -63,7 +62,7 @@ class _ScanState extends State<ScanScreen> {
                       }
                     },
                     child: Text(
-                      vehicleScanned,
+                      textButton,
                       textAlign: TextAlign.center,
                     )),
               ),
@@ -78,6 +77,8 @@ class _ScanState extends State<ScanScreen> {
       setState(() {
         this.barcode = barcode;
         this.scanned = true;
+        this.textButton =
+            "Der QR Code wurde erfolgreich gescannt! Zum Fahrzeug hinzufügen hier klicken.";
       });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
@@ -95,7 +96,8 @@ class _ScanState extends State<ScanScreen> {
     }
   }
 
-  Vehicle _convertIntoVehicle() {
+  _addTransferedVehicle() {
+    //split the string coming from the QR Code
     String splitter = ':';
     List<String> split = barcode.split(',');
     List<String> type = split[0].split(splitter);
@@ -117,6 +119,7 @@ class _ScanState extends State<ScanScreen> {
     List<String> chargeTimeEnd = split[15].split(splitter);
     print(chargeTimeEnd);
 
+    //convert String time into TimeOfDay
     TimeOfDay startTime = TimeOfDay(
         hour: int.parse(chargeTimeBegin[1]),
         minute: int.parse(chargeTimeBegin[2]));
@@ -158,9 +161,6 @@ class _ScanState extends State<ScanScreen> {
           parkedIn[1] == '1');
     }
     DataHelper.addVehicle(context, vehicle);
-    vehicleScanned = "Zum Hinzufügen des gescannten Fahrzeugs hier klicken!";
-    scanned = true;
-    return vehicle;
   }
 
   Vehicle transferStandardVehicle(
