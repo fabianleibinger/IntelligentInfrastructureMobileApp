@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/dialogs/scanqrdialog.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:parkingapp/util/qrscanner.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_preferences_settings/shared_preferences_settings.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

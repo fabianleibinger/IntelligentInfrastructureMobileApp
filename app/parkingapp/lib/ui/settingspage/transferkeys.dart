@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
-import 'package:parkingapp/dialogs/scanqrdialog.dart';
+import 'package:parkingapp/dialogs/scanqrdialogs.dart';
+import 'package:parkingapp/dialogs/scanqrdialogs.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -47,12 +48,12 @@ class Transferkeys extends StatelessWidget {
                   onTap: () {
                     //show QR Code not possible if vehicle is currently parking in or out
                     if (vehicle.parkingIn || vehicle.parkingOut) {
-                      NoConnectionDialog.createDialog(context);
+                      ScanQRDialogs.getNoScanQRPossibleDialog(context);
                     }
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return ScanQRDialog.getVehicleQRDialog(
+                        return ScanQRDialogs.getVehicleQRDialog(
                             context, vehicle);
                       },
                     );
