@@ -139,8 +139,18 @@ class ChargeableVehicle extends Vehicle {
 
   /// Convert to [StandardVehicle].
   StandardVehicle toStandardVehicle() {
-    return StandardVehicle(inAppKey, name, licensePlate, height, width, length,
-        turningCycle, distRearAxleLicensePlate, nearExitPreference, parkingCard, false);
+    return StandardVehicle(
+        inAppKey,
+        name,
+        licensePlate,
+        height,
+        width,
+        length,
+        turningCycle,
+        distRearAxleLicensePlate,
+        nearExitPreference,
+        parkingCard,
+        false);
   }
 
   @override

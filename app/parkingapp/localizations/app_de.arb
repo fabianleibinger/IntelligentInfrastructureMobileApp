@@ -271,6 +271,8 @@
     "@welcomeText": {},
     "appName": "FZI AutoPark",
     "@appName": {},
+    "textQRPage": "Zum Übertragen der Daten scannen Sie den QR-Code mit einem anderen Gerät. Rufen Sie dafür unter Fahrzeuge bearbeiten den Import Dialog auf oder wählen Sie während der Einrichtung Daten Importieren auf.",
+    "@textQRPage": {},
     "askDeleteVehicle": "Fahrzeug löschen?",
     "@askDeleteVehicle": {},
     "askDeleteVehicleContent": "Alle Informationen über das Fahrzeug werden unwiderruflich gelöscht.",
@@ -288,5 +290,36 @@
     "additionalInMilimeters": "(in mm)",
     "@additionalInMilimeters": {
         "description": "hint that a dimension shall be specified in milimeters"
-    }
+    },
+    "scanQRText": "Rufen Sie den QR Code eines anderen Geräts unter Einstellungen > Daten exportieren auf und scannen Sie diesen.",
+    "@scanQRText": {},
+    "scannedQRText": "QR Code erfolgreich gescannt! Durch Tippen auf dieses Feld wird ihr Fahrzeug hinzugefügt.",
+    "@scannedQRText": {},
+    "pushMessages": "Push Nachrichten",
+    "@pushMessages": {},
+    "pushMessagesCharge": "Ladevorgang",
+    "@pushMessagesCharge": {},
+    "pushMessagesParked": "Einparkvorgang",
+    "@pushMessagesParked": {},
+    "pushMessagesText": "Hinweise erhalten, bei wichtigen Hinweisen",
+    "@pushMessagesText": {},
+    "pushMessagesChargeText": "Bei Informationen zum Ladestand",
+    "@pushMessagesChargeText": {},
+    "pushMessagesParkedText": "Wenn der Einparkvorgang abgeschlossen ist",
+    "@pushMessagesParkedText": {},
+    "password": "Passwort",
+    "@password": {},
+    "passwordSubtitle": "App mit einem Passwort schützen",
+    "@passwordSubtitle": {},
+    "transferData": "Daten übertragen",
+    "@transferData": {},
+    "transferDataText": "Fahrzeuge auf andere Geräte übertragen",
+    "@transferDataText": {},
+    "showTermsAndConditions": "AGB und Nutzungsbedingungen",
+    "@showTermsAndConditions": {},
+    "showTermsAndConditionsSubtitle": "AGB und Nutzungsbedingungen anzeigen",
+    "@showTermsAndConditionsSubtitle": {}
+
+
+
 }
