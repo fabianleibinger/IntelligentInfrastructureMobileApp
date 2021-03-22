@@ -32,6 +32,7 @@ dependencies:
   shared_preferences_settings: ^1.2.0
   passcode_screen: ^1.2.2+1
   flutter_app_lock: ^1.4.0
+  flutter_local_notifications: ^4.0.1+2
   permission_handler: ^5.0.1+1
 
 
@@ -47,6 +48,8 @@ dependencies:
   flutter_bloc: ^6.1.1
   qr_flutter: ^3.1.0
   uuid: ^2.2.2
+  qr_code_scanner: ^0.2.1
+  image_size_getter: ^0.2.1
   barcode_scan: ^1.0.0
 
 dev_dependencies:

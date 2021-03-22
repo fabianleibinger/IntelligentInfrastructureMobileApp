@@ -1,16 +1,9 @@
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/addvehicle.dart';
-import 'package:parkingapp/bloc/events/deletevehicle.dart';
-import 'package:parkingapp/bloc/events/resetvehicles.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
-import 'package:parkingapp/models/classes/standardvehicle.dart';
-import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
-import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
-import 'package:parkingapp/util/qrscanner.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -93,11 +86,7 @@ class _FancyFabState extends State<FancyFab>
           // DatabaseProvider.db.delete(2).then((index) {
           //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
           // });
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (BuildContext context) => ScanScreen()));
-          /*DatabaseProvider.db
+          DatabaseProvider.db
               .insert(ChargeableVehicle(
                   Utility.generateKey(),
                   "Tesla Model 3",
@@ -116,7 +105,7 @@ class _FancyFabState extends State<FancyFab>
                   TimeOfDay.now()))
               .then((vehicle) {
             BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
-          });*/
+          });
           // DatabaseProvider.db.clear().then((value) {
           //   BlocProvider.of<VehicleBloc>(context).add(ResetVehicles());
           // });

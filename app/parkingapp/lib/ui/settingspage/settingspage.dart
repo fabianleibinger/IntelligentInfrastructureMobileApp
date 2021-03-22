@@ -19,6 +19,10 @@ class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
   const SettingsPage({Key key}) : super(key: key);
 
+  static final String notificationSettingKey = 'pushNotifications';
+  static final String notificationLoadSettingKey = 'pushLoad';
+  static final String notificationParkSettingKey = 'pushPark';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

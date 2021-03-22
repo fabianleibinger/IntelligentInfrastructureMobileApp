@@ -11,6 +11,7 @@ import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 
+/// The route paths.
 class Routes {
   static const String vehicle = VehiclePage.routeName;
   static const String settings = SettingsPage.routeName;
@@ -24,25 +25,25 @@ class Routes {
   static const String qrpage = QRPage.routeName;
   static const String authPage = AuthentificationHandling.routeName;
 
-  //returns the correct route for the AppDrawer according to vehicles values.
-  //returns either MainPage, ParkInPage, ParkOutPage
+  /// Returns the correct route according to [vehicle] values.
+  /// Opens either [MainPage], [ParkInPage], [ParkOutPage].
   static String returnCorrectRouteForVehicle(Vehicle vehicle) {
-    //vehicle is currently parking in
+    // vehicle is currently parking in.
     if (vehicle.parkingIn) {
       print('AppDrawer chose park in page');
       return vehicle.inAppKey + parkIn;
-      //vehicle is currently parking out or cancelling park in
+      // vehicle is currently parking out or cancelling park in.
     } else if (vehicle.parkingOut) {
       print('AppDrawer chose park out page');
       return vehicle.inAppKey + parkOut;
-      //vehicle is parked in
+      // vehicle is parked in.
     } else if (vehicle.parkedIn) {
       print('AppDrawer chose park in page');
       return vehicle.inAppKey + parkIn;
-      //vehicle is not inside the parking garage
+      // vehicle is not inside the parking garage.
     } else {
       print('AppDrawer chose main page');
-      //goto mainPage
+      // goto mainPage.
       return vehicle.inAppKey;
     }
   }

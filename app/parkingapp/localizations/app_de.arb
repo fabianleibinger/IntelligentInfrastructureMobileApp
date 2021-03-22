@@ -89,9 +89,33 @@
     "@noConnectionDialogTitle": {
         "description": "Text for no connection dialog title"
     },
+    "notificationParkInTitle": "Fahrzeug ",
+    "@notificationParkInTitle": {
+        "description": "title of park in notification"
+    },
+    "notificationParkInBody": "Hier klicken zum Ausparken",
+    "@notificationParkInBody": {
+        "description": "body of park in notification"
+    },
+    "notificationParkOutTitleOne": "Fahrzeug ",
+    "@notificationParkInTitleOne": {
+        "description": "first title part of park out notification"
+    },
+    "notificationParkOutTitleTwo": " erfolgreich ausgeparkt",
+    "@notificationParkInTitleTwo": {
+        "description": "Second title part of park out notification"
+    },
+    "notificationParkOutBody": "Ihr Fahrzeug steht in der Übergabezone zum Abholen bereit",
+    "@notificationParkOutBody": {
+        "description": "body of park out notification"
+    },
     "networkButton": "Netzwerkeinstellungen öffnen",
     "@networkButton": {
         "description": "Text on network settings button"
+    },
+    "noScanPossibleDialogText": "Diese Funktion ist aktuell leider nicht verfügbar, da das Auto ein- oder ausparkt",
+    "@noScanPossibleDialogText": {
+        "description": "Text on no scan possible dialog"
     },
     "parkDialogBackButton": "ZURÜCK",
     "@parkDialogBackButton": {
@@ -157,7 +181,7 @@
     "@scanQRDialogTitle": {
         "description": "Title in vehicle QR dialog"
     },
-    "scanQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / sdie Fahrzeuge haben?",
+    "scanQRDialogContent": "Möchten Sie von mehreren Geräten gleichzeitig Zugriff auf das Fahrzeug / die Fahrzeuge haben?",
     "@scanQRDialogContent": {
         "description": "Text body in vehicle QR dialog"
     },

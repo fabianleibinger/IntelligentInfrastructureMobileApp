@@ -4,8 +4,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle extends Vehicle {
-  StandardVehicle(
-      this.inAppKey,
+  StandardVehicle(this.inAppKey,
       this.name,
       this.licensePlate,
       this.width,
@@ -16,14 +15,15 @@ class StandardVehicle extends Vehicle {
       this.nearExitPreference,
       this.parkingCard,
       this.parkedIn) {
+    // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
     this.parkingIn = false;
     this.parkingOut = false;
   }
 
-  //private constructor: only called by fromMap() method, database defines databaseId
-  StandardVehicle._(
-      this.databaseId,
+  /// Private constructor: only called by [fromMap] method,
+  /// database defines databaseId
+  StandardVehicle._(this.databaseId,
       this.inAppKey,
       this.name,
       this.licensePlate,
@@ -35,6 +35,7 @@ class StandardVehicle extends Vehicle {
       this.nearExitPreference,
       this.parkingCard,
       this.parkedIn) {
+    // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
     this.parkingIn = false;
     this.parkingOut = false;
@@ -71,7 +72,8 @@ class StandardVehicle extends Vehicle {
   @override
   bool parkedIn;
 
-  Vehicle toElectricVehicle() {
+  /// Convert to [ChargeableVehicle].
+  Vehicle toChargeableVehicle() {
     return ChargeableVehicle(
         inAppKey,
         name,
@@ -87,6 +89,6 @@ class StandardVehicle extends Vehicle {
         false,
         '',
         TimeOfDay(hour: 0, minute: 0),
-        TimeOfDay(hour: 23, minute: 59));
+        TimeOfDay(hour: 0, minute: 0));
   }
 }

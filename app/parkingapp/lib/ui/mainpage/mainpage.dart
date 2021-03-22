@@ -10,7 +10,7 @@ import 'package:parkingapp/bloc/events/setvehicles.dart';
 import 'package:parkingapp/dialogs/chargetimedialog.dart';
 import 'package:parkingapp/dialogs/chargingproviderdialog.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
-import 'package:parkingapp/dialogs/parkdialog.dart';
+import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/dialogs/parkpreferencesdialog.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
@@ -44,13 +44,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final _parkingGarageImageHeight = 250;
-  final _bottomMargin = 80;
+  final int _parkingGarageImageHeight = 250;
+  final int _bottomMargin = 80;
 
+  /// The variables that define the current state of the page.
   int _parkingSpots;
   bool _buttonIsDisabled;
   bool _noConnection;
 
+  /// Sets initial state variables values and selects current vehicle.
   @override
   void initState() {
     super.initState();
@@ -80,12 +82,16 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
-  //disables button according to free parking spots and connection to server
+  /// Disables button.
   _setButtonIsDisabled() {
-    bool disable = _parkingSpots <= 0 || _noConnection;
     setState(() {
-      _buttonIsDisabled = disable;
+      _buttonIsDisabled = disableButton();
     });
+  }
+
+  /// Check if button needs to be disabled.
+  bool disableButton() {
+    return _parkingSpots <= 0 || _noConnection;
   }
 
   @override
@@ -104,7 +110,7 @@ class _MainPageState extends State<MainPage> {
         vehicle.licensePlate);
     //check which parking spots should be displayed and if button should be disabled
     _parkingSpots = currentParkingGarage.getFreeSpotsForVehicle(vehicle);
-    _buttonIsDisabled = _parkingSpots <= 0 || _noConnection;
+    _buttonIsDisabled = disableButton();
     return Scaffold(
         appBar: AppBar(
           title: Text(vehicle.name, style: whiteHeader),
@@ -117,12 +123,24 @@ class _MainPageState extends State<MainPage> {
           onPressed: () {
             if (_buttonIsDisabled) {
               if (_noConnection) {
-                NoConnectionDialog.createDialog(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return NoConnectionDialog.getDialog(context);
+                    });
               } else {
-                ParkingGarageOccupiedDialog.createDialog(context);
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ParkingGarageOccupiedDialog.getDialog(context);
+                    });
               }
             } else {
-              ParkDialog.createParkInDialog(context);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ParkDialogs.getParkInDialog(context);
+                  });
             }
           },
           label: Text(AppLocalizations.of(context).actionButtonPark),
@@ -207,7 +225,7 @@ class _MainPageState extends State<MainPage> {
           Text(AppLocalizations.of(context).mainPageCarPreferenceShouldCharge),
       onChanged: (bool newValue) {
         setState(() {
-          vehicle.setDoCharge(context, newValue);
+          vehicle.setAndUpdateDoCharge(context, newValue);
           if (newValue) {
             _parkingSpots = currentParkingGarage.freeChargeableParkingSpots;
           } else {

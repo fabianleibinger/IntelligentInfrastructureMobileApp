@@ -27,6 +27,7 @@ class VehiclePage extends StatefulWidget {
 class _VehiclePageState extends State<VehiclePage> {
   final GlobalKey<FormState> _loginFormKey =
       new GlobalKey<FormState>(debugLabel: '_loginFormKey');
+
   @override
   void initState() {
     // TODO: implement initState
@@ -72,7 +73,9 @@ class _VehiclePageState extends State<VehiclePage> {
                       //will not allow deletion if vehicle is parked in
                       showDialog(
                           context: context,
-                          builder: (_) => vehicle.parkedIn
+                          builder: (_) => vehicle.parkedIn ||
+                                  vehicle.parkingIn ||
+                                  vehicle.parkingOut
                               ? CantDeleteVehicle()
                               : ConfirmDelete()),
                   direction: DismissDirection.endToStart,

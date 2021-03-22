@@ -1,10 +1,9 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 
-//defines the park preferences dialog
+/// The Dialog that sets the park preferences for [Vehicles].
 class ParkPreferencesDialog extends StatefulWidget {
   ParkPreferencesDialog({Key key}) : super(key: key);
 
@@ -13,34 +12,17 @@ class ParkPreferencesDialog extends StatefulWidget {
 }
 
 class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
-  bool _nearExitCheckBox;
-  bool _parkingCardCheckBox;
 
-  //sets the initial check box values using the current vehicles attributes
+  /// The values of the [Checkboxes].
+  bool _nearExit;
+  bool _parkingCard;
+
+  /// Sets the initial [Checkbox] values.
   @override
   void initState() {
-    // TODO: switch to correct currentVehicle
     super.initState();
-    _nearExitCheckBox = vehicle.nearExitPreference;
-    _parkingCardCheckBox = vehicle.parkingCard;
-  }
-
-  //switches current vehicles value and checkbox value
-  void _setNearExitCheckboxValue(bool value) {
-    vehicle.setNearExitPreference(context, value);
-    setState(() {
-      vehicle.nearExitPreference = value;
-      _nearExitCheckBox = vehicle.nearExitPreference;
-    });
-  }
-
-  //switches current vehicles value and checkbox value
-  void _setParkingCardCheckboxValue(bool value) {
-    vehicle.setParkingCard(context, value);
-    setState(() {
-      vehicle.parkingCard = value;
-      _parkingCardCheckBox = vehicle.parkingCard;
-    });
+    _nearExit = vehicle.nearExitPreference;
+    _parkingCard = vehicle.parkingCard;
   }
 
   @override
@@ -52,14 +34,14 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
         _getCheckBoxes(context));
   }
 
-  //returns two checkboxes for near exit preference and parking card
+  /// Returns two [Checkboxes] for near exit preference and parking card.
   _getCheckBoxes(BuildContext context) {
     return Column(
       children: [
         Row(
           children: [
             Checkbox(
-                value: _nearExitCheckBox,
+                value: _nearExit,
                 onChanged: (value) {
                   _setNearExitCheckboxValue(value);
                 }),
@@ -70,7 +52,7 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
         Row(
           children: [
             Checkbox(
-                value: _parkingCardCheckBox,
+                value: _parkingCard,
                 onChanged: (value) {
                   _setParkingCardCheckboxValue(value);
                 }),
@@ -79,5 +61,23 @@ class _ParkPreferencesDialogState extends State<ParkPreferencesDialog> {
         )
       ],
     );
+  }
+
+  /// Switches [CheckBox] value and sets [vehicle.nearExitPreference].
+  void _setNearExitCheckboxValue(bool value) {
+    setState(() {
+      vehicle.nearExitPreference = value;
+      _nearExit = vehicle.nearExitPreference;
+    });
+    vehicle.setAndUpdateNearExitPreference(context, value);
+  }
+
+  /// Switches [CheckBox] value and sets [vehicle.parkingCard].
+  void _setParkingCardCheckboxValue(bool value) {
+    setState(() {
+      vehicle.parkingCard = value;
+      _parkingCard = vehicle.parkingCard;
+    });
+    vehicle.setAndUpdateParkingCard(context, value);
   }
 }
