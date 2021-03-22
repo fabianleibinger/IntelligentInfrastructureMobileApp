@@ -15,8 +15,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ///             });
 /// ```
 class ScanQRDialogs {
-  //TODO: update comment
-  //returns qr dialog for specific vehicle
+
+  /// Returns the dialog that opens the [QRPage] for a specific [vehicle].
   static getVehicleQRDialog(BuildContext context, Vehicle vehicle) {
     return AlertDialog(
       title: Text(AppLocalizations.of(context).scanQRDialogTitle),
