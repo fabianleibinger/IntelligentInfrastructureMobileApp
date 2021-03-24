@@ -16,6 +16,7 @@ class Notifications {
   static String _androidDetailsBasicNotification = 'basic notification';
 
   /// enable notifications.
+  static bool _enabledGeneral;
   static bool _enabledForPark;
   static bool _enabledForCharge;
 
@@ -84,6 +85,11 @@ class Notifications {
         payload: payload);
   }
 
+  static bool _checkEnabledGeneral() {
+    _getEnabledValues();
+    return _enabledGeneral;
+  }
+
   /// Checks if notifications are enabled for charge information.
   static bool _checkEnabledForCharge() {
     _getEnabledValues();
@@ -99,6 +105,7 @@ class Notifications {
   /// Gets values for the enabled attributes from [SettingsPage].
   static _getEnabledValues() async {
     final prefs = await SharedPreferences.getInstance();
+    _enabledGeneral = prefs.getBool('notifications') ?? false;
     _enabledForCharge = prefs.getBool('notificationsCharged') ?? false;
     _enabledForPark = prefs.getBool('notificationsParked') ?? false;
   }
