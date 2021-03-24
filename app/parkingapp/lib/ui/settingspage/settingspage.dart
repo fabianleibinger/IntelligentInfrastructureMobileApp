@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
+import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:system_settings/system_settings.dart';
 
 import 'changepasscodepage.dart';
 
@@ -49,13 +53,19 @@ class _SettingsFormState extends State<SettingsForm> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
         SwitchListTile(
             title: Text(AppLocalizations.of(context).pushMessages),
             subtitle: Text(AppLocalizations.of(context).pushMessagesText),
             value: _pushNotifications,
-            onChanged: (value) {
+            onChanged: (value) async {
               if (value) {
-                AppSettings.openNotificationSettings();
+                if (await Permission.notification.request().isDenied) {
+                  SystemSettings.app();
+                }
+                if (await Permission.notification.request().isDenied) {
+                  value = false;
+                }
               }
               //update change in Sharedpreferences
               if (value) {
@@ -133,13 +143,13 @@ class _SettingsFormState extends State<SettingsForm> {
 
     //check if values are already initialized
     if (notifications == null) {
-      notifications = true;
+      notifications = false;
     }
     if (notificationsCharge == null) {
-      notificationsCharge = true;
+      notificationsCharge = false;
     }
     if (notificationsParked == null) {
-      notificationsParked = true;
+      notificationsParked = false;
     }
 
     setState(() {

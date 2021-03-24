@@ -51,6 +51,7 @@ dependencies:
   qr_code_scanner: ^0.2.1
   image_size_getter: ^0.2.1
   barcode_scan: ^1.0.0
+  system_settings: ^1.0.1
 
 dev_dependencies:
   flutter_test:

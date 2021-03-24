@@ -99,6 +99,7 @@ class AuthentificationHandling extends StatelessWidget {
   }
 
   void _isAuthentificated(BuildContext context) async {
+    //ask if device is locked with password
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isAuthentificated = prefs.getBool('authentification') ?? false;
     isAuthentificated

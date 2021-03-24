@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 
 /// The local notifications.
@@ -96,12 +97,9 @@ class Notifications {
   }
 
   /// Gets values for the enabled attributes from [SettingsPage].
-  static _getEnabledValues() {
-    _enabledForPark =
-        Settings().getBool(SettingsPage.notificationParkSettingKey, false) ??
-            false;
-    _enabledForCharge =
-        Settings().getBool(SettingsPage.notificationLoadSettingKey, false) ??
-            false;
+  static _getEnabledValues() async {
+    final prefs = await SharedPreferences.getInstance();
+    _enabledForCharge = prefs.getBool('notificationsCharged') ?? false;
+    _enabledForPark = prefs.getBool('notificationsParked') ?? false;
   }
 }
