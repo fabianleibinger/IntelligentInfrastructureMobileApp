@@ -21,7 +21,7 @@ abstract class Vehicle {
   //observer for parkedIn
   ValueNotifier<bool> parkedInObserver;
 
-  Coordinate parkingSpot;
+  Coordinate parkingSpot, location;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
