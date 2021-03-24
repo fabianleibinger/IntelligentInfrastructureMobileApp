@@ -67,9 +67,6 @@ class _ParkOutPageState extends State<ParkOutPage> {
 
   @override
   Widget build(BuildContext context) {
-    //update position
-    //ParkManager.getVehiclePosition(vehicle)
-    //    .then((coordinate) => widget.vehiclePosition = coordinate);
     //cancel the timer if the vehicle is parked in
     ParkManager.needsToParkOut(vehicle) ? null : _timer.cancel();
 
