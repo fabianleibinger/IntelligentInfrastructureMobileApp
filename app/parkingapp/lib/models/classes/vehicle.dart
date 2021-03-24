@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/util/parkmanager.dart';
@@ -19,6 +20,8 @@ abstract class Vehicle {
 
   //observer for parkedIn
   ValueNotifier<bool> parkedInObserver;
+
+  Coordinate parkingSpot;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -134,6 +137,7 @@ abstract class Vehicle {
   //setter which includes database updating and observer updating
   void setParkIngOut(BuildContext context, bool parkingOut) {
     this.parkingOut = parkingOut;
+    this.parkingSpot = null;
     DataHelper.updateVehicle(context, this);
   }
 
@@ -146,5 +150,10 @@ abstract class Vehicle {
     this.turningCycle = turningCycle;
     this.distRearAxleLicensePlate = distRearAxleLicensePlate;
     DataHelper.updateVehicle(context, this);
+  }
+
+  //set the parkingSpot for the vehicle
+  void setParkingSpot(Coordinate parkingSpot) {
+    this.parkingSpot = parkingSpot;
   }
 }

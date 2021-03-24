@@ -24,6 +24,12 @@ class ParkManager {
             //TODO add functionality
             ApiProvider.getPosition(this).then((value) => null);
           }*/
+          //set the parking Spot for the vehicle
+          double latitude = value["latitude"];
+          double longitude = value["longitude"];
+          Coordinate _destination =
+              Coordinate(lattitude: latitude, longitude: longitude);
+          vehicle.setParkingSpot(_destination);
           //TODO remove
           vehicle.setParkedIn(context, true);
           print('vehicle parked in: ' + vehicle.parkedIn.toString());

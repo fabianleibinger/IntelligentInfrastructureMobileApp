@@ -118,7 +118,9 @@ class _ParkInPageState extends State<ParkInPage> {
             child: ListView(
               children: [
                 ParkManager.getParkInAnimation(
-                    context: context, vehiclePosition: widget.vehiclePosition),
+                    context: context,
+                    vehiclePosition: widget.vehiclePosition,
+                    destination: vehicle.parkingSpot),
               ],
             ),
           )
