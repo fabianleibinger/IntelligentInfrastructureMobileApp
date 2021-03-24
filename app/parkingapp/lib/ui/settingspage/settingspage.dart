@@ -53,6 +53,7 @@ class _SettingsFormState extends State<SettingsForm> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
+        Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
         SwitchListTile(
             title: Text(AppLocalizations.of(context).pushMessages),
             subtitle: Text(AppLocalizations.of(context).pushMessagesText),
@@ -61,6 +62,9 @@ class _SettingsFormState extends State<SettingsForm> {
               if (value) {
                 if (await Permission.notification.request().isDenied) {
                   SystemSettings.app();
+                }
+                if (await Permission.notification.request().isDenied) {
+                  value = false;
                 }
               }
               //update change in Sharedpreferences

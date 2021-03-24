@@ -69,6 +69,9 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
                 if (await Permission.notification.request().isDenied) {
                   SystemSettings.app();
                 }
+                if (await Permission.notification.request().isDenied) {
+                  value = false;
+                }
               }
               //update change in Sharedpreferences
               if (value) {
