@@ -21,7 +21,6 @@ import 'package:parkingapp/util/parkmanager.dart';
 
 class ParkInPage extends StatefulWidget {
   static const String routeName = '/parkinpage';
-  Coordinate vehiclePosition;
 
   final String carInAppKey;
 

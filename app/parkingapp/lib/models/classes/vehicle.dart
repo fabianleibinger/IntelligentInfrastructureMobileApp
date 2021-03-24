@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/classes/parkinggarage.dart';
+import 'package:parkingapp/models/classes/coordinate.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/util/parkmanager.dart';
