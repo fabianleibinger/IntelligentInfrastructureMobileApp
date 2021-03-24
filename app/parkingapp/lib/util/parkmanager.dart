@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
@@ -20,16 +23,20 @@ class ParkManager {
 
         //try to contact server
         ApiProvider.parkIn(vehicle).then((value) {
-          /*while (!this.parkedIn) {
-            //TODO add functionality
-            ApiProvider.getPosition(this).then((value) => null);
-          }*/
           //set the parking Spot for the vehicle
           double latitude = value["latitude"];
           double longitude = value["longitude"];
           Coordinate _destination =
               Coordinate(lattitude: latitude, longitude: longitude);
           vehicle.setParkingSpot(_destination);
+
+          //update the position while the vehicle is parking
+          new Timer.periodic(Duration(seconds: 1), (timer) {
+            print('updating vehicle');
+            ParkManager.updatePosition(vehicle).then((value) {
+              //if (!value) timer.cancel();
+            });
+          });
           //TODO remove
           vehicle.setParkedIn(context, true);
           print('vehicle parked in: ' + vehicle.parkedIn.toString());
@@ -95,6 +102,14 @@ class ParkManager {
 
       //try to contact server
       ApiProvider.parkOut(vehicle).then((value) {
+        //update the position while the vehicle is parking out
+        new Timer.periodic(Duration(seconds: 1), (timer) {
+          print('updating vehicle');
+          ParkManager.updatePosition(vehicle).then((value) {
+            //if (!value) timer.cancel();
+          });
+        });
+
         vehicle.setParkedIn(context, false);
         print('vehicle parked out: ' + vehicle.parkedIn.toString());
         //open main page
@@ -238,5 +253,15 @@ class ParkManager {
     double latitude = position["latitude"];
     double longitude = position["longitude"];
     return Coordinate(lattitude: latitude, longitude: longitude);
+  }
+
+  ///update the position in the vehicle
+  ///returns true if the vehicle is still moving
+  static Future<bool> updatePosition(Vehicle vehicle) async {
+    var position = await ApiProvider.getPosition(vehicle);
+    double latitude = position["latitude"];
+    double longitude = position["longitude"];
+    vehicle.location = Coordinate(lattitude: latitude, longitude: longitude);
+    return position["moving"];
   }
 }
