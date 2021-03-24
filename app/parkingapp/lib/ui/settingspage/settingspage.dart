@@ -3,10 +3,13 @@ import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:app_settings/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:system_settings/system_settings.dart';
 
 import 'changepasscodepage.dart';
 
@@ -54,10 +57,11 @@ class _SettingsFormState extends State<SettingsForm> {
             title: Text(AppLocalizations.of(context).pushMessages),
             subtitle: Text(AppLocalizations.of(context).pushMessagesText),
             value: _pushNotifications,
-            onChanged: (value) {
+            onChanged: (value) async {
               if (value) {
-                Notifications.createNotification(
-                    'Push Nachrichten erfolgreich erlaubt!', '');
+                if (await Permission.notification.request().isDenied) {
+                  SystemSettings.app();
+                }
               }
               //update change in Sharedpreferences
               if (value) {

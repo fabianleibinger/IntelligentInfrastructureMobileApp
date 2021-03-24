@@ -8,8 +8,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
 import 'package:parkingapp/util/qrscanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared_preferences_settings/shared_preferences_settings.dart';
+import 'package:system_settings/system_settings.dart';
 
 class AppConfiguration extends StatelessWidget {
   @override
@@ -62,9 +64,11 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
             title: Text(AppLocalizations.of(context).pushMessages),
             subtitle: Text(AppLocalizations.of(context).pushMessagesText),
             value: _pushNotifications,
-            onChanged: (value) {
+            onChanged: (value) async {
               if (value) {
-                Notifications.createNotification('', '');
+                if (await Permission.notification.request().isDenied) {
+                  SystemSettings.app();
+                }
               }
               //update change in Sharedpreferences
               if (value) {
