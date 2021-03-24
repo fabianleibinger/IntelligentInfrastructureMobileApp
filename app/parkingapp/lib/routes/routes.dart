@@ -10,6 +10,7 @@ import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
+import 'package:parkingapp/util/qrscanner.dart';
 
 /// The route paths.
 class Routes {
@@ -24,6 +25,7 @@ class Routes {
   static const String transferkeys = Transferkeys.routeName;
   static const String qrpage = QRPage.routeName;
   static const String authPage = AuthentificationHandling.routeName;
+  static const String qrscanner = ScanScreen.routeName;
 
   /// Returns the correct route according to [vehicle] values.
   /// Opens either [MainPage], [ParkInPage], [ParkOutPage].
