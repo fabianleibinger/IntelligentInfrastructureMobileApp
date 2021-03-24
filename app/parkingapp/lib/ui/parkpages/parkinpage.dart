@@ -76,8 +76,8 @@ class _ParkInPageState extends State<ParkInPage> {
   @override
   Widget build(BuildContext context) {
     //update position
-    ParkManager.getVehiclePosition(vehicle)
-        .then((coordinate) => widget.vehiclePosition = coordinate);
+    //ParkManager.getVehiclePosition(vehicle)
+    //    .then((coordinate) => widget.vehiclePosition = coordinate);
     //cancel the timer if the vehicle is parked in
     ParkManager.needsToParkIn(vehicle) ? null : _timer.cancel();
 
@@ -121,7 +121,7 @@ class _ParkInPageState extends State<ParkInPage> {
               children: [
                 ParkManager.getParkInAnimation(
                     context: context,
-                    vehiclePosition: widget.vehiclePosition,
+                    vehiclePosition: vehicle.location,
                     destination: vehicle.parkingSpot),
               ],
             ),
