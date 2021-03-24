@@ -141,7 +141,7 @@ class ParkManager {
   static Widget getParkInAnimation(
       {@required BuildContext context,
       Coordinate vehiclePosition,
-      Coordinate destination}) {
+      destination}) {
     //TODO height must be calculated from aspect ratio of mapp
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (1473 * _width) / 1000;
@@ -156,8 +156,15 @@ class ParkManager {
     print(_topRightAdjusted);
 
     double _iconSize = 16;
-    Container _icon = Container(
+    Container _vehicleIcon = Container(
         width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
+    Container _destinationIcon = Container(
+        width: _iconSize,
+        height: _iconSize,
+        child: Icon(
+          Icons.circle,
+          color: Theme.of(context).accentColor,
+        ));
 
     return Stack(alignment: Alignment.center, children: [
       //map
@@ -170,8 +177,11 @@ class ParkManager {
         ),
       ),
       //vehicleIcon
-      _getPositionedIcon(
-          vehiclePosition, _height, _topRightAdjusted, _iconSize, _width, _icon)
+      _getPositionedIcon(vehiclePosition, _height, _topRightAdjusted, _iconSize,
+          _width, _vehicleIcon),
+      //vehicle destination
+      _getPositionedIcon(destination, _height, _topRightAdjusted, _iconSize,
+          _width, _destinationIcon)
     ]);
   }
 
