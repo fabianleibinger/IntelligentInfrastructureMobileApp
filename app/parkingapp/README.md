@@ -1,16 +1,13 @@
-# parkingapp
+# Parking App
 
-A new Flutter project.
+The Parking App is responsible for managing the users personal vehicles and therefore enables creating, editing and deleting vehicles in a local database, which is accessible via the DataHelper class.
 
-## Getting Started
+The vehicles can be divided into two sub-categories: standard vehicles and chargeable vehicles, which differ by the amount of extra features, e.g. for charging. New sub-categories could easily be integrated into the app by deriving from the Vehicle class, which is abstract.
 
-This project is a starting point for a Flutter application.
+The main goal of the Parking App is to send park requests for the users vehicles to the parking garage. This is achieved by the ApiProvider class that handles communication with the backend via HTTP get and post requests. 
 
-A few resources to get you started if this is your first Flutter project:
+To keep the vehicles state consistent during park operations, the ParkManager class provides the necessary logic.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+During a park operation the user can track the current and target position of his vehicle on a map of the parking garage.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Push notifications inform about important operations and allow the user to park out a vehicle from home screen with only one click. 
