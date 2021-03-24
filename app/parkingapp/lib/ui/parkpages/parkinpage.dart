@@ -56,7 +56,8 @@ class _ParkInPageState extends State<ParkInPage> {
     }
 
     //add timer to update map
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
+    _timer =
+        Timer.periodic(Duration(milliseconds: 500), (timer) => setState(() {}));
 
     super.initState();
     //wait until build finished to call method

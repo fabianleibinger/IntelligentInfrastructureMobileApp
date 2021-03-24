@@ -50,7 +50,8 @@ class _ParkOutPageState extends State<ParkOutPage> {
     }
 
     //add timer to update map
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) => setState(() {}));
+    _timer =
+        Timer.periodic(Duration(milliseconds: 500), (timer) => setState(() {}));
 
     //wait until build finished to call method
     WidgetsBinding.instance
