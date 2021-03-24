@@ -83,36 +83,7 @@ class _FancyFabState extends State<FancyFab>
     return Container(
       child: FloatingActionButton(
         onPressed: () {
-          // DatabaseProvider.db.delete(2).then((index) {
-          //   BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(index));
-          // });
-          DatabaseProvider.db
-              .insert(ChargeableVehicle(
-                  Utility.generateKey(),
-                  "Tesla Model 3",
-                  "KA-ST 930 E",
-                  2934.23,
-                  1223.93,
-                  4529.3,
-                  0,
-                  0,
-                  true,
-                  false,
-                  false,
-                  true,
-                  "EnBW",
-                  TimeOfDay.now(),
-                  TimeOfDay.now()))
-              .then((vehicle) {
-            BlocProvider.of<VehicleBloc>(context).add(AddVehicle(vehicle));
-          });
-          // DatabaseProvider.db.clear().then((value) {
-          //   BlocProvider.of<VehicleBloc>(context).add(ResetVehicles());
-          // });
-          // Navigator.push(
-          //     (context),
-          //     MaterialPageRoute(
-          //         builder: (BuildContext context) => VehiclePage()));
+          Navigator.pushNamed(context, Routes.qrscanner);
         },
         tooltip: 'QR Code',
         elevation: 10,

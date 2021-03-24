@@ -15,6 +15,7 @@ import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
+import 'package:parkingapp/util/qrscanner.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,6 +67,8 @@ class Main extends StatelessWidget {
           case Routes.authPage:
             return MaterialPageRoute(
                 builder: (context) => AuthentificationHandling());
+          case Routes.qrscanner:
+            return MaterialPageRoute(builder: (context) => ScanScreen());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0

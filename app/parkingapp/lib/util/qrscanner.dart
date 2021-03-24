@@ -51,6 +51,8 @@ class _ScanState extends State<ScanScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: grey, onPrimary: white, shadowColor: grey),
                     onPressed: () {
                       if (scanned) {
                         _addTransferedVehicle();
