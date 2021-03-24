@@ -78,6 +78,9 @@ class _ParkInPageState extends State<ParkInPage> {
     //update position
     ParkManager.getVehiclePosition(vehicle)
         .then((coordinate) => widget.vehiclePosition = coordinate);
+    //cancel the timer if the vehicle is parked in
+    ParkManager.isParkedIn(vehicle)
+        .then((value) => value ? _timer.cancel() : null);
 
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
