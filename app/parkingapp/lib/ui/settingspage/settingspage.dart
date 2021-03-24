@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
+import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -55,7 +56,8 @@ class _SettingsFormState extends State<SettingsForm> {
             value: _pushNotifications,
             onChanged: (value) {
               if (value) {
-                AppSettings.openNotificationSettings();
+                Notifications.createNotification(
+                    'Push Nachrichten erfolgreich erlaubt!', '');
               }
               //update change in Sharedpreferences
               if (value) {
@@ -133,13 +135,13 @@ class _SettingsFormState extends State<SettingsForm> {
 
     //check if values are already initialized
     if (notifications == null) {
-      notifications = true;
+      notifications = false;
     }
     if (notificationsCharge == null) {
-      notificationsCharge = true;
+      notificationsCharge = false;
     }
     if (notificationsParked == null) {
-      notificationsParked = true;
+      notificationsParked = false;
     }
 
     setState(() {

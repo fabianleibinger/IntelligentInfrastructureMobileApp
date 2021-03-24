@@ -2,6 +2,7 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/ui/FirstStart/addvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -63,7 +64,7 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
             value: _pushNotifications,
             onChanged: (value) {
               if (value) {
-                AppSettings.openNotificationSettings();
+                Notifications.createNotification('', '');
               }
               //update change in Sharedpreferences
               if (value) {
@@ -117,26 +118,13 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
 
   //get all the shared prefernces for initstate
   Future<Null> getPushNotifications() async {
-    final SharedPreferences prefs = await preferences;
-    bool notifications = prefs.getBool('notifications');
-    bool notificationsCharge = prefs.getBool('notificationsCharged');
-    bool notificationsParked = prefs.getBool('notificationsParked');
-
-    //check if values are already initialized
-    if (notifications == null) {
-      notifications = true;
-    }
-    if (notificationsCharge == null) {
-      notificationsCharge = true;
-    }
-    if (notificationsParked == null) {
-      notificationsParked = true;
-    }
+    //inialize SharedPreferences Settings with false values
+    SharedPreferencesHelper.initializeSharedPreferences();
 
     setState(() {
-      _pushNotifications = notifications;
-      _pushNotificationsCharge = notificationsCharge;
-      _pushNotificationsParked = notificationsParked;
+      _pushNotifications = false;
+      _pushNotificationsCharge = false;
+      _pushNotificationsParked = false;
     });
   }
 }

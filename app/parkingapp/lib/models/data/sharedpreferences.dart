@@ -1,6 +1,14 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesHelper {
+  static Future<void> initializeSharedPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('authentification', false);
+    prefs.setBool('notifications', false);
+    prefs.setBool('notificationsParked', false);
+    prefs.setBool('notificationsCharged', false);
+  }
+
   static Future<bool> setPasscode(String passcode) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setString('passcode', passcode);
