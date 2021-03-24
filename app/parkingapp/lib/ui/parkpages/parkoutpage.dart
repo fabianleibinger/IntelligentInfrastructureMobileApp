@@ -68,8 +68,8 @@ class _ParkOutPageState extends State<ParkOutPage> {
   @override
   Widget build(BuildContext context) {
     //update position
-    ParkManager.getVehiclePosition(vehicle)
-        .then((coordinate) => widget.vehiclePosition = coordinate);
+    //ParkManager.getVehiclePosition(vehicle)
+    //    .then((coordinate) => widget.vehiclePosition = coordinate);
     //cancel the timer if the vehicle is parked in
     ParkManager.needsToParkOut(vehicle) ? null : _timer.cancel();
 
@@ -103,7 +103,7 @@ class _ParkOutPageState extends State<ParkOutPage> {
             child: ListView(
               children: [
                 ParkManager.getParkInAnimation(
-                    context: context, vehiclePosition: widget.vehiclePosition),
+                    context: context, vehiclePosition: vehicle.location),
               ],
             ),
           )
