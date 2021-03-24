@@ -239,11 +239,4 @@ class ParkManager {
     double longitude = position["longitude"];
     return Coordinate(lattitude: latitude, longitude: longitude);
   }
-
-  ///check if the vehicle is parked in
-  ///returns true when the vehicle reached it's destination
-  static Future<bool> isParkedIn(Vehicle vehicle) async {
-    return await ApiProvider.getPosition(vehicle)
-        .then((value) => value["reached_position"] ? true : false);
-  }
 }
