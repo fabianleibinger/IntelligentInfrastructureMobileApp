@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import math
 import configparser
@@ -273,3 +275,4 @@ def perform_reset_database():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
