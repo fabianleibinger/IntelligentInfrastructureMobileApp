@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import datetime
 import rospy
 import threading
@@ -527,3 +529,4 @@ class VehicleIdentificationException(Exception):
     Unify exceptions occurring due to unknown app identifiers in the ID mapping database.
     """
     pass
+

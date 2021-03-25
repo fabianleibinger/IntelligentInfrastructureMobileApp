@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import math
 import configparser
@@ -186,7 +188,8 @@ def perform_park_out_request():
     The request must provide information about the vehicle to allow an identification.
     After the park out request, the parking management system will locate the vehicle and provide the coordinates of
     the zone where the car can be picked-up.
-    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string);
+    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
+        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
     :return: HTTP response with status code 200 and JSON fields 'parking_out', which is set to true if the parking
         garage could locate the vehicle, 'longitude' and 'latitude' representing the coordinates of the transfer zone.
     """
@@ -227,7 +230,7 @@ def perform_get_position():
     position as longitude and latitude.
     :parameter: Necessary JSON fields: 'id' and 'number_plate'
     :return: HTTP response with status code 200 and JSON fields 'longitude' and 'latitude', which provide the
-        geographical coordinates of the vehicle´s position as well as boolean values for 'parking' and 'reached_position'
+        geographical coordinates of the vehicle´s position as well as boolean values for 'moving' and 'reached_position'
     """
     try:
         if request.is_json:
@@ -272,3 +275,4 @@ def perform_reset_database():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
