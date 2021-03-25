@@ -1,4 +1,4 @@
-# Parking app backend & ROS communiaction to parking management system
+# Parking app backend & ROS communication to parking management system
 
 The parking app has a connected backend which can be addressed via HTTP requests. Therefore, the backend opens a python flask server. IP address and port as well as the name of the parking garage can be modified in the config.properties file.
 
