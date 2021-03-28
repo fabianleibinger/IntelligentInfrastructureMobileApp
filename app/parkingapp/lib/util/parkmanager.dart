@@ -34,13 +34,14 @@ class ParkManager {
           new Timer.periodic(Duration(seconds: 1), (timer) {
             print('updating vehicle ' + vehicle.name);
             ParkManager.updatePosition(vehicle).then((value) {
-              if (!value) timer.cancel();
+              //vehicle is now parked in
+              if (!value) {
+                timer.cancel();
+                vehicle.setAndUpdateParkedIn(context, true);
+                print('vehicle parked in: ' + vehicle.parkedIn.toString());
+              }
             });
           });
-          //TODO remove
-          vehicle.setAndUpdateParkedIn(context, true);
-          print('vehicle parked in: ' + vehicle.parkedIn.toString());
-
           // vehicle not parking in anymore.
         }).whenComplete(() {
           vehicle.setAndUpdateParkIngIn(context, false);
