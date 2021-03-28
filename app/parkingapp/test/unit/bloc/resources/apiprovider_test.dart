@@ -12,7 +12,7 @@ void main() {
     chargeable = standard.toChargeableVehicle();
   });
 
-  group('Correct park in bodies should be chosen', () {
+  group('Correct park in bodies should be chosen for vehicle types', () {
     test('Correct park in body should be chosen for StandardVehicle', () {
       var actualBody = ApiProvider.chooseParkInBody(standard);
       var correctBody = ApiProvider.parkInBodyStandardVehicle(standard);
