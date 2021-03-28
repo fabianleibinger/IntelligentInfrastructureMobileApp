@@ -32,7 +32,7 @@ class ParkManager {
 
           //update the position while the vehicle is parking
           new Timer.periodic(Duration(seconds: 1), (timer) {
-            print('updating vehicle');
+            print('updating vehicle ' + vehicle.name);
             ParkManager.updatePosition(vehicle).then((value) {
               if (!value) timer.cancel();
             });
@@ -63,6 +63,10 @@ class ParkManager {
 
   /// Returns if [vehicle] needs to be parked in.
   static bool needsToParkIn(Vehicle vehicle) {
+    print('needs to park in? parked in: ' +
+        vehicle.parkedIn.toString() +
+        ' parking in: ' +
+        vehicle.parkingIn.toString());
     return !vehicle.parkedIn && !vehicle.parkingIn;
   }
 
