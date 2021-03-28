@@ -34,7 +34,7 @@ class ParkManager {
           new Timer.periodic(Duration(seconds: 1), (timer) {
             print('updating vehicle');
             ParkManager.updatePosition(vehicle).then((value) {
-              //if (!value) timer.cancel();
+              if (!value) timer.cancel();
             });
           });
           //TODO remove
@@ -260,12 +260,12 @@ class ParkManager {
   }
 
   ///update the position in the vehicle
-  ///returns true if the vehicle is still moving
+  ///returns true if the vehicle is still parking
   static Future<bool> updatePosition(Vehicle vehicle) async {
     var position = await ApiProvider.getPosition(vehicle);
     double latitude = position["latitude"];
     double longitude = position["longitude"];
     vehicle.location = Coordinate(lattitude: latitude, longitude: longitude);
-    return position["moving"];
+    return position["parking"] && !position["reached_position"];
   }
 }
