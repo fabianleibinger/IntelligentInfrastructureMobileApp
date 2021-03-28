@@ -107,7 +107,7 @@ class ParkManager {
         new Timer.periodic(Duration(seconds: 1), (timer) {
           print('updating vehicle');
           ParkManager.updatePosition(vehicle).then((value) {
-            //if (!value) timer.cancel();
+            if (!value) timer.cancel();
           });
         });
 
