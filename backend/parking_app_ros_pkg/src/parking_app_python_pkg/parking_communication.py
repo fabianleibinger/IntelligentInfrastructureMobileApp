@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import datetime
 import rospy
 import threading
@@ -95,16 +97,17 @@ class VehicleStatus(enum.Enum):
     The parking process can be divided in different phases. Each of them has a status.
     The vehicle status should fit the corresponding ROS message VehicleStatusMsg.
     """
-    status_transfer = 0
-    status_parking_in = 1
-    status_parked = 2
-    status_parking_out = 3
-    status_drop_off = 4
-    status_pickup = 5
+    status_transfer = 0  # both transfer from transfer zone to parking spot and from parking spot to pickup zone
+    status_parking_in = 1  # park process at parking spot
+    status_parked = 2  # reached final parking position
+    status_parking_out = 3  # park process at parking spot
+    status_drop_off = 4  # vehicle in drop-off zone and will be moved to parking spot soon
+    status_pickup = 5  # vehicle in pickup zone and will be taken over by driver soon
     status_unknown = 6
 
 
 class ParkProcess:
+    """ The ParkProcess bundles methods for park in and park out requests. """
     def register_vehicle_to_pms(self, vehicle_parameters):
         """
             This method should be called when the flask server retrieves a park in request.
@@ -116,7 +119,7 @@ class ParkProcess:
             :exception: CommunicationRosServiceException if the ROS service is unavailable
             """
         vehicle_message = self.generate_vehicle_message(
-            vehicle_parameters, vehicle_status=VehicleStatus.status_transfer.value)
+            vehicle_parameters, vehicle_status=VehicleStatus.status_drop_off.value)
         vehicle_message.entry_time = rospy.get_rostime()
         try:
             rospy.wait_for_service('register_vehicle_request', max_secs_to_wait_for_ros_service)
@@ -322,7 +325,8 @@ class ParkProcess:
             (both double, coordinates of the target parking position if park in process or of the transfer zone if park
             out process, NaN if registration failed).
         """
-        if response_from_pms.vehicle_status.status == VehicleStatus.status_transfer.value \
+        if response_from_pms.vehicle_status.status == VehicleStatus.status_drop_off.value \
+                or response_from_pms.vehicle_status.status == VehicleStatus.status_transfer.value \
                 or response_from_pms.vehicle_status.status == VehicleStatus.status_parking_in.value:
             IdMapper.map_vehicle_ids(app_id, response_from_pms.pms_id)
             return {'parking_in': True,
@@ -337,7 +341,8 @@ class ParkProcess:
 
     def generate_park_out_response(self, response_from_pms: ParkoutVehicleRequestResponse):
         if response_from_pms.vehicle_status.status == VehicleStatus.status_parking_out.value \
-                or response_from_pms.vehicle_status.status == VehicleStatus.status_drop_off.value:
+                or response_from_pms.vehicle_status.status == VehicleStatus.status_transfer.value \
+                or response_from_pms.vehicle_status.status == VehicleStatus.status_pickup.value:
             return {'parking_out': True,
                     'longitude': response_from_pms.transfer_zone.longitude,
                     'latitude': response_from_pms.transfer_zone.latitude}
@@ -348,6 +353,7 @@ class ParkProcess:
 
 
 class LocalizationProcess:
+    """ The LocalizationProcess bundles methods for get position requests."""
     def request_current_position(self, app_id: int, number_plate: str):
         """
         This method communicates with the parking management system to get the current position of the vehicle
@@ -376,7 +382,17 @@ class LocalizationProcess:
             raise CommunicationRosServiceException(str(service_exception))
 
     def generate_get_position_response(self, response: VehiclePositionRequestResponse):
-        if response.vehicle_status.status == VehicleStatus.status_transfer \
+        """
+        This method transforms the response from the parking management system to a dictionary for flask server´s usage.
+        It provides information about the park process as well as the coordinates of the vehicle´s position.
+        :param response: VehiclePositionRequestResponse which must include coordinates and status information
+        :return: A dictionary with keys 'longitude', 'latitude' (both float), 
+            'moving' and 'reached_position' (both boolean)
+        """
+        if response.vehicle_status.status == VehicleStatus.status_unknown.value:
+            raise CommunicationRosServiceException(
+                "Parking garage could not locate the vehicle. Its status is unknown.")
+        if response.vehicle_status.status == VehicleStatus.status_transfer.value \
                 or response.vehicle_status.status == VehicleStatus.status_parking_in.value \
                 or response.vehicle_status.status == VehicleStatus.status_parking_out.value \
                 or response.vehicle_status.status == VehicleStatus.status_drop_off.value:
@@ -392,11 +408,12 @@ class LocalizationProcess:
 
         return {'longitude': response.position.longitude,
                 'latitude': response.position.latitude,
-                'moving': in_park_process,
+                'parking': in_park_process,
                 'reached_position': reached_target_position}
         
 
 class CapacityProcess:
+    """ The CapacityProcess bundles methods for capacity requests. """
     def retrieve_capacity_from_pms(self):
         """
         This method communicates with the parking management system and retrieves all capacities.
@@ -461,6 +478,7 @@ class CapacityProcess:
 
 
 class IdMapper:
+    """ The IdMapper provides the possibility to save app ID with corresponding parking management system´s ID. """
     @staticmethod
     def map_vehicle_ids(app_id: int, pms_id: int):
         """

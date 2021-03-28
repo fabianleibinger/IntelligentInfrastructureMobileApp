@@ -13,6 +13,7 @@ class ParkingGarage {
   String map;
   Coordinate bottomLeft, topRight;
 
+  /// The Constructor that updates parking spots.
   ParkingGarage({
     this.name,
     this.type,
@@ -26,33 +27,42 @@ class ParkingGarage {
     this.updateAllFreeParkingSpots();
   }
 
-  //updates all parking spots
+  /// Updates all parking spots.
   void updateAllFreeParkingSpots() {
     this.updateFreeParkingSpots();
     this.updateFreeChargeableParkingSpots();
   }
 
-  //sends the getFreeParkingSpots inquiry to the parking garage management system
-  //updates freeParkingSpots
+  /// Updates [freeParkingSpots]
+  /// by [ApiProvider.getFreeParkingSpots()].
   void updateFreeParkingSpots() {
-    ApiProvider.getFreeParkingSpots().then((value) => this.freeParkingSpots =
-        int.parse(value.values.single.toString().split(' ').last));
+    ApiProvider.getFreeParkingSpots().then((value) =>
+    this.freeParkingSpots =
+        int.parse(value.values.single
+            .toString()
+            .split(' ')
+            .last));
   }
 
-  //sends the getFreeChargeableParkingSpots inquiry to the parking garage management system
-  //updates freeParkingSpots
+  /// Updates [freeChargeableParkingSpots]
+  /// by [ApiProvider.getFreeChargeableParkingSpots()].
   void updateFreeChargeableParkingSpots() {
     ApiProvider.getFreeChargeableParkingSpots().then((value) =>
         this.freeChargeableParkingSpots =
-            int.parse(value.values.single.toString().split(' ').last));
+        int.parse(value.values.single
+            .toString()
+            .split(' ')
+            .last));
   }
 
-  //returns true when spots for specific preferences are available
+  /// Returns true when parking spots
+  /// for specific [vehicle] preferences are available.
   bool vehicleSpecificSpotsAvailable(Vehicle vehicle) {
     return this.getFreeSpotsForVehicle(vehicle) > 0;
   }
 
-  //vehicles preferences decide if chargeable or normal parking spots are returned
+  /// Returns [freeParkingSpots] or [freeChargeableParkingSpots]
+  /// according to [vehicle].
   int getFreeSpotsForVehicle(Vehicle vehicle) {
     if (vehicle.runtimeType == ChargeableVehicle) {
       return this._chooseParkingSpotsForChargeableVehicle(vehicle);
@@ -61,7 +71,8 @@ class ParkingGarage {
     }
   }
 
-  //if vehicle is supposed to load return chargeable parking spots, otherwise don't
+  /// Returns [freeParkingSpots] or [freeChargeableParkingSpots]
+  /// according to [vehicle.doCharge].
   _chooseParkingSpotsForChargeableVehicle(ChargeableVehicle vehicle) {
     if (vehicle.doCharge) {
       return this.freeChargeableParkingSpots;

@@ -1,85 +1,88 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'dart:convert';
 import 'package:parkingapp/models/classes/vehicle.dart';
 
-// defines the calls to the backend and what should happen with the results
+/// A Service that defines the calls to the backend server.
 class ApiProvider {
-  static final int httpGetStatusCodeSuccess = 200;
-  static final int httpPostStatusCodeSuccess = 200;
-
+  /// The Backend Server Address.
   //TODO new url 192.168.4.1
   static final String _serverUrl = 'http://10.0.2.2';
   static final String _serverPort = ':2525';
 
-  static final Duration _timeOutAfter = Duration(seconds: 10);
+  /// The HTTP status codes.
+  static final int httpGetStatusCodeSuccess = 200;
+  static final int httpPostStatusCodeSuccess = 200;
 
+  /// The HTTP Header specifications.
   static final String _httpPostHeaderFirst = 'Content-Type';
   static final String _httpPostHeaderSecond = 'application/json; charset=UTF-8';
 
-  // ['IP', 'Port', 'Parking garage']
-  //tries to connect to server
+  /// The time span that triggers a time out.
+  static final Duration _timeOutAfter = Duration(seconds: 10);
+
+  /// Returns connection details.
+  /// ['IP', 'Port', 'Parking garage']
   static Future<Map<String, dynamic>> connect() async {
     return httpGet(
         _serverUrl + _serverPort + '/connect', 'Failed to connect to server');
   }
 
-  // ['total', 'electric', 'electric_fast', 'electric_inductive']
-  //tries to get parking capacities
+  /// Returns parking garage capacities.
+  /// ['total', 'electric', 'electric_fast', 'electric_inductive']
   static Future<Map<String, dynamic>> getCapacity() async {
     return httpGet(
         _serverUrl + _serverPort + '/capacities', 'Failed to get capacities');
   }
 
-  // ['free_total', 'free_electric', 'free_electric_fast', 'free_electric_inductive']
-  //tries to get free parking capacities
+  /// Returns free parking garage capacities.
+  /// ['free_total', 'free_electric', 'free_electric_fast', 'free_electric_inductive']
   static Future<Map<String, dynamic>> getFreeCapacity() async {
     return httpGet(
-        _serverUrl + _serverPort + '/free', 'Failed to get capacities');
+        _serverUrl + _serverPort + '/free', 'Failed to get free capacities');
   }
 
-  // ['free_total']
-  //tries to get free parking spots
+  /// Returns free total parking spots.
+  /// ['free_total']
   static Future<Map<String, dynamic>> getFreeParkingSpots() async {
     return httpGet(_serverUrl + _serverPort + '/free/total',
-        'Failed to get free parking spots');
+        'Failed to get free total parking spots');
   }
 
-  // ['free_electric']
-  //tries to get free chargeable parking spots
+  /// Returns free chargeable parking spots.
+  /// ['free_electric']
   static Future<Map<String, dynamic>> getFreeChargeableParkingSpots() async {
     return httpGet(_serverUrl + _serverPort + '/free/electric',
         'Failed to get free chargeable parking spots');
   }
 
-  //['parking', 'longitude', 'latitude', 'load_vehicle']
-  //tries to park in vehicle
+  /// Tries to park in [vehicle].
+  /// Returns ['parking', 'longitude', 'latitude', 'load_vehicle'].
   static Future<Map<String, dynamic>> parkIn(Vehicle vehicle) async {
     return httpPost(_serverUrl + _serverPort + '/parkIn',
-        _chooseParkInBody(vehicle), 'Failed to park in');
+        _chooseParkInBody(vehicle), 'Failed to park in vehicle');
   }
 
-  //['parking', 'longitude', 'latitude']
-  //tries to park out vehicle or cancel park in
+  /// Tries to park out or cancel park in for [vehicle].
+  /// Returns ['parking', 'longitude', 'latitude'].
   static Future<Map<String, dynamic>> parkOut(Vehicle vehicle) async {
-    return httpPost(
-        _serverUrl + _serverPort + "/parkOut",
-        _chooseParkOutBody(vehicle),
-        'Failed to park out');
+    return httpPost(_serverUrl + _serverPort + "/parkOut",
+        _chooseParkOutBody(vehicle), 'Failed to park out vehicle');
   }
 
-  //['longitude', 'latitude', 'moving', 'reached_position']
-  //tries to get position of the vehicle
+  /// Returns the position of the [vehicle].
+  /// ['longitude', 'latitude', 'moving', 'reached_position']
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
-    return httpPost(
-        _serverUrl + _serverPort + "/getPosition",
-        _chooseGetPositionBody(vehicle),
-        'Failed to get position');
+    return httpPost(_serverUrl + _serverPort + "/getPosition",
+        _chooseGetPositionBody(vehicle), 'Failed to get position of vehicle');
   }
 
-  //http get request that returns the response body
+  /// Returns the response body of the HTTP Get request to [url].
+  ///
+  /// Throws an [HttpException] with the [failureText].
   static Future<Map<String, dynamic>> httpGet(
       String url, String failureText) async {
     final response = await http.get(url).timeout(_timeOutAfter);
@@ -88,11 +91,13 @@ class ApiProvider {
       print(result.entries.toString());
       return result;
     } else {
-      throw Exception(failureText);
+      throw HttpException(failureText);
     }
   }
 
-  //http post request that returns the response body
+  /// Returns the response body of the HTTP Post request to [url].
+  ///
+  /// Throws an [HttpException] with the [failureText].
   static Future<Map<String, dynamic>> httpPost(
       String url, Map<String, dynamic> body, String failureText) async {
     final response = await http
@@ -107,11 +112,12 @@ class ApiProvider {
       print(result.entries.toString());
       return result;
     } else {
-      throw Exception(failureText);
+      throw HttpException(failureText);
     }
   }
 
-  //chooses and returns http post body for park in call
+  /// Chooses and returns the correct HTTP Post body for a [vehicle]
+  /// used in [ApiProvider.parkIn(vehicle)].
   static Map<String, dynamic> _chooseParkInBody(Vehicle vehicle) {
     if (vehicle.runtimeType == ChargeableVehicle) {
       return _parkInBodyChargeableVehicle(vehicle);
@@ -120,38 +126,41 @@ class ApiProvider {
     }
   }
 
+  /// Returns the HTTP Post body for [chargeableVehicle] park in requests.
   static Map<String, dynamic> _parkInBodyChargeableVehicle(
-      ChargeableVehicle vehicle) {
+      ChargeableVehicle chargeableVehicle) {
     return {
-      "id": vehicle.databaseId,
-      "length": vehicle.length,
-      "width": vehicle.width,
-      "turning_radius": vehicle.turningCycle,
-      "dist_rear_axle_numberplate": vehicle.distRearAxleLicensePlate,
+      "id": chargeableVehicle.databaseId,
+      "length": chargeableVehicle.length,
+      "width": chargeableVehicle.width,
+      "turning_radius": chargeableVehicle.turningCycle,
+      "dist_rear_axle_numberplate": chargeableVehicle.distRearAxleLicensePlate,
       "charge_type": "electric",
-      "number_plate": vehicle.licensePlate,
-      "near_exit": vehicle.nearExitPreference,
-      "parking_card": vehicle.parkingCard,
-      "load": vehicle.doCharge,
-      "charge_service_provider": vehicle.chargingProvider
+      "number_plate": chargeableVehicle.licensePlate,
+      "near_exit": chargeableVehicle.nearExitPreference,
+      "parking_card": chargeableVehicle.parkingCard,
+      "load": chargeableVehicle.doCharge,
+      "charge_service_provider": chargeableVehicle.chargingProvider
     };
   }
 
+  /// Returns the HTTP Post body for [standardVehicle] park in requests.
   static Map<String, dynamic> _parkInBodyStandardVehicle(
-      StandardVehicle vehicle) {
+      StandardVehicle standardVehicle) {
     return {
-      "id": vehicle.databaseId,
-      "length": vehicle.length,
-      "width": vehicle.width,
-      "turning_radius": vehicle.turningCycle,
-      "dist_rear_axle_numberplate": vehicle.distRearAxleLicensePlate,
-      "number_plate": vehicle.licensePlate,
-      "near_exit": vehicle.nearExitPreference,
-      "parking_card": vehicle.parkingCard
+      "id": standardVehicle.databaseId,
+      "length": standardVehicle.length,
+      "width": standardVehicle.width,
+      "turning_radius": standardVehicle.turningCycle,
+      "dist_rear_axle_numberplate": standardVehicle.distRearAxleLicensePlate,
+      "number_plate": standardVehicle.licensePlate,
+      "near_exit": standardVehicle.nearExitPreference,
+      "parking_card": standardVehicle.parkingCard
     };
   }
 
-  //chooses and returns http post body for park out call
+  /// Chooses and returns the correct HTTP Post body for a [vehicle]
+  /// used in [ApiProvider.parkOut(vehicle)].
   static Map<String, dynamic> _chooseParkOutBody(Vehicle vehicle) {
     return {
       "id": vehicle.databaseId,
@@ -163,7 +172,8 @@ class ApiProvider {
     };
   }
 
-  //chooses and returns http post body for park out call
+  /// Chooses and returns the correct HTTP Post body for a [vehicle]
+  /// used in [ApiProvider.getPosition(vehicle)].
   static Map<String, dynamic> _chooseGetPositionBody(Vehicle vehicle) {
     return {"id": vehicle.databaseId, "number_plate": vehicle.licensePlate};
   }

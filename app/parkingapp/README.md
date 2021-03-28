@@ -1,16 +1,22 @@
-# parkingapp
+# Parking App
 
-A new Flutter project.
+## Usage, modification and further development
 
-## Getting Started
+### Vehicle management
+The Parking App is responsible for managing the users personal vehicles and therefore enables creating, editing and deleting vehicles (VehiclePage and EditVehicle widgets) in a local database (DatabaseProvider class), which is accessible via the DataHelper class.
 
-This project is a starting point for a Flutter application.
+Users can share their vehicles with other users by scanning a QR Code, implemented in the QRPage widget, the QRGenerator and QRScanner class.
 
-A few resources to get you started if this is your first Flutter project:
+The vehicles (Vehicle class) are divided into two categories: standard vehicles and chargeable vehicles (StandardVehicle and ChargeableVehicle class), differing by the amount of extra features, e.g. for charging. New categories could easily be integrated into the app by deriving from the Vehicle class, which is abstract. Keep in mind that new vehicle properties have to be included in the DatabaseProvider and the responsible dialogs (Dialogs package).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+The user can select one of his vehicles in the AppDrawer widget. Thereafter the vehicles' properties are summarized on the MainPage widget, which provides the park in button and the compatible parking garage information in addition, e.g. available parking spots.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Backend communication
+The main goal of the Parking App is to send park requests for the users vehicles to the parking garage. All requests are handled by the ApiProvider class that communicates with the backend via HTTP. 
+
+### Park operations
+To keep the vehicles state consistent during park operations, the ParkManager class provides the necessary logic.
+
+During a park process the user can track the current and target position of his vehicle on a map of the parking garage, implemented on the ParkPages (ParkInPage and ParkOutPage classes).
+
+Push notifications (Notifications class) inform about important operations and allow the user to park out a vehicle from home screen with only one click. Notifications can be enabled or disabled on the SettingsPage widget. 

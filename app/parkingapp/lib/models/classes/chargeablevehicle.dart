@@ -25,12 +25,14 @@ class ChargeableVehicle extends Vehicle {
       this.chargingProvider,
       this.chargeTimeBegin,
       this.chargeTimeEnd) {
+    // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
     this.parkingIn = false;
     this.parkingOut = false;
   }
 
-  //private constructor: only called by fromMap() method, database defines databaseId
+  /// Private constructor: only called by [fromMap] method,
+  /// database defines databaseId
   ChargeableVehicle._(
       this.databaseId,
       this.inAppKey,
@@ -48,6 +50,7 @@ class ChargeableVehicle extends Vehicle {
       this.chargingProvider,
       this.chargeTimeBegin,
       this.chargeTimeEnd) {
+    // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
     this.parkingIn = false;
     this.parkingOut = false;
@@ -76,6 +79,7 @@ class ChargeableVehicle extends Vehicle {
           chargeTimeEnd.toString().split('(').last.split(')').first
     };
 
+    // When [databaseId] exists, use the value
     if (databaseId != null) {
       map[DatabaseProvider.COLUMN_DATABASE_ID] = databaseId;
     }
@@ -109,34 +113,44 @@ class ChargeableVehicle extends Vehicle {
             minute: int.parse(timeEnd.split(':').last)));
   }
 
-  //setter which includes database updating
-  void setDoCharge(BuildContext context, bool doCharge) {
+  /// Setter which includes database updating.
+  void setAndUpdateDoCharge(BuildContext context, bool doCharge) {
     this.doCharge = doCharge;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setChargingProvider(BuildContext context, String chargingProvider) {
+  /// Setter which includes database updating.
+  void setAndUpdateChargingProvider(BuildContext context, String chargingProvider) {
     this.chargingProvider = chargingProvider;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setChargeTimeBegin(BuildContext context, TimeOfDay begin) {
+  /// Setter which includes database updating.
+  void setAndUpdateChargeTimeBegin(BuildContext context, TimeOfDay begin) {
     this.chargeTimeBegin = begin;
     DataHelper.updateVehicle(context, this);
   }
 
-  //setter which includes database updating
-  void setChargeTimeEnd(BuildContext context, TimeOfDay end) {
+  /// Setter which includes database updating.
+  void setAndUpdateChargeTimeEnd(BuildContext context, TimeOfDay end) {
     this.chargeTimeEnd = end;
     DataHelper.updateVehicle(context, this);
   }
 
-  //convert to standard vehicle
+  /// Convert to [StandardVehicle].
   StandardVehicle toStandardVehicle() {
-    return StandardVehicle(inAppKey, name, licensePlate, height, width, length,
-        turningCycle, distRearAxleLicensePlate, nearExitPreference, parkingCard, false);
+    return StandardVehicle(
+        inAppKey,
+        name,
+        licensePlate,
+        height,
+        width,
+        length,
+        turningCycle,
+        distRearAxleLicensePlate,
+        nearExitPreference,
+        parkingCard,
+        false);
   }
 
   @override

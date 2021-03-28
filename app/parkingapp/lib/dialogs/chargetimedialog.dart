@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 
-//defines the charge time dialog
+///The dialog that sets charge times for [ChargeableVehicles].
 class ChargeTimeDialog extends StatefulWidget {
   ChargeTimeDialog({Key key}) : super(key: key);
 
@@ -13,16 +13,19 @@ class ChargeTimeDialog extends StatefulWidget {
 }
 
 class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
-  static final TimeOfDay _midnight = TimeOfDay(hour: 00, minute: 00);
   static final double _dividerThickness = 1;
 
-  bool _chargeAllDay = true;
+  static final TimeOfDay _midnight = TimeOfDay(hour: 00, minute: 00);
 
+  /// The values of the dialog [Tiles].
+  bool _chargeAllDay = true;
   TimeOfDay _chargeTimeBegin = _midnight;
   TimeOfDay _chargeTimeEnd = _midnight;
+
+  /// The time picked by [showTimePicker]
   TimeOfDay _picked;
 
-  //sets the initial values
+  /// Sets the initially displayed [Tiles] values.
   @override
   void initState() {
     super.initState();
@@ -40,7 +43,8 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
         _getBody(context));
   }
 
-  //returns one switch list tile and two clock widgets
+  /// Returns one [SwitchListTile] for hole day
+  /// and two clock widgets [ListTile] for begin and end.
   _getBody(BuildContext context) {
     return Column(
       children: [
@@ -72,28 +76,29 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     );
   }
 
-  //switches current vehicles value and listTile values
+  /// Switches hole day [SwitchListTile] value and sets vehicle times accordingly.
   void _setSwitchListTileValue(bool value) {
     setState(() {
       _chargeAllDay = value;
       if (value) {
         _chargeTimeBegin = _midnight;
         _chargeTimeEnd = _midnight;
-        if(vehicle.runtimeType == ChargeableVehicle) {
+        if (vehicle.runtimeType == ChargeableVehicle) {
           _setChargeTimeVehicle(vehicle);
         }
       }
     });
   }
 
-  //selects charge time begin in vehicle and listTile
+  /// Selects charge time begin and sets vehicle times
+  /// and all displayed [Tiles] accordingly.
   void _selectChargeTimeBegin(BuildContext context) async {
     _picked =
-    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
     if (_picked != null) {
       setState(() {
         _chargeTimeBegin = _picked;
-        if(vehicle.runtimeType == ChargeableVehicle) {
+        if (vehicle.runtimeType == ChargeableVehicle) {
           _setChargeTimeVehicle(vehicle);
           _checkHoleDay();
         }
@@ -101,14 +106,15 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     }
   }
 
-  //selects charge time end in vehicle and listTile
+  /// Selects charge time end and sets vehicle times
+  /// and all displayed [Tiles] accordingly.
   void _selectChargeTimeEnd(BuildContext context) async {
     _picked =
-    await showTimePicker(context: context, initialTime: _chargeTimeBegin);
+        await showTimePicker(context: context, initialTime: _chargeTimeBegin);
     if (_picked != null) {
       setState(() {
         _chargeTimeEnd = _picked;
-        if(vehicle.runtimeType == ChargeableVehicle) {
+        if (vehicle.runtimeType == ChargeableVehicle) {
           _setChargeTimeVehicle(vehicle);
           _checkHoleDay();
         }
@@ -116,20 +122,21 @@ class _ChargeTimeDialogState extends State<ChargeTimeDialog> {
     }
   }
 
-  //sets vehicles charge time values
+  /// Sets [vehicle] charge time values.
   void _setChargeTimeVehicle(ChargeableVehicle vehicle) {
-    vehicle.setChargeTimeBegin(context, _chargeTimeBegin);
-    vehicle.setChargeTimeEnd(context, _chargeTimeEnd);
+    vehicle.setAndUpdateChargeTimeBegin(context, _chargeTimeBegin);
+    vehicle.setAndUpdateChargeTimeEnd(context, _chargeTimeEnd);
   }
 
-  //selects the right charge time values for all tiles
+  /// Selects the correct charge time values of a chargeable [vehicle]
+  /// for all displayed [Tiles].
   void _checkChargeTimes(ChargeableVehicle vehicle) {
     _chargeTimeBegin = vehicle.chargeTimeBegin;
     _chargeTimeEnd = vehicle.chargeTimeEnd;
     _checkHoleDay();
   }
 
-  //checks if switchListTile for charging hole day has to be true or false
+  /// Checks if [SwitchListTile] for charging hole day should display true or false.
   void _checkHoleDay() {
     if (_chargeTimeBegin == _midnight && _chargeTimeEnd == _midnight) {
       _setSwitchListTileValue(true);

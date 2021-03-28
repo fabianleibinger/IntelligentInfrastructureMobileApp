@@ -1,12 +1,14 @@
-class ExampleVehicle {
+class ExampleVehicleDimension {
   String name;
+
+  ///The vehicle dimensions.
   double height, width, length, turningCycle, distRearAxleLicensePlate;
 
-  ExampleVehicle(this.name, this.height, this.width, this.length,
+  ExampleVehicleDimension(this.name, this.height, this.width, this.length,
       this.turningCycle, this.distRearAxleLicensePlate);
 
-  static ExampleVehicle fromJson(Map<String, dynamic> parsedJson) {
-    return new ExampleVehicle(
+  static ExampleVehicleDimension fromJson(Map<String, dynamic> parsedJson) {
+    return new ExampleVehicleDimension(
         parsedJson['name'],
         parsedJson['height'],
         parsedJson['width'],

@@ -9,6 +9,12 @@ from parking_app_ros_pkg.srv import ParkoutVehicleRequest, ParkoutVehicleRequest
 import rospy
 import random
 
+# variable to control dummy implementation of parking process (parking process should stop)
+get_position_calls = 0
+
+
+# Script for running the ROS services (server-side)
+# Services return dummy data for test purposes
 
 # Script for running the ROS services (server-side)
 # Services return dummy data for test purposes
@@ -37,7 +43,7 @@ def handle_request_register(req):
     response = RegisterVehicleRequestResponse()
     response.vehicle_status.status = req.info.status.status
     response.pms_id = random.randint(1, 1000)
-    if req.info.status.status == 0 or req.info.status.status == 1:  # park in
+    if req.info.status.status == 0 or req.info.status.status == 1 or req.info.status.status == 4:  # park in
         response.target_parking_position.longitude = 8.4202020245
         response.target_parking_position.latitude = 49.0141414141
     if req.info.loadable.load_during_parking:
@@ -52,7 +58,13 @@ def handle_request_vehicle_position(req):
     :return: VehiclePositionRequestResponse
     """
     response = VehiclePositionRequestResponse()
-    response.vehicle_status.status = 0
+    global get_position_calls
+    if get_position_calls >= 20:
+        response.vehicle_status.status = 2
+        get_position_calls = 0
+    else:
+        get_position_calls += 1
+        response.vehicle_status.status = 0
     response.position.longitude = random.uniform(8.41950527853, 8.42059599234)
     response.position.latitude = random.uniform(49.01388810447, 49.0144759205)
     return response

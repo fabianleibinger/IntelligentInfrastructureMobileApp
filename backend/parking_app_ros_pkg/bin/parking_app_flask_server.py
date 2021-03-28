@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 import os
+import math
 import configparser
 from flask import Flask, jsonify, request, Response, redirect
 
@@ -38,7 +41,7 @@ app.app_context().push()
 
 ############################################################################
 
-# This message should be sent to the client when the ROS service did not return a valid capacity value.
+# This message should be sent to the client when the ROS service did not return a valid value.
 communication_failed_message = \
     "The parking garage management system could not return a valid response or is unavailable."
 
@@ -155,6 +158,8 @@ def perform_park_in_request():
         try:
             park_in_parameters = request.get_json()
             park_in_response = communication.communicate_park_in(park_in_parameters)
+            if math.isnan(park_in_response["longitude"]) or math.isnan(park_in_response["latitude"]):
+                return Response({'Vehicle status indicates an unsuccessful registration.'}, status=409)
             return jsonify({'parking_in': park_in_response["parking_in"],
                             'longitude': park_in_response["longitude"],
                             'latitude': park_in_response["latitude"],
@@ -235,7 +240,7 @@ def perform_get_position():
             position = communication.communicate_vehicle_position(app_id, number_plate)
             return jsonify({'longitude': position["longitude"],
                             'latitude': position["latitude"],
-                            'moving': position["moving"],
+                            'parking': position["parking"],
                             'reached_position': position["reached_position"]})
     except communication.VehicleIdentificationException as e:
         return Response({str(e)}, status=406)

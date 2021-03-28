@@ -16,6 +16,7 @@ import 'package:parkingapp/util/parkmanager.dart';
 class ParkInPage extends StatefulWidget {
   static const String routeName = '/parkinpage';
 
+  /// The inAppKey of the currently selected vehicle on [MainPage].
   final String carInAppKey;
 
   ParkInPage(this.carInAppKey);
@@ -27,12 +28,13 @@ class ParkInPage extends StatefulWidget {
 class _ParkInPageState extends State<ParkInPage> {
   Timer _timer;
 
+  /// Initializes selected vehicle and calls [vehicle.parkIn(context)].
   @override
   void initState() {
-    //update parking spots
+    // Update parking spots.
     currentParkingGarage.updateAllFreeParkingSpots();
 
-    //init vehicle list
+    // Init vehicle list.
     DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -41,7 +43,7 @@ class _ParkInPageState extends State<ParkInPage> {
         }
       },
     );
-    //get vehicle that shall be used from the list of vehicles
+    // Get vehicle that shall be used from the list of vehicles.
     for (Vehicle currentVehicle
         in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
@@ -53,7 +55,7 @@ class _ParkInPageState extends State<ParkInPage> {
         Timer.periodic(Duration(milliseconds: 500), (timer) => setState(() {}));
 
     super.initState();
-    //wait until build finished to call method
+    // Wait until build finished to call method.
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
   }
@@ -67,6 +69,7 @@ class _ParkInPageState extends State<ParkInPage> {
 
   //TODO: setState when parkedIn switches
 
+  /// Returns [Scaffold], Animation, park out button [FloatingActionButton].
   @override
   Widget build(BuildContext context) {
     //cancel the timer if the vehicle is parked in
@@ -75,17 +78,17 @@ class _ParkInPageState extends State<ParkInPage> {
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkIn),
-      //button observes parkedIn value of car
+      // Button observes parkedIn value of car.
       floatingActionButton: ValueListenableBuilder(
           valueListenable: vehicle.parkedInObserver,
           builder: (BuildContext context, bool, Widget child) {
             return FloatingActionButton.extended(
-              //cancel or park out button
+              // Cancel or park out button.
               label: vehicle.parkedIn
                   ? Text(AppLocalizations.of(context).actionButtonParkOut)
                   : Text(AppLocalizations.of(context).actionButtonCancelPark),
               backgroundColor: red,
-              //park out dialog or cancel dialog
+              // Park out dialog or cancel dialog
               onPressed: () {
                 showDialog(
                     context: context,

@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/data/sharedpreferences.dart';
+import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/models/global.dart';
+import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:shared_preferences_settings/shared_preferences_settings.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:app_settings/app_settings.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:system_settings/system_settings.dart';
+
+import 'changepasscodepage.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
-  final String apikey;
-  const SettingsPage({Key key, this.apikey}) : super(key: key);
+  const SettingsPage({Key key}) : super(key: key);
 
   static final String notificationSettingKey = 'pushNotifications';
   static final String notificationLoadSettingKey = 'pushLoad';
@@ -29,69 +37,127 @@ class SettingsForm extends StatefulWidget {
 }
 
 class _SettingsFormState extends State<SettingsForm> {
-  //global key for form validation
-  final _formKey = GlobalKey<FormState>();
+  bool _pushNotifications = false;
+  bool _pushNotificationsParked = false;
+  bool _pushNotificationsCharge = false;
+
+  Future<SharedPreferences> preferences = SharedPreferences.getInstance();
+
+  @override
+  void initState() {
+    super.initState();
+    getPushNotifications();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-        key: _formKey,
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: ListView(
-            children: <Widget>[
-              Padding(padding: EdgeInsets.symmetric(vertical: 0.5)),
-              SwitchSettingsTile(
-                settingKey: SettingsPage.notificationSettingKey,
-                title: 'Push Nachrichten',
-                subtitle: 'Hinweise erhalten, bei wichtigen Hinweisen',
-              ),
-              SwitchSettingsTile(
-                settingKey: SettingsPage.notificationLoadSettingKey,
-                title: 'Ladevorgang',
-                subtitle: 'Push Benachrichtigungen zum Ladevorgang erhalten',
-                visibleIfKey: 'pushNotifications',
-              ),
-              SwitchSettingsTile(
-                settingKey: SettingsPage.notificationParkSettingKey,
-                title: 'Parkvorgänge',
-                subtitle:
-                    'Push Benachrichtigungen bei abgeschlossenen Parkvorgängen',
-                visibleIfKey: 'pushNotifications',
-
-              ),
-              ListTile(
-                title: Text('Passwort'),
-                subtitle: Text('App mit einem Passwort schützen'),
-                trailing: Icon(Icons.arrow_forward_ios),
-                // TO DO: Implement passcode page
-                //onTap: () {
-                //_passCodeSettings();
-                //},
-              ),
-              Divider(),
-              ListTile(
-                  title: Text('Daten übertragen'),
-                  subtitle: Text('Fahrezeuge auf andere Geräte übertragen'),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.agb);
-                  }),
-              Divider(),
-              ListTile(
-                  title: Text('AGB und Nutzungsbedingungen'),
-                  subtitle: Text('AGB und Nutzungsbedingungen anzeigen'),
-                  trailing: Icon(Icons.arrow_forward_ios),
-                  onTap: () {
-                    Navigator.pushNamed(context, Routes.agb);
-                  })
-            ],
-          ),
-        ));
+    return ListView(
+      children: <Widget>[
+        Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
+        SwitchListTile(
+            title: Text(AppLocalizations.of(context).pushMessages),
+            subtitle: Text(AppLocalizations.of(context).pushMessagesText),
+            value: _pushNotifications,
+            onChanged: (value) async {
+              if (value) {
+                if (await Permission.notification.request().isDenied) {
+                  SystemSettings.app();
+                }
+                if (await Permission.notification.request().isDenied) {
+                  value = false;
+                }
+              }
+              //update change in Sharedpreferences
+              if (value) {
+                SharedPreferencesHelper.enableNotifications();
+              } else {
+                SharedPreferencesHelper.disableNotifications();
+              }
+              setState(() {
+                _pushNotifications = value;
+              });
+            }),
+        Divider(),
+        SwitchListTile(
+            title: Text(AppLocalizations.of(context).pushMessagesParked),
+            subtitle: Text(AppLocalizations.of(context).pushMessagesParkedText),
+            value: _pushNotificationsParked && _pushNotifications,
+            onChanged: (value) {
+              SharedPreferencesHelper.setNotificationsParked(value);
+              setState(() {
+                _pushNotificationsParked = value;
+              });
+            }),
+        Divider(),
+        SwitchListTile(
+            title: Text(AppLocalizations.of(context).pushMessagesCharge),
+            subtitle: Text(AppLocalizations.of(context).pushMessagesChargeText),
+            value: _pushNotificationsCharge && _pushNotifications,
+            onChanged: (value) {
+              SharedPreferencesHelper.setNotificationsCharged(value);
+              setState(() {
+                _pushNotificationsCharge = value;
+              });
+            }),
+        Divider(),
+        ListTile(
+          title: Text(AppLocalizations.of(context).password),
+          subtitle: Text(AppLocalizations.of(context).passwordSubtitle),
+          trailing: Icon(Icons.arrow_forward_ios),
+          onTap: () {
+            _passCodeSettings();
+          },
+        ),
+        Divider(),
+        ListTile(
+            title: Text(AppLocalizations.of(context).transferData),
+            subtitle: Text(AppLocalizations.of(context).transferDataText),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.transferkeys);
+            }),
+        Divider(),
+        ListTile(
+            title: Text(AppLocalizations.of(context).showTermsAndConditions),
+            subtitle: Text(
+                AppLocalizations.of(context).showTermsAndConditionsSubtitle),
+            trailing: Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.agbPage);
+            })
+      ],
+    );
   }
-  // TO DO: finish implementing passcode page
-  /*_passCodeSettings() {
-    //Navigator.push(context,
-        //MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
-  }*/
+
+  _passCodeSettings() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
+  }
+
+  //get all the shared preferences for initstate
+  Future<Null> getPushNotifications() async {
+    final SharedPreferences prefs = await preferences;
+    bool notifications = prefs.getBool('notifications');
+    bool notificationsCharge = prefs.getBool('notificationsCharged');
+    bool notificationsParked = prefs.getBool('notificationsParked');
+
+    //check if values are already initialized
+    if (notifications == null) {
+      notifications = false;
+    }
+    if (notificationsCharge == null) {
+      notificationsCharge = false;
+    }
+    if (notificationsParked == null) {
+      notificationsParked = false;
+    }
+
+    Notifications.getEnabledValues();
+
+    setState(() {
+      _pushNotifications = notifications;
+      _pushNotificationsCharge = notificationsCharge;
+      _pushNotificationsParked = notificationsParked;
+    });
+  }
 }

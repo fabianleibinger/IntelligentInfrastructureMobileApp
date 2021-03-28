@@ -6,13 +6,19 @@ import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'constants.dart';
 
-//defines the dialog that tells the user that no connection can be established at the moment
+/// The dialog that tells the user that no connection can be established at the moment.
+///
+/// ```showDialog(
+///             context: context,
+///             builder: (context) {
+///               return NoConnectionDialog.getDialog(context);
+///             });
+/// ```
 class NoConnectionDialog {
   static const double _dividerThickness = 0;
 
-  //raised button opens wifi settings
-  //button leads back to MainPage or Park page
-  //returns dialog, use when no connection to parking garage server
+  /// Returns dialog that can open WIFI settings
+  /// and opens the correct page for the vehicle.
   static getDialog(BuildContext context) {
     return AlertDialog(
       title: Text(AppLocalizations.of(context).noConnectionDialogTitle),
@@ -27,7 +33,7 @@ class NoConnectionDialog {
         ],
       ),
       actions: [
-        Constants.createTextButton(
+        Constants.getTextButton(
             context,
             red,
             AppLocalizations.of(context).parkDialogBackButton,
