@@ -27,4 +27,9 @@ void main() {
       expect(actualBody, correctBody);
     });
   });
+
+  tearDown(() {
+    standard = null;
+    chargeable = null;
+  });
 }

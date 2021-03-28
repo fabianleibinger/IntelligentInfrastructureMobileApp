@@ -17,6 +17,7 @@ class ParkManager {
       if (currentParkingGarage.vehicleSpecificSpotsAvailable(vehicle)) {
         vehicle.setAndUpdateParkIngIn(context, true);
         print(vehicle.name + ' parking in');
+
         // Try to contact server.
         ApiProvider.parkIn(vehicle).then((value) {
           /*while (!this.parkedIn) {
