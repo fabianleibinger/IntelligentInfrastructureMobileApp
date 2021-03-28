@@ -10,7 +10,7 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
-import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -150,8 +150,8 @@ class _VehicleFormState extends State<VehicleForm> {
                   FormField(
                     builder: (FormFieldState<dynamic> field) {
                       return ListTile(
-                    title: Text(AppLocalizations.of(context)
-                        .vehicleDimensionsDialogTitle),
+                        title: Text(AppLocalizations.of(context)
+                            .vehicleDimensionsDialogTitle),
                         subtitle: field.hasError
                             ? Text(
                                 field.errorText,
@@ -159,7 +159,7 @@ class _VehicleFormState extends State<VehicleForm> {
                                     color: Theme.of(context).errorColor),
                               )
                             : _vehicleDimensionsSubtitle(),
-                    onTap: () =>
+                        onTap: () =>
                             _showDialog(context, VehicleDimensionsDialog())
                                 .then((value) => field.validate()),
                       );
