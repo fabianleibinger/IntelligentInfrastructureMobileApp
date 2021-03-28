@@ -86,7 +86,7 @@ class _VehiclePageState extends State<VehiclePage> {
                       child: Icon(Icons.delete,
                           color: Theme.of(context).dialogBackgroundColor),
                     ),
-                    color: Colors.red,
+                    color: Theme.of(context).errorColor,
                   ),
                   key: Key(vehicle.inAppKey),
                   onDismissed: (direction) {
