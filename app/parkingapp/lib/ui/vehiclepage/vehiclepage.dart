@@ -105,9 +105,7 @@ class _VehiclePageState extends State<VehiclePage> {
                   },
                   child: ListTile(
                     title: Text(vehicle.name),
-                    subtitle: Text(vehicle.licensePlate +
-                        "; " +
-                        vehicle.databaseId.toString()),
+                    subtitle: Text(vehicle.licensePlate),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditVehicle(
                               vehicle: vehicle,
