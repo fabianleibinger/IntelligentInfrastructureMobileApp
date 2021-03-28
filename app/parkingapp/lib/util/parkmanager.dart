@@ -112,19 +112,21 @@ class ParkManager {
         new Timer.periodic(Duration(seconds: 1), (timer) {
           print('updating vehicle');
           ParkManager.updatePosition(vehicle).then((value) {
-            if (!value) timer.cancel();
+            //park out finished
+            if (!value) {
+              timer.cancel();
+              vehicle.setAndUpdateParkedIn(context, false);
+              print('vehicle parked out: ' + vehicle.parkedIn.toString());
+              // Open main page.
+              Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ParkDialogs.getParkOutFinishedDialog(context);
+                  });
+            }
           });
         });
-
-        vehicle.setAndUpdateParkedIn(context, false);
-        print('vehicle parked out: ' + vehicle.parkedIn.toString());
-        // Open main page.
-        Navigator.pushReplacementNamed(context, vehicle.inAppKey);
-        showDialog(
-            context: context,
-            builder: (context) {
-              return ParkDialogs.getParkOutFinishedDialog(context);
-            });
 
         // vehicle not parking out anymore.
       }).whenComplete(() {
