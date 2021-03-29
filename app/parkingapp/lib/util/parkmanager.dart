@@ -173,10 +173,10 @@ class ParkManager {
       {@required BuildContext context,
       Coordinate vehiclePosition,
       destination}) {
+    print('generate parkInMap');
     //TODO height must be calculated from aspect ratio of mapp
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (1473 * _width) / 1000;
-    print(_width.toString() + ' x ' + _height.toString());
 
     //assume 0x0 to be the bottom left
     Coordinate _topRightAdjusted = Coordinate(
@@ -184,7 +184,6 @@ class ParkManager {
             currentParkingGarage.bottomLeft.longitude,
         lattitude: currentParkingGarage.topRight.lattitude -
             currentParkingGarage.bottomLeft.lattitude);
-    print(_topRightAdjusted);
 
     double _iconSize = 16;
     Container _vehicleIcon = Container(
