@@ -16,7 +16,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ParkManager {
   /// Sends the [vehicle] park in request to the [ApiProvider].
   static void parkInRequest(BuildContext context, Vehicle vehicle) {
-    if (needsToParkIn(vehicle)) {
+    if (needsToParkIn(context, vehicle)) {
       if (currentParkingGarage.vehicleSpecificSpotsAvailable(vehicle)) {
         vehicle.setAndUpdateParkIngIn(context, true);
         print(vehicle.name + ' parking in');
@@ -62,11 +62,24 @@ class ParkManager {
   }
 
   /// Returns if [vehicle] needs to be parked in.
-  static bool needsToParkIn(Vehicle vehicle) {
-    print('needs to park in? parked in: ' +
-        vehicle.parkedIn.toString() +
-        ' parking in: ' +
-        vehicle.parkingIn.toString());
+  static bool needsToParkIn(BuildContext context, Vehicle vehicle) {
+    ApiProvider.getPosition(vehicle).then((value) {
+      print(value);
+      value["parkedIn"] != null
+          //use backend value
+          ? vehicle.setAndUpdateParkedIn(context, value["parkedIn"])
+          //fallback
+          : vehicle.setAndUpdateParkedIn(context, false);
+      value["reached_position"] != null
+          //use backend value
+          ? vehicle.setAndUpdateParkIngIn(context, value["reached_position"])
+          //fallback
+          : vehicle.setAndUpdateParkIngIn(context, false);
+      print('needs to park in? parked in: ' +
+          vehicle.parkedIn.toString() +
+          ' parking in: ' +
+          vehicle.parkingIn.toString());
+    });
     return !vehicle.parkedIn && !vehicle.parkingIn;
   }
 
@@ -99,7 +112,7 @@ class ParkManager {
 
   /// Sends the [vehicle] park out request to the [ApiProvider].
   static void parkOutRequest(BuildContext context, Vehicle vehicle) {
-    if (needsToParkOut(vehicle)) {
+    if (needsToParkOut(context, vehicle)) {
       // Cancelling park in if needed.
       vehicle.setAndUpdateParkIngIn(context, false);
 
@@ -136,7 +149,20 @@ class ParkManager {
   }
 
   /// Returns if [vehicle] needs to be parked out.
-  static bool needsToParkOut(Vehicle vehicle) {
+  static bool needsToParkOut(BuildContext context, Vehicle vehicle) {
+    ApiProvider.getPosition(vehicle).then((value) {
+      print(value);
+      value["reached_position"] != null
+          //use backend value
+          ? vehicle.setAndUpdateParkedIn(context, value["reached_position"])
+          //fallback
+          : vehicle.setAndUpdateParkedIn(context, false);
+      value["parking"] != null
+          //use backend value
+          ? vehicle.setAndUpdateParkIngOut(context, value["parking"])
+          //fallback
+          : vehicle.setAndUpdateParkIngOut(context, false);
+    });
     return vehicle.parkingOut;
   }
 
