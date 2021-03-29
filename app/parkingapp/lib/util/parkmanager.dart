@@ -30,7 +30,7 @@ class ParkManager {
               Coordinate(lattitude: latitude, longitude: longitude);
           vehicle.setParkingSpot(_destination);
 
-          //update the position while the vehicle is parking
+          //update the position while the vehicle is parking and check if it has been parked
           new Timer.periodic(Duration(seconds: 1), (timer) {
             print('updating vehicle ' + vehicle.name);
             ParkManager.updatePosition(vehicle).then((value) {
@@ -38,14 +38,13 @@ class ParkManager {
               if (!value) {
                 timer.cancel();
                 vehicle.setAndUpdateParkedIn(context, true);
+                vehicle.setAndUpdateParkIngIn(context, false);
                 print('vehicle parked in: ' + vehicle.parkedIn.toString());
               }
             });
+            _checkAndReactParkInWorked(context, vehicle);
           });
           // vehicle not parking in anymore.
-        }).whenComplete(() {
-          vehicle.setAndUpdateParkIngIn(context, false);
-          _checkAndReactParkInWorked(context, vehicle);
         });
       } else {
         // No parking spots available.
@@ -87,7 +86,8 @@ class ParkManager {
         vehicle.parkOut(context);
         return null;
       }, true, false);
-    } else {
+    } else if (!vehicle.parkingIn) {
+      // vehicle is not parked in but also not parking in meaning something has failed
       // if park in didn't work: connection to server failed.
       showDialog(
           context: context,
@@ -116,6 +116,7 @@ class ParkManager {
             if (!value) {
               timer.cancel();
               vehicle.setAndUpdateParkedIn(context, false);
+              vehicle.setAndUpdateParkIngOut(context, false);
               print('vehicle parked out: ' + vehicle.parkedIn.toString());
               // Open main page.
               Navigator.pushReplacementNamed(context, vehicle.inAppKey);
@@ -126,12 +127,10 @@ class ParkManager {
                   });
             }
           });
+          _checkAndReactParkOutWorked(context, vehicle);
         });
 
         // vehicle not parking out anymore.
-      }).whenComplete(() {
-        vehicle.setAndUpdateParkIngOut(context, false);
-        _checkAndReactParkOutWorked(context, vehicle);
       });
     }
   }
