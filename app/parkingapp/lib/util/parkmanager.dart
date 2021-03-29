@@ -137,7 +137,7 @@ class ParkManager {
 
   /// Returns if [vehicle] needs to be parked out.
   static bool needsToParkOut(Vehicle vehicle) {
-    return !vehicle.parkingOut;
+    return vehicle.parkingOut;
   }
 
   /// Checks if park out worked,
