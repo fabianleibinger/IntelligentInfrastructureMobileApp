@@ -84,7 +84,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
     });
   }
 
-  void _setExampleVehicle(Vehicle vehicle, ExampleVehicleDimension exampleVehicle) {
+  void _setExampleVehicle(
+      Vehicle vehicle, ExampleVehicleDimension exampleVehicle) {
     //update vehicle dimensions of the vehicle in the database with the new dimensions of exampleVehicle
     vehicle.setAndUpdateDimensions(
         context,
@@ -129,12 +130,14 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
     final _formKey = GlobalKey<FormState>();
     return ListTile(
       title: Text(AppLocalizations.of(context).customDimensions),
-      onTap: () async {
-        await showDialog(
+      onTap: () {
+        showDialog(
             context: context,
-            builder: (context) => AlertDialog(
-                  title: Text(AppLocalizations.of(context).customDimensions),
-                  content: Form(
+            builder: (context) => Scaffold(
+                  appBar: AppBar(
+                    title: Text(AppLocalizations.of(context).customDimensions),
+                  ),
+                  body: Form(
                     key: _formKey,
                     child: ListView(
                       children: [
@@ -150,8 +153,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) =>
-                              vehicle.setAndUpdateLength(context, double.tryParse(val)),
+                          onSaved: (val) => vehicle.setAndUpdateLength(
+                              context, double.tryParse(val)),
                         ),
                         //width
                         TextFormField(
@@ -165,8 +168,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) =>
-                              vehicle.setAndUpdateWidth(context, double.tryParse(val)),
+                          onSaved: (val) => vehicle.setAndUpdateWidth(
+                              context, double.tryParse(val)),
                         ),
                         //height
                         TextFormField(
@@ -180,8 +183,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) =>
-                              vehicle.setAndUpdateHeight(context, double.tryParse(val)),
+                          onSaved: (val) => vehicle.setAndUpdateHeight(
+                              context, double.tryParse(val)),
                         ),
                         //turning circle
                         TextFormField(
@@ -214,27 +217,26 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                           validator: (val) => (num.tryParse(val) ?? 0) > 0
                               ? null
                               : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setAndUpdateDistRearAxleLicensePlate(
-                              context, double.tryParse(val)),
+                          onSaved: (val) =>
+                              vehicle.setAndUpdateDistRearAxleLicensePlate(
+                                  context, double.tryParse(val)),
+                        ),
+                        FlatButton(
+                          child: Text(AppLocalizations.of(context).buttonOk),
+                          onPressed: () {
+                            //validate form and exit on success
+                            if (_formKey.currentState.validate()) {
+                              _formKey.currentState.save();
+
+                              Navigator.of(context).pop();
+                            }
+                          },
                         )
                       ],
                     ),
                   ),
-                  actions: [
-                    FlatButton(
-                      child: Text(AppLocalizations.of(context).buttonOk),
-                      onPressed: () {
-                        //validate form and exit on success
-                        if (_formKey.currentState.validate()) {
-                          _formKey.currentState.save();
-
-                          Navigator.of(context).pop();
-                        }
-                      },
-                    )
-                  ],
                 ));
-        Navigator.of(context).pop();
+        //Navigator.of(context).pop();
       },
     );
   }
