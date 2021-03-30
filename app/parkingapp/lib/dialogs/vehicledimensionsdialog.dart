@@ -140,89 +140,93 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                   ),
                   body: Form(
                     key: _formKey,
-                    child: ListView(
-                      children: [
-                        //length
-                        TextFormField(
-                          initialValue: vehicle.length.round().toString(),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context).length +
-                                  AppLocalizations.of(context).space +
-                                  AppLocalizations.of(context)
-                                      .additionalInMilimeters),
-                          validator: (val) => (num.tryParse(val) ?? 0) > 0
-                              ? null
-                              : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setAndUpdateLength(
-                              context, double.tryParse(val)),
-                        ),
-                        //width
-                        TextFormField(
-                          initialValue: vehicle.width.round().toString(),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context).width +
-                                  AppLocalizations.of(context).space +
-                                  AppLocalizations.of(context)
-                                      .additionalInMilimeters),
-                          validator: (val) => (num.tryParse(val) ?? 0) > 0
-                              ? null
-                              : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setAndUpdateWidth(
-                              context, double.tryParse(val)),
-                        ),
-                        //height
-                        TextFormField(
-                          initialValue: vehicle.height.round().toString(),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context).height +
-                                  AppLocalizations.of(context).space +
-                                  AppLocalizations.of(context)
-                                      .additionalInMilimeters),
-                          validator: (val) => (num.tryParse(val) ?? 0) > 0
-                              ? null
-                              : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setAndUpdateHeight(
-                              context, double.tryParse(val)),
-                        ),
-                        //turning circle
-                        TextFormField(
-                          initialValue: vehicle.turningCycle.round().toString(),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              labelText:
-                                  AppLocalizations.of(context).turningCircle +
-                                      AppLocalizations.of(context).space +
-                                      AppLocalizations.of(context)
-                                          .additionalInMilimeters),
-                          validator: (val) => (num.tryParse(val) ?? 0) > 0
-                              ? null
-                              : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) => vehicle.setAndUpdateTurningCycle(
-                              context, double.tryParse(val)),
-                        ),
-                        //distance rear axle license plate
-                        TextFormField(
-                          initialValue: vehicle.distRearAxleLicensePlate
-                              .round()
-                              .toString(),
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              labelText: AppLocalizations.of(context)
-                                      .distRearAxleLicensePlate +
-                                  AppLocalizations.of(context).space +
-                                  AppLocalizations.of(context)
-                                      .additionalInMilimeters),
-                          validator: (val) => (num.tryParse(val) ?? 0) > 0
-                              ? null
-                              : AppLocalizations.of(context).requiredText,
-                          onSaved: (val) =>
-                              vehicle.setAndUpdateDistRearAxleLicensePlate(
-                                  context, double.tryParse(val)),
-                        ),
-                      ],
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ListView(
+                        children: [
+                          //length
+                          TextFormField(
+                            initialValue: vehicle.length.round().toString(),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context).length +
+                                    AppLocalizations.of(context).space +
+                                    AppLocalizations.of(context)
+                                        .additionalInMilimeters),
+                            validator: (val) => (num.tryParse(val) ?? 0) > 0
+                                ? null
+                                : AppLocalizations.of(context).requiredText,
+                            onSaved: (val) => vehicle.setAndUpdateLength(
+                                context, double.tryParse(val)),
+                          ),
+                          //width
+                          TextFormField(
+                            initialValue: vehicle.width.round().toString(),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context).width +
+                                    AppLocalizations.of(context).space +
+                                    AppLocalizations.of(context)
+                                        .additionalInMilimeters),
+                            validator: (val) => (num.tryParse(val) ?? 0) > 0
+                                ? null
+                                : AppLocalizations.of(context).requiredText,
+                            onSaved: (val) => vehicle.setAndUpdateWidth(
+                                context, double.tryParse(val)),
+                          ),
+                          //height
+                          TextFormField(
+                            initialValue: vehicle.height.round().toString(),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context).height +
+                                    AppLocalizations.of(context).space +
+                                    AppLocalizations.of(context)
+                                        .additionalInMilimeters),
+                            validator: (val) => (num.tryParse(val) ?? 0) > 0
+                                ? null
+                                : AppLocalizations.of(context).requiredText,
+                            onSaved: (val) => vehicle.setAndUpdateHeight(
+                                context, double.tryParse(val)),
+                          ),
+                          //turning circle
+                          TextFormField(
+                            initialValue:
+                                vehicle.turningCycle.round().toString(),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText:
+                                    AppLocalizations.of(context).turningCircle +
+                                        AppLocalizations.of(context).space +
+                                        AppLocalizations.of(context)
+                                            .additionalInMilimeters),
+                            validator: (val) => (num.tryParse(val) ?? 0) > 0
+                                ? null
+                                : AppLocalizations.of(context).requiredText,
+                            onSaved: (val) => vehicle.setAndUpdateTurningCycle(
+                                context, double.tryParse(val)),
+                          ),
+                          //distance rear axle license plate
+                          TextFormField(
+                            initialValue: vehicle.distRearAxleLicensePlate
+                                .round()
+                                .toString(),
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: AppLocalizations.of(context)
+                                        .distRearAxleLicensePlate +
+                                    AppLocalizations.of(context).space +
+                                    AppLocalizations.of(context)
+                                        .additionalInMilimeters),
+                            validator: (val) => (num.tryParse(val) ?? 0) > 0
+                                ? null
+                                : AppLocalizations.of(context).requiredText,
+                            onSaved: (val) =>
+                                vehicle.setAndUpdateDistRearAxleLicensePlate(
+                                    context, double.tryParse(val)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
