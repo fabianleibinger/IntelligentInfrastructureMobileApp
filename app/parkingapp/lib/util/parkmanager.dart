@@ -49,8 +49,9 @@ class ParkManager {
   }
 
   /// Returns if [vehicle] needs to be parked in.
+  /// Parking out vehicle can't be parked in.
   static bool needsToParkIn(Vehicle vehicle) {
-    return !vehicle.parkedIn && !vehicle.parkingIn;
+    return !vehicle.parkedIn && !vehicle.parkingIn && !vehicle.parkingOut;
   }
 
   /// Checks if park in worked,
@@ -109,8 +110,9 @@ class ParkManager {
   }
 
   /// Returns if [vehicle] needs to be parked out.
+  /// Parking in vehicle can be parked out.
   static bool needsToParkOut(Vehicle vehicle) {
-    return !vehicle.parkingOut;
+    return !vehicle.parkingOut && (vehicle.parkingIn || vehicle.parkedIn);
   }
 
   /// Checks if park out worked,
