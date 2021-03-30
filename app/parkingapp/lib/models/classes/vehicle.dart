@@ -148,4 +148,22 @@ abstract class Vehicle {
     this.distRearAxleLicensePlate = distRearAxleLicensePlate;
     DataHelper.updateVehicle(context, this);
   }
+
+  /// Compares [vehicle] attribute values with own attribute values
+  bool equals(Vehicle vehicle) {
+    return this.inAppKey == vehicle.inAppKey &&
+        this.databaseId == vehicle.databaseId &&
+        this.name == vehicle.name &&
+        this.licensePlate == vehicle.licensePlate &&
+        this.width == vehicle.width &&
+        this.height == vehicle.height &&
+        this.length == vehicle.length &&
+        this.turningCycle == vehicle.turningCycle &&
+        this.distRearAxleLicensePlate == vehicle.distRearAxleLicensePlate &&
+        this.nearExitPreference == vehicle.nearExitPreference &&
+        this.parkingCard == vehicle.parkingCard &&
+        this.parkedIn == vehicle.parkedIn &&
+        this.parkingIn == vehicle.parkingIn &&
+        this.parkingOut == vehicle.parkingOut;
+  }
 }

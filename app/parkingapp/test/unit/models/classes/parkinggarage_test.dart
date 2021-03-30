@@ -5,14 +5,14 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 
 void main() {
-  ParkingGarage garage;
+  ParkingGarage _garage;
 
-  StandardVehicle standard;
-  ChargeableVehicle chargeable;
+  StandardVehicle _standard;
+  ChargeableVehicle _chargeable;
 
   setUp(() {
     Coordinate coordinate = Coordinate(latitude: 0, longitude: 0);
-    garage = ParkingGarage(
+    _garage = ParkingGarage(
         name: '',
         type: ParkingGarageType.Tiefgarage,
         freeParkingSpots: 0,
@@ -22,15 +22,15 @@ void main() {
         bottomLeft: coordinate,
         topRight: coordinate);
 
-    standard = StandardVehicle('', '', '', 0, 0, 0, 0, 0, true, true, true);
-    chargeable = standard.toChargeableVehicle();
+    _standard = StandardVehicle('', '', '', 0, 0, 0, 0, 0, true, true, true);
+    _chargeable = _standard.toChargeableVehicle();
   });
 
   group('Free parking spots should be returned for vehicle types and settings',
       () {
     test('Free parking spots should be returned for StandardVehicle', () {
-      int freeSpots = garage.getFreeSpotsForVehicle(standard);
-      int correctSpots = garage.freeParkingSpots;
+      int freeSpots = _garage.getFreeSpotsForVehicle(_standard);
+      int correctSpots = _garage.freeParkingSpots;
 
       expect(freeSpots, correctSpots);
     });
@@ -38,10 +38,10 @@ void main() {
     test(
         'Free parking spots should be returned for ChargeableVehicle that enabled charging',
         () {
-      chargeable.doCharge = true;
+      _chargeable.doCharge = true;
 
-      int freeSpots = garage.getFreeSpotsForVehicle(chargeable);
-      int correctSpots = garage.freeChargeableParkingSpots;
+      int freeSpots = _garage.getFreeSpotsForVehicle(_chargeable);
+      int correctSpots = _garage.freeChargeableParkingSpots;
 
       expect(freeSpots, correctSpots);
     });
@@ -49,10 +49,10 @@ void main() {
     test(
         'Free parking spots should be returned for ChargeableVehicle that disabled charging',
         () {
-      chargeable.doCharge = false;
+      _chargeable.doCharge = false;
 
-      int freeSpots = garage.getFreeSpotsForVehicle(chargeable);
-      int correctSpots = garage.freeParkingSpots;
+      int freeSpots = _garage.getFreeSpotsForVehicle(_chargeable);
+      int correctSpots = _garage.freeParkingSpots;
 
       expect(freeSpots, correctSpots);
     });
@@ -64,9 +64,9 @@ void main() {
     test(
         'Should return if specific parking spots are available for 0 free parking spots',
         () {
-      garage.freeParkingSpots = 0;
+      _garage.freeParkingSpots = 0;
 
-      bool available = garage.vehicleSpecificSpotsAvailable(standard);
+      bool available = _garage.vehicleSpecificSpotsAvailable(_standard);
 
       expect(available, false);
     });
@@ -74,9 +74,9 @@ void main() {
     test(
         'Should return if specific parking spots are available for negative free parking spots',
         () {
-      garage.freeParkingSpots = -1;
+      _garage.freeParkingSpots = -1;
 
-      bool available = garage.vehicleSpecificSpotsAvailable(standard);
+      bool available = _garage.vehicleSpecificSpotsAvailable(_standard);
 
       expect(available, false);
     });
@@ -84,9 +84,9 @@ void main() {
     test(
         'Should return if specific parking spots are available for positive free parking spots',
         () {
-      garage.freeParkingSpots = 1;
+      _garage.freeParkingSpots = 1;
 
-      bool available = garage.vehicleSpecificSpotsAvailable(standard);
+      bool available = _garage.vehicleSpecificSpotsAvailable(_standard);
 
       expect(available, true);
     });
@@ -94,17 +94,17 @@ void main() {
     test(
         'Should return if specific parking spots are available for nAn free parking spots',
         () {
-      garage.freeParkingSpots = null;
+      _garage.freeParkingSpots = null;
 
-      expect(() => garage.vehicleSpecificSpotsAvailable(standard),
+      expect(() => _garage.vehicleSpecificSpotsAvailable(_standard),
           throwsNoSuchMethodError);
     });
   });
 
   tearDown(() {
-    garage = null;
+    _garage = null;
 
-    standard = null;
-    chargeable = null;
+    _standard = null;
+    _chargeable = null;
   });
 }

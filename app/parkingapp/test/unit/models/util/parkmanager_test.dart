@@ -3,52 +3,52 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/util/parkmanager.dart';
 
 void main() {
-  StandardVehicle vehicle;
+  StandardVehicle _vehicle;
 
   setUp(() {
-    vehicle = StandardVehicle('', '', '', 0, 0, 0, 0, 0, true, true, false);
+    _vehicle = StandardVehicle('', '', '', 0, 0, 0, 0, 0, true, true, false);
   });
 
   group('Should return if vehicle needs to park in for all vehicle states', () {
     test('Should return if parked in vehicle needs to park in', () {
-      vehicle.parkedIn = true;
+      _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkIn(vehicle);
+      bool parkIn = ParkManager.needsToParkIn(_vehicle);
 
       expect(parkIn, false);
     });
 
     test('Should return if parked out vehicle needs to park in', () {
-      vehicle.parkedIn = false;
+      _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkIn(vehicle);
+      bool parkIn = ParkManager.needsToParkIn(_vehicle);
 
       expect(parkIn, true);
     });
 
     test('Should return if parking in vehicle needs to park in', () {
-      vehicle.parkingIn = true;
-      vehicle.parkedIn = false;
+      _vehicle.parkingIn = true;
+      _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkIn(vehicle);
+      bool parkIn = ParkManager.needsToParkIn(_vehicle);
 
       expect(parkIn, false);
     });
 
     test('Should return if park in cancelling vehicle needs to park in', () {
-      vehicle.parkingOut = true;
-      vehicle.parkedIn = false;
+      _vehicle.parkingOut = true;
+      _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkIn(vehicle);
+      bool parkIn = ParkManager.needsToParkIn(_vehicle);
 
       expect(parkIn, false);
     });
 
     test('Should return if parking out vehicle needs to park in', () {
-      vehicle.parkingOut = true;
-      vehicle.parkedIn = true;
+      _vehicle.parkingOut = true;
+      _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkIn(vehicle);
+      bool parkIn = ParkManager.needsToParkIn(_vehicle);
 
       expect(parkIn, false);
     });
@@ -57,50 +57,50 @@ void main() {
 
   group('Should return if vehicle needs to park out for all vehicle states', () {
     test('Should return if parked in vehicle needs to park out', () {
-      vehicle.parkedIn = true;
+      _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkOut(vehicle);
+      bool parkIn = ParkManager.needsToParkOut(_vehicle);
 
       expect(parkIn, true);
     });
 
     test('Should return if parked out vehicle needs to park out', () {
-      vehicle.parkedIn = false;
+      _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkOut(vehicle);
+      bool parkIn = ParkManager.needsToParkOut(_vehicle);
 
       expect(parkIn, false);
     });
 
     test('Should return if parking in vehicle needs to park out', () {
-      vehicle.parkingIn = true;
-      vehicle.parkedIn = false;
+      _vehicle.parkingIn = true;
+      _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkOut(vehicle);
+      bool parkIn = ParkManager.needsToParkOut(_vehicle);
 
       expect(parkIn, true);
     });
 
     test('Should return if park in cancelling vehicle needs to park out', () {
-      vehicle.parkingOut = true;
-      vehicle.parkedIn = false;
+      _vehicle.parkingOut = true;
+      _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkOut(vehicle);
+      bool parkIn = ParkManager.needsToParkOut(_vehicle);
 
       expect(parkIn, false);
     });
 
     test('Should return if parking out vehicle needs to park out', () {
-      vehicle.parkingOut = true;
-      vehicle.parkedIn = true;
+      _vehicle.parkingOut = true;
+      _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkOut(vehicle);
+      bool parkIn = ParkManager.needsToParkOut(_vehicle);
 
       expect(parkIn, false);
     });
   });
 
   tearDown(() {
-    vehicle = null;
+    _vehicle = null;
   });
 }

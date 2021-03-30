@@ -4,32 +4,32 @@ import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 
 void main() {
-  StandardVehicle standard;
-  ChargeableVehicle chargeable;
+  StandardVehicle _standard;
+  ChargeableVehicle _chargeable;
 
   setUp(() {
-    standard = StandardVehicle('', '', '', 0, 0, 0, 0, 0, true, true, true);
-    chargeable = standard.toChargeableVehicle();
+    _standard = StandardVehicle('', '', '', 0, 0, 0, 0, 0, true, true, true);
+    _chargeable = _standard.toChargeableVehicle();
   });
 
   group('Correct park in bodies should be chosen for vehicle types', () {
     test('Correct park in body should be chosen for StandardVehicle', () {
-      var actualBody = ApiProvider.chooseParkInBody(standard);
-      var correctBody = ApiProvider.parkInBodyStandardVehicle(standard);
+      var actualBody = ApiProvider.chooseParkInBody(_standard);
+      var correctBody = ApiProvider.parkInBodyStandardVehicle(_standard);
 
       expect(actualBody, correctBody);
     });
 
     test('Correct park in body should be chosen for ChargeableVehicle', () {
-      var actualBody = ApiProvider.chooseParkInBody(chargeable);
-      var correctBody = ApiProvider.parkInBodyChargeableVehicle(chargeable);
+      var actualBody = ApiProvider.chooseParkInBody(_chargeable);
+      var correctBody = ApiProvider.parkInBodyChargeableVehicle(_chargeable);
 
       expect(actualBody, correctBody);
     });
   });
 
   tearDown(() {
-    standard = null;
-    chargeable = null;
+    _standard = null;
+    _chargeable = null;
   });
 }
