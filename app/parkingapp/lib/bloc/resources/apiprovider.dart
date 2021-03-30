@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
@@ -63,21 +64,21 @@ class ApiProvider {
   /// Returns ['parking', 'longitude', 'latitude', 'load_vehicle'].
   static Future<Map<String, dynamic>> parkIn(Vehicle vehicle) async {
     return httpPost(_serverUrl + _serverPort + '/parkIn',
-        _chooseParkInBody(vehicle), 'Failed to park in vehicle');
+        chooseParkInBody(vehicle), 'Failed to park in vehicle');
   }
 
   /// Tries to park out or cancel park in for [vehicle].
   /// Returns ['parking', 'longitude', 'latitude'].
   static Future<Map<String, dynamic>> parkOut(Vehicle vehicle) async {
     return httpPost(_serverUrl + _serverPort + "/parkOut",
-        _chooseParkOutBody(vehicle), 'Failed to park out vehicle');
+        chooseParkOutBody(vehicle), 'Failed to park out vehicle');
   }
 
   /// Returns the position of the [vehicle].
   /// ['longitude', 'latitude', 'moving', 'reached_position']
   static Future<Map<String, dynamic>> getPosition(Vehicle vehicle) async {
     return httpPost(_serverUrl + _serverPort + "/getPosition",
-        _chooseGetPositionBody(vehicle), 'Failed to get position of vehicle');
+        chooseGetPositionBody(vehicle), 'Failed to get position of vehicle');
   }
 
   /// Returns the response body of the HTTP Get request to [url].
@@ -118,16 +119,18 @@ class ApiProvider {
 
   /// Chooses and returns the correct HTTP Post body for a [vehicle]
   /// used in [ApiProvider.parkIn(vehicle)].
-  static Map<String, dynamic> _chooseParkInBody(Vehicle vehicle) {
+  @visibleForTesting
+  static Map<String, dynamic> chooseParkInBody(Vehicle vehicle) {
     if (vehicle.runtimeType == ChargeableVehicle) {
-      return _parkInBodyChargeableVehicle(vehicle);
+      return parkInBodyChargeableVehicle(vehicle);
     } else {
-      return _parkInBodyStandardVehicle(vehicle);
+      return parkInBodyStandardVehicle(vehicle);
     }
   }
 
   /// Returns the HTTP Post body for [chargeableVehicle] park in requests.
-  static Map<String, dynamic> _parkInBodyChargeableVehicle(
+  @visibleForTesting
+  static Map<String, dynamic> parkInBodyChargeableVehicle(
       ChargeableVehicle chargeableVehicle) {
     return {
       "id": chargeableVehicle.databaseId,
@@ -145,7 +148,8 @@ class ApiProvider {
   }
 
   /// Returns the HTTP Post body for [standardVehicle] park in requests.
-  static Map<String, dynamic> _parkInBodyStandardVehicle(
+  @visibleForTesting
+  static Map<String, dynamic> parkInBodyStandardVehicle(
       StandardVehicle standardVehicle) {
     return {
       "id": standardVehicle.databaseId,
@@ -161,7 +165,8 @@ class ApiProvider {
 
   /// Chooses and returns the correct HTTP Post body for a [vehicle]
   /// used in [ApiProvider.parkOut(vehicle)].
-  static Map<String, dynamic> _chooseParkOutBody(Vehicle vehicle) {
+  @visibleForTesting
+  static Map<String, dynamic> chooseParkOutBody(Vehicle vehicle) {
     return {
       "id": vehicle.databaseId,
       "number_plate": vehicle.licensePlate,
@@ -174,7 +179,8 @@ class ApiProvider {
 
   /// Chooses and returns the correct HTTP Post body for a [vehicle]
   /// used in [ApiProvider.getPosition(vehicle)].
-  static Map<String, dynamic> _chooseGetPositionBody(Vehicle vehicle) {
-    return {"id": vehicle.databaseId, "number_plate": vehicle.licensePlate};
+  @visibleForTesting
+  static Map<String, dynamic> chooseGetPositionBody(Vehicle vehicle) {
+    return {"id": vehicle.inAppKey, "number_plate": vehicle.licensePlate};
   }
 }
