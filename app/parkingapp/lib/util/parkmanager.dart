@@ -99,7 +99,7 @@ class ParkManager {
         vehicle.parkOut(context);
         return null;
       }, true, false);
-    } else if (!vehicle.parkingIn) {
+    } else if (!vehicle.parkedIn && !vehicle.parkingIn) {
       // vehicle is not parked in but also not parking in meaning something has failed
       // if park in didn't work: connection to server failed.
       showDialog(
