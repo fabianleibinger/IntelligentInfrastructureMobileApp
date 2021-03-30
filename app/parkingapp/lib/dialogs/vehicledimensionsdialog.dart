@@ -133,7 +133,8 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
       onTap: () {
         showDialog(
             context: context,
-            builder: (context) => Scaffold(
+            builder: (context) => WillPopScope(
+                child: Scaffold(
                   appBar: AppBar(
                     title: Text(AppLocalizations.of(context).customDimensions),
                   ),
@@ -221,21 +222,19 @@ class _VehicleDimensionsDialogState extends State<VehicleDimensionsDialog> {
                               vehicle.setAndUpdateDistRearAxleLicensePlate(
                                   context, double.tryParse(val)),
                         ),
-                        FlatButton(
-                          child: Text(AppLocalizations.of(context).buttonOk),
-                          onPressed: () {
-                            //validate form and exit on success
-                            if (_formKey.currentState.validate()) {
-                              _formKey.currentState.save();
-
-                              Navigator.of(context).pop();
-                            }
-                          },
-                        )
                       ],
                     ),
                   ),
-                ));
+                ),
+                onWillPop: () async {
+                  //validate form and exit on success
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }));
         //Navigator.of(context).pop();
       },
     );
