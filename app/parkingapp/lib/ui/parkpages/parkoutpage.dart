@@ -71,7 +71,7 @@ class _ParkOutPageState extends State<ParkOutPage> {
   @override
   Widget build(BuildContext context) {
     //cancel the timer if the vehicle is parked in
-    ParkManager.needsToParkOut(vehicle) ? null : _timer.cancel();
+    ParkManager.needsToParkOut(context, vehicle) ? null : _timer.cancel();
 
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
@@ -87,7 +87,9 @@ class _ParkOutPageState extends State<ParkOutPage> {
                 : Text(
                     AppLocalizations.of(context).actionButtonCancelParkProcess),
             backgroundColor: grey,
-            onPressed: () {},
+            onPressed: () {
+              setState(() {});
+            },
           );
         },
       ),
