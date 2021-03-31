@@ -7,6 +7,9 @@ import 'package:parkingapp/bloc/events/vehicleevent.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/bloc/events/setvehicles.dart';
 
+/// stores all the vehicles during runtime as a list
+/// accessed via the DataHelper class
+
 class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
   VehicleBloc(List<Vehicle> initialState) : super(initialState);
 
@@ -14,6 +17,8 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
 
   @override
   Stream<List<Vehicle>> mapEventToState(VehicleEvent event) async* {
+    // defines the behavior of the specific events
+    // these are childs of the abstract class vehicleEvent
     if (event is SetVehicles) {
       yield event.vehicleList;
     } else if (event is AddVehicle) {
@@ -41,29 +46,5 @@ class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
       newState.fillRange(index, index, event.eventVehicle);
       yield newState;
     }
-
-    /*switch (event is) {
-      case SetVehicles:
-        List<Vehicle> newState = List.from(state);
-        if (event.vehicle != null) {
-          newState.add(event.vehicle);
-        }
-        yield newState;
-        break;
-      case EventType.delete:
-        List<Vehicle> newState = List.from(state);
-        newState.removeAt(event.vehicleIndex);
-        yield newState;
-        break;
-      case EventType.update:
-        List<Vehicle> newState = List.from(state);
-        Iterable<Vehicle> newIterable = [event.vehicle];
-        newState.replaceRange(
-            event.vehicleIndex, event.vehicleIndex, newIterable);
-        yield newState;
-        break;
-      default:
-        throw Exception('Event not found $event');
-    }*/
   }
 }
