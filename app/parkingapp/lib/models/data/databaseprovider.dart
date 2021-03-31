@@ -18,6 +18,8 @@ class DatabaseProvider {
   static const String COLUMN_HEIGHT = "height";
   static const String COLUMN_LENGTH = "length";
   static const String COLUMN_TURNING_CYCLE = "turningCycle";
+  static const String COLUMN_DIST_REAR_AXLE_LICENSE_PLATE =
+      "distRearAxleLicensePlate";
   static const String COLUMN_NEAR_EXIT_PREFERENCE = "nearExitPreference";
   static const String COLUMN_PARKING_CARD = "parkingCard";
   static const String COLUMN_PARKED_IN = "parkedIn";
@@ -64,6 +66,7 @@ class DatabaseProvider {
           "$COLUMN_HEIGHT DOUBLE,"
           "$COLUMN_LENGTH DOUBLE,"
           "$COLUMN_TURNING_CYCLE DOUBLE,"
+          "$COLUMN_DIST_REAR_AXLE_LICENSE_PLATE DOUBLE,"
           "$COLUMN_NEAR_EXIT_PREFERENCE INTEGER,"
           "$COLUMN_PARKING_CARD INTEGER,"
           "$COLUMN_PARKED_IN INTEGER,"
@@ -90,6 +93,7 @@ class DatabaseProvider {
       COLUMN_HEIGHT,
       COLUMN_LENGTH,
       COLUMN_TURNING_CYCLE,
+      COLUMN_DIST_REAR_AXLE_LICENSE_PLATE,
       COLUMN_NEAR_EXIT_PREFERENCE,
       COLUMN_PARKING_CARD,
       COLUMN_PARKED_IN,
@@ -141,8 +145,10 @@ class DatabaseProvider {
         vehicle.height.toString() +
         ' length: ' +
         vehicle.length.toString() +
-        'turningCircle: ' +
+        ' turningCircle: ' +
         vehicle.turningCycle.toString() +
+        ' distRearAxleLicensePlate: ' +
+        vehicle.distRearAxleLicensePlate.toString() +
         ' nearExitPreference: ' +
         vehicle.nearExitPreference.toString() +
         ' parkingCard: ' +
