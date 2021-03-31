@@ -207,7 +207,7 @@ def perform_park_out_request():
         except communication.VehicleIdentificationException as e:
             return Response({str(e)}, status=406)
         except communication.CommunicationRosServiceException:
-            return Response({communication_failed_message}, status=503)          
+            return Response({communication_failed_message}, status=503)
     else:
         return Response({'Request had no JSON fields.'}, status=406)
 
@@ -257,6 +257,9 @@ def perform_redirect_get_position():
     return perform_get_position
 
 
+############################################################################
+# Routes for administrators (extra security checks can be added here)
+
 @app.route('/resetDatabase')
 def perform_reset_database():
     """
@@ -268,6 +271,15 @@ def perform_reset_database():
     id_mapping.init_db()
     return Response({"Database has been cleared. All IDs have been deleted. Vehicles must be registered again."},
                     status=205)
+
+
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return 'Server shutting down...'
 
 
 ############################################################################

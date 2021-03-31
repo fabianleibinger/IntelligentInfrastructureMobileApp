@@ -16,9 +16,6 @@ get_position_calls = 0
 # Script for running the ROS services (server-side)
 # Services return dummy data for test purposes
 
-# Script for running the ROS services (server-side)
-# Services return dummy data for test purposes
-
 def handle_request_capacity(req):
     """
     Generate a CapacityRequestResponse providing information about parking garage´s capacities.
