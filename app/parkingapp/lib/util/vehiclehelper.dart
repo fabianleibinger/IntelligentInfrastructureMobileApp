@@ -14,9 +14,10 @@ final TimeOfDay notSpecifiedTimeOfDay = TimeOfDay(hour: 0, minute: 0);
 final String defaultChargingProvider =
     ChargingProvider.Automatisch.toShortString();
 
-class UpdateMainPageVehicle {
+class VehicleHelper {
   //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
-  static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
+  static void updateMainPageVehicle(
+      {@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
       print('set new electric vehicle on main page');
       vehicle = ChargeableVehicle(
@@ -51,7 +52,7 @@ class UpdateMainPageVehicle {
     }
   }
 
-  static Future<bool> cleanUp(
+  static Future<bool> cleanUpDummy(
       {@required BuildContext context, Vehicle parseVehicle}) async {
     print('starting clean up');
     if (parseVehicle == null) {

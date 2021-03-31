@@ -33,10 +33,11 @@ class EditVehicle extends StatelessWidget {
         : null;
 
     //update vehicle in MainPage
-    UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
+    VehicleHelper.updateMainPageVehicle(
+        context: context, parseVehicle: this.vehicle);
     return WillPopScope(
       onWillPop: () {
-        return UpdateMainPageVehicle.cleanUp(
+        return VehicleHelper.cleanUpDummy(
             context: context, parseVehicle: this.vehicle);
       },
       child: Scaffold(
@@ -58,9 +59,9 @@ class CreateVehicle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    UpdateMainPageVehicle.setUp(context: context);
+    VehicleHelper.updateMainPageVehicle(context: context);
     return WillPopScope(
-      onWillPop: () => UpdateMainPageVehicle.cleanUp(context: context),
+      onWillPop: () => VehicleHelper.cleanUpDummy(context: context),
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).addVehicleTitle),
