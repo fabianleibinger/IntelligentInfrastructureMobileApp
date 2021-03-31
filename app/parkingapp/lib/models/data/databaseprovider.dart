@@ -5,6 +5,9 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 
+/// provides the database for storing the vehicle list persistantly
+/// accessed via the DataHelper class
+
 class DatabaseProvider {
   static const String TABLE_VEHICLE = "vehicle";
   static const String COLUMN_DATABASE_ID = "databaseId";
@@ -15,8 +18,6 @@ class DatabaseProvider {
   static const String COLUMN_HEIGHT = "height";
   static const String COLUMN_LENGTH = "length";
   static const String COLUMN_TURNING_CYCLE = "turningCycle";
-  static const String COLUMN_DIST_REAR_AXLE_LICENSE_PLATE =
-      "distRearAxleLicensePlate";
   static const String COLUMN_NEAR_EXIT_PREFERENCE = "nearExitPreference";
   static const String COLUMN_PARKING_CARD = "parkingCard";
   static const String COLUMN_PARKED_IN = "parkedIn";
@@ -26,11 +27,11 @@ class DatabaseProvider {
   static const String COLUMN_CHARGE_TIME_END = "chargeTimeEnd";
 
   DatabaseProvider._();
-
   static final DatabaseProvider db = DatabaseProvider._();
 
   Database _database;
 
+  // get database, if not existant create one
   Future<Database> get database async {
     print("database getter called");
 
@@ -43,6 +44,7 @@ class DatabaseProvider {
     return _database;
   }
 
+  // creates database
   Future<Database> createDatabase() async {
     var path = await getDatabasesPath();
     String dbPath = join(path, 'vehicleDB.db');
@@ -62,7 +64,6 @@ class DatabaseProvider {
           "$COLUMN_HEIGHT DOUBLE,"
           "$COLUMN_LENGTH DOUBLE,"
           "$COLUMN_TURNING_CYCLE DOUBLE,"
-          "$COLUMN_DIST_REAR_AXLE_LICENSE_PLATE DOUBLE,"
           "$COLUMN_NEAR_EXIT_PREFERENCE INTEGER,"
           "$COLUMN_PARKING_CARD INTEGER,"
           "$COLUMN_PARKED_IN INTEGER,"
@@ -76,6 +77,7 @@ class DatabaseProvider {
     );
   }
 
+  // get all stored vehicles
   Future<List<Vehicle>> getVehicles() async {
     final db = await database;
 
@@ -88,7 +90,6 @@ class DatabaseProvider {
       COLUMN_HEIGHT,
       COLUMN_LENGTH,
       COLUMN_TURNING_CYCLE,
-      COLUMN_DIST_REAR_AXLE_LICENSE_PLATE,
       COLUMN_NEAR_EXIT_PREFERENCE,
       COLUMN_PARKING_CARD,
       COLUMN_PARKED_IN,
@@ -112,18 +113,21 @@ class DatabaseProvider {
     return vehicleList;
   }
 
+  // insert a new vehicle, returns the same vehicle
   Future<Vehicle> insert(Vehicle vehicle) async {
     final db = await database;
     vehicle.databaseId = await db.insert(TABLE_VEHICLE, vehicle.toMap());
     return vehicle;
   }
 
+  // deletes a vehicle by database_id, returns the database_id
   Future<int> delete(int id) async {
     final db = await database;
     return await db.delete(TABLE_VEHICLE,
         where: "$COLUMN_DATABASE_ID = ?", whereArgs: [id]);
   }
 
+  // updates a vehicle, returns the database_id
   Future<int> update(Vehicle vehicle) async {
     print('DB update: inAppKey: ' +
         vehicle.inAppKey +
@@ -137,10 +141,8 @@ class DatabaseProvider {
         vehicle.height.toString() +
         ' length: ' +
         vehicle.length.toString() +
-        ' turningCircle: ' +
+        'turningCircle: ' +
         vehicle.turningCycle.toString() +
-        ' distRearAxleLicensePlate: ' +
-        vehicle.distRearAxleLicensePlate.toString() +
         ' nearExitPreference: ' +
         vehicle.nearExitPreference.toString() +
         ' parkingCard: ' +
@@ -154,6 +156,8 @@ class DatabaseProvider {
         where: "$COLUMN_DATABASE_ID = ?", whereArgs: [vehicle.databaseId]);
   }
 
+  // clears the database table
+  // uncomment last line to delete the whole database
   Future clear() async {
     var path = await getDatabasesPath();
     String dbPath = join(path, 'vehicleDB.db');
