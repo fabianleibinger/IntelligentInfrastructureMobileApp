@@ -146,7 +146,7 @@ def perform_park_in_request():
     The request must provide information about the vehicle to allow an identification.
     After the park in request, the vehicle will be registered to the parking management system and the parking
     management system will select an appropriate parking spot.
-    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
+    :parameter: Necessary JSON fields: 'id' (string), 'number_plate' (string),
         'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
         Optional JSON fields:  'charge_type' (string), 'load' (boolean), 'near_exit' (boolean)
         and 'parking_card' (boolean).
@@ -188,7 +188,7 @@ def perform_park_out_request():
     The request must provide information about the vehicle to allow an identification.
     After the park out request, the parking management system will locate the vehicle and provide the coordinates of
     the zone where the car can be picked-up.
-    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
+    :parameter: Necessary JSON fields: 'id' (string), 'number_plate' (string),
         'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
     :return: HTTP response with status code 200 and JSON fields 'parking_out', which is set to true if the parking
         garage could locate the vehicle, 'longitude' and 'latitude' representing the coordinates of the transfer zone.
@@ -287,4 +287,5 @@ def shutdown():
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
 
