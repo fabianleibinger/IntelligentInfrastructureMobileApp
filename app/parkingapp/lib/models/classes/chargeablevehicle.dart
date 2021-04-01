@@ -143,14 +143,14 @@ class ChargeableVehicle extends Vehicle {
         inAppKey,
         name,
         licensePlate,
-        height,
         width,
+        height,
         length,
         turningCycle,
         distRearAxleLicensePlate,
         nearExitPreference,
         parkingCard,
-        false);
+        parkedIn);
   }
 
   @override

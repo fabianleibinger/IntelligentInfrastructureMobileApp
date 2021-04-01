@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:parkingapp/notifications/notifications.dart';
 
 class SharedPreferencesHelper {
   static Future<void> initializeSharedPreferences() async {
@@ -7,6 +8,7 @@ class SharedPreferencesHelper {
     prefs.setBool('notifications', false);
     prefs.setBool('notificationsParked', false);
     prefs.setBool('notificationsCharged', false);
+    Notifications.getEnabledValues();
   }
 
   static Future<bool> setPasscode(String passcode) async {
@@ -36,12 +38,16 @@ class SharedPreferencesHelper {
 
   static Future<bool> enableNotifications() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setBool('notifications', true);
+    return prefs
+        .setBool('notifications', true)
+        .then((value) => Notifications.getEnabledValues());
   }
 
   static Future<bool> disableNotifications() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setBool('notifications', false);
+    return prefs
+        .setBool('notifications', false)
+        .then((value) => Notifications.getEnabledValues());
   }
 
   static getNotifications() async {
@@ -51,12 +57,16 @@ class SharedPreferencesHelper {
 
   static setNotificationsParked(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setBool('notificationsParked', value);
+    return prefs
+        .setBool('notificationsParked', value)
+        .then((value) => Notifications.getEnabledValues());
   }
 
   static setNotificationsCharged(bool value) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setBool('notificationsCharged', value);
+    return prefs
+        .setBool('notificationsCharged', value)
+        .then((value) => Notifications.getEnabledValues());
   }
 
   static getNotificationsParked() async {

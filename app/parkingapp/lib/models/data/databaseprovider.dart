@@ -5,6 +5,9 @@ import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:path/path.dart';
 
+/// provides the database for storing the vehicle list persistantly
+/// accessed via the DataHelper class
+
 class DatabaseProvider {
   static const String TABLE_VEHICLE = "vehicle";
   static const String COLUMN_DATABASE_ID = "databaseId";
@@ -26,11 +29,11 @@ class DatabaseProvider {
   static const String COLUMN_CHARGE_TIME_END = "chargeTimeEnd";
 
   DatabaseProvider._();
-
   static final DatabaseProvider db = DatabaseProvider._();
 
   Database _database;
 
+  // get database, if not existant create one
   Future<Database> get database async {
     print("database getter called");
 
@@ -43,6 +46,7 @@ class DatabaseProvider {
     return _database;
   }
 
+  // creates database
   Future<Database> createDatabase() async {
     var path = await getDatabasesPath();
     String dbPath = join(path, 'vehicleDB.db');
@@ -76,6 +80,7 @@ class DatabaseProvider {
     );
   }
 
+  // get all stored vehicles
   Future<List<Vehicle>> getVehicles() async {
     final db = await database;
 
@@ -112,18 +117,21 @@ class DatabaseProvider {
     return vehicleList;
   }
 
+  // insert a new vehicle, returns the same vehicle
   Future<Vehicle> insert(Vehicle vehicle) async {
     final db = await database;
     vehicle.databaseId = await db.insert(TABLE_VEHICLE, vehicle.toMap());
     return vehicle;
   }
 
+  // deletes a vehicle by database_id, returns the database_id
   Future<int> delete(int id) async {
     final db = await database;
     return await db.delete(TABLE_VEHICLE,
         where: "$COLUMN_DATABASE_ID = ?", whereArgs: [id]);
   }
 
+  // updates a vehicle, returns the database_id
   Future<int> update(Vehicle vehicle) async {
     print('DB update: inAppKey: ' +
         vehicle.inAppKey +
@@ -154,6 +162,8 @@ class DatabaseProvider {
         where: "$COLUMN_DATABASE_ID = ?", whereArgs: [vehicle.databaseId]);
   }
 
+  // clears the database table
+  // uncomment last line to delete the whole database
   Future clear() async {
     var path = await getDatabasesPath();
     String dbPath = join(path, 'vehicleDB.db');

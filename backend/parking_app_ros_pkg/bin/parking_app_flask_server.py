@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import os
 import math
 import configparser
@@ -144,7 +146,7 @@ def perform_park_in_request():
     The request must provide information about the vehicle to allow an identification.
     After the park in request, the vehicle will be registered to the parking management system and the parking
     management system will select an appropriate parking spot.
-    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string),
+    :parameter: Necessary JSON fields: 'id' (string), 'number_plate' (string),
         'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
         Optional JSON fields:  'charge_type' (string), 'load' (boolean), 'near_exit' (boolean)
         and 'parking_card' (boolean).
@@ -186,7 +188,8 @@ def perform_park_out_request():
     The request must provide information about the vehicle to allow an identification.
     After the park out request, the parking management system will locate the vehicle and provide the coordinates of
     the zone where the car can be picked-up.
-    :parameter: Necessary JSON fields: 'id' (int), 'number_plate' (string);
+    :parameter: Necessary JSON fields: 'id' (string), 'number_plate' (string),
+        'length', 'width', 'turning_radius', 'dist_rear_axle_numberplate';
     :return: HTTP response with status code 200 and JSON fields 'parking_out', which is set to true if the parking
         garage could locate the vehicle, 'longitude' and 'latitude' representing the coordinates of the transfer zone.
     """
@@ -204,7 +207,7 @@ def perform_park_out_request():
         except communication.VehicleIdentificationException as e:
             return Response({str(e)}, status=406)
         except communication.CommunicationRosServiceException:
-            return Response({communication_failed_message}, status=503)          
+            return Response({communication_failed_message}, status=503)
     else:
         return Response({'Request had no JSON fields.'}, status=406)
 
@@ -227,7 +230,7 @@ def perform_get_position():
     position as longitude and latitude.
     :parameter: Necessary JSON fields: 'id' and 'number_plate'
     :return: HTTP response with status code 200 and JSON fields 'longitude' and 'latitude', which provide the
-        geographical coordinates of the vehicle´s position as well as boolean values for 'parking' and 'reached_position'
+        geographical coordinates of the vehicle´s position as well as boolean values for 'moving' and 'reached_position'
     """
     try:
         if request.is_json:
@@ -254,6 +257,9 @@ def perform_redirect_get_position():
     return perform_get_position
 
 
+############################################################################
+# Routes for administrators (extra security checks can be added here)
+
 @app.route('/resetDatabase')
 def perform_reset_database():
     """
@@ -267,8 +273,19 @@ def perform_reset_database():
                     status=205)
 
 
+@app.route('/shutdown', methods=['GET'])
+def shutdown():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the Werkzeug Server')
+    func()
+    return 'Server shutting down...'
+
+
 ############################################################################
 # Entry point for the program. Starting the application with url and port.
 if __name__ == '__main__':
     id_mapping.init_db()
     app.run(debug=True, host=url_address, port=port, use_reloader=False)
+
+

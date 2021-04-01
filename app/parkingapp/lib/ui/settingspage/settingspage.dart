@@ -134,7 +134,7 @@ class _SettingsFormState extends State<SettingsForm> {
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
   }
 
-  //get all the shared prefernces for initstate
+  //get all the shared preferences for initstate
   Future<Null> getPushNotifications() async {
     final SharedPreferences prefs = await preferences;
     bool notifications = prefs.getBool('notifications');
@@ -151,6 +151,8 @@ class _SettingsFormState extends State<SettingsForm> {
     if (notificationsParked == null) {
       notificationsParked = false;
     }
+
+    Notifications.getEnabledValues();
 
     setState(() {
       _pushNotifications = notifications;

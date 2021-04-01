@@ -11,7 +11,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// Utility class that communicates with the [ApiProvider]
 /// to manage park processes for vehicles.
 class ParkManager {
-
   /// Sends the [vehicle] park in request to the [ApiProvider].
   static void parkInRequest(BuildContext context, Vehicle vehicle) {
     if (needsToParkIn(vehicle)) {
@@ -50,13 +49,15 @@ class ParkManager {
   }
 
   /// Returns if [vehicle] needs to be parked in.
+  /// Parking out vehicle can't be parked in.
   static bool needsToParkIn(Vehicle vehicle) {
-    return !vehicle.parkedIn && !vehicle.parkingIn;
+    return !vehicle.parkedIn && !vehicle.parkingIn && !vehicle.parkingOut;
   }
 
   /// Checks if park in worked,
   /// creates parked in [Notification] or opens [NoConnectionDialog].
-  static void _checkAndReactParkInWorked(BuildContext context, Vehicle vehicle) {
+  static void _checkAndReactParkInWorked(
+      BuildContext context, Vehicle vehicle) {
     if (vehicle.parkedIn) {
       // if park in worked: notification, that triggers parkOut method.
       Notifications.createNotificationClickable(
@@ -68,7 +69,7 @@ class ParkManager {
           vehicle.inAppKey, (value) {
         vehicle.parkOut(context);
         return null;
-      });
+      }, true, false);
     } else {
       // if park in didn't work: connection to server failed.
       showDialog(
@@ -109,20 +110,26 @@ class ParkManager {
   }
 
   /// Returns if [vehicle] needs to be parked out.
+  /// Parking in vehicle can be parked out.
   static bool needsToParkOut(Vehicle vehicle) {
-    return !vehicle.parkingOut;
+    return !vehicle.parkingOut && (vehicle.parkingIn || vehicle.parkedIn);
   }
 
   /// Checks if park out worked,
   /// creates parked out [Notification] or opens [NoConnectionDialog].
-  static void _checkAndReactParkOutWorked(BuildContext context, Vehicle vehicle) {
+  static void _checkAndReactParkOutWorked(
+      BuildContext context, Vehicle vehicle) {
     if (!vehicle.parkedIn) {
       // if park out worked: notification
       Notifications.createNotification(
           AppLocalizations.of(context).notificationParkOutTitleOne +
-              vehicle.name + ' ' + vehicle.licensePlate +
+              vehicle.name +
+              ' ' +
+              vehicle.licensePlate +
               AppLocalizations.of(context).notificationParkOutTitleTwo,
-          AppLocalizations.of(context).notificationParkOutBody);
+          AppLocalizations.of(context).notificationParkOutBody,
+          true,
+          false);
     } else {
       // if park out didn't work: connection to server failed
       showDialog(
