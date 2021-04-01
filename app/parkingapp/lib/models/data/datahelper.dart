@@ -9,25 +9,33 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 
 import 'databaseprovider.dart';
 
+/// helps accessing the bloc and database structure
+/// to ensure consistency over bloc and database this first calls the database
+/// and if this is successfull the bloc is updated aswell
+
 class DataHelper {
+  // adds a specific vehicle
   static addVehicle(BuildContext context, Vehicle vehicle) {
     DatabaseProvider.db.insert(vehicle).then((dbVehicle) {
       BlocProvider.of<VehicleBloc>(context).add(AddVehicle(dbVehicle));
     });
   }
 
+  // deletes a specific vehicle
   static deleteVehicle(BuildContext context, Vehicle vehicle) {
     DatabaseProvider.db.delete(vehicle.databaseId).then((_) {
       BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(vehicle));
     });
   }
 
+  // updates a specific vehicle
   static updateVehicle(BuildContext context, Vehicle vehicle) {
     DatabaseProvider.db.update(vehicle).then((_) {
       BlocProvider.of<VehicleBloc>(context).add(UpdateVehicle(vehicle));
     });
   }
 
+  // copies all vehicles from database to bloc (app start)
   static initVehicles(BuildContext context) {
     DatabaseProvider.db.getVehicles().then((dbVehicles) {
       BlocProvider.of<VehicleBloc>(context).add(SetVehicles(dbVehicles));
