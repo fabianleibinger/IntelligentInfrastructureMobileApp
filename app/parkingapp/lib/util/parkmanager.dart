@@ -41,17 +41,14 @@ class ParkManager {
               //vehicle is now parked in
               if (!parking) {
                 timer.cancel();
-                vehicle.setAndUpdateParkedIn(context, true);
-                vehicle.setAndUpdateParkIngIn(context, false);
-                print('vehicle parked in: ' + vehicle.parkedIn.toString());
+                _setParkedIn(vehicle, context);
               }
             }).catchError((e) {
               print('error getting position ' + _errorCount.toString());
               //if get position fails try again or cancel park in
               if (_errorCount++ > _errorLimit) {
                 timer.cancel();
-                vehicle.setAndUpdateParkedIn(context, true);
-                vehicle.setAndUpdateParkIngIn(context, false);
+                _setParkedIn(vehicle, context);
               }
               return;
             });
@@ -72,6 +69,12 @@ class ParkManager {
       // vehicle is already parked in.
       print('vehicle ' + vehicle.name + ' is already parked in');
     }
+  }
+
+  static void _setParkedIn(Vehicle vehicle, BuildContext context) {
+    vehicle.setAndUpdateParkedIn(context, true);
+    vehicle.setAndUpdateParkIngIn(context, false);
+    print('vehicle parked in: ' + vehicle.parkedIn.toString());
   }
 
   /// Returns if [vehicle] needs to be parked in.
