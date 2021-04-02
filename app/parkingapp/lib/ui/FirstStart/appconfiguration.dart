@@ -146,6 +146,19 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
     );
   }
 
+  Widget _importVehicleListTile() {
+    return ListTile(
+        title: Text(AppLocalizations.of(context).importVehicles),
+        subtitle: Text(AppLocalizations.of(context).importVehiclesSubtitle),
+        trailing: Icon(Icons.arrow_forward_ios),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) => ScanScreen()));
+        });
+  }
+
   Widget _showTermsListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).showTermsAndConditions),

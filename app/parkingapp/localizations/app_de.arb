@@ -328,7 +328,11 @@
     "termsAndConditionsTitle": "AGB und Nutzungsbedingungen",
     "@termsAndConditionsTitle": {},
     "settingsTitle": "Einstellungen",
-    "@settingsTitle": {}
+    "@settingsTitle": {},
+    "importVehicles": "Daten importieren",
+    "@importVehicles": {},
+    "importVehiclesSubtitle": "Fahrzeuge aus anderer App importieren",
+    "@importVehiclesSubtitle": {}
 
 
 
