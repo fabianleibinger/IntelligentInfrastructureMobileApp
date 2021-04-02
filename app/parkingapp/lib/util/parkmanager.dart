@@ -44,7 +44,6 @@ class ParkManager {
                 _setParkedIn(vehicle, context);
               }
             }).catchError((e) {
-              print('error getting position ' + _errorCount.toString());
               //if get position fails try again or cancel park in
               if (_errorCount++ > _errorLimit) {
                 timer.cancel();
@@ -71,6 +70,7 @@ class ParkManager {
     }
   }
 
+  ///set the [vehicle] to a parked in state
   static void _setParkedIn(Vehicle vehicle, BuildContext context) {
     vehicle.setAndUpdateParkedIn(context, true);
     vehicle.setAndUpdateParkIngIn(context, false);
