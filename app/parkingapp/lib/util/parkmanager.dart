@@ -130,6 +130,7 @@ class ParkManager {
   /// Sends the [vehicle] park out request to the [ApiProvider].
   static void parkOutRequest(BuildContext context, Vehicle vehicle) {
     if (needsToParkOut(context, vehicle)) {
+      int _errorCount = 0;
       // Cancelling park in if needed.
       vehicle.setAndUpdateParkIngIn(context, false);
 
@@ -156,6 +157,22 @@ class ParkManager {
                     return ParkDialogs.getParkOutFinishedDialog(context);
                   });
             }
+          }).catchError((e) {
+            //if get position fails try again or cancel park in
+            if (_errorCount++ > _errorLimit) {
+              timer.cancel();
+              vehicle.setAndUpdateParkedIn(context, false);
+              vehicle.setAndUpdateParkIngOut(context, false);
+              print('vehicle parked out: ' + vehicle.parkedIn.toString());
+              // Open main page.
+              Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ParkDialogs.getParkOutFinishedDialog(context);
+                  });
+            }
+            return;
           });
           _checkAndReactParkOutWorked(context, vehicle);
         });
@@ -172,18 +189,12 @@ class ParkManager {
   static bool needsToParkOut(BuildContext context, Vehicle vehicle) {
     ApiProvider.getPosition(vehicle).then((value) {
       print(value);
-      value["reached_position"] != null
-          //use backend value
-          ? vehicle.setAndUpdateParkedIn(context, value["reached_position"])
-          //fallback
-          : vehicle.setAndUpdateParkedIn(context, false);
-      value["parking"] != null
-          //use backend value
-          ? vehicle.setAndUpdateParkIngOut(context, value["parking"])
-          //fallback
-          : vehicle.setAndUpdateParkIngOut(context, false);
+      value["reached_position"] != null ??
+          vehicle.setAndUpdateParkedIn(context, value["reached_position"]);
+      value["parking"] != null ??
+          vehicle.setAndUpdateParkIngOut(context, value["parking"]);
     });
-    return vehicle.parkingOut;
+    return vehicle.parkedIn;
   }
 
   /// Checks if park out worked,
@@ -201,7 +212,7 @@ class ParkManager {
           AppLocalizations.of(context).notificationParkOutBody,
           true,
           false);
-    } else {
+    } else if (vehicle.parkedIn && !vehicle.parkingOut) {
       // if park out didn't work: connection to server failed
       showDialog(
           context: context,
