@@ -20,12 +20,12 @@ void main() {
     TimeOfDay time = TimeOfDay(hour: 0, minute: 0);
     _chargeable = ChargeableVehicle(
         '', '', '', 0, 0, 0, 0, 0, true, true, true, true, '', time, time);
-    _qrpage = QRPage(vehicle: _standard);
     _qrscanner = ScanState();
   });
 
   test('Equal standard vehicle after transfer', () {
-    _qrstring = _qrpage.createQRString(_standard);
+    _qrpage = QRPage(vehicle: _standard);
+    _qrstring = _qrpage.createQRString();
     _transferedVehicle = _qrscanner.transferIntoVehicle(_qrstring);
     _vehicletoMap = _standard.toMap().toString();
     _transferedVehicletoMap = _transferedVehicle.toMap().toString();
@@ -34,12 +34,12 @@ void main() {
   });
 
   test('Equal chargeable vehicle after transfer', () {
-    _qrstring = _qrpage.createQRString(_chargeable);
-    print(_chargeable.toMap().toString());
-    print(_qrstring);
+    _qrpage = QRPage(vehicle: _chargeable);
+    _qrstring = _qrpage.createQRString();
     _transferedVehicle = _qrscanner.transferIntoVehicle(_qrstring);
-    _vehicletoMap = _standard.toString();
-    _transferedVehicletoMap = _transferedVehicle.toString();
+    _vehicletoMap = _chargeable.toMap().toString();
+    _transferedVehicletoMap = _transferedVehicle.toMap().toString();
+    expect(_chargeable.equals(_transferedVehicle), true);
     expect(_vehicletoMap == _transferedVehicletoMap, true);
   });
 

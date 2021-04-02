@@ -134,12 +134,12 @@ class ScanState extends State<ScanScreen> {
 
       TimeOfDay endTime = TimeOfDay(
           hour: int.parse(chargeTimeEnd[1]),
-          minute: int.parse(chargeTimeEnd[2]));
+          minute: int.parse(chargeTimeEnd[2].substring(0, 2)));
 
       vehicle = transferChargeableVehicle(
-          inAppKey[1],
-          name[1],
-          licensePlate[1],
+          inAppKey[1].substring(1),
+          name[1].substring(1),
+          licensePlate[1].substring(1),
           double.tryParse(width[1]),
           double.tryParse(height[1]),
           double.tryParse(length[1]),
@@ -149,7 +149,7 @@ class ScanState extends State<ScanScreen> {
           parkingCard[1] == ' 1',
           parkedIn[1] == ' 1',
           doCharge[1] == ' 1',
-          chargingProvider[1],
+          chargingProvider[1].substring(1),
           startTime,
           endTime);
     } else if (type[1] == 'standard') {
