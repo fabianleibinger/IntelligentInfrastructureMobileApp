@@ -89,7 +89,6 @@ class ApiProvider {
     final response = await http.get(url).timeout(_timeOutAfter);
     if (response.statusCode == httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
-      print(result.entries.toString());
       return result;
     } else {
       throw HttpException(failureText);
@@ -110,7 +109,6 @@ class ApiProvider {
         .timeout(_timeOutAfter);
     if (response.statusCode == httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
-      print(result.entries.toString());
       return result;
     } else {
       throw HttpException(failureText);
