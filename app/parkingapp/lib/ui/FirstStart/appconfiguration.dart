@@ -10,7 +10,6 @@ import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
 import 'package:parkingapp/util/qrscanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared_preferences_settings/shared_preferences_settings.dart';
 import 'package:system_settings/system_settings.dart';
 
 class AppConfiguration extends StatelessWidget {

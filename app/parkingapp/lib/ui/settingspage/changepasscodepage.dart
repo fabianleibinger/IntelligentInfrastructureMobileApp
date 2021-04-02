@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_lock/flutter_app_lock.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
@@ -15,10 +14,10 @@ class PasscodePage extends StatefulWidget {
   PasscodePage({Key key, this.login}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _PasscodePageState();
+  State<StatefulWidget> createState() => PasscodePageState();
 }
 
-class _PasscodePageState extends State<PasscodePage> {
+class PasscodePageState extends State<PasscodePage> {
   final StreamController<bool> _verificationNotifier =
       StreamController<bool>.broadcast();
 
@@ -42,7 +41,7 @@ class _PasscodePageState extends State<PasscodePage> {
             circleSize: 30),
         keyboardUIConfig: KeyboardUIConfig(
             digitBorderWidth: 2, primaryColor: Theme.of(context).primaryColor),
-        passwordEnteredCallback: _onNewPasscodeEntered,
+        passwordEnteredCallback: onNewPasscodeEntered,
         cancelButton: Icon(
           Icons.arrow_back,
           color: Theme.of(context).primaryColor,
@@ -52,15 +51,15 @@ class _PasscodePageState extends State<PasscodePage> {
           style: const TextStyle(fontSize: 16, color: Colors.white),
           semanticsLabel: 'Delete',
         ),
-        bottomWidget: _buildPasscodeRestoreButton(),
+        bottomWidget: buildPasscodeRestoreButton(),
         shouldTriggerVerification: _verificationNotifier.stream,
         backgroundColor: Colors.black.withOpacity(0.8),
-        cancelCallback: _onPasscodeCancelled,
+        cancelCallback: onPasscodeCancelled,
         digits: digits,
         passwordDigits: 6);
   }
 
-  _onNewPasscodeEntered(String enteredPasscode) {
+  onNewPasscodeEntered(String enteredPasscode) {
     bool isValid;
     //damit das Eingabefenster wieder verschwindet
     if (enteredPasscode.length == 6) {
@@ -78,11 +77,11 @@ class _PasscodePageState extends State<PasscodePage> {
     }
   }
 
-  _onPasscodeCancelled() {
+  onPasscodeCancelled() {
     Navigator.maybePop(context);
   }
 
-  _buildPasscodeRestoreButton() => Align(
+  buildPasscodeRestoreButton() => Align(
         alignment: Alignment.bottomCenter,
         child: Container(
           margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
@@ -97,14 +96,16 @@ class _PasscodePageState extends State<PasscodePage> {
             ),
             splashColor: Colors.white.withOpacity(0.4),
             highlightColor: Colors.white.withOpacity(0.2),
-            onPressed: _resetAppPassword,
+            onPressed: () {
+              resetAppPassword();
+              Navigator.maybePop(context);
+            },
           ),
         ),
       );
 
-  _resetAppPassword() {
+  resetAppPassword() {
     SharedPreferencesHelper.disableAuthentification();
-    Navigator.maybePop(context);
   }
 
   @override
