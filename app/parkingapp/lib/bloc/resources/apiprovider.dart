@@ -133,7 +133,7 @@ class ApiProvider {
   static Map<String, dynamic> parkInBodyChargeableVehicle(
       ChargeableVehicle chargeableVehicle) {
     return {
-      "id": chargeableVehicle.databaseId,
+      "id": chargeableVehicle.inAppKey,
       "length": chargeableVehicle.length,
       "width": chargeableVehicle.width,
       "turning_radius": chargeableVehicle.turningCycle,
@@ -152,7 +152,7 @@ class ApiProvider {
   static Map<String, dynamic> parkInBodyStandardVehicle(
       StandardVehicle standardVehicle) {
     return {
-      "id": standardVehicle.databaseId,
+      "id": standardVehicle.inAppKey,
       "length": standardVehicle.length,
       "width": standardVehicle.width,
       "turning_radius": standardVehicle.turningCycle,
@@ -168,7 +168,7 @@ class ApiProvider {
   @visibleForTesting
   static Map<String, dynamic> chooseParkOutBody(Vehicle vehicle) {
     return {
-      "id": vehicle.databaseId,
+      "id": vehicle.inAppKey,
       "number_plate": vehicle.licensePlate,
       "length": vehicle.length,
       "width": vehicle.width,
