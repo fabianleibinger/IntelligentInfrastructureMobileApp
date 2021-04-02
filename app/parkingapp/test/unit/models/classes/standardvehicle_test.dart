@@ -12,20 +12,7 @@ void main() {
     var map = _standard.toMap();
     StandardVehicle fromMap = StandardVehicle.fromMap(map);
 
-    expect(fromMap.inAppKey, _standard.inAppKey);
-    expect(fromMap.databaseId, _standard.databaseId);
-    expect(fromMap.name, _standard.name);
-    expect(fromMap.licensePlate, _standard.licensePlate);
-    expect(fromMap.width, _standard.width);
-    expect(fromMap.height, _standard.height);
-    expect(fromMap.length, _standard.length);
-    expect(fromMap.turningCycle, _standard.turningCycle);
-    expect(fromMap.distRearAxleLicensePlate, _standard.distRearAxleLicensePlate);
-    expect(fromMap.nearExitPreference, _standard.nearExitPreference);
-    expect(fromMap.parkingCard, _standard.parkingCard);
-    expect(fromMap.parkedIn, _standard.parkedIn);
-    expect(fromMap.parkingIn, _standard.parkingIn);
-    expect(fromMap.parkingOut, _standard.parkingOut);
+    expect(_standard.equals(fromMap), true);
   });
 
   test('To chargeable should result in the same vehicle values', () {

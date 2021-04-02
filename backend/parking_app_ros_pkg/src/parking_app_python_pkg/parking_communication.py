@@ -33,7 +33,7 @@ def communicate_park_in(park_in_parameters: dict):
     return park_process_helper.register_vehicle_to_pms(park_in_parameters)
 
 
-def communicate_park_out(app_id: int, number_plate: str):
+def communicate_park_out(app_id: str, number_plate: str):
     """
     This function serves as an interface for the flask server.
     It delegates the park out process. It will try to park out the vehicle from the parking garage.
@@ -69,7 +69,7 @@ def communicate_capacities(free: bool):
     return capacity_process_helper.request_capacities(free)
 
 
-def communicate_vehicle_position(app_id: int, number_plate: str):
+def communicate_vehicle_position(app_id: str, number_plate: str):
     """
     This function serves as an interface for the flask server.
     It delegates the localization process. It requests the current position of the vehicle with the given identifiers.
@@ -132,7 +132,7 @@ class ParkProcess:
         except rospy.ServiceException as service_exception:
             raise CommunicationRosServiceException(str(service_exception))
 
-    def park_out_vehicle_from_pms(self, app_id: int, number_plate: str):
+    def park_out_vehicle_from_pms(self, app_id: str, number_plate: str):
         """
         This method should be called when the flask server retrieves a park out request.
         From the given parameters, it generates a suitable ROS message and calls ROS service ParkoutVehicleRequest.
@@ -171,7 +171,7 @@ class ParkProcess:
         vehicle_message = VehicleInformationMsg()
         try:
             vehicle_message.identifiers = self.generate_identification_message(
-                int(vehicle_parameters["id"]), vehicle_parameters["number_plate"])
+                vehicle_parameters["id"], vehicle_parameters["number_plate"])
             vehicle_message.dimensions.length = float(vehicle_parameters["length"])
             vehicle_message.dimensions.width = float(vehicle_parameters["width"])
             vehicle_message.dimensions.turning_radius = float(vehicle_parameters["turning_radius"])
@@ -185,7 +185,7 @@ class ParkProcess:
 
         return vehicle_message
 
-    def generate_identification_message(self, app_id: int, number_plate: str, pms_id: int = unknown_pms_id):
+    def generate_identification_message(self, app_id: str, number_plate: str, pms_id: int = unknown_pms_id):
         """
         This method generates a vehicle identification message.
         This message includes the app ID and the number plate as well as the corresponding parking management system´s
@@ -313,7 +313,7 @@ class ParkProcess:
                     begin = datetime.datetime.combine(today, current_time)
         return [begin, end]
 
-    def generate_park_in_response(self, response_from_pms: RegisterVehicleRequestResponse, app_id: int):
+    def generate_park_in_response(self, response_from_pms: RegisterVehicleRequestResponse, app_id: str):
         """
         This method generates a dictionary from the RegisterVehicleRequestResponse.
         If the vehicle was successfully registered and the parking management system started the park process,
@@ -354,7 +354,7 @@ class ParkProcess:
 
 class LocalizationProcess:
     """ The LocalizationProcess bundles methods for get position requests."""
-    def request_current_position(self, app_id: int, number_plate: str):
+    def request_current_position(self, app_id: str, number_plate: str):
         """
         This method communicates with the parking management system to get the current position of the vehicle
         with this app id and number plate.
@@ -480,7 +480,7 @@ class CapacityProcess:
 class IdMapper:
     """ The IdMapper provides the possibility to save app ID with corresponding parking management system´s ID. """
     @staticmethod
-    def map_vehicle_ids(app_id: int, pms_id: int):
+    def map_vehicle_ids(app_id: str, pms_id: int):
         """
         This method adds the pair of app id and parking management system id to the database.
         In the database, IDs can be stored permanently. IDs are used to identify vehicles uniquely.
@@ -491,7 +491,7 @@ class IdMapper:
         id_database.add(app_id, pms_id)
 
     @staticmethod
-    def get_corresponding_pms_id(app_id: int):
+    def get_corresponding_pms_id(app_id: str):
         """
         This method returns the corresponding parking management system´s ID to the given app id.
         The value will be requested from the id mapping database.
@@ -529,4 +529,5 @@ class VehicleIdentificationException(Exception):
     Unify exceptions occurring due to unknown app identifiers in the ID mapping database.
     """
     pass
+
 
