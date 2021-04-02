@@ -160,7 +160,7 @@ class ParkManager {
     } else {
       print('vehicle is not parked in');
       //vehicle does not need to be parked out
-      //Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+      Navigator.pushReplacementNamed(context, vehicle.inAppKey);
     }
   }
 
