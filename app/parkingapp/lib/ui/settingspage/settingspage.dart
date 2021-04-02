@@ -3,16 +3,14 @@ import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/ui/settingspage/passcodepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:system_settings/system_settings.dart';
 
-import 'changepasscodepage.dart';
-
+/// Class for showing the settings page
 class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
   const SettingsPage({Key key}) : super(key: key);
@@ -25,18 +23,22 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      appBar: AppBar(title: Text('Einstellungen', style: whiteHeader)),
+      appBar: AppBar(
+          title: Text(AppLocalizations.of(context).settingsTitle,
+              style: whiteHeader)),
       body: SettingsForm(),
     );
   }
 }
 
+/// State for settings page
 class SettingsForm extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _SettingsFormState();
+  State<StatefulWidget> createState() => SettingsFormState();
 }
 
-class _SettingsFormState extends State<SettingsForm> {
+class SettingsFormState extends State<SettingsForm> {
+  //Initialize all the settings
   bool _pushNotifications = false;
   bool _pushNotificationsParked = false;
   bool _pushNotificationsCharge = false;
@@ -46,87 +48,116 @@ class _SettingsFormState extends State<SettingsForm> {
   @override
   void initState() {
     super.initState();
-    getPushNotifications();
+    _getPushNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
+    return _settingsUi();
+  }
+
+  /// Creates ListView
+  Widget _settingsUi() {
     return ListView(
       children: <Widget>[
         Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
-        SwitchListTile(
-            title: Text(AppLocalizations.of(context).pushMessages),
-            subtitle: Text(AppLocalizations.of(context).pushMessagesText),
-            value: _pushNotifications,
-            onChanged: (value) async {
-              if (value) {
-                if (await Permission.notification.request().isDenied) {
-                  SystemSettings.app();
-                }
-                if (await Permission.notification.request().isDenied) {
-                  value = false;
-                }
-              }
-              //update change in Sharedpreferences
-              if (value) {
-                SharedPreferencesHelper.enableNotifications();
-              } else {
-                SharedPreferencesHelper.disableNotifications();
-              }
-              setState(() {
-                _pushNotifications = value;
-              });
-            }),
+        _notificationsListTile(),
         Divider(),
-        SwitchListTile(
-            title: Text(AppLocalizations.of(context).pushMessagesParked),
-            subtitle: Text(AppLocalizations.of(context).pushMessagesParkedText),
-            value: _pushNotificationsParked && _pushNotifications,
-            onChanged: (value) {
-              SharedPreferencesHelper.setNotificationsParked(value);
-              setState(() {
-                _pushNotificationsParked = value;
-              });
-            }),
+        _notificationsParkedListTile(),
         Divider(),
-        SwitchListTile(
-            title: Text(AppLocalizations.of(context).pushMessagesCharge),
-            subtitle: Text(AppLocalizations.of(context).pushMessagesChargeText),
-            value: _pushNotificationsCharge && _pushNotifications,
-            onChanged: (value) {
-              SharedPreferencesHelper.setNotificationsCharged(value);
-              setState(() {
-                _pushNotificationsCharge = value;
-              });
-            }),
+        _notificationsChargedListTile(),
         Divider(),
-        ListTile(
-          title: Text(AppLocalizations.of(context).password),
-          subtitle: Text(AppLocalizations.of(context).passwordSubtitle),
-          trailing: Icon(Icons.arrow_forward_ios),
-          onTap: () {
-            _passCodeSettings();
-          },
-        ),
+        _passcodeListTile(),
         Divider(),
-        ListTile(
-            title: Text(AppLocalizations.of(context).transferData),
-            subtitle: Text(AppLocalizations.of(context).transferDataText),
-            trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.transferkeys);
-            }),
+        _transferDataListTile(),
         Divider(),
-        ListTile(
-            title: Text(AppLocalizations.of(context).showTermsAndConditions),
-            subtitle: Text(
-                AppLocalizations.of(context).showTermsAndConditionsSubtitle),
-            trailing: Icon(Icons.arrow_forward_ios),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.agbPage);
-            })
+        _showTermsListTile()
       ],
     );
+  }
+
+  Widget _notificationsListTile() {
+    return SwitchListTile(
+        title: Text(AppLocalizations.of(context).pushMessages),
+        subtitle: Text(AppLocalizations.of(context).pushMessagesText),
+        value: _pushNotifications,
+        onChanged: (value) async {
+          if (value) {
+            if (await Permission.notification.request().isDenied) {
+              SystemSettings.app();
+            }
+            if (await Permission.notification.request().isDenied) {
+              value = false;
+            }
+          }
+          //update change in Sharedpreferences
+          if (value) {
+            SharedPreferencesHelper.enableNotifications();
+          } else {
+            SharedPreferencesHelper.disableNotifications();
+          }
+          setState(() {
+            _pushNotifications = value;
+          });
+        });
+  }
+
+  Widget _notificationsParkedListTile() {
+    return SwitchListTile(
+        title: Text(AppLocalizations.of(context).pushMessagesParked),
+        subtitle: Text(AppLocalizations.of(context).pushMessagesParkedText),
+        value: _pushNotificationsParked && _pushNotifications,
+        onChanged: (value) {
+          SharedPreferencesHelper.setNotificationsParked(value);
+          setState(() {
+            _pushNotificationsParked = value;
+          });
+        });
+  }
+
+  Widget _notificationsChargedListTile() {
+    return SwitchListTile(
+        title: Text(AppLocalizations.of(context).pushMessagesCharge),
+        subtitle: Text(AppLocalizations.of(context).pushMessagesChargeText),
+        value: _pushNotificationsCharge && _pushNotifications,
+        onChanged: (value) {
+          SharedPreferencesHelper.setNotificationsCharged(value);
+          setState(() {
+            _pushNotificationsCharge = value;
+          });
+        });
+  }
+
+  Widget _passcodeListTile() {
+    return ListTile(
+      title: Text(AppLocalizations.of(context).password),
+      subtitle: Text(AppLocalizations.of(context).passwordSubtitle),
+      trailing: Icon(Icons.arrow_forward_ios),
+      onTap: () {
+        _passCodeSettings();
+      },
+    );
+  }
+
+  Widget _transferDataListTile() {
+    return ListTile(
+        title: Text(AppLocalizations.of(context).transferData),
+        subtitle: Text(AppLocalizations.of(context).transferDataText),
+        trailing: Icon(Icons.arrow_forward_ios),
+        onTap: () {
+          Navigator.pushNamed(context, Routes.transferkeys);
+        });
+  }
+
+  Widget _showTermsListTile() {
+    return ListTile(
+        title: Text(AppLocalizations.of(context).showTermsAndConditions),
+        subtitle:
+            Text(AppLocalizations.of(context).showTermsAndConditionsSubtitle),
+        trailing: Icon(Icons.arrow_forward_ios),
+        onTap: () {
+          Navigator.pushNamed(context, Routes.agbPage);
+        });
   }
 
   _passCodeSettings() {
@@ -134,8 +165,8 @@ class _SettingsFormState extends State<SettingsForm> {
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
   }
 
-  //get all the shared preferences for initstate
-  Future<Null> getPushNotifications() async {
+  /// Gets all the shared preferences for initstate
+  Future<Null> _getPushNotifications() async {
     final SharedPreferences prefs = await preferences;
     bool notifications = prefs.getBool('notifications');
     bool notificationsCharge = prefs.getBool('notificationsCharged');
@@ -154,6 +185,7 @@ class _SettingsFormState extends State<SettingsForm> {
 
     Notifications.getEnabledValues();
 
+    //sets state of settings page
     setState(() {
       _pushNotifications = notifications;
       _pushNotificationsCharge = notificationsCharge;

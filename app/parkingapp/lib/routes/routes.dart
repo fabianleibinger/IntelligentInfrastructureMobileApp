@@ -1,15 +1,15 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
-import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/parkpages/parkinpage.dart';
 import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
-import 'package:parkingapp/ui/settingspage/qrpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
+import 'package:parkingapp/ui/startpage/appLockPage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
+import 'package:parkingapp/util/qrgenerator.dart';
 import 'package:parkingapp/util/qrscanner.dart';
 
 /// The route paths.

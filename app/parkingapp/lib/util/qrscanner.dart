@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +8,17 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/ui/settingspage/qrpage.dart';
-import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Class that creates barcode scanner and adds scanned vehicle to app
 class ScanScreen extends StatefulWidget {
   static const String routeName = '/qrscanner';
   @override
-  _ScanState createState() => new _ScanState();
+  ScanState createState() => new ScanState();
 }
 
-class _ScanState extends State<ScanScreen> {
+class ScanState extends State<ScanScreen> {
   String barcode = "";
   String textButton = "Noch keinen QR Code gescannt!";
   bool scanned = false;
@@ -55,6 +54,7 @@ class _ScanState extends State<ScanScreen> {
                         primary: grey, onPrimary: white, shadowColor: grey),
                     onPressed: () {
                       if (scanned) {
+                        // add scanned vehicle to database
                         _addTransferedVehicle();
                         Navigator.push(
                             context,
@@ -73,32 +73,41 @@ class _ScanState extends State<ScanScreen> {
         ));
   }
 
+  /// Opens barcode scanner
   Future scan() async {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() {
         this.barcode = barcode;
         this.scanned = true;
-        this.textButton =
-            "Der QR Code wurde erfolgreich gescannt! Zum Fahrzeug hinzufügen hier klicken.";
+        this.textButton = AppLocalizations.of(context).barcodeScanned;
       });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
+          this.barcode = AppLocalizations.of(context).cameraAcessDenied;
         });
       } else {
-        setState(() => this.barcode = 'Unknown error: $e');
+        setState(
+            () => this.barcode = AppLocalizations.of(context).unknownException);
       }
     } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
+      setState(
+          () => this.barcode = AppLocalizations.of(context).unknownException);
     } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
+      setState(
+          () => this.barcode = AppLocalizations.of(context).unknownException);
     }
   }
 
+  /// Adds new vehicle object to database
   _addTransferedVehicle() {
+    Vehicle vehicle = transferIntoVehicle(this.barcode);
+    DataHelper.addVehicle(context, vehicle);
+  }
+
+  /// Creates new vehicle from String
+  Vehicle transferIntoVehicle(String barcode) {
     //split the string coming from the QR Code
     String splitter = ':';
     List<String> split = barcode.split(',');
@@ -114,57 +123,61 @@ class _ScanState extends State<ScanScreen> {
     List<String> nearExitPreference = split[9].split(splitter);
     List<String> parkingCard = split[10].split(splitter);
     List<String> parkedIn = split[11].split(splitter);
-    List<String> doCharge = split[12].split(splitter);
-    List<String> chargingProvider = split[13].split(splitter);
-    List<String> chargeTimeBegin = split[14].split(splitter);
-    print(chargeTimeBegin);
-    List<String> chargeTimeEnd = split[15].split(splitter);
-    print(chargeTimeEnd);
-
-    //convert String time into TimeOfDay
-    TimeOfDay startTime = TimeOfDay(
-        hour: int.parse(chargeTimeBegin[1]),
-        minute: int.parse(chargeTimeBegin[2]));
-
-    TimeOfDay endTime = TimeOfDay(
-        hour: int.parse(chargeTimeEnd[1]), minute: int.parse(chargeTimeEnd[2]));
 
     Vehicle vehicle;
 
+    //check type of scanned vehicle
     if (type[1] == 'chargeable') {
+      List<String> doCharge = split[12].split(splitter);
+      List<String> chargingProvider = split[13].split(splitter);
+      List<String> chargeTimeBegin = split[14].split(splitter);
+      print(chargeTimeBegin);
+      List<String> chargeTimeEnd = split[15].split(splitter);
+      print(chargeTimeEnd);
+
+      //convert String time into TimeOfDay
+      TimeOfDay startTime = TimeOfDay(
+          hour: int.parse(chargeTimeBegin[1]),
+          minute: int.parse(chargeTimeBegin[2]));
+
+      TimeOfDay endTime = TimeOfDay(
+          hour: int.parse(chargeTimeEnd[1]),
+          minute: int.parse(chargeTimeEnd[2].substring(0, 2)));
+
       vehicle = transferChargeableVehicle(
-          inAppKey[1],
-          name[1],
-          licensePlate[1],
+          inAppKey[1].substring(1),
+          name[1].substring(1),
+          licensePlate[1].substring(1),
           double.tryParse(width[1]),
           double.tryParse(height[1]),
           double.tryParse(length[1]),
           double.tryParse(turningCycle[1]),
           double.tryParse(distRearAxleLicensePlate[1]),
-          nearExitPreference[1] == '1',
-          parkingCard[1] == '1',
-          parkedIn[1] == '1',
-          doCharge[1] == '1',
-          chargingProvider[1],
+          nearExitPreference[1] == ' 1',
+          parkingCard[1] == ' 1',
+          parkedIn[1] == ' 1',
+          doCharge[1] == ' 1',
+          chargingProvider[1].substring(1),
           startTime,
           endTime);
     } else if (type[1] == 'standard') {
       vehicle = transferStandardVehicle(
-          inAppKey[1],
-          name[1],
-          licensePlate[1],
+          inAppKey[1].substring(1),
+          name[1].substring(1),
+          licensePlate[1].substring(1),
           double.tryParse(width[1]),
           double.tryParse(height[1]),
           double.tryParse(length[1]),
           double.tryParse(turningCycle[1]),
           double.tryParse(distRearAxleLicensePlate[1]),
-          nearExitPreference[1] == '1',
-          parkingCard[1] == '1',
-          parkedIn[1] == '1');
+          nearExitPreference[1] == ' 1',
+          parkingCard[1] == ' 1',
+          parkedIn[1] == ' 1');
     }
-    DataHelper.addVehicle(context, vehicle);
+    return vehicle;
   }
 
+  /// Creates new standard vehicle object
   Vehicle transferStandardVehicle(
       String inAppKey,
       String name,
@@ -192,6 +205,7 @@ class _ScanState extends State<ScanScreen> {
     return vehicle;
   }
 
+  /// Creates chargeable vehicle object
   Vehicle transferChargeableVehicle(
       String inAppKey,
       String name,
