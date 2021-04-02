@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/ui/settingspage/qrpage.dart';
+import 'package:parkingapp/util/qrgenerator.dart';
 import 'package:parkingapp/util/qrscanner.dart';
 
 void main() {

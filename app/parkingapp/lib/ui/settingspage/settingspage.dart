@@ -23,7 +23,9 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      appBar: AppBar(title: Text('Einstellungen', style: whiteHeader)),
+      appBar: AppBar(
+          title: Text(AppLocalizations.of(context).settingsTitle,
+              style: whiteHeader)),
       body: SettingsForm(),
     );
   }
@@ -46,35 +48,35 @@ class SettingsFormState extends State<SettingsForm> {
   @override
   void initState() {
     super.initState();
-    getPushNotifications();
+    _getPushNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
-    return settingsUi();
+    return _settingsUi();
   }
 
   /// Creates ListView
-  Widget settingsUi() {
+  Widget _settingsUi() {
     return ListView(
       children: <Widget>[
         Padding(padding: EdgeInsets.fromLTRB(0, 10.0, 0, 0)),
-        notificationsListTile(),
+        _notificationsListTile(),
         Divider(),
-        notificationsParkedListTile(),
+        _notificationsParkedListTile(),
         Divider(),
-        notificationsChargedListTile(),
+        _notificationsChargedListTile(),
         Divider(),
-        passcodeListTile(),
+        _passcodeListTile(),
         Divider(),
-        transferDataListTile(),
+        _transferDataListTile(),
         Divider(),
-        showTermsListTile()
+        _showTermsListTile()
       ],
     );
   }
 
-  Widget notificationsListTile() {
+  Widget _notificationsListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessages),
         subtitle: Text(AppLocalizations.of(context).pushMessagesText),
@@ -100,7 +102,7 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
-  Widget notificationsParkedListTile() {
+  Widget _notificationsParkedListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessagesParked),
         subtitle: Text(AppLocalizations.of(context).pushMessagesParkedText),
@@ -113,7 +115,7 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
-  Widget notificationsChargedListTile() {
+  Widget _notificationsChargedListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessagesCharge),
         subtitle: Text(AppLocalizations.of(context).pushMessagesChargeText),
@@ -126,18 +128,18 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
-  Widget passcodeListTile() {
+  Widget _passcodeListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context).password),
       subtitle: Text(AppLocalizations.of(context).passwordSubtitle),
       trailing: Icon(Icons.arrow_forward_ios),
       onTap: () {
-        passCodeSettings();
+        _passCodeSettings();
       },
     );
   }
 
-  Widget transferDataListTile() {
+  Widget _transferDataListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).transferData),
         subtitle: Text(AppLocalizations.of(context).transferDataText),
@@ -147,7 +149,7 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
-  Widget showTermsListTile() {
+  Widget _showTermsListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).showTermsAndConditions),
         subtitle:
@@ -158,13 +160,13 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
-  passCodeSettings() {
+  _passCodeSettings() {
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
   }
 
   /// Gets all the shared preferences for initstate
-  Future<Null> getPushNotifications() async {
+  Future<Null> _getPushNotifications() async {
     final SharedPreferences prefs = await preferences;
     bool notifications = prefs.getBool('notifications');
     bool notificationsCharge = prefs.getBool('notificationsCharged');

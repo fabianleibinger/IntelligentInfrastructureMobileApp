@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/FirstStart/termsofservice.dart';
-import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -78,15 +77,5 @@ class RouteLandingPage extends StatelessWidget {
             context, Routes.vehicle, (Route<dynamic> route) => false)
         : Navigator.pushNamedAndRemoveUntil(
             context, Routes.landingPage, (Route<dynamic> route) => false);
-  }
-
-  void _isAuthentificated(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthentificated = prefs.getBool('authentification') ?? false;
-    isAuthentificated
-        ? Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
-        : Navigator.pushNamedAndRemoveUntil(
-            context, Routes.settings, (Route<dynamic> route) => false);
   }
 }

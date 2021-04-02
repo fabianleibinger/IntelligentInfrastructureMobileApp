@@ -318,7 +318,17 @@
     "showTermsAndConditions": "AGB und Nutzungsbedingungen",
     "@showTermsAndConditions": {},
     "showTermsAndConditionsSubtitle": "AGB und Nutzungsbedingungen anzeigen",
-    "@showTermsAndConditionsSubtitle": {}
+    "@showTermsAndConditionsSubtitle": {},
+    "barcodeScanned": "Der QR Code wurde erfolgreich gescannt! Zum Fahrzeug hinzufügen hier klicken.",
+    "@barcodeScanned": {},
+    "cameraAcessDenied": "Der Nutzer hat den Kamerazugriff verweigert!",
+    "@cameraAcessDenied": {},
+    "unknownException": "Unbekannter Fehler!",
+    "@unknownException": {},
+    "termsAndConditionsTitle": "AGB und Nutzungsbedingungen",
+    "@termsAndConditionsTitle": {},
+    "settingsTitle": "Einstellungen",
+    "@settingsTitle": {}
 
 
 

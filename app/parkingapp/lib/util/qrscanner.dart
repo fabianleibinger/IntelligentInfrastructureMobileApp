@@ -9,7 +9,9 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Class that creates barcode scanner and adds scanned vehicle to app
 class ScanScreen extends StatefulWidget {
   static const String routeName = '/qrscanner';
   @override
@@ -52,6 +54,7 @@ class ScanState extends State<ScanScreen> {
                         primary: grey, onPrimary: white, shadowColor: grey),
                     onPressed: () {
                       if (scanned) {
+                        // add scanned vehicle to database
                         _addTransferedVehicle();
                         Navigator.push(
                             context,
@@ -70,36 +73,40 @@ class ScanState extends State<ScanScreen> {
         ));
   }
 
+  /// Opens barcode scanner
   Future scan() async {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() {
         this.barcode = barcode;
         this.scanned = true;
-        this.textButton =
-            "Der QR Code wurde erfolgreich gescannt! Zum Fahrzeug hinzufügen hier klicken.";
+        this.textButton = AppLocalizations.of(context).barcodeScanned;
       });
     } on PlatformException catch (e) {
       if (e.code == BarcodeScanner.CameraAccessDenied) {
         setState(() {
-          this.barcode = 'The user did not grant the camera permission!';
+          this.barcode = AppLocalizations.of(context).cameraAcessDenied;
         });
       } else {
-        setState(() => this.barcode = 'Unknown error: $e');
+        setState(
+            () => this.barcode = AppLocalizations.of(context).unknownException);
       }
     } on FormatException {
-      setState(() => this.barcode =
-          'null (User returned using the "back"-button before scanning anything. Result)');
+      setState(
+          () => this.barcode = AppLocalizations.of(context).unknownException);
     } catch (e) {
-      setState(() => this.barcode = 'Unknown error: $e');
+      setState(
+          () => this.barcode = AppLocalizations.of(context).unknownException);
     }
   }
 
+  /// Adds new vehicle object to database
   _addTransferedVehicle() {
     Vehicle vehicle = transferIntoVehicle(this.barcode);
     DataHelper.addVehicle(context, vehicle);
   }
 
+  /// Creates new vehicle from String
   Vehicle transferIntoVehicle(String barcode) {
     //split the string coming from the QR Code
     String splitter = ':';
@@ -119,6 +126,7 @@ class ScanState extends State<ScanScreen> {
 
     Vehicle vehicle;
 
+    //check type of scanned vehicle
     if (type[1] == 'chargeable') {
       List<String> doCharge = split[12].split(splitter);
       List<String> chargingProvider = split[13].split(splitter);
@@ -169,6 +177,7 @@ class ScanState extends State<ScanScreen> {
     return vehicle;
   }
 
+  /// Creates new standard vehicle object
   Vehicle transferStandardVehicle(
       String inAppKey,
       String name,
@@ -196,6 +205,7 @@ class ScanState extends State<ScanScreen> {
     return vehicle;
   }
 
+  /// Creates chargeable vehicle object
   Vehicle transferChargeableVehicle(
       String inAppKey,
       String name,

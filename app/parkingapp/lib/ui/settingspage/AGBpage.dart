@@ -11,7 +11,8 @@ class AGB extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('AGB und Nutzungsbedingungen', style: whiteHeader),
+        title: Text(AppLocalizations.of(context).termsAndConditionsTitle,
+            style: whiteHeader),
       ),
       body: ScrollableAGB(),
     );
