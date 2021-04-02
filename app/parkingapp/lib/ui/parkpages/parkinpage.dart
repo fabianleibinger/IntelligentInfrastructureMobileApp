@@ -96,10 +96,15 @@ class _ParkInPageState extends State<ParkInPage> {
           Expanded(
             child: ListView(
               children: [
-                ParkManager.getParkInAnimation(
-                    context: context,
-                    vehiclePosition: vehicle.location,
-                    destination: vehicle.parkingSpot),
+                ValueListenableBuilder(
+                    valueListenable: vehicle.locationObserver,
+                    builder: (BuildContext context, coordinate, Widget widget) {
+                      print('rebuilding park in map');
+                      return ParkManager.getParkInAnimation(
+                          context: context,
+                          vehiclePosition: vehicle.location,
+                          destination: vehicle.parkingSpot);
+                    })
               ],
             ),
           )

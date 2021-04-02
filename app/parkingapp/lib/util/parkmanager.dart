@@ -317,7 +317,7 @@ class ParkManager {
     var position = await ApiProvider.getPosition(vehicle);
     double latitude = position["latitude"];
     double longitude = position["longitude"];
-    vehicle.location = Coordinate(lattitude: latitude, longitude: longitude);
+    vehicle.setLocation(Coordinate(lattitude: latitude, longitude: longitude));
     return position["parking"] && !position["reached_position"];
   }
 }

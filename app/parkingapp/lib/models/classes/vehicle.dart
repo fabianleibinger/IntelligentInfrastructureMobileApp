@@ -23,6 +23,9 @@ abstract class Vehicle {
 
   Coordinate parkingSpot, location;
 
+  /// Notifier for [location]
+  ValueNotifier<Coordinate> locationObserver;
+
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
       DatabaseProvider.COLUMN_IN_APP_KEY: inAppKey,
@@ -142,6 +145,11 @@ abstract class Vehicle {
     this.parkingOut = parkingOut;
     this.parkingSpot = null;
     DataHelper.updateVehicle(context, this);
+  }
+
+  void setLocation(Coordinate coordinate) {
+    this.location = coordinate;
+    this.locationObserver.value = this.location;
   }
 
   /// Setter for all dimensions which includes database updating.
