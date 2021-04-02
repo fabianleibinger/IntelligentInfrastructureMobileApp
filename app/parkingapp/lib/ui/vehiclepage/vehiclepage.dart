@@ -13,6 +13,7 @@ import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/util/vehiclehelper.dart';
 // example for a page (mainpage)
 
 class VehiclePage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _VehiclePageState extends State<VehiclePage> {
     // TODO: implement initState
     super.initState();
     DataHelper.initVehicles(context);
+    VehicleHelper.cleanUpVehicles(context);
   }
 
   @override

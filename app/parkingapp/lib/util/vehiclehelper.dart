@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
@@ -83,5 +85,15 @@ class VehicleHelper {
       DataHelper.updateVehicle(context, parseVehicle);
     }
     return true;
+  }
+
+  ///deletes all [Vehicle] from the Database that are dummy vehicles
+  static void cleanUpVehicles(BuildContext context) {
+    for (Vehicle vehicle in BlocProvider.of<VehicleBloc>(context).state) {
+      if (vehicle.name == notSpecifiedString &&
+          vehicle.licensePlate == notSpecifiedString) {
+        DataHelper.deleteVehicle(context, vehicle);
+      }
+    }
   }
 }
