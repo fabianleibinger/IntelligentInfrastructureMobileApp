@@ -141,32 +141,14 @@ class ParkManager {
             //park out finished
             if (!parking) {
               timer.cancel();
-              vehicle.setAndUpdateParkedIn(context, false);
-              vehicle.setAndUpdateParkIngOut(context, false);
-              print('vehicle parked out: ' + vehicle.parkedIn.toString());
-              // Open main page.
-              Navigator.pushReplacementNamed(context, vehicle.inAppKey);
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ParkDialogs.getParkOutFinishedDialog(context);
-                  });
+              _setParkedOut(vehicle, context);
             }
           }).catchError((e) {
             print('Could not update position ' + _errorCount.toString());
             //if get position fails try again or cancel park in
             if (_errorCount++ > _errorLimit) {
               timer.cancel();
-              vehicle.setAndUpdateParkedIn(context, false);
-              vehicle.setAndUpdateParkIngOut(context, false);
-              print('vehicle parked out: ' + vehicle.parkedIn.toString());
-              // Open main page.
-              Navigator.pushReplacementNamed(context, vehicle.inAppKey);
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ParkDialogs.getParkOutFinishedDialog(context);
-                  });
+              _setParkedOut(vehicle, context);
             }
             return;
           });
@@ -175,11 +157,24 @@ class ParkManager {
 
         // vehicle not parking out anymore.
       });
-    } //else {
-    //print('vehicle is not parked in');
-    //vehicle does not need to be parked out
-    //Navigator.pushReplacementNamed(context, vehicle.inAppKey);
-    //}
+    } else {
+      print('vehicle is not parked in');
+      //vehicle does not need to be parked out
+      //Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+    }
+  }
+
+  static void _setParkedOut(Vehicle vehicle, BuildContext context) {
+    vehicle.setAndUpdateParkedIn(context, false);
+    vehicle.setAndUpdateParkIngOut(context, false);
+    print('vehicle parked out: ' + vehicle.parkedIn.toString());
+    // Open main page.
+    Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return ParkDialogs.getParkOutFinishedDialog(context);
+        });
   }
 
   /// Returns if [vehicle] needs to be parked out.
