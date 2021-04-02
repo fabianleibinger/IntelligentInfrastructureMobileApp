@@ -76,6 +76,17 @@ class ParkManager {
     vehicle.setAndUpdateParkedIn(context, true);
     vehicle.setAndUpdateParkIngIn(context, false);
     print('vehicle parked in: ' + vehicle.parkedIn.toString());
+    // if park in worked: notification, that triggers parkOut method.
+    Notifications.createNotificationClickable(
+        AppLocalizations.of(context).notificationParkInTitle +
+            vehicle.name +
+            ' ' +
+            vehicle.licensePlate,
+        AppLocalizations.of(context).notificationParkInBody,
+        vehicle.inAppKey, (value) {
+      vehicle.parkOut(context);
+      return null;
+    }, true, false);
   }
 
   /// Returns if [vehicle] needs to be parked in.
@@ -98,19 +109,7 @@ class ParkManager {
   /// creates parked in [Notification] or opens [NoConnectionDialog].
   static void _checkAndReactParkInWorked(
       BuildContext context, Vehicle vehicle) {
-    if (vehicle.parkedIn) {
-      // if park in worked: notification, that triggers parkOut method.
-      Notifications.createNotificationClickable(
-          AppLocalizations.of(context).notificationParkInTitle +
-              vehicle.name +
-              ' ' +
-              vehicle.licensePlate,
-          AppLocalizations.of(context).notificationParkInBody,
-          vehicle.inAppKey, (value) {
-        vehicle.parkOut(context);
-        return null;
-      }, true, false);
-    } else if (!vehicle.parkedIn && !vehicle.parkingIn) {
+    if (!vehicle.parkedIn && !vehicle.parkingIn) {
       // vehicle is not parked in but also not parking in meaning something has failed
       // if park in didn't work: connection to server failed.
       showDialog(
@@ -175,6 +174,16 @@ class ParkManager {
         builder: (context) {
           return ParkDialogs.getParkOutFinishedDialog(context);
         });
+    // if park out worked: notification
+    Notifications.createNotification(
+        AppLocalizations.of(context).notificationParkOutTitleOne +
+            vehicle.name +
+            ' ' +
+            vehicle.licensePlate +
+            AppLocalizations.of(context).notificationParkOutTitleTwo,
+        AppLocalizations.of(context).notificationParkOutBody,
+        true,
+        false);
   }
 
   /// Returns if [vehicle] needs to be parked out.
@@ -198,18 +207,7 @@ class ParkManager {
   /// creates parked out [Notification] or opens [NoConnectionDialog].
   static void _checkAndReactParkOutWorked(
       BuildContext context, Vehicle vehicle) {
-    if (!vehicle.parkedIn) {
-      // if park out worked: notification
-      Notifications.createNotification(
-          AppLocalizations.of(context).notificationParkOutTitleOne +
-              vehicle.name +
-              ' ' +
-              vehicle.licensePlate +
-              AppLocalizations.of(context).notificationParkOutTitleTwo,
-          AppLocalizations.of(context).notificationParkOutBody,
-          true,
-          false);
-    } else if (vehicle.parkedIn && !vehicle.parkingOut) {
+    if (vehicle.parkedIn && !vehicle.parkingOut) {
       // if park out didn't work: connection to server failed
       showDialog(
           context: context,
