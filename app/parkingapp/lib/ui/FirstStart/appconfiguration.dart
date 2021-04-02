@@ -6,7 +6,7 @@ import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/ui/FirstStart/addvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
-import 'package:parkingapp/ui/settingspage/changepasscodepage.dart';
+import 'package:parkingapp/ui/settingspage/passcodepage.dart';
 import 'package:parkingapp/util/qrscanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';

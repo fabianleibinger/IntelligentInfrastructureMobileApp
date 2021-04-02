@@ -6,12 +6,10 @@ import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 
-const storedPasscode = '123456';
-
+/// Class for the widget to select a passcode
 class PasscodePage extends StatefulWidget {
-  static const String routeName = '/changepasscodepage';
-  final VoidCallback login;
-  PasscodePage({Key key, this.login}) : super(key: key);
+  static const String routeName = '/passcodepage';
+  PasscodePage({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => PasscodePageState();
@@ -28,6 +26,7 @@ class PasscodePageState extends State<PasscodePage> {
     return showPasscodeScreen();
   }
 
+  /// Creates UI for passcode screen
   Widget showPasscodeScreen() {
     return PasscodeScreen(
         title: Text(
@@ -59,9 +58,10 @@ class PasscodePageState extends State<PasscodePage> {
         passwordDigits: 6);
   }
 
+  /// Handels new passcode
   onNewPasscodeEntered(String enteredPasscode) {
     bool isValid;
-    //damit das Eingabefenster wieder verschwindet
+    //passcode screen disappears after typing in the passcode
     if (enteredPasscode.length == 6) {
       isValid = true;
       SharedPreferencesHelper.setPasscode(enteredPasscode);
@@ -77,10 +77,12 @@ class PasscodePageState extends State<PasscodePage> {
     }
   }
 
+  /// Method to pop the widget
   onPasscodeCancelled() {
     Navigator.maybePop(context);
   }
 
+  /// Method to build restore button
   buildPasscodeRestoreButton() => Align(
         alignment: Alignment.bottomCenter,
         child: Container(
@@ -104,6 +106,7 @@ class PasscodePageState extends State<PasscodePage> {
         ),
       );
 
+  /// Resets passcode in shared preferences
   resetAppPassword() {
     SharedPreferencesHelper.disableAuthentification();
   }

@@ -36,14 +36,14 @@ class SharedPreferencesHelper {
     return prefs.setBool('authentification', false);
   }
 
-  static Future<bool> enableNotifications() async {
+  static Future<dynamic> enableNotifications() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs
         .setBool('notifications', true)
         .then((value) => Notifications.getEnabledValues());
   }
 
-  static Future<bool> disableNotifications() async {
+  static Future<dynamic> disableNotifications() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs
         .setBool('notifications', false)
