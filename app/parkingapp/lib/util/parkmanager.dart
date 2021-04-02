@@ -81,7 +81,6 @@ class ParkManager {
   /// Parking out vehicle can't be parked in.
   static bool needsToParkIn(BuildContext context, Vehicle vehicle) {
     ApiProvider.getPosition(vehicle).then((value) {
-      print(value);
       value["parkedIn"] != null
           //use backend value
           ? vehicle.setAndUpdateParkedIn(context, value["parkedIn"])
@@ -179,9 +178,11 @@ class ParkManager {
 
         // vehicle not parking out anymore.
       });
-    } else
+    } else {
+      print('vehicle is not parked in');
       //vehicle does not need to be parked out
       Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+    }
   }
 
   /// Returns if [vehicle] needs to be parked out.
