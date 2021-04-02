@@ -13,10 +13,10 @@ import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 class ScanScreen extends StatefulWidget {
   static const String routeName = '/qrscanner';
   @override
-  _ScanState createState() => new _ScanState();
+  ScanState createState() => new ScanState();
 }
 
-class _ScanState extends State<ScanScreen> {
+class ScanState extends State<ScanScreen> {
   String barcode = "";
   String textButton = "Noch keinen QR Code gescannt!";
   bool scanned = false;
@@ -96,6 +96,11 @@ class _ScanState extends State<ScanScreen> {
   }
 
   _addTransferedVehicle() {
+    Vehicle vehicle = transferIntoVehicle(this.barcode);
+    DataHelper.addVehicle(context, vehicle);
+  }
+
+  Vehicle transferIntoVehicle(String barcode) {
     //split the string coming from the QR Code
     String splitter = ':';
     List<String> split = barcode.split(',');
@@ -111,24 +116,26 @@ class _ScanState extends State<ScanScreen> {
     List<String> nearExitPreference = split[9].split(splitter);
     List<String> parkingCard = split[10].split(splitter);
     List<String> parkedIn = split[11].split(splitter);
-    List<String> doCharge = split[12].split(splitter);
-    List<String> chargingProvider = split[13].split(splitter);
-    List<String> chargeTimeBegin = split[14].split(splitter);
-    print(chargeTimeBegin);
-    List<String> chargeTimeEnd = split[15].split(splitter);
-    print(chargeTimeEnd);
-
-    //convert String time into TimeOfDay
-    TimeOfDay startTime = TimeOfDay(
-        hour: int.parse(chargeTimeBegin[1]),
-        minute: int.parse(chargeTimeBegin[2]));
-
-    TimeOfDay endTime = TimeOfDay(
-        hour: int.parse(chargeTimeEnd[1]), minute: int.parse(chargeTimeEnd[2]));
 
     Vehicle vehicle;
 
     if (type[1] == 'chargeable') {
+      List<String> doCharge = split[12].split(splitter);
+      List<String> chargingProvider = split[13].split(splitter);
+      List<String> chargeTimeBegin = split[14].split(splitter);
+      print(chargeTimeBegin);
+      List<String> chargeTimeEnd = split[15].split(splitter);
+      print(chargeTimeEnd);
+
+      //convert String time into TimeOfDay
+      TimeOfDay startTime = TimeOfDay(
+          hour: int.parse(chargeTimeBegin[1]),
+          minute: int.parse(chargeTimeBegin[2]));
+
+      TimeOfDay endTime = TimeOfDay(
+          hour: int.parse(chargeTimeEnd[1]),
+          minute: int.parse(chargeTimeEnd[2]));
+
       vehicle = transferChargeableVehicle(
           inAppKey[1],
           name[1],
@@ -138,28 +145,28 @@ class _ScanState extends State<ScanScreen> {
           double.tryParse(length[1]),
           double.tryParse(turningCycle[1]),
           double.tryParse(distRearAxleLicensePlate[1]),
-          nearExitPreference[1] == '1',
-          parkingCard[1] == '1',
-          parkedIn[1] == '1',
-          doCharge[1] == '1',
+          nearExitPreference[1] == ' 1',
+          parkingCard[1] == ' 1',
+          parkedIn[1] == ' 1',
+          doCharge[1] == ' 1',
           chargingProvider[1],
           startTime,
           endTime);
     } else if (type[1] == 'standard') {
       vehicle = transferStandardVehicle(
-          inAppKey[1],
-          name[1],
-          licensePlate[1],
+          inAppKey[1].substring(1),
+          name[1].substring(1),
+          licensePlate[1].substring(1),
           double.tryParse(width[1]),
           double.tryParse(height[1]),
           double.tryParse(length[1]),
           double.tryParse(turningCycle[1]),
           double.tryParse(distRearAxleLicensePlate[1]),
-          nearExitPreference[1] == '1',
-          parkingCard[1] == '1',
-          parkedIn[1] == '1');
+          nearExitPreference[1] == ' 1',
+          parkingCard[1] == ' 1',
+          parkedIn[1] == ' 1');
     }
-    DataHelper.addVehicle(context, vehicle);
+    return vehicle;
   }
 
   Vehicle transferStandardVehicle(

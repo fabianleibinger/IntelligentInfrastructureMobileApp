@@ -35,6 +35,16 @@ class QRPage extends StatelessWidget {
   }
 
   Widget scannableQR(Vehicle vehicle) {
+    String data = createQRString(vehicle);
+
+    return QrImage(
+      data: data,
+      version: QrVersions.auto,
+      size: 300.0,
+    );
+  }
+
+  String createQRString(Vehicle vehicle) {
     String data = 'type:';
 
     if (vehicle.runtimeType == StandardVehicle) {
@@ -43,13 +53,7 @@ class QRPage extends StatelessWidget {
       data = data + 'chargeable,';
     }
 
-    data = data + _getCompleteData();
-
-    return QrImage(
-      data: data,
-      version: QrVersions.auto,
-      size: 300.0,
-    );
+    return data + _getCompleteData();
   }
 
   String _getCompleteData() {
