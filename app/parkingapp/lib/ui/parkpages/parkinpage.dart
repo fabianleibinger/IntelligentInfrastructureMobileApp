@@ -59,7 +59,6 @@ class _ParkInPageState extends State<ParkInPage> {
         .addPostFrameCallback((_) => vehicle.parkIn(context));
   }
 
-  //TODO the timer will not be canceled (a propper check if parked in is needed)
   @override
   void dispose() {
     _timer.cancel();
