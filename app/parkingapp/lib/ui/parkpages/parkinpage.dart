@@ -26,8 +26,6 @@ class ParkInPage extends StatefulWidget {
 }
 
 class _ParkInPageState extends State<ParkInPage> {
-  Timer _timer;
-
   /// Initializes selected vehicle and calls [vehicle.parkIn(context)].
   @override
   void initState() {
@@ -49,20 +47,10 @@ class _ParkInPageState extends State<ParkInPage> {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
-
-    //add timer to update map
-    _timer =
-        Timer.periodic(Duration(milliseconds: 500), (timer) => setState(() {}));
     super.initState();
     // Wait until build finished to call method.
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
   }
 
   //TODO: setState when parkedIn switches
@@ -70,16 +58,6 @@ class _ParkInPageState extends State<ParkInPage> {
   /// Returns [Scaffold], Animation, park out button [FloatingActionButton].
   @override
   Widget build(BuildContext context) {
-    if (ParkManager.needsToParkIn(context, vehicle)) {
-      //restart timer it has been disabled
-      if (!_timer.isActive)
-        _timer = Timer.periodic(
-            Duration(milliseconds: 500), (timer) => setState(() {}));
-    } else {
-      //cancel the timer if the vehicle is parked in
-      _timer.cancel();
-    }
-
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkIn),
