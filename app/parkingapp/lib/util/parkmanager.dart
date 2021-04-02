@@ -11,6 +11,9 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+//how often to retry the park in
+int _errorLimit = 20;
+
 /// Utility class that communicates with the [ApiProvider]
 /// to manage park processes for vehicles.
 class ParkManager {
@@ -18,6 +21,7 @@ class ParkManager {
   static void parkInRequest(BuildContext context, Vehicle vehicle) {
     if (needsToParkIn(context, vehicle)) {
       if (currentParkingGarage.vehicleSpecificSpotsAvailable(vehicle)) {
+        int _errorCount = 0;
         vehicle.setAndUpdateParkIngIn(context, true);
         print(vehicle.name + ' parking in');
 
@@ -32,15 +36,24 @@ class ParkManager {
 
           //update the position while the vehicle is parking and check if it has been parked
           new Timer.periodic(Duration(seconds: 1), (timer) {
-            print('updating vehicle ' + vehicle.name);
-            ParkManager.updatePosition(vehicle).then((value) {
+            print('ParkIn: updating vehicle ' + vehicle.name);
+            ParkManager.updatePosition(vehicle).then((bool parking) {
               //vehicle is now parked in
-              if (!value) {
+              if (!parking) {
                 timer.cancel();
                 vehicle.setAndUpdateParkedIn(context, true);
                 vehicle.setAndUpdateParkIngIn(context, false);
                 print('vehicle parked in: ' + vehicle.parkedIn.toString());
               }
+            }).catchError((e) {
+              print('error getting position ' + _errorCount.toString());
+              //if get position fails try again or cancel park in
+              if (_errorCount++ > _errorLimit) {
+                timer.cancel();
+                vehicle.setAndUpdateParkedIn(context, true);
+                vehicle.setAndUpdateParkIngIn(context, false);
+              }
+              return;
             });
             _checkAndReactParkInWorked(context, vehicle);
           });
@@ -124,7 +137,7 @@ class ParkManager {
       ApiProvider.parkOut(vehicle).then((value) {
         //update the position while the vehicle is parking out
         new Timer.periodic(Duration(seconds: 1), (timer) {
-          print('updating vehicle');
+          print('ParkOut: updating vehicle ' + vehicle.name);
           ParkManager.updatePosition(vehicle).then((value) {
             //park out finished
             if (!value) {
