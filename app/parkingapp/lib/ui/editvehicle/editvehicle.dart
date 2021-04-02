@@ -23,15 +23,6 @@ class EditVehicle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    vehicle != null
-        ? print('Update vehicle: ' +
-            vehicle.inAppKey +
-            ', ' +
-            vehicle.name +
-            ', ' +
-            vehicle.licensePlate)
-        : null;
-
     //update vehicle in MainPage
     VehicleHelper.updateMainPageVehicle(
         context: context, parseVehicle: this.vehicle);
