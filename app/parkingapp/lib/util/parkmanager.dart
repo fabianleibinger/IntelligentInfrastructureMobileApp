@@ -44,6 +44,7 @@ class ParkManager {
                 _setParkedIn(vehicle, context);
               }
             }).catchError((e) {
+              print('Could not update position ' + _errorCount.toString());
               //if get position fails try again or cancel park in
               if (_errorCount++ > _errorLimit) {
                 timer.cancel();
@@ -157,6 +158,7 @@ class ParkManager {
                   });
             }
           }).catchError((e) {
+            print('Could not update position ' + _errorCount.toString());
             //if get position fails try again or cancel park in
             if (_errorCount++ > _errorLimit) {
               timer.cancel();
