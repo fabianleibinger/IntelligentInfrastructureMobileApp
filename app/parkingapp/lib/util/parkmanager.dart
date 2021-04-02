@@ -162,7 +162,9 @@ class ParkManager {
 
         // vehicle not parking out anymore.
       });
-    }
+    } else
+      //vehicle does not need to be parked out
+      Navigator.pushReplacementNamed(context, vehicle.inAppKey);
   }
 
   /// Returns if [vehicle] needs to be parked out.
