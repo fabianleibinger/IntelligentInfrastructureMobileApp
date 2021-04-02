@@ -26,8 +26,6 @@ class ParkOutPage extends StatefulWidget {
 }
 
 class _ParkOutPageState extends State<ParkOutPage> {
-  Timer _timer;
-
   /// Initializes selected vehicle and calls [vehicle.parkOut(context)].
   @override
   void initState() {
@@ -48,11 +46,6 @@ class _ParkOutPageState extends State<ParkOutPage> {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
-    // Wait until build finished to call method.
-
-    //add timer to update map
-    _timer =
-        Timer.periodic(Duration(milliseconds: 500), (timer) => setState(() {}));
 
     //wait until build finished to call method
     WidgetsBinding.instance
@@ -61,18 +54,7 @@ class _ParkOutPageState extends State<ParkOutPage> {
 
   /// Returns [Scaffold], Animation, [FloatingActionButton].
   @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  //TODO: switch _firstBuild to false in setState()
-
-  @override
   Widget build(BuildContext context) {
-    //cancel the timer if the vehicle is parked in
-    ParkManager.needsToParkOut(context, vehicle) ? null : _timer.cancel();
-
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
       drawer: AppDrawer(Routes.parkOut),
@@ -104,8 +86,15 @@ class _ParkOutPageState extends State<ParkOutPage> {
           Expanded(
             child: ListView(
               children: [
-                ParkManager.getParkInAnimation(
-                    context: context, vehiclePosition: vehicle.location),
+                ValueListenableBuilder(
+                    valueListenable: vehicle.locationObserver,
+                    builder: (BuildContext context, coordinate, Widget widget) {
+                      print('rebuilding park in map');
+                      return ParkManager.getParkInAnimation(
+                          context: context,
+                          vehiclePosition: vehicle.location,
+                          destination: vehicle.parkingSpot);
+                    })
               ],
             ),
           )
