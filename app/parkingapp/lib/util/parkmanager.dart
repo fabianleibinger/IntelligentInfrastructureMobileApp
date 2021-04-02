@@ -82,10 +82,10 @@ class ParkManager {
   /// Parking out vehicle can't be parked in.
   static bool needsToParkIn(BuildContext context, Vehicle vehicle) {
     ApiProvider.getPosition(vehicle).then((value) {
-      value["parkedIn"] != null ??
-          vehicle.setAndUpdateParkedIn(context, value["parkedIn"]);
-      value["reached_position"] != null ??
-          vehicle.setAndUpdateParkIngIn(context, value["reached_position"]);
+      if (value["reached_position"] != null)
+        vehicle.setAndUpdateParkedIn(context, value["reached_position"]);
+      if (value["parking"] != null)
+        vehicle.setAndUpdateParkIngIn(context, value["parking"]);
       print('needs to park in? parked in: ' +
           vehicle.parkedIn.toString() +
           ' parking in: ' +
@@ -182,10 +182,14 @@ class ParkManager {
   static bool needsToParkOut(BuildContext context, Vehicle vehicle) {
     ApiProvider.getPosition(vehicle).then((value) {
       print(value);
-      value["reached_position"] != null ??
-          vehicle.setAndUpdateParkedIn(context, value["reached_position"]);
-      value["parking"] != null ??
-          vehicle.setAndUpdateParkIngOut(context, value["parking"]);
+      //if (value["reached_position"] != null)
+      //  vehicle.setAndUpdateParkedIn(context, value["reached_position"]);
+      if (value["parking"] != null)
+        vehicle.setAndUpdateParkIngOut(context, value["parking"]);
+      print('needs to park out? parked in: ' +
+          vehicle.parkedIn.toString() +
+          ' parking out: ' +
+          vehicle.parkingOut.toString());
     });
     return vehicle.parkedIn;
   }
