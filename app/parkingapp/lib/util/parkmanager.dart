@@ -136,9 +136,10 @@ class ParkManager {
         //update the position while the vehicle is parking out
         new Timer.periodic(Duration(seconds: 1), (timer) {
           print('ParkOut: updating vehicle ' + vehicle.name);
-          ParkManager.updatePosition(vehicle).then((value) {
+          ParkManager.updatePosition(vehicle).then((bool parking) {
+            print('parking? ' + parking.toString());
             //park out finished
-            if (!value) {
+            if (!parking) {
               timer.cancel();
               vehicle.setAndUpdateParkedIn(context, false);
               vehicle.setAndUpdateParkIngOut(context, false);
@@ -174,11 +175,11 @@ class ParkManager {
 
         // vehicle not parking out anymore.
       });
-    } else {
-      print('vehicle is not parked in');
-      //vehicle does not need to be parked out
-      Navigator.pushReplacementNamed(context, vehicle.inAppKey);
-    }
+    } //else {
+    //print('vehicle is not parked in');
+    //vehicle does not need to be parked out
+    //Navigator.pushReplacementNamed(context, vehicle.inAppKey);
+    //}
   }
 
   /// Returns if [vehicle] needs to be parked out.
