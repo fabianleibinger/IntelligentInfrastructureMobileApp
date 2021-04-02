@@ -82,16 +82,10 @@ class ParkManager {
   /// Parking out vehicle can't be parked in.
   static bool needsToParkIn(BuildContext context, Vehicle vehicle) {
     ApiProvider.getPosition(vehicle).then((value) {
-      value["parkedIn"] != null
-          //use backend value
-          ? vehicle.setAndUpdateParkedIn(context, value["parkedIn"])
-          //fallback
-          : vehicle.setAndUpdateParkedIn(context, false);
-      value["reached_position"] != null
-          //use backend value
-          ? vehicle.setAndUpdateParkIngIn(context, value["reached_position"])
-          //fallback
-          : vehicle.setAndUpdateParkIngIn(context, false);
+      value["parkedIn"] != null ??
+          vehicle.setAndUpdateParkedIn(context, value["parkedIn"]);
+      value["reached_position"] != null ??
+          vehicle.setAndUpdateParkIngIn(context, value["reached_position"]);
       print('needs to park in? parked in: ' +
           vehicle.parkedIn.toString() +
           ' parking in: ' +
