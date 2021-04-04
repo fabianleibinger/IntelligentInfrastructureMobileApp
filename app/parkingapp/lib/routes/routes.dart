@@ -1,5 +1,6 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';

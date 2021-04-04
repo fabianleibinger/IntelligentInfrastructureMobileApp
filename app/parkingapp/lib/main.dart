@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/models/classes/coordinate.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -112,9 +114,9 @@ class Main extends StatelessWidget {
         freeChargeableParkingSpots: 0,
         image: 'assets/parkgarage-fasanengarten.jpg',
         map: "assets/parkgarage-fasanengarten-map.jpg",
-        bottomLeft: Coordinate(latitude: 49.0134227, longitude: 8.41950527853),
+        bottomLeft: Coordinate(lattitude: 49.0134227, longitude: 8.41950527853),
         topRight:
-            Coordinate(latitude: 49.0144759205, longitude: 8.42059599234));
+            Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234));
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
     return MultiProvider(
       providers: [

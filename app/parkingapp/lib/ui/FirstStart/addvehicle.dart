@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/util/vehiclehelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AddVehicle extends StatefulWidget {
@@ -13,14 +14,14 @@ class _AddVehicleState extends State<AddVehicle> {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    UpdateMainPageVehicle.setUp(context: context);
+    VehicleHelper.updateMainPageVehicle(context: context);
     SharedPreferences.getInstance().then(
         (preferences) => preferences.setBool(RouteLandingPage.isSetUp, true));
     return WillPopScope(
         onWillPop: () {
           SharedPreferences.getInstance().then((preferences) =>
               preferences.setBool(RouteLandingPage.isSetUp, false));
-          return UpdateMainPageVehicle.cleanUp(context: context);
+          return VehicleHelper.cleanUpDummy(context: context);
         },
         child: Scaffold(
           appBar: AppBar(

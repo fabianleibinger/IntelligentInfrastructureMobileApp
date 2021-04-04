@@ -3,6 +3,7 @@ import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
+import 'package:parkingapp/models/classes/coordinate.dart';
 
 void main() {
   ParkingGarage _garage;
@@ -11,7 +12,7 @@ void main() {
   ChargeableVehicle _chargeable;
 
   setUp(() {
-    Coordinate coordinate = Coordinate(latitude: 0, longitude: 0);
+    Coordinate coordinate = Coordinate(lattitude: 0, longitude: 0);
     _garage = ParkingGarage(
         name: '',
         type: ParkingGarageType.Tiefgarage,

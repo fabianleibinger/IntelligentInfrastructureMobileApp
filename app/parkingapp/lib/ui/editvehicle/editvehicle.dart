@@ -10,18 +10,12 @@ import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/enum/chargingprovider.dart';
-import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/util/utility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/util/vehiclehelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-final double _notSpecifiedDouble = 0;
-final String _notSpecifiedString = '';
-final bool _notSpecifiedBool = false;
-final TimeOfDay _notSpecifiedTimeOfDay = TimeOfDay(hour: 0, minute: 0);
-final String _defaultChargingProvider =
-    ChargingProvider.Automatisch.toShortString();
 
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
@@ -29,20 +23,12 @@ class EditVehicle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    vehicle != null
-        ? print('Update vehicle: ' +
-            vehicle.inAppKey +
-            ', ' +
-            vehicle.name +
-            ', ' +
-            vehicle.licensePlate)
-        : null;
-
     //update vehicle in MainPage
-    UpdateMainPageVehicle.setUp(context: context, parseVehicle: this.vehicle);
+    VehicleHelper.updateMainPageVehicle(
+        context: context, parseVehicle: this.vehicle);
     return WillPopScope(
       onWillPop: () {
-        return UpdateMainPageVehicle.cleanUp(
+        return VehicleHelper.cleanUpDummy(
             context: context, parseVehicle: this.vehicle);
       },
       child: Scaffold(
@@ -64,9 +50,9 @@ class CreateVehicle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //update vehicle in MainPage
-    UpdateMainPageVehicle.setUp(context: context);
+    VehicleHelper.updateMainPageVehicle(context: context);
     return WillPopScope(
-      onWillPop: () => UpdateMainPageVehicle.cleanUp(context: context),
+      onWillPop: () => VehicleHelper.cleanUpDummy(context: context),
       child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).addVehicleTitle),
@@ -150,8 +136,8 @@ class _VehicleFormState extends State<VehicleForm> {
                   FormField(
                     builder: (FormFieldState<dynamic> field) {
                       return ListTile(
-                    title: Text(AppLocalizations.of(context)
-                        .vehicleDimensionsDialogTitle),
+                        title: Text(AppLocalizations.of(context)
+                            .vehicleDimensionsDialogTitle),
                         subtitle: field.hasError
                             ? Text(
                                 field.errorText,
@@ -159,7 +145,7 @@ class _VehicleFormState extends State<VehicleForm> {
                                     color: Theme.of(context).errorColor),
                               )
                             : _vehicleDimensionsSubtitle(),
-                    onTap: () =>
+                        onTap: () =>
                             _showDialog(context, VehicleDimensionsDialog())
                                 .then((value) => field.validate()),
                       );
@@ -169,7 +155,7 @@ class _VehicleFormState extends State<VehicleForm> {
                       vehicle.width,
                       vehicle.height,
                       vehicle.turningCycle
-                    ].every((value) => value == _notSpecifiedDouble)
+                    ].every((value) => value == notSpecifiedDouble)
                         ? AppLocalizations.of(context).requiredText
                         : null,
                   )
@@ -201,10 +187,10 @@ class _VehicleFormState extends State<VehicleForm> {
   }
 
   Widget _vehicleDimensionsSubtitle() {
-    if (vehicle.height == _notSpecifiedDouble &&
-        vehicle.width == _notSpecifiedDouble &&
-        vehicle.height == _notSpecifiedDouble &&
-        vehicle.turningCycle == _notSpecifiedDouble) return null;
+    if (vehicle.height == notSpecifiedDouble &&
+        vehicle.width == notSpecifiedDouble &&
+        vehicle.height == notSpecifiedDouble &&
+        vehicle.turningCycle == notSpecifiedDouble) return null;
     return SubtitleFormatter.vehicleDimensions(
       context: context,
       vehicle: vehicle,
@@ -294,76 +280,5 @@ class UpperCaseTextFormatter extends TextInputFormatter {
       text: newValue.text?.toUpperCase(),
       selection: newValue.selection,
     );
-  }
-}
-
-class UpdateMainPageVehicle {
-  //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
-  static void setUp({@required BuildContext context, Vehicle parseVehicle}) {
-    if (parseVehicle == null) {
-      print('set new electric vehicle on main page');
-      vehicle = ChargeableVehicle(
-        Utility.generateKey(),
-        _notSpecifiedString,
-        _notSpecifiedString,
-        _notSpecifiedDouble,
-        _notSpecifiedDouble,
-        _notSpecifiedDouble,
-        _notSpecifiedDouble,
-        _notSpecifiedDouble,
-        _notSpecifiedBool,
-        _notSpecifiedBool,
-        _notSpecifiedBool,
-        _notSpecifiedBool,
-        _defaultChargingProvider,
-        _notSpecifiedTimeOfDay,
-        _notSpecifiedTimeOfDay,
-      );
-      print('adding dummy vehicle to database');
-      DataHelper.addVehicle(context, vehicle);
-    } else if (parseVehicle.runtimeType == ChargeableVehicle) {
-      print('parsedVehicle is electric; using parsed vehicle as is');
-      vehicle = parseVehicle;
-    } else if (parseVehicle.runtimeType == StandardVehicle) {
-      DataHelper.deleteVehicle(context, vehicle);
-      print('parsedVehicle is standard; converting into chargeable');
-      StandardVehicle convertVehicle = parseVehicle;
-      vehicle = convertVehicle.toChargeableVehicle();
-      print('converting standard vehicle to electric vehicle in database');
-      DataHelper.addVehicle(context, vehicle);
-    }
-  }
-
-  static Future<bool> cleanUp(
-      {@required BuildContext context, Vehicle parseVehicle}) async {
-    print('starting clean up');
-    if (parseVehicle == null) {
-      print('removing dummy vehicle');
-      //the behicle did not exist before opening the form and needs to be removed
-      DataHelper.deleteVehicle(context, vehicle);
-    } else {
-      print('restoring previous state');
-      print('previous vehicle: inAppID: ' +
-          parseVehicle.inAppKey +
-          ' name: ' +
-          parseVehicle.name +
-          ' licensePlate: ' +
-          parseVehicle.licensePlate +
-          ' parkpreferences: ' +
-          parseVehicle.nearExitPreference.toString() +
-          parseVehicle.parkingCard.toString());
-      print('temporary vehicle: inAppID: ' +
-          vehicle.inAppKey +
-          ' name: ' +
-          vehicle.name +
-          ' licensePlate: ' +
-          vehicle.licensePlate +
-          ' parkpreferences: ' +
-          vehicle.nearExitPreference.toString() +
-          vehicle.parkingCard.toString());
-      //restore the previous state
-      DataHelper.updateVehicle(context, parseVehicle);
-    }
-    return true;
   }
 }

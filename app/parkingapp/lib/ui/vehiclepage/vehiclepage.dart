@@ -13,6 +13,7 @@ import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parkingapp/util/vehiclehelper.dart';
 // example for a page (mainpage)
 
 class VehiclePage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _VehiclePageState extends State<VehiclePage> {
     // TODO: implement initState
     super.initState();
     DataHelper.initVehicles(context);
+    VehicleHelper.cleanUpVehicles(context);
   }
 
   @override
@@ -86,7 +88,7 @@ class _VehiclePageState extends State<VehiclePage> {
                       child: Icon(Icons.delete,
                           color: Theme.of(context).dialogBackgroundColor),
                     ),
-                    color: Colors.red,
+                    color: Theme.of(context).errorColor,
                   ),
                   key: Key(vehicle.inAppKey),
                   onDismissed: (direction) {
@@ -105,9 +107,7 @@ class _VehiclePageState extends State<VehiclePage> {
                   },
                   child: ListTile(
                     title: Text(vehicle.name),
-                    subtitle: Text(vehicle.licensePlate +
-                        "; " +
-                        vehicle.databaseId.toString()),
+                    subtitle: Text(vehicle.licensePlate),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditVehicle(
                               vehicle: vehicle,
