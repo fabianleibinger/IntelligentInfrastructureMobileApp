@@ -38,6 +38,18 @@ class ParkManager {
           new Timer.periodic(Duration(seconds: 1), (timer) {
             print('ParkIn: updating vehicle ' + vehicle.name);
             ParkManager.updatePosition(vehicle).then((bool parking) {
+              // Checks if park in failed
+              if (!vehicle.parkedIn && !vehicle.parkingIn) {
+                // vehicle is not parked in but also not parking in meaning something has failed
+                // if park in didn't work: connection to server failed.
+                timer.cancel();
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return NoConnectionDialog.getDialog(context);
+                    }).then((value) => _setParkedOut(vehicle, context));
+              }
+
               //vehicle is now parked in
               if (!parking) {
                 timer.cancel();
@@ -45,14 +57,13 @@ class ParkManager {
               }
             }).catchError((e) {
               print('Could not update position ' + _errorCount.toString());
-              //if get position fails try again or cancel park in
+              //if get position fails try again or assume parked in
               if (_errorCount++ > _errorLimit) {
                 timer.cancel();
                 _setParkedIn(vehicle, context);
               }
               return;
             });
-            _checkAndReactParkInWorked(context, vehicle);
           });
           // vehicle not parking in anymore.
         });
@@ -103,21 +114,6 @@ class ParkManager {
           vehicle.parkingIn.toString());
     });
     return !vehicle.parkedIn && !vehicle.parkingIn && !vehicle.parkingOut;
-  }
-
-  /// Checks if park in worked,
-  /// creates parked in [Notification] or opens [NoConnectionDialog].
-  static void _checkAndReactParkInWorked(
-      BuildContext context, Vehicle vehicle) {
-    if (!vehicle.parkedIn && !vehicle.parkingIn) {
-      // vehicle is not parked in but also not parking in meaning something has failed
-      // if park in didn't work: connection to server failed.
-      showDialog(
-          context: context,
-          builder: (context) {
-            return NoConnectionDialog.getDialog(context);
-          });
-    }
   }
 
   /// Sends the [vehicle] park out request to the [ApiProvider].
