@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
+import 'package:parkingapp/ui/startpage/appLockPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //this will show a circular progress indicator while it waits for the shared preferences to be checked
