@@ -9,6 +9,7 @@ import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Class to show lockscreen if app is locked
 class AppLockPage extends StatefulWidget {
   final String apikey;
   const AppLockPage({Key key, this.apikey}) : super(key: key);
@@ -19,9 +20,6 @@ class AppLockPage extends StatefulWidget {
 const storedPasscode = '123456';
 
 class _AppLockPageState extends State<AppLockPage> {
-  //nötig??
-  //TextEditingController usernameController = new TextEditingController();
-
   //for passcode screen
   final StreamController<bool> _verificationNotifier =
       StreamController<bool>.broadcast();
@@ -34,6 +32,7 @@ class _AppLockPageState extends State<AppLockPage> {
     return _passCodeLockScreen(context);
   }
 
+  /// Creates passcode ui
   _passCodeLockScreen(BuildContext context) {
     return PasscodeScreen(
       title: Text(
@@ -87,6 +86,7 @@ class _AppLockPageState extends State<AppLockPage> {
   }
 }
 
+/// Handels routing if app is locked
 class AuthentificationHandling extends StatelessWidget {
   static const String routeName = '/authPage';
 

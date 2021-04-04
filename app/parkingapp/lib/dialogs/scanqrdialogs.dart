@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/settingspage/qrpage.dart';
+import 'package:parkingapp/util/qrgenerator.dart';
 import 'constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -15,7 +14,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 ///             });
 /// ```
 class ScanQRDialogs {
-
   /// Returns the dialog that opens the [QRPage] for a specific [vehicle].
   static getVehicleQRDialog(BuildContext context, Vehicle vehicle) {
     return AlertDialog(

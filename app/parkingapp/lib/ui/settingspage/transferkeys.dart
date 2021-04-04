@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/dialogs/noconnectiondialog.dart';
-import 'package:parkingapp/dialogs/scanqrdialogs.dart';
 import 'package:parkingapp/dialogs/scanqrdialogs.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/ui/mainpage/mainpage.dart';
-import 'package:parkingapp/ui/settingspage/qrpage.dart';
 
+/// Class for page to select car to transfer
 class Transferkeys extends StatelessWidget {
   static const routeName = '/transferkeys';
   @override
@@ -22,6 +19,7 @@ class Transferkeys extends StatelessWidget {
         ));
   }
 
+  /// Creates ListView of cars to transfer
   Widget createTransferKeysView() {
     return BlocBuilder<VehicleBloc, List<Vehicle>>(
       buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
@@ -57,12 +55,6 @@ class Transferkeys extends StatelessWidget {
                             context, vehicle);
                       },
                     );
-                    /*Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                QRPage(vehicle: vehicle)));*/
-                    //ScanQRDialog.createVehicleQRDialog(context);
                   });
             },
             itemCount: vehicleList.length);

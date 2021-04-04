@@ -7,13 +7,13 @@ import 'package:parkingapp/ui/FirstStart/landingpage.dart';
 import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
-import 'package:parkingapp/ui/firststartpage/appLockPage.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/parkpages/parkinpage.dart';
 import 'package:parkingapp/ui/parkpages/parkoutpage.dart';
 import 'package:parkingapp/ui/settingspage/settingspage.dart';
 import 'package:parkingapp/ui/settingspage/transferkeys.dart';
+import 'package:parkingapp/ui/startpage/appLockPage.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:parkingapp/util/qrscanner.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -69,6 +69,8 @@ class Main extends StatelessWidget {
                 builder: (context) => AuthentificationHandling());
           case Routes.qrscanner:
             return MaterialPageRoute(builder: (context) => ScanScreen());
+          case Routes.transferkeys:
+            return MaterialPageRoute(builder: (context) => Transferkeys());
         }
         //vehicles park routes
         //regex inAppKey check: 80996360-679b-11eb-8046-434ac6c775f0
@@ -95,15 +97,6 @@ class Main extends StatelessWidget {
                 builder: (context) => MainPage(uri.pathSegments.first));
           }
         }
-        if (settings.name == Routes.agbPage) {
-          return MaterialPageRoute(builder: (context) => AGB());
-        }
-        if (settings.name == Routes.transferkeys) {
-          return MaterialPageRoute(builder: (context) => Transferkeys());
-        }
-        //if (settings.name == Routes.qrpage) {
-        //return MaterialPageRoute(builder: (context) => QRPage(null));
-        //}
 
         //fallback route
         return MaterialPageRoute(builder: (context) => SettingsPage());
