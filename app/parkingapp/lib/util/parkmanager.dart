@@ -105,9 +105,8 @@ class ParkManager {
             vehicle.licensePlate,
         AppLocalizations.of(context).notificationParkInBody,
         vehicle.inAppKey, (value) {
-      vehicle.parkOut(context);
       Navigator.pushReplacementNamed(
-          context, Routes.returnCorrectRouteForVehicle(vehicle));
+          context, vehicle.inAppKey + Routes.parkOut);
       return null;
     }, true, false);
   }
