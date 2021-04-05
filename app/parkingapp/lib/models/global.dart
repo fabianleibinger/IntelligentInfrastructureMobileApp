@@ -71,7 +71,8 @@ TextStyle redButtonText = new TextStyle(
 
 // App theme
 ThemeData themeData = ThemeData(
-  appBarTheme: AppBarTheme(brightness: Brightness.dark),
+  appBarTheme:
+      AppBarTheme(brightness: Brightness.dark, titleTextStyle: whiteHeader),
   primaryColor: green,
   accentColor: lightGreen,
   errorColor: red,

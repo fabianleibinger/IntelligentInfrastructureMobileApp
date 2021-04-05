@@ -24,8 +24,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context).settingsTitle,
-              style: whiteHeader)),
+          title: Text(AppLocalizations.of(context).settingsTitle)),
       body: SettingsForm(),
     );
   }

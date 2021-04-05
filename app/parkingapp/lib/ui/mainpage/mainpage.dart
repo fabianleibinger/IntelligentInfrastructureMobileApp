@@ -113,7 +113,7 @@ class _MainPageState extends State<MainPage> {
     _buttonIsDisabled = disableButton();
     return Scaffold(
         appBar: AppBar(
-          title: Text(vehicle.name, style: whiteHeader),
+          title: Text(vehicle.name),
         ),
         drawer: AppDrawer(),
         floatingActionButton: FloatingActionButton.extended(

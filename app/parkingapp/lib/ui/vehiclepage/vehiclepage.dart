@@ -41,8 +41,7 @@ class _VehiclePageState extends State<VehiclePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).drawerVehicles,
-              style: whiteHeader),
+          title: Text(AppLocalizations.of(context).drawerVehicles),
         ),
         //TODO use routeName
         drawer: AppDrawer(),
