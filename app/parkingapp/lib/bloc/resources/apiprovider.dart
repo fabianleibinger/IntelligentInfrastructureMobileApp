@@ -15,8 +15,8 @@ class ApiProvider {
   static final String _serverPort = ':2525';
 
   /// The HTTP status codes.
-  static final int httpGetStatusCodeSuccess = 200;
-  static final int httpPostStatusCodeSuccess = 200;
+  static final int _httpGetStatusCodeSuccess = 200;
+  static final int _httpPostStatusCodeSuccess = 200;
 
   /// The HTTP Header specifications.
   static final String _httpPostHeaderFirst = 'Content-Type';
@@ -87,7 +87,7 @@ class ApiProvider {
   static Future<Map<String, dynamic>> httpGet(
       String url, String failureText) async {
     final response = await http.get(url).timeout(_timeOutAfter);
-    if (response.statusCode == httpGetStatusCodeSuccess) {
+    if (response.statusCode == _httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
     } else {
@@ -107,7 +107,7 @@ class ApiProvider {
             },
             body: jsonEncode(body))
         .timeout(_timeOutAfter);
-    if (response.statusCode == httpGetStatusCodeSuccess) {
+    if (response.statusCode == _httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
     } else {

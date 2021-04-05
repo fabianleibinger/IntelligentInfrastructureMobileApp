@@ -12,7 +12,7 @@ The vehicles (Vehicle class) are divided into two categories: standard vehicles 
 The user can select one of his vehicles in the AppDrawer widget. Thereafter the vehicles' properties are summarized on the MainPage widget, which provides the park in button and the compatible parking garage information in addition, e.g. available parking spots.
 
 ### Backend communication
-The main goal of the Parking App is to send park requests for the users vehicles to the parking garage. All requests are handled by the ApiProvider class that communicates with the backend via HTTP. 
+The main goal of the Parking App is to send park requests for the users vehicles to the parking garage. All requests are handled by the ApiProvider class that communicates with the backend via HTTP. The url of the backend can be changed with the _serverUrl variable (ApiProvider) as well as the port (_serverPort).
 
 ### Park operations
 To keep the vehicles state consistent during park operations, the ParkManager class provides the necessary logic.
