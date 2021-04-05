@@ -47,8 +47,7 @@ class _VehiclePageState extends State<VehiclePage> {
         //TODO use routeName
         drawer: AppDrawer(),
         floatingActionButton: FancyFab(),
-        body: Container(
-            padding: EdgeInsets.all(8), color: white, child: createListView()));
+        body: Container(padding: EdgeInsets.all(8), child: createListView()));
   }
 
   Widget createListView() {
