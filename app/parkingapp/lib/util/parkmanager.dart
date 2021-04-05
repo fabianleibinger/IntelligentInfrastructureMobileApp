@@ -42,13 +42,17 @@ class ParkManager {
               // Checks if park in failed
               if (!vehicle.parkedIn && !vehicle.parkingIn) {
                 // vehicle is not parked in but also not parking in meaning something has failed
-                // if park in didn't work: connection to server failed.
                 timer.cancel();
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return NoConnectionDialog.getDialog(context);
-                    }).then((value) => _setParkedOut(vehicle, context));
+
+                //vehicle could be cancelling park in
+                if (!vehicle.parkingOut) {
+                  // if park in didn't work: connection to server failed.
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return NoConnectionDialog.getDialog(context);
+                      }).then((value) => _setParkedOut(vehicle, context));
+                }
               }
 
               //vehicle is now parked in
@@ -141,6 +145,18 @@ class ParkManager {
           print('ParkOut: updating vehicle ' + vehicle.name);
           ParkManager.updatePosition(vehicle).then((bool parking) {
             print('parking? ' + parking.toString());
+
+            //checks if park out failed
+            if(!vehicle.parkingOut) {
+              timer.cancel();
+              // if park out didn't work: connection to server failed.
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return NoConnectionDialog.getDialog(context);
+                  }).then((value) => _setParkedIn(vehicle, context));
+            }
+
             //park out finished
             if (!parking) {
               timer.cancel();
@@ -195,18 +211,7 @@ class ParkManager {
   /// Returns if [vehicle] needs to be parked out.
   /// Parking in vehicle can be parked out.
   static bool needsToParkOut(BuildContext context, Vehicle vehicle) {
-    ApiProvider.getPosition(vehicle).then((value) {
-      print(value);
-      //if (value["reached_position"] != null)
-      //  vehicle.setAndUpdateParkedIn(context, value["reached_position"]);
-      if (value["parking"] != null)
-        vehicle.setAndUpdateParkIngOut(context, value["parking"]);
-      print('needs to park out? parked in: ' +
-          vehicle.parkedIn.toString() +
-          ' parking out: ' +
-          vehicle.parkingOut.toString());
-    });
-    return vehicle.parkedIn;
+    return (vehicle.parkedIn || vehicle.parkingIn) && !vehicle.parkingOut;
   }
 
   /// Checks if park out worked,
