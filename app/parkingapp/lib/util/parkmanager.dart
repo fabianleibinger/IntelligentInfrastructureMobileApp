@@ -66,24 +66,28 @@ class ParkManager {
             });
           });
           // vehicle not parking in anymore.
-        });
-      } else {
-        // No parking spots available.
-        print('no parking spots available');
-        showDialog(
-            context: context,
-            builder: (context) {
-              return ParkingGarageOccupiedDialog.getDialog(context);
-            });
-      }
+        }).catchError((e) => _noParkingSpotsAvailable(context));
+      } else
+        _noParkingSpotsAvailable(context);
     } else {
       // vehicle is already parked in.
       print('vehicle ' + vehicle.name + ' is already parked in');
     }
   }
 
+  static Future _noParkingSpotsAvailable(BuildContext context) {
+    // No parking spots available.
+    print('no parking spots available');
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return ParkingGarageOccupiedDialog.getDialog(context);
+        });
+  }
+
   ///set the [vehicle] to a parked in state
   static void _setParkedIn(Vehicle vehicle, BuildContext context) {
+    //TODO this does not update the vehicle on the main page. Parking out from here only works if the AppDrawer is opened (and presumably updates the vehicle from the database changes)
     vehicle.setAndUpdateParkedIn(context, true);
     vehicle.setAndUpdateParkIngIn(context, false);
     print('vehicle parked in: ' + vehicle.parkedIn.toString());
