@@ -8,6 +8,7 @@ import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
+import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -100,6 +101,8 @@ class ParkManager {
         AppLocalizations.of(context).notificationParkInBody,
         vehicle.inAppKey, (value) {
       vehicle.parkOut(context);
+      Navigator.pushReplacementNamed(
+          context, Routes.returnCorrectRouteForVehicle(vehicle));
       return null;
     }, true, false);
   }
