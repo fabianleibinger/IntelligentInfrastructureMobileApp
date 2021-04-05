@@ -11,8 +11,11 @@ class RouteLandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _isSetUp(context);
-    return Center(
-      child: CircularProgressIndicator(),
+    return Container(
+      color: Theme.of(context).primaryColor,
+      child: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
