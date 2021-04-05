@@ -68,9 +68,9 @@ class Main extends StatelessWidget {
           case Routes.authPage:
             return MaterialPageRoute(
                 builder: (context) => AuthentificationHandling());
-          case Routes.qrscanner:
+          case Routes.qrScanner:
             return MaterialPageRoute(builder: (context) => ScanScreen());
-          case Routes.transferkeys:
+          case Routes.transferKeys:
             return MaterialPageRoute(builder: (context) => Transferkeys());
         }
         //vehicles park routes

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/models/classes/coordinate.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';
@@ -88,11 +89,14 @@ class ParkManager {
 
   ///set the [vehicle] to a parked in state
   static void _setParkedIn(Vehicle vehicle, BuildContext context) {
-    //TODO this does not update the vehicle on the main page. Parking out from here only works if the AppDrawer is opened (and presumably updates the vehicle from the database changes)
     vehicle.setAndUpdateParkedIn(context, true);
     vehicle.setAndUpdateParkIngIn(context, false);
+    vehicle.setAndUpdateParkIngOut(context, false);
     print('vehicle parked in: ' + vehicle.parkedIn.toString());
-    // if park in worked: notification, that triggers parkOut method.
+
+    DataHelper.initVehicles(context);
+
+    // notification, that triggers parkOut method.
     Notifications.createNotificationClickable(
         AppLocalizations.of(context).notificationParkInTitle +
             vehicle.name +
@@ -168,8 +172,12 @@ class ParkManager {
 
   static void _setParkedOut(Vehicle vehicle, BuildContext context) {
     vehicle.setAndUpdateParkedIn(context, false);
+    vehicle.setAndUpdateParkIngIn(context, false);
     vehicle.setAndUpdateParkIngOut(context, false);
     print('vehicle parked out: ' + vehicle.parkedIn.toString());
+
+    DataHelper.initVehicles(context);
+
     // Open main page.
     Navigator.pushReplacementNamed(context, vehicle.inAppKey);
     showDialog(
@@ -229,7 +237,7 @@ class ParkManager {
       Coordinate vehiclePosition,
       destination}) {
     print('generate parkInMap');
-    //TODO height must be calculated from aspect ratio of mapp
+    //TODO height must be calculated from aspect ratio of map
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (1473 * _width) / 1000;
 

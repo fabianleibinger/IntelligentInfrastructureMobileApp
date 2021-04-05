@@ -83,7 +83,7 @@ class _FancyFabState extends State<FancyFab>
     return Container(
       child: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, Routes.qrscanner);
+          Navigator.pushNamed(context, Routes.qrScanner);
         },
         tooltip: 'QR Code',
         elevation: 10,
