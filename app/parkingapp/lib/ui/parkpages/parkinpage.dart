@@ -59,7 +59,7 @@ class _ParkInPageState extends State<ParkInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
+      appBar: AppBar(title: Text(vehicle.name)),
       drawer: AppDrawer(Routes.parkIn),
       // Button observes parkedIn value of car.
       floatingActionButton: ValueListenableBuilder(

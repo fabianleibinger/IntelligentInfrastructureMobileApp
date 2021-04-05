@@ -20,8 +20,7 @@ class AppConfiguration extends StatelessWidget {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context).titleConfigureApp,
-              style: whiteHeader)),
+          title: Text(AppLocalizations.of(context).titleConfigureApp)),
       bottomNavigationBar: Material(
         elevation: 10,
         child: ButtonBar(

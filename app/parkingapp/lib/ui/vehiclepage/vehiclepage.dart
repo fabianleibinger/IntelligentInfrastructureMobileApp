@@ -41,14 +41,12 @@ class _VehiclePageState extends State<VehiclePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).drawerVehicles,
-              style: whiteHeader),
+          title: Text(AppLocalizations.of(context).drawerVehicles),
         ),
         //TODO use routeName
         drawer: AppDrawer(),
         floatingActionButton: FancyFab(),
-        body: Container(
-            padding: EdgeInsets.all(8), color: white, child: createListView()));
+        body: Container(padding: EdgeInsets.all(8), child: createListView()));
   }
 
   Widget createListView() {
