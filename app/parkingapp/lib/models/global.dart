@@ -75,7 +75,17 @@ ThemeData themeData = ThemeData(
   accentColor: lightGreen,
   errorColor: red,
   visualDensity: VisualDensity.adaptivePlatformDensity,
-  dialogBackgroundColor: Colors.white,
+  toggleableActiveColor: green,
+  disabledColor: grey,
+);
+
+//Dark App Theme
+ThemeData darkThemeData = ThemeData(
+  brightness: Brightness.dark,
+  primaryColor: green,
+  accentColor: lightGreen,
+  errorColor: red,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
   toggleableActiveColor: green,
   disabledColor: grey,
 );
