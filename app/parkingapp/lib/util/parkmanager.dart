@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/resources/apiprovider.dart';
 import 'package:parkingapp/dialogs/noconnectiondialog.dart';
 import 'package:parkingapp/models/classes/coordinate.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/dialogs/parkinggarageoccupieddialog.dart';

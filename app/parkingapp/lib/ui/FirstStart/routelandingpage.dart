@@ -22,7 +22,7 @@ class RouteLandingPage extends StatelessWidget {
 
   //check the shared preferences and database if the app has been succesfully set up and navigate to correct page
   void _isSetUp(BuildContext context) async {
-    DataHelper.initVehicles(context);
+    await DataHelper.initVehicles(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
     print('isSetUp? ' + isSetUp.toString());
