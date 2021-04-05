@@ -33,7 +33,6 @@ class _VehiclePageState extends State<VehiclePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    DataHelper.initVehicles(context);
     VehicleHelper.cleanUpVehicles(context);
   }
 

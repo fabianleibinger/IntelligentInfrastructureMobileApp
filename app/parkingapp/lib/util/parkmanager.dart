@@ -94,8 +94,6 @@ class ParkManager {
     vehicle.setAndUpdateParkIngOut(context, false);
     print('vehicle parked in: ' + vehicle.parkedIn.toString());
 
-    DataHelper.initVehicles(context);
-
     // notification, that triggers parkOut method.
     Notifications.createNotificationClickable(
         AppLocalizations.of(context).notificationParkInTitle +
@@ -175,8 +173,6 @@ class ParkManager {
     vehicle.setAndUpdateParkIngIn(context, false);
     vehicle.setAndUpdateParkIngOut(context, false);
     print('vehicle parked out: ' + vehicle.parkedIn.toString());
-
-    DataHelper.initVehicles(context);
 
     // Open main page.
     Navigator.pushReplacementNamed(context, vehicle.inAppKey);

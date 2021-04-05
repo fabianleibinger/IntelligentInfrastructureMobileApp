@@ -66,7 +66,6 @@ class _MainPageState extends State<MainPage> {
         _setButtonIsDisabled();
       });
     });
-    DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
         for (Vehicle vehicle in vehicleList) {

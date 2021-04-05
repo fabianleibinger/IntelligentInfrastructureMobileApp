@@ -108,8 +108,6 @@ ListTile generateVehicleTile(BuildContext context, String currentDrawer,
 
 Widget generateVehicles(BuildContext context, String currentDrawer) {
   //TODO this needs to be removed or replaced by something that will not allways regcreate the drawer
-  // get vehicleList
-  DataHelper.initVehicles(context);
 
   return BlocBuilder<VehicleBloc, List<Vehicle>>(
     buildWhen: (List<Vehicle> previous, List<Vehicle> current) {

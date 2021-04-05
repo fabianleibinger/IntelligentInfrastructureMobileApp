@@ -29,8 +29,6 @@ class _ParkOutPageState extends State<ParkOutPage> {
   void initState() {
     super.initState();
 
-    // Init vehicle list.
-    DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
         for (Vehicle vehicle in vehicleList) {

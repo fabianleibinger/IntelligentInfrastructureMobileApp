@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/startpage/appLockPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,8 +20,9 @@ class RouteLandingPage extends StatelessWidget {
     );
   }
 
-  //check the shared preferences if the app has been succesfully set up and navigate to correct page
+  //check the shared preferences and database if the app has been succesfully set up and navigate to correct page
   void _isSetUp(BuildContext context) async {
+    DataHelper.initVehicles(context);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
     print('isSetUp? ' + isSetUp.toString());
