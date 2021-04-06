@@ -40,7 +40,7 @@ class PasscodePageState extends State<PasscodePage> {
             circleSize: 30),
         keyboardUIConfig: KeyboardUIConfig(
             digitBorderWidth: 2, primaryColor: Theme.of(context).primaryColor),
-        passwordEnteredCallback: onNewPasscodeEntered,
+        passwordEnteredCallback: _onNewPasscodeEntered,
         cancelButton: Icon(
           Icons.arrow_back,
           color: Theme.of(context).primaryColor,
@@ -50,16 +50,16 @@ class PasscodePageState extends State<PasscodePage> {
           style: const TextStyle(fontSize: 16, color: Colors.white),
           semanticsLabel: 'Delete',
         ),
-        bottomWidget: buildPasscodeRestoreButton(),
+        bottomWidget: _buildPasscodeRestoreButton(),
         shouldTriggerVerification: _verificationNotifier.stream,
         backgroundColor: Colors.black.withOpacity(0.8),
-        cancelCallback: onPasscodeCancelled,
+        cancelCallback: _onPasscodeCancelled,
         digits: digits,
         passwordDigits: 6);
   }
 
   /// Handels new passcode
-  onNewPasscodeEntered(String enteredPasscode) {
+  _onNewPasscodeEntered(String enteredPasscode) {
     bool isValid;
     //passcode screen disappears after typing in the passcode
     if (enteredPasscode.length == 6) {
@@ -78,12 +78,12 @@ class PasscodePageState extends State<PasscodePage> {
   }
 
   /// Method to pop the widget
-  onPasscodeCancelled() {
+  _onPasscodeCancelled() {
     Navigator.maybePop(context);
   }
 
   /// Method to build restore button
-  buildPasscodeRestoreButton() => Align(
+  _buildPasscodeRestoreButton() => Align(
         alignment: Alignment.bottomCenter,
         child: Container(
           margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
@@ -99,7 +99,7 @@ class PasscodePageState extends State<PasscodePage> {
             splashColor: Colors.white.withOpacity(0.4),
             highlightColor: Colors.white.withOpacity(0.2),
             onPressed: () {
-              resetAppPassword();
+              _resetAppPassword();
               Navigator.maybePop(context);
             },
           ),
@@ -107,7 +107,7 @@ class PasscodePageState extends State<PasscodePage> {
       );
 
   /// Resets passcode in shared preferences
-  resetAppPassword() {
+  _resetAppPassword() {
     SharedPreferencesHelper.disableAuthentification();
   }
 

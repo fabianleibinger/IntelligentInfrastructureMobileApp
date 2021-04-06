@@ -9,7 +9,7 @@ import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Class to show lockscreen if app is locked
+// Class is only called from [AuthentificationHandling] when app is locked
 class AppLockPage extends StatefulWidget {
   final String apikey;
   const AppLockPage({Key key, this.apikey}) : super(key: key);
@@ -86,7 +86,10 @@ class _AppLockPageState extends State<AppLockPage> {
   }
 }
 
-/// Handels routing if app is locked
+/// Handels routing if app is locked,
+///
+/// directing to [AppLockPage] if a passcode is required,
+/// directing to [RouteLandingPage] if no passcode is required
 class AuthentificationHandling extends StatelessWidget {
   static const String routeName = '/authPage';
 
