@@ -32,8 +32,6 @@ class _ParkInPageState extends State<ParkInPage> {
     // Update parking spots.
     currentParkingGarage.updateAllFreeParkingSpots();
 
-    // Init vehicle list.
-    DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
         for (Vehicle vehicle in vehicleList) {

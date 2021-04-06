@@ -11,7 +11,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 class ApiProvider {
   /// The Backend Server Address.
   //TODO new url 192.168.4.1
-  static final String _serverUrl = 'http://10.0.2.2';
+  static final String _serverUrl = 'http://cloud.carl.al';
   static final String _serverPort = ':2525';
 
   /// The HTTP status codes.
@@ -107,7 +107,7 @@ class ApiProvider {
             },
             body: jsonEncode(body))
         .timeout(_timeOutAfter);
-    if (response.statusCode == _httpGetStatusCodeSuccess) {
+    if (response.statusCode == _httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
     } else {

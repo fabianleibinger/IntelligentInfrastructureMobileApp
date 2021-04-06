@@ -23,10 +23,10 @@ class Routes {
   static const String createVehicle = CreateVehicle.routeName;
   static const String landingPage = LandingPage.routeName;
   static const String routeLandingPage = RouteLandingPage.routeName;
-  static const String transferkeys = Transferkeys.routeName;
-  static const String qrpage = QRPage.routeName;
+  static const String transferKeys = Transferkeys.routeName;
+  static const String qrPage = QRPage.routeName;
   static const String authPage = AuthentificationHandling.routeName;
-  static const String qrscanner = ScanScreen.routeName;
+  static const String qrScanner = ScanScreen.routeName;
 
   /// Returns the correct route according to [vehicle] values.
   /// Opens either [MainPage], [ParkInPage], [ParkOutPage].
