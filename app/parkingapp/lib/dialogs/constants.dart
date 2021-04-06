@@ -3,7 +3,6 @@ import 'package:parkingapp/models/global.dart';
 
 /// Basic building blocks for dialogs.
 class Constants {
-
   static const double padding = 20;
   static const double avatarRadius = 45;
 
@@ -20,8 +19,7 @@ class Constants {
       content: Text(content),
       actions: [
         getBackTextButton(context, red, cancelButtonText),
-        getTextButton(
-            context, green, confirmButtonText, confirmButtonNextPage)
+        getTextButton(context, green, confirmButtonText, confirmButtonNextPage)
       ],
     );
   }
@@ -37,8 +35,7 @@ class Constants {
       content: Text(content),
       actions: [
         getBackTextButton(context, red, cancelButtonText),
-        getTextButton(
-            context, green, confirmButtonText, confirmButtonNextPage)
+        getTextButton(context, green, confirmButtonText, confirmButtonNextPage)
       ],
     );
   }
@@ -62,8 +59,8 @@ class Constants {
   }
 
   /// Returns a confirmation dialog with [title], widget content [tiles] and one button.
-  static getConfirmationDialog(BuildContext context, String title,
-      String buttonText, Widget tiles) {
+  static getConfirmationDialog(
+      BuildContext context, String title, String buttonText, Widget tiles) {
     return AlertDialog(
       title: Text(title),
       content: Column(
@@ -77,7 +74,8 @@ class Constants {
   }
 
   /// Returns a button that closes a dialog, shows [text] and has a [color].
-  static TextButton getBackTextButton(BuildContext context, Color color, String text) {
+  static TextButton getBackTextButton(
+      BuildContext context, Color color, String text) {
     return TextButton(
       style: TextButton.styleFrom(primary: color),
       onPressed: () => Navigator.pop(context),
@@ -90,7 +88,8 @@ class Constants {
       BuildContext context, Color color, String text, String nextPage) {
     return TextButton(
       style: TextButton.styleFrom(primary: color),
-      onPressed: () => Navigator.pushReplacementNamed(context, nextPage),
+      onPressed: () => Navigator.pushNamedAndRemoveUntil(
+          context, nextPage, (route) => false),
       child: Text(text),
     );
   }
