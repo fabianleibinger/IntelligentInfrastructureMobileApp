@@ -10,7 +10,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:system_settings/system_settings.dart';
 
-/// Class for showing the settings page
+/// Settings ui
+/// 
+/// User can modify push notification and passcode settings and can transfer 
+/// vehicles via QR from this page
 class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
   const SettingsPage({Key key}) : super(key: key);

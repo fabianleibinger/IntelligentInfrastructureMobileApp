@@ -6,7 +6,9 @@ import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 
-/// Class for the widget to select a passcode
+/// Passcode ui
+/// 
+/// User can set new passcode for the app or turn it off
 class PasscodePage extends StatefulWidget {
   static const String routeName = '/passcodepage';
   PasscodePage({Key key}) : super(key: key);

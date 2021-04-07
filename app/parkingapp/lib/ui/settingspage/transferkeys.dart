@@ -5,7 +5,10 @@ import 'package:parkingapp/dialogs/scanqrdialogs.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 
-/// Class for page to select car to transfer
+/// Class creates list with vehicles to transfer
+/// 
+/// All current vehicles are showed and can be selected, 
+/// routes to associated [QRPage]
 class Transferkeys extends StatelessWidget {
   static const routeName = '/transferkeys';
   @override
