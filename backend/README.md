@@ -11,6 +11,8 @@ In a terminal, navigate to catkin_ws/ and run command 'bash setup_script.sh'. Th
 
 For testing purpose, open a browser and type in a valid address, e.g. http://127.0.0.1:2525/free if your server runs on IP 127.0.0.1 (localhost) and port 2525. If you have the app installed or running on an emulator, use the given buttons to call methods from the API provider. Returns will have JSON format.
 
+To shutdown the server gracefully, copy shutdown_script.sh to your catkin_ws/ directory and in a terminal run 'bash shutdown_script.sh'. It will call the shutdown route of the server and kill the rosmaster.
+
 ## Modification and further development
 ROS services are defined in parking_app_ros_pkg/srv, ROS messages in parking_app_ros_pkg/msg. If you add or remove ROS elements from there, modify CMakeLists.txt for your needs.
 
