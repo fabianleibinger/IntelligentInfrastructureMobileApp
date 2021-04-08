@@ -7,11 +7,11 @@ import enum
 import parking_app_python_pkg.database as id_database
 
 from std_msgs.msg import String
-from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
-from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
-from parking_app_ros_pkg.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
-from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
+from ros_parking_management_msgs.srv import CapacityRequest, CapacityRequestResponse
+from ros_parking_management_msgs.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
+from ros_parking_management_msgs.srv import VehiclePositionRequest, VehiclePositionRequestResponse
+from ros_parking_management_msgs.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
+from ros_parking_management_msgs.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
 
 # Initialise a ROS node to allow ROS publisher/subscriber or requesting ROS services.
 # Use threading to avoid collision with flask server.
@@ -122,11 +122,11 @@ class ParkProcess:
             vehicle_parameters, vehicle_status=VehicleStatus.status_drop_off.value)
         vehicle_message.entry_time = rospy.get_rostime()
         try:
-            rospy.wait_for_service('register_vehicle_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/register_vehicle_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            register_vehicle_request = rospy.ServiceProxy('register_vehicle_request', RegisterVehicleRequest)
+            register_vehicle_request = rospy.ServiceProxy('/register_vehicle_request', RegisterVehicleRequest)
             response = register_vehicle_request(vehicle_message)
             return self.generate_park_in_response(response, vehicle_message.identifiers.app_id)
         except rospy.ServiceException as service_exception:
@@ -145,11 +145,11 @@ class ParkProcess:
         pms_id = IdMapper.get_corresponding_pms_id(app_id)
         vehicle_identification_message = self.generate_identification_message(app_id, number_plate, pms_id)
         try:
-            rospy.wait_for_service('parkout_vehicle_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/unpark_vehicle_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            parkout_vehicle_request = rospy.ServiceProxy('parkout_vehicle_request', ParkoutVehicleRequest)
+            parkout_vehicle_request = rospy.ServiceProxy('/unpark_vehicle_request', ParkoutVehicleRequest)
             response = parkout_vehicle_request(vehicle_identification_message)
             return self.generate_park_out_response(response)
         except rospy.ServiceException as service_exception:
@@ -371,11 +371,11 @@ class LocalizationProcess:
         vehicle_identification = park_process_ids.generate_identification_message(app_id, number_plate, pms_id)
 
         try:
-            rospy.wait_for_service('vehicle_position_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/vehicle_position_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            vehicle_position_request = rospy.ServiceProxy('vehicle_position_request', VehiclePositionRequest)
+            vehicle_position_request = rospy.ServiceProxy('/vehicle_position_request', VehiclePositionRequest)
             response = vehicle_position_request(vehicle_identification)
             return self.generate_get_position_response(response)
         except rospy.ServiceException as service_exception:
@@ -423,12 +423,12 @@ class CapacityProcess:
         :exception: CommunicationRosServiceException if the ROS service is unavailable
         """
         try:
-            rospy.wait_for_service('capacity_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/capacity_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             # If you get this exception here, probably your ROS service server is not running.
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            capacity_request = rospy.ServiceProxy('capacity_request', CapacityRequest)
+            capacity_request = rospy.ServiceProxy('/capacity_request', CapacityRequest)
             capacities = capacity_request()
             return capacities
         except rospy.ServiceException as service_exception:
