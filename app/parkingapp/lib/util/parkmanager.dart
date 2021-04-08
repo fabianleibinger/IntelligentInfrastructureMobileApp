@@ -125,7 +125,7 @@ class ParkManager {
           vehicle.parkedIn.toString() +
           ' parking in: ' +
           vehicle.parkingIn.toString());
-    });
+    }).catchError((e) => print('could not update vehiclePosition'));
     return !vehicle.parkedIn && !vehicle.parkingIn && !vehicle.parkingOut;
   }
 
