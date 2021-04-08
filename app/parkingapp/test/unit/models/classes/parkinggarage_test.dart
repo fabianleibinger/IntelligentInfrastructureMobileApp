@@ -12,7 +12,7 @@ void main() {
   ChargeableVehicle _chargeable;
 
   setUp(() {
-    Coordinate coordinate = Coordinate(lattitude: 0, longitude: 0);
+    Coordinate coordinate = Coordinate(latitude: 0, longitude: 0);
     _garage = ParkingGarage(
         name: '',
         type: ParkingGarageType.Tiefgarage,

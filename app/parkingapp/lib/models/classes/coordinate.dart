@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Coordinate {
-  final double lattitude, longitude;
+  final double latitude, longitude;
 
-  Coordinate({@required this.lattitude, @required this.longitude});
+  Coordinate({@required this.latitude, @required this.longitude});
 
   toString() {
-    return lattitude.toString() + ', ' + longitude.toString();
+    return latitude.toString() + ', ' + longitude.toString();
   }
 }

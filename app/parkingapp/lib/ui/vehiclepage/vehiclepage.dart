@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
-import 'package:parkingapp/dialogs/constants.dart';
 import 'package:parkingapp/dialogs/deletevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/util/vehiclehelper.dart';
-// example for a page (mainpage)
 
 class VehiclePage extends StatefulWidget {
   static const String routeName = '/vehiclepage';
@@ -31,7 +27,6 @@ class _VehiclePageState extends State<VehiclePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     VehicleHelper.cleanUpVehicles(context);
   }

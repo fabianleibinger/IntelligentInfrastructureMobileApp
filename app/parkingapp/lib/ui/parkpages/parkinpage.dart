@@ -1,10 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/dialogs/parkdialogs.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
@@ -50,8 +48,6 @@ class _ParkInPageState extends State<ParkInPage> {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkIn(context));
   }
-
-  //TODO: setState when parkedIn switches
 
   /// Returns [Scaffold], Animation, park out button [FloatingActionButton].
   @override
