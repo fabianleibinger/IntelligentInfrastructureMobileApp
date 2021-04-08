@@ -7,11 +7,11 @@ import enum
 import parking_app_python_pkg.database as id_database
 
 from std_msgs.msg import String
-from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
-from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
-from parking_app_ros_pkg.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
-from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
+from ros_parking_management_msgs.srv import CapacityRequest, CapacityRequestResponse
+from ros_parking_management_msgs.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
+from ros_parking_management_msgs.srv import VehiclePositionRequest, VehiclePositionRequestResponse
+from ros_parking_management_msgs.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
+from ros_parking_management_msgs.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
 
 # Initialise a ROS node to allow ROS publisher/subscriber or requesting ROS services.
 # Use threading to avoid collision with flask server.

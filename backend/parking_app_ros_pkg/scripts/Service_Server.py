@@ -2,10 +2,10 @@
 
 from __future__ import print_function
 
-from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
-from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
-from parking_app_ros_pkg.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
+from ros_parking_management_msgs.srv import CapacityRequest, CapacityRequestResponse
+from ros_parking_management_msgs.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
+from ros_parking_management_msgs.srv import VehiclePositionRequest, VehiclePositionRequestResponse
+from ros_parking_management_msgs.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
 import rospy
 import random
 
