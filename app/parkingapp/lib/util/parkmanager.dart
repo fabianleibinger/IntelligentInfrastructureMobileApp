@@ -125,7 +125,11 @@ class ParkManager {
           vehicle.parkedIn.toString() +
           ' parking in: ' +
           vehicle.parkingIn.toString());
-    }).catchError((e) => print('could not update vehiclePosition'));
+    }).catchError((e) {
+      print('could not update vehiclePosition');
+      vehicle.setAndUpdateParkedIn(context, false);
+      vehicle.setAndUpdateParkIngIn(context, false);
+    });
     return !vehicle.parkedIn && !vehicle.parkingIn && !vehicle.parkingOut;
   }
 
@@ -176,7 +180,13 @@ class ParkManager {
         });
 
         // vehicle not parking out anymore.
-      });
+      }).catchError((e) =>
+          // if park out didn't work: connection to server failed.
+          showDialog(
+              context: context,
+              builder: (context) {
+                return NoConnectionDialog.getDialog(context);
+              }).then((value) => _setParkedIn(vehicle, context)));
     } else {
       print('vehicle is not parked in');
       //vehicle does not need to be parked out
