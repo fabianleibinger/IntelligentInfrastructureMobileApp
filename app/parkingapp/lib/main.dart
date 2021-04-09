@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 import 'models/classes/parkinggarage.dart';
 import 'models/enum/parkinggaragetype.dart';
 
-// Main: From here you call all u'r widgets.
+// Main: From here you call all ur widgets.
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
