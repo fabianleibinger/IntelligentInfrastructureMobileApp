@@ -31,16 +31,12 @@ class Routes {
   /// Returns the correct route according to [vehicle] values.
   /// Opens either [MainPage], [ParkInPage], [ParkOutPage].
   static String returnCorrectRouteForVehicle(Vehicle vehicle) {
-    // vehicle is currently parking in.
-    if (vehicle.parkingIn) {
-      print('AppDrawer chose park in page');
-      return vehicle.inAppKey + parkIn;
-      // vehicle is currently parking out or cancelling park in.
-    } else if (vehicle.parkingOut) {
+    // vehicle is currently parking out or cancelling park in.
+    if (vehicle.parkingOut) {
       print('AppDrawer chose park out page');
       return vehicle.inAppKey + parkOut;
-      // vehicle is parked in.
-    } else if (vehicle.parkedIn) {
+      // vehicle is currently parking in or parked in.
+    } else if (vehicle.parkingIn || vehicle.parkedIn) {
       print('AppDrawer chose park in page');
       return vehicle.inAppKey + parkIn;
       // vehicle is not inside the parking garage.

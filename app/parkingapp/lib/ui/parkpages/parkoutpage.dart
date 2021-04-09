@@ -85,7 +85,7 @@ class _ParkOutPageState extends State<ParkOutPage> {
                     valueListenable: vehicle.locationObserver,
                     builder: (BuildContext context, coordinate, Widget widget) {
                       print('rebuilding park in map');
-                      return ParkManager.getParkInAnimation(
+                      return ParkManager.getParkAnimation(
                           context: context,
                           vehiclePosition: vehicle.location,
                           destination: vehicle.parkingSpot);
