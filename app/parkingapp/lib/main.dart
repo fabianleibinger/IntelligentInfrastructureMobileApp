@@ -132,26 +132,3 @@ class Main extends StatelessWidget {
     );
   }
 }
-/*
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Text("ijawd");
-  }
-
-  void login() {
-    setState(() {
-      build(context);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-}*/
