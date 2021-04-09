@@ -1,11 +1,11 @@
 [
   {
     "name": "CoCar",
-    "width": 2.089,
-    "height": 1.500,
-    "length": 4.629,
-    "turningCycle": 7.806,
-    "distRearAxleLicensePlate": 0.927
+    "width": 2089.0,
+    "height": 1500.0,
+    "length": 4629.0,
+    "turningCycle": 7806.0,
+    "distRearAxleLicensePlate": 927.0
   },
   {
     "name": "Audi",
