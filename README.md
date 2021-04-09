@@ -12,4 +12,4 @@ The frontend communicates with a server running on local wifi of the parking gar
 
 ## Component structure
 This is an overview of the components and communication between different systems involved in this project:
-![component diagram of the project system](/documentation/Projektschema_Komponenten.png)
+![component diagram of the project system](/documentation/Projektschema_Komponenten.PNG)
