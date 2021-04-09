@@ -19,3 +19,7 @@ ROS services are defined in parking_app_ros_pkg/srv, ROS messages in parking_app
 The backend application is implemented in three different modules. It represents a layered architecture with UI, logic and data management. If you want to modify HTTP routes, JSON fields or data exchange with the frontend in general, go to parking_app_flask_server.py (parking_app_ros_pkg/bin). It also includes the main method and calls methods from parking_communication.py. In parking_communication.py (parking_app_ros_pkg/src/) you can change the logic and the communication with external ROS services. Use class structure and method comments to navigate to your concern. The module database.py (parking_app_ros_pkg/src) provides a data management which primarly is used to map IDs from the frontend with corresponding IDs from the parking management system.
 
 Please be aware of the given folder structure. Otherwise, rosrun could have problems locating your scripts.
+
+## Python module parking_communication
+This is an overview of the class structure in python module parking_communication:
+![class diagram of module parking_communication](../documentation/Klassendiagramm_Backend.png)
