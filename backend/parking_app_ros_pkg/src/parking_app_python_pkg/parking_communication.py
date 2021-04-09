@@ -103,7 +103,8 @@ class VehicleStatus(enum.Enum):
     status_parking_out = 3  # park process at parking spot
     status_drop_off = 4  # vehicle in drop-off zone and will be moved to parking spot soon
     status_pickup = 5  # vehicle in pickup zone and will be taken over by driver soon
-    status_unknown = 6
+    status_unknown = 6  # parking management system´s simulation returns status_unknown
+                        # because vehicle is deleted when it reached the pickup zone
 
 
 class ParkProcess:
@@ -401,7 +402,8 @@ class LocalizationProcess:
             in_park_process = False
 
         if response.vehicle_status.status == VehicleStatus.status_parked.value \
-                or response.vehicle_status.status == VehicleStatus.status_pickup.value:
+                or response.vehicle_status.status == VehicleStatus.status_pickup.value \
+                or response.vehicle_status.status == VehicleStatus.status_unknown.value:
             reached_target_position = True
         else:
             reached_target_position = False
@@ -529,5 +531,3 @@ class VehicleIdentificationException(Exception):
     Unify exceptions occurring due to unknown app identifiers in the ID mapping database.
     """
     pass
-
-
