@@ -42,7 +42,6 @@ class ParkManager {
               return;
             });
           });
-
         }).catchError((e) => _noParkingSpotsAvailable(context));
       } else
         _noParkingSpotsAvailable(context);
@@ -151,12 +150,17 @@ class ParkManager {
             _checkAndReactIfParkOutFailed(vehicle, timer, context);
             _checkAndReactIfVehicleParkedOut(vehicle, parking, timer, context);
           }).catchError((e) {
-            _handleGetPositionErrorForParkOutRequest(_errorCount, timer, context);
+            _handleGetPositionErrorForParkOutRequest(
+                _errorCount, timer, context);
             return;
           });
         });
-
-      });
+        // If park out didn't work: NoConnectionDialog and set vehicle state.
+      }).catchError((e) => showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          }).then((value) => vehicle.setAndUpdateParkIngOut(context, false)));
     } else {
       print('vehicle is not parked in');
       // vehicle does not need to be parked out.
