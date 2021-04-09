@@ -1,0 +1,4 @@
+VehicleIdentificationMsg identifiers
+---
+VehicleStatusMsg vehicle_status
+GeographicalPositionMsg position
