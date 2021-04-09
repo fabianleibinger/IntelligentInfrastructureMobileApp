@@ -230,11 +230,11 @@ class ParkManager {
     }
   }
 
-  ///Widget showing the parking garages map and an overlay for
-  ///the vehicle
-  ///and the destination
-  ///both of them are optional and if neither are specified an empty map will be returned
-  static Widget getParkInAnimation(
+  /// Widget showing the parking garages map and an overlay for
+  /// the vehicle
+  /// and the destination
+  /// both of them are optional and if neither are specified an empty map will be returned.
+  static Widget getParkAnimation(
       {@required BuildContext context,
       Coordinate vehiclePosition,
       destination}) {
