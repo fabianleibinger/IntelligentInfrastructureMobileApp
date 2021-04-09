@@ -36,10 +36,10 @@ class RouteLandingPage extends StatelessWidget {
             context, Routes.landingPage, (Route<dynamic> route) => false);
   }
 
-  void _isAuthentificated(BuildContext context) async {
+  void _isAuthenticated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthentificated = prefs.getBool('authentification') ?? false;
-    isAuthentificated
+    bool isAuthenticated = prefs.getBool('authentication') ?? false;
+    isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
         : Navigator.pushNamedAndRemoveUntil(

@@ -34,6 +34,7 @@ class _VehiclePageState extends State<VehiclePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _loginFormKey,
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).drawerVehicles),
         ),
@@ -90,8 +91,8 @@ class _VehiclePageState extends State<VehiclePage> {
                     DatabaseProvider.db.delete(vehicle.databaseId);
                     BlocProvider.of<VehicleBloc>(context)
                         .add(DeleteVehicle(vehicle));
-                    //show snackbar that vehicle has been deleted
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                    //show SnackBar that vehicle has been deleted
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(vehicle.name +
                           AppLocalizations.of(context).space +
                           AppLocalizations.of(context).deleted),

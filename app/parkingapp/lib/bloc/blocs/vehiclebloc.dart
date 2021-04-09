@@ -13,7 +13,7 @@ import 'package:parkingapp/bloc/events/setvehicles.dart';
 class VehicleBloc extends Bloc<VehicleEvent, List<Vehicle>> {
   VehicleBloc(List<Vehicle> initialState) : super(initialState);
 
-  List<Vehicle> get initialState => List<Vehicle>();
+  List<Vehicle> get initialState => <Vehicle>[];
 
   @override
   Stream<List<Vehicle>> mapEventToState(VehicleEvent event) async* {

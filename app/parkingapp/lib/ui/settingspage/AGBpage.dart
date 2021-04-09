@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/data/sharedpreferences.dart';
-import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Class for showing conditions and terms of the app

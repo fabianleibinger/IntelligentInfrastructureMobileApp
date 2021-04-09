@@ -17,6 +17,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 Vehicle vehicle;
 ParkingGarage currentParkingGarage;
 
+// ignore: must_be_immutable
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
 
