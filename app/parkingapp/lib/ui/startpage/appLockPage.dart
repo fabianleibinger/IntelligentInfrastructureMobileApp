@@ -71,8 +71,9 @@ class _AppLockPageState extends State<AppLockPage> {
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
-        Navigator.pushReplacementNamed(context, Routes.settings);
       });
+      // Routes to [RouteLandingPage] after unlock
+      Navigator.pushReplacementNamed(context, Routes.routeLandingPage);
     }
   }
 
