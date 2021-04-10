@@ -5,6 +5,7 @@ import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/dialogs/deletevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
+import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
@@ -24,10 +25,16 @@ class VehiclePage extends StatefulWidget {
 class _VehiclePageState extends State<VehiclePage> {
   final GlobalKey<FormState> _loginFormKey =
       new GlobalKey<FormState>(debugLabel: '_loginFormKey');
+  static bool _firstBuild = true;
 
   @override
   void initState() {
     super.initState();
+    //only init vehicles after app start up
+    if (_firstBuild) {
+      DataHelper.initVehicles(context);
+      _firstBuild = false;
+    }
     VehicleHelper.cleanUpVehicles(context);
   }
 

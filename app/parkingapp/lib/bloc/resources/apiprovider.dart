@@ -11,7 +11,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 class ApiProvider {
   /// The Backend Server Address.
   //TODO new url 192.168.4.1
-  static final String _serverUrl = 'http://192.168.4.1';
+  static final String _serverUrl = 'http://cloud.carl.al';
   static final String _serverPort = ':2525';
 
   /// The HTTP status codes.
