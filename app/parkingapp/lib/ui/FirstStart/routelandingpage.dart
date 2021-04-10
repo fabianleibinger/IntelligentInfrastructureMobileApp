@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,8 +23,6 @@ class RouteLandingPage extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
     print('isSetUp? ' + isSetUp.toString());
-
-    await DataHelper.initVehicles(context);
 
     //navigate to page and remove all widgets from the widget tree
     isSetUp

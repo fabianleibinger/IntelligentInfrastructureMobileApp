@@ -15,7 +15,7 @@ class LandingPage extends StatelessWidget {
           elevation: 10,
           child: ButtonBar(
             children: [
-              FlatButton(
+              TextButton(
                 child: Text(AppLocalizations.of(context).buttonContinue),
                 onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => TermsOfService())),

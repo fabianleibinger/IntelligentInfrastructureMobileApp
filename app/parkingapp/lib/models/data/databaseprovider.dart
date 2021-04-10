@@ -163,11 +163,7 @@ class DatabaseProvider {
   }
 
   // clears the database table
-  // uncomment last line to delete the whole database
   Future clear() async {
-    var path = await getDatabasesPath();
-    String dbPath = join(path, 'vehicleDB.db');
     _database.delete(TABLE_VEHICLE);
-    //await deleteDatabase(dbPath);
   }
 }

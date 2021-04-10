@@ -15,7 +15,6 @@ final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
 class AppDrawer extends StatelessWidget {
   AppDrawer([this.currentPage]);
 
-  // TODO Make this something dynamic
   final String currentPage;
 
   @override
@@ -106,35 +105,13 @@ ListTile generateVehicleTile(BuildContext context, String currentDrawer,
 }
 
 Widget generateVehicles(BuildContext context, String currentDrawer) {
-  //TODO this needs to be removed or replaced by something that will not allways regcreate the drawer
-
   return BlocBuilder<VehicleBloc, List<Vehicle>>(
     buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
       return true;
     },
     builder: (context, vehicleList) {
       //build vehicles Column
-      //TODO Sort list
       List<ListTile> listTiles = [];
-      //this sometimes seems to fail with
-      /*The following NoSuchMethodError was thrown building BlocBuilder<VehicleBloc, List<Vehicle>>(dirty, dependencies: [MediaQuery, _LocalizationsScope-[GlobalKey#55074]], state: _BlocBuilderBaseState<VehicleBloc, List<Vehicle>>#f9ab8):
-      The getter 'name' was called on null.
-      Receiver: null
-      Tried calling: name
-
-      The relevant error-causing widget was
-      BlocBuilder<VehicleBloc, List<Vehicle>>
-      package:parkingapp/…/mainpage/mainpage.dart:62
-      When the exception was thrown, this was the stack
-      #0      Object.noSuchMethod (dart:core-patch/object_patch.dart:51:5)
-      #1      _MainPageState.build.<anonymous closure>
-      package:parkingapp/…/mainpage/mainpage.dart:77
-      #2      BlocBuilder.build
-      package:flutter_bloc/src/bloc_builder.dart:93
-      #3      _BlocBuilderBaseState.build
-      package:flutter_bloc/src/bloc_builder.dart:153
-      #4      StatefulElement.build
-      */
       for (Vehicle vehicle in vehicleList) {
         var icon;
         vehicle.runtimeType == ChargeableVehicle

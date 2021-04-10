@@ -21,7 +21,7 @@ class _TermsOfServiceState extends State<TermsOfService> {
         elevation: 10,
         child: ButtonBar(
           children: [
-            FlatButton(
+            TextButton(
               child: Text(AppLocalizations.of(context).buttonContinue),
               onPressed: () => _formKey.currentState.validate()
                   ? Navigator.push(

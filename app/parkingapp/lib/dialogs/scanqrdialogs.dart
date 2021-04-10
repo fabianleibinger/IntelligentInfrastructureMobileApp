@@ -22,8 +22,8 @@ class ScanQRDialogs {
       actions: [
         Constants.getBackTextButton(context, red,
             AppLocalizations.of(context).scanQRDialogCancelButton),
-        FlatButton(
-          textColor: green,
+        TextButton(
+          style: TextButton.styleFrom(primary: green),
           onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
