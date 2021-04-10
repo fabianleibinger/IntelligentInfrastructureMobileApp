@@ -67,13 +67,14 @@ class _AppLockPageState extends State<AppLockPage> {
   _onPasscodeEntered(String enteredPasscode) async {
     String passcode = await SharedPreferencesHelper.getPasscode() ?? "123456";
     bool isValid = passcode == enteredPasscode;
-    _verificationNotifier.add(isValid);
+    //_verificationNotifier.add(isValid);
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
       });
       // Routes to [RouteLandingPage] after unlock
       Navigator.pushReplacementNamed(context, Routes.routeLandingPage);
+      this.isValidCallBack();
     }
   }
 
@@ -86,6 +87,8 @@ class _AppLockPageState extends State<AppLockPage> {
     _verificationNotifier.close();
     super.dispose();
   }
+
+  void isValidCallBack() {}
 }
 
 /// Handels routing if app is locked,

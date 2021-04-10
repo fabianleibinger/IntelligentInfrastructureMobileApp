@@ -7,7 +7,7 @@ import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 
 /// Passcode ui
-/// 
+///
 /// User can set new passcode for the app or turn it off
 class PasscodePage extends StatefulWidget {
   static const String routeName = '/passcodepage';
@@ -70,12 +70,13 @@ class PasscodePageState extends State<PasscodePage> {
     } else {
       isValid = false;
     }
-    _verificationNotifier.add(isValid);
+    //_verificationNotifier.add(isValid);
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
       });
       SharedPreferencesHelper.enableAuthentification();
+      Navigator.pop(context);
     }
   }
 
