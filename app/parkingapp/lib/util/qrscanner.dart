@@ -11,7 +11,10 @@ import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/vehiclepage/vehiclepage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-/// Class that creates barcode scanner and adds scanned vehicle to app
+/// Creates barcode scanner and adds scanned vehicle to app
+///
+/// This Class include the Widgets for opening the QR Code Scanner and
+/// adding the scanned vehicle to the database of the app
 class ScanScreen extends StatefulWidget {
   static const String routeName = '/qrscanner';
   @override
@@ -32,7 +35,7 @@ class ScanState extends State<ScanScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-          title: new Text('QR Code Scanner'),
+          title: new Text(AppLocalizations.of(context).scanScreenTitle),
         ),
         body: new Center(
           child: new Column(
@@ -45,7 +48,7 @@ class ScanState extends State<ScanScreen> {
                     style: ElevatedButton.styleFrom(
                         primary: green, onPrimary: white, shadowColor: grey),
                     onPressed: scan,
-                    child: const Text('Kamera zum Scannen starten')),
+                    child: Text(AppLocalizations.of(context).startScanButton)),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -144,6 +147,7 @@ class ScanState extends State<ScanScreen> {
           hour: int.parse(chargeTimeEnd[1]),
           minute: int.parse(chargeTimeEnd[2].substring(0, 2)));
 
+      // create new chargeable vehicle
       vehicle = transferChargeableVehicle(
           inAppKey[1].substring(1),
           name[1].substring(1),
@@ -161,6 +165,7 @@ class ScanState extends State<ScanScreen> {
           startTime,
           endTime);
     } else if (type[1] == 'standard') {
+      // create new standard vehicle
       vehicle = transferStandardVehicle(
           inAppKey[1].substring(1),
           name[1].substring(1),

@@ -67,7 +67,7 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => RouteLandingPage());
           case Routes.authPage:
             return MaterialPageRoute(
-                builder: (context) => AuthenticationHandling());
+                builder: (context) => AuthentificationHandling());
           case Routes.qrScanner:
             return MaterialPageRoute(builder: (context) => ScanScreen());
           case Routes.transferKeys:
