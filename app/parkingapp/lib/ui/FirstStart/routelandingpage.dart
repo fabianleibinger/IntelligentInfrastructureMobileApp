@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/startpage/appLockPage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //this will show a circular progress indicator while it waits for the shared preferences to be checked
@@ -34,15 +33,5 @@ class RouteLandingPage extends StatelessWidget {
             context, Routes.vehicle, (Route<dynamic> route) => false)
         : Navigator.pushNamedAndRemoveUntil(
             context, Routes.landingPage, (Route<dynamic> route) => false);
-  }
-
-  void _isAuthenticated(BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthenticated = prefs.getBool('authentication') ?? false;
-    isAuthenticated
-        ? Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
-        : Navigator.pushNamedAndRemoveUntil(
-            context, Routes.settings, (Route<dynamic> route) => false);
   }
 }

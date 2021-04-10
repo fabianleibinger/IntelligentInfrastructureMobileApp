@@ -25,7 +25,7 @@ class Routes {
   static const String routeLandingPage = RouteLandingPage.routeName;
   static const String transferKeys = Transferkeys.routeName;
   static const String qrPage = QRPage.routeName;
-  static const String authPage = AuthenticationHandling.routeName;
+  static const String authPage = AuthentificationHandling.routeName;
   static const String qrScanner = ScanScreen.routeName;
 
   /// Returns the correct route according to [vehicle] values.

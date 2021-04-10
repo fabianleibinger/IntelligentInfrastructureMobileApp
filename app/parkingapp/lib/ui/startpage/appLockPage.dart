@@ -44,7 +44,7 @@ class _AppLockPageState extends State<AppLockPage> {
           CircleUIConfig(borderColor: green, fillColor: green, circleSize: 30),
       keyboardUIConfig:
           KeyboardUIConfig(digitBorderWidth: 2, primaryColor: green),
-      passwordEnteredCallback: _onPassCodeEntered,
+      passwordEnteredCallback: _onPasscodeEntered,
       cancelButton: Text(
         'Delete',
         style: const TextStyle(fontSize: 16, color: Colors.white),
@@ -96,7 +96,7 @@ class AuthentificationHandling extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _isAuthenticated(context);
+    _isAuthentificated(context);
     return Center(
       child: CircularProgressIndicator(),
     );
