@@ -105,7 +105,8 @@ class AuthentificationHandling extends StatelessWidget {
   /// Checks if app is secured with passcode and handels routing
   void _isAuthentificated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthenticated = prefs.getBool('authentication') ?? false;
+    bool isAuthenticated = prefs.getBool('authentification') ?? false;
+    print(isAuthenticated);
     isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))

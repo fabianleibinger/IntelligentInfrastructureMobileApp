@@ -3,7 +3,9 @@ import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/settingspage/passcodepage.dart';
+import 'package:parkingapp/util/qrgenerator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,8 +27,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      appBar: AppBar(
-          title: Text(AppLocalizations.of(context).settingsTitle)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).settingsTitle)),
       body: SettingsForm(),
     );
   }
