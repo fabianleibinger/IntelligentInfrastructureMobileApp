@@ -1,6 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 
+/// Handels access to sharedpreferences of app
+///
+/// Is used for accessing passcode, authentification status handling and
+/// notification permissions given by the user
 class SharedPreferencesHelper {
   static Future<void> initializeSharedPreferences() async {
     final prefs = await SharedPreferences.getInstance();

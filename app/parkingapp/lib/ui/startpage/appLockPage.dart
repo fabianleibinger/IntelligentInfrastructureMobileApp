@@ -63,6 +63,7 @@ class _AppLockPageState extends State<AppLockPage> {
     );
   }
 
+  // Checks if entered passcode equals stored passcode
   _onPasscodeEntered(String enteredPasscode) async {
     String passcode = await SharedPreferencesHelper.getPasscode() ?? "123456";
     bool isValid = passcode == enteredPasscode;
@@ -101,8 +102,8 @@ class AuthentificationHandling extends StatelessWidget {
     );
   }
 
+  /// Checks if app is secured with passcode and handels routing
   void _isAuthentificated(BuildContext context) async {
-    //ask if device is locked with password
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isAuthentificated = prefs.getBool('authentification') ?? false;
     isAuthentificated

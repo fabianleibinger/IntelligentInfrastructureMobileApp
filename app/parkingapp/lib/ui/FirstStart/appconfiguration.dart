@@ -2,7 +2,6 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/FirstStart/addvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,7 +12,10 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system_settings/system_settings.dart';
 
-/// Class for settingspage in first start procedure
+/// Settings ui for first start procedure
+///
+/// User can modify push notification and passcode settings and can import vehicles
+/// from other users via QR code
 class AppConfiguration extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -83,6 +85,7 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
     );
   }
 
+  /// Creates ListTile for notifications and stores users preferences in sharedpreferences
   Widget _notificationsListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessages),
@@ -109,6 +112,8 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
         });
   }
 
+  /// Creates ListTile for notifications if vehicle is parked
+  /// and stores users preferences in sharedpreferences
   Widget _notificationsParkedListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessagesParked),
@@ -122,6 +127,8 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
         });
   }
 
+  /// Creates ListTile for notifications if vehicle is charged
+  /// and stores users preferences in sharedpreferences
   Widget _notificationsChargedListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessagesCharge),
@@ -135,6 +142,7 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
         });
   }
 
+  /// Creates List Tile for passcode and calls _passCodeSettings()
   Widget _passcodeListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context).password),
@@ -146,6 +154,7 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
     );
   }
 
+  /// Creates List Tile for import Data and routes to [ScanScreen]
   Widget _importVehicleListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).importVehicles),
@@ -159,6 +168,7 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
         });
   }
 
+  /// Creates List Tile for showing terms and conditions and routes to [AGB]
   Widget _showTermsListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).showTermsAndConditions),
@@ -175,7 +185,7 @@ class _AppConfigurationState extends State<AppConfigurationForm> {
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));
   }
 
-  /// Gets all the shared prefernces for initstate
+  /// Gets all the shared preferences for initstate
   Future<Null> _getPushNotifications() async {
     //inialize SharedPreferences Settings with false values
     SharedPreferencesHelper.initializeSharedPreferences();

@@ -3,7 +3,7 @@ import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-/// Class shows conditions and terms of the app
+/// Creates scrollable page for conditions and terms of the app
 class AGB extends StatelessWidget {
   static const String routeName = '/agbpage';
 

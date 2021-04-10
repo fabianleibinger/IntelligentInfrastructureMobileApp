@@ -5,7 +5,10 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-/// Class to show qr code to share
+/// Shows QR code of a vehicle
+///
+/// User can scan this QR code with another app and transfer corresponding
+/// vehicle
 class QRPage extends StatelessWidget {
   static const routeName = '/qrpage';
   // selcted vehicle for transfer
