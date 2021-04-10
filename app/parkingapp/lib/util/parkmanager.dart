@@ -54,6 +54,20 @@ class ParkManager {
   /// Returns if [vehicle] needs to be parked in.
   /// Parking out vehicle can't be parked in.
   static bool needsToParkIn(BuildContext context, Vehicle vehicle) {
+    ApiProvider.getPosition(vehicle).then((value) {
+      if (value["reached_position"] != null)
+        vehicle.setAndUpdateParkedIn(context, value["reached_position"]);
+      if (value["parking"] != null)
+        vehicle.setAndUpdateParkIngIn(context, value["parking"]);
+      print('needs to park in? parked in: ' +
+          vehicle.parkedIn.toString() +
+          ' parking in: ' +
+          vehicle.parkingIn.toString());
+    }).catchError((e) {
+      print('could not update vehiclePosition');
+      vehicle.setAndUpdateParkedIn(context, false);
+      vehicle.setAndUpdateParkIngIn(context, false);
+    });
     return !vehicle.parkedIn && !vehicle.parkingIn && !vehicle.parkingOut;
   }
 
@@ -141,7 +155,6 @@ class ParkManager {
       int _errorCount = 0;
       // Try to contact server.
       ApiProvider.parkOut(vehicle).then((value) {
-
         // Update the position while the vehicle is parking out.
         new Timer.periodic(Duration(seconds: 1), (timer) {
           print('ParkOut: updating vehicle ' + vehicle.name);

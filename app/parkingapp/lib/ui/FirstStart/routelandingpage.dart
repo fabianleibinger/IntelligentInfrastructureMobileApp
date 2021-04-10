@@ -11,6 +11,7 @@ class RouteLandingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DataHelper.initVehicles(context);
     _isSetUp(context);
     return Container(
       color: Theme.of(context).primaryColor,
