@@ -17,7 +17,6 @@ final String defaultChargingProvider =
     ChargingProvider.Automatisch.toShortString();
 
 class VehicleHelper {
-  //TODO maybe put setUp into a constructor of a specific element and destroying this element with the cleanUp method. This would mean not specifying the parseVehicle to the cleanUp
   static void updateMainPageVehicle(
       {@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
