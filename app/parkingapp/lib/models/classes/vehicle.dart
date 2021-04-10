@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingapp/models/classes/coordinate.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/util/parkmanager.dart';
@@ -19,6 +20,11 @@ abstract class Vehicle {
 
   /// Notifier for [parkedIn].
   ValueNotifier<bool> parkedInObserver;
+
+  Coordinate parkingSpot, location;
+
+  /// Notifier for [location]
+  ValueNotifier<Coordinate> locationObserver;
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -102,13 +108,15 @@ abstract class Vehicle {
   }
 
   /// Setter which includes database updating.
-  void setAndUpdateDistRearAxleLicensePlate(BuildContext context, double distance) {
+  void setAndUpdateDistRearAxleLicensePlate(
+      BuildContext context, double distance) {
     this.distRearAxleLicensePlate = distance;
     DataHelper.updateVehicle(context, this);
   }
 
   /// Setter which includes database updating.
-  void setAndUpdateNearExitPreference(BuildContext context, bool nearExitPreference) {
+  void setAndUpdateNearExitPreference(
+      BuildContext context, bool nearExitPreference) {
     this.nearExitPreference = nearExitPreference;
     DataHelper.updateVehicle(context, this);
   }
@@ -135,7 +143,15 @@ abstract class Vehicle {
   /// Setter which includes database updating.
   void setAndUpdateParkIngOut(BuildContext context, bool parkingOut) {
     this.parkingOut = parkingOut;
+    this.parkingSpot = null;
     DataHelper.updateVehicle(context, this);
+  }
+
+  /// Setter for location, defined by [latitude], [longitude].
+  void setLocation(double latitude, double longitude) {
+    Coordinate location = Coordinate(latitude: latitude, longitude: longitude);
+    this.location = location;
+    this.locationObserver.value = this.location;
   }
 
   /// Setter for all dimensions which includes database updating.
@@ -147,6 +163,13 @@ abstract class Vehicle {
     this.turningCycle = turningCycle;
     this.distRearAxleLicensePlate = distRearAxleLicensePlate;
     DataHelper.updateVehicle(context, this);
+  }
+
+  /// Setter for the parking spot location, defined by [latitude], [longitude].
+  void setParkingSpot(double latitude, double longitude) {
+    Coordinate destination =
+        Coordinate(latitude: latitude, longitude: longitude);
+    this.parkingSpot = destination;
   }
 
   /// Compares [vehicle] attribute values with own attribute values

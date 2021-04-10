@@ -15,7 +15,7 @@ class Transferkeys extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Daten übertragen', style: whiteHeader),
+          title: Text('Daten übertragen'),
         ),
         body: Container(
           child: createTransferKeysView(),

@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/bloc/events/deletevehicle.dart';
-import 'package:parkingapp/dialogs/constants.dart';
 import 'package:parkingapp/dialogs/deletevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
-import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-// example for a page (mainpage)
+import 'package:parkingapp/util/vehiclehelper.dart';
 
 class VehiclePage extends StatefulWidget {
   static const String routeName = '/vehiclepage';
@@ -30,23 +27,21 @@ class _VehiclePageState extends State<VehiclePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    DataHelper.initVehicles(context);
+    VehicleHelper.cleanUpVehicles(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _loginFormKey,
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context).drawerVehicles,
-              style: whiteHeader),
+          title: Text(AppLocalizations.of(context).drawerVehicles),
         ),
         //TODO use routeName
         drawer: AppDrawer(),
         floatingActionButton: FancyFab(),
-        body: Container(
-            padding: EdgeInsets.all(8), color: white, child: createListView()));
+        body: Container(padding: EdgeInsets.all(8), child: createListView()));
   }
 
   Widget createListView() {
@@ -86,7 +81,7 @@ class _VehiclePageState extends State<VehiclePage> {
                       child: Icon(Icons.delete,
                           color: Theme.of(context).dialogBackgroundColor),
                     ),
-                    color: Colors.red,
+                    color: Theme.of(context).errorColor,
                   ),
                   key: Key(vehicle.inAppKey),
                   onDismissed: (direction) {
@@ -96,8 +91,8 @@ class _VehiclePageState extends State<VehiclePage> {
                     DatabaseProvider.db.delete(vehicle.databaseId);
                     BlocProvider.of<VehicleBloc>(context)
                         .add(DeleteVehicle(vehicle));
-                    //show snackbar that vehicle has been deleted
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                    //show SnackBar that vehicle has been deleted
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(vehicle.name +
                           AppLocalizations.of(context).space +
                           AppLocalizations.of(context).deleted),
@@ -105,9 +100,7 @@ class _VehiclePageState extends State<VehiclePage> {
                   },
                   child: ListTile(
                     title: Text(vehicle.name),
-                    subtitle: Text(vehicle.licensePlate +
-                        "; " +
-                        vehicle.databaseId.toString()),
+                    subtitle: Text(vehicle.licensePlate),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => EditVehicle(
                               vehicle: vehicle,

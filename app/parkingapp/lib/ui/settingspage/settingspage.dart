@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/settingspage/passcodepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,8 +26,7 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context).settingsTitle,
-              style: whiteHeader)),
+          title: Text(AppLocalizations.of(context).settingsTitle)),
       body: SettingsForm(),
     );
   }
@@ -155,7 +153,7 @@ class SettingsFormState extends State<SettingsForm> {
         subtitle: Text(AppLocalizations.of(context).transferDataText),
         trailing: Icon(Icons.arrow_forward_ios),
         onTap: () {
-          Navigator.pushNamed(context, Routes.transferkeys);
+          Navigator.pushNamed(context, Routes.transferKeys);
         });
   }
 

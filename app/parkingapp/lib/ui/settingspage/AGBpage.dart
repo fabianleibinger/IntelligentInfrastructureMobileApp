@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingapp/models/data/sharedpreferences.dart';
-import 'package:parkingapp/models/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Creates scrollable page for conditions and terms of the app
@@ -11,8 +9,7 @@ class AGB extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).termsAndConditionsTitle,
-            style: whiteHeader),
+        title: Text(AppLocalizations.of(context).termsAndConditionsTitle),
       ),
       body: ScrollableAGB(),
     );

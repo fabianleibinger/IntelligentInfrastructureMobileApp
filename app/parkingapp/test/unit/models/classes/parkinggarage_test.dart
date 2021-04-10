@@ -3,6 +3,7 @@ import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/parkinggarage.dart';
 import 'package:parkingapp/models/classes/standardvehicle.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
+import 'package:parkingapp/models/classes/coordinate.dart';
 
 void main() {
   ParkingGarage _garage;

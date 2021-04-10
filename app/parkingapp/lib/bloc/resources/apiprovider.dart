@@ -11,12 +11,12 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 class ApiProvider {
   /// The Backend Server Address.
   //TODO new url 192.168.4.1
-  static final String _serverUrl = 'http://10.0.2.2';
+  static final String _serverUrl = 'http://cloud.carl.al';
   static final String _serverPort = ':2525';
 
   /// The HTTP status codes.
-  static final int httpGetStatusCodeSuccess = 200;
-  static final int httpPostStatusCodeSuccess = 200;
+  static final int _httpGetStatusCodeSuccess = 200;
+  static final int _httpPostStatusCodeSuccess = 200;
 
   /// The HTTP Header specifications.
   static final String _httpPostHeaderFirst = 'Content-Type';
@@ -87,9 +87,8 @@ class ApiProvider {
   static Future<Map<String, dynamic>> httpGet(
       String url, String failureText) async {
     final response = await http.get(url).timeout(_timeOutAfter);
-    if (response.statusCode == httpGetStatusCodeSuccess) {
+    if (response.statusCode == _httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
-      print(result.entries.toString());
       return result;
     } else {
       throw HttpException(failureText);
@@ -108,9 +107,8 @@ class ApiProvider {
             },
             body: jsonEncode(body))
         .timeout(_timeOutAfter);
-    if (response.statusCode == httpGetStatusCodeSuccess) {
+    if (response.statusCode == _httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
-      print(result.entries.toString());
       return result;
     } else {
       throw HttpException(failureText);
@@ -133,7 +131,7 @@ class ApiProvider {
   static Map<String, dynamic> parkInBodyChargeableVehicle(
       ChargeableVehicle chargeableVehicle) {
     return {
-      "id": chargeableVehicle.databaseId,
+      "id": chargeableVehicle.inAppKey,
       "length": chargeableVehicle.length,
       "width": chargeableVehicle.width,
       "turning_radius": chargeableVehicle.turningCycle,
@@ -152,7 +150,7 @@ class ApiProvider {
   static Map<String, dynamic> parkInBodyStandardVehicle(
       StandardVehicle standardVehicle) {
     return {
-      "id": standardVehicle.databaseId,
+      "id": standardVehicle.inAppKey,
       "length": standardVehicle.length,
       "width": standardVehicle.width,
       "turning_radius": standardVehicle.turningCycle,
@@ -168,7 +166,7 @@ class ApiProvider {
   @visibleForTesting
   static Map<String, dynamic> chooseParkOutBody(Vehicle vehicle) {
     return {
-      "id": vehicle.databaseId,
+      "id": vehicle.inAppKey,
       "number_plate": vehicle.licensePlate,
       "length": vehicle.length,
       "width": vehicle.width,

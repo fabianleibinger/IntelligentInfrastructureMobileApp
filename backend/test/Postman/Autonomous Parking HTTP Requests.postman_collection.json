@@ -1,0 +1,926 @@
+{
+	"info": {
+		"_postman_id": "7834c00a-df08-4f7a-ad8e-d9ee63137428",
+		"name": "Autonomous Parking HTTP Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:2525/connect",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/connect",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"connect"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/connect",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/connect",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"connect"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "81"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:49:31 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"IP\": \"127.0.0.1\",\n    \"Port\": 2525,\n    \"parking_garage\": \"ParkingGarage01\"\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/capacities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/capacities",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"capacities"
+					]
+				},
+				"description": "Get the capacities of the parking garage (occupied and unoccupied). Should return a JSON with categories for different vehicle types."
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/capacities",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/capacities",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"capacities"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "87"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:50:00 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"electric\": 5,\n    \"electric_fast\": 0,\n    \"electric_inductive\": 0,\n    \"total\": 10\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/free",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/free",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"free"
+					]
+				},
+				"description": "Return unoccupied parking spots."
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/free",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/free",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"free"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "106"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:36:04 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"free_electric\": 2,\n    \"free_electric_fast\": 0,\n    \"free_electric_inductive\": 0,\n    \"free_total\": 8\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/free/total",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/free/total",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"free",
+						"total"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/free/total",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/free/total",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"free",
+								"total"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "22"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:36:25 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"free_total\": 8\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/free/electric",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/free/electric",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"free",
+						"electric"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/free/electric",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/free/electric",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"free",
+								"electric"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "25"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:37:00 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"free_electric\": 2\n}"
+				}
+			]
+		},
+		{
+			"name": "127.0.0.1:2525/parkIn",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"100\", \n    \"length\": 5.1,\n    \"width\": 1.94,\n    \"turning_radius\": 12,\n    \"dist_rear_axle_numberplate\": 0.5,\n    \"charge_type\": \"electric\",\n    \"number_plate\": \"KA-XX-2021\",\n    \"near_exit\": true,\n    \"parking_card\": true,\n    \"load\": true,\n    \"charge_service_provider\": \"EnBW\",\n    \"state_of_charge\": 87,\n    \"charge_time_begin\": \"15:15\",\n    \"charge_time_end\": \"22:30\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:2525/parkIn",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"parkIn"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": "Park in a vehicle with many park in parameters. Vehicle will be registered afterwards."
+			},
+			"response": [
+				{
+					"name": "127.0.0.1:2525/parkIn",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"100\", \n    \"length\": 5.1,\n    \"width\": 1.94,\n    \"turning_radius\": 12,\n    \"dist_rear_axle_numberplate\": 0.5,\n    \"charge_type\": \"electric\",\n    \"number_plate\": \"KA-XX-2021\",\n    \"near_exit\": true,\n    \"parking_card\": true,\n    \"load\": true,\n    \"charge_service_provider\": \"EnBW\",\n    \"state_of_charge\": 87,\n    \"charge_time_begin\": \"15:15\",\n    \"charge_time_end\": \"22:30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "127.0.0.1:2525/parkIn",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"parkIn"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "110"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:37:33 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"latitude\": 49.0141414141,\n    \"load_vehicle\": true,\n    \"longitude\": 8.4202020245,\n    \"parking_in\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/getPosition",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"100\",\n    \"number_plate\": \"KA-XX-2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:2525/getPosition",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"getPosition"
+					]
+				},
+				"description": "Get position of vehicle with app id 100. Should return a position if vehicle was successfully registered (see parkIn)"
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/getPosition",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"100\",\n    \"number_plate\": \"KA-XX-2021\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2525/getPosition",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"getPosition"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "121"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:50:30 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"latitude\": 49.01438967538964,\n    \"longitude\": 8.419971237454696,\n    \"parking\": true,\n    \"reached_position\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/getPosition",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1500\",\n    \"number_plate\": \"KA-XX-2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:2525/getPosition",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"getPosition"
+					]
+				},
+				"description": "Get position of unregistered vehicle should return an error message and status 406."
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/getPosition",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1500\",\n    \"number_plate\": \"KA-XX-2021\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2525/getPosition",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"getPosition"
+							]
+						}
+					},
+					"status": "NOT ACCEPTABLE",
+					"code": 406,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:50:38 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "Database could not find a corresponding ID in parking garage´s system. Vehicle ist not registered."
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/parkOut",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"100\", \n    \"length\": 5.1,\n    \"width\": 1.94,\n    \"turning_radius\": 12,\n    \"dist_rear_axle_numberplate\": 0.5,\n    \"number_plate\": \"KA-XX-2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:2525/parkOut",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"parkOut"
+					]
+				},
+				"description": "Park out vehicle with id 100."
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/parkOut",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"100\", \n    \"length\": 5.1,\n    \"width\": 1.94,\n    \"turning_radius\": 12,\n    \"dist_rear_axle_numberplate\": 0.5,\n    \"number_plate\": \"KA-XX-2021\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2525/parkOut",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"parkOut"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Content-Length",
+							"value": "85"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:45:46 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"latitude\": 49.013999999,\n    \"longitude\": 8.4204040404,\n    \"parking_out\": true\n}"
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/parkOut",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1500\", \n    \"number_plate\": \"KA-XX-2021\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:2525/parkOut",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"parkOut"
+					]
+				},
+				"description": "Try to park out unregistered vehicle."
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/parkOut",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"1500\", \n    \"number_plate\": \"KA-XX-2021\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:2525/parkOut",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"parkOut"
+							]
+						}
+					},
+					"status": "NOT ACCEPTABLE",
+					"code": 406,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:40:10 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "Database could not find a corresponding ID in parking garage´s system. Vehicle ist not registered."
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/resetDatabase",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/resetDatabase",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"resetDatabase"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/resetDatabase",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/resetDatabase",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"resetDatabase"
+							]
+						}
+					},
+					"status": "RESET CONTENT",
+					"code": 205,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Connection",
+							"value": "close"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:51:01 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "Database has been cleared. All IDs have been deleted. Vehicles must be registered again."
+				}
+			]
+		},
+		{
+			"name": "http://127.0.0.1:2525/shutdown",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:2525/shutdown",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "2525",
+					"path": [
+						"shutdown"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "http://127.0.0.1:2525/shutdown",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:2525/shutdown",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "2525",
+							"path": [
+								"shutdown"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "html",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "text/html; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "23"
+						},
+						{
+							"key": "Server",
+							"value": "Werkzeug/1.0.1 Python/3.8.5"
+						},
+						{
+							"key": "Date",
+							"value": "Wed, 07 Apr 2021 09:51:12 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "Server shutting down..."
+				}
+			]
+		}
+	]
+}

@@ -27,6 +27,7 @@ class ChargeableVehicle extends Vehicle {
       this.chargeTimeEnd) {
     // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.locationObserver = ValueNotifier(this.location);
     this.parkingIn = false;
     this.parkingOut = false;
   }
@@ -52,6 +53,7 @@ class ChargeableVehicle extends Vehicle {
       this.chargeTimeEnd) {
     // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.locationObserver = ValueNotifier(this.location);
     this.parkingIn = false;
     this.parkingOut = false;
   }
@@ -120,7 +122,8 @@ class ChargeableVehicle extends Vehicle {
   }
 
   /// Setter which includes database updating.
-  void setAndUpdateChargingProvider(BuildContext context, String chargingProvider) {
+  void setAndUpdateChargingProvider(
+      BuildContext context, String chargingProvider) {
     this.chargingProvider = chargingProvider;
     DataHelper.updateVehicle(context, this);
   }

@@ -103,7 +103,7 @@ class DatabaseProvider {
       COLUMN_CHARGE_TIME_END
     ]);
 
-    List<Vehicle> vehicleList = List<Vehicle>();
+    List<Vehicle> vehicleList = <Vehicle>[];
 
     vehicles.forEach((currentVehicle) {
       if (currentVehicle[COLUMN_DO_CHARGE] == null) {

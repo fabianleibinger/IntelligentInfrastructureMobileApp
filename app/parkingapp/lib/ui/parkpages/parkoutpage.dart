@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
+import 'package:parkingapp/util/parkmanager.dart';
 
 class ParkOutPage extends StatefulWidget {
   static const String routeName = '/parkoutpage';
@@ -16,21 +16,18 @@ class ParkOutPage extends StatefulWidget {
   /// The inAppKey of the currently selected vehicle on [MainPage].
   final String carInAppKey;
 
-  const ParkOutPage(this.carInAppKey);
+  ParkOutPage(this.carInAppKey);
 
   @override
   _ParkOutPageState createState() => _ParkOutPageState();
 }
 
 class _ParkOutPageState extends State<ParkOutPage> {
-
   /// Initializes selected vehicle and calls [vehicle.parkOut(context)].
   @override
   void initState() {
     super.initState();
 
-    // Init vehicle list.
-    DataHelper.initVehicles(context);
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
         for (Vehicle vehicle in vehicleList) {
@@ -40,12 +37,12 @@ class _ParkOutPageState extends State<ParkOutPage> {
     );
     // Get vehicle that shall be used from the list of vehicles.
     for (Vehicle currentVehicle
-    in BlocProvider.of<VehicleBloc>(context).state) {
+        in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
     }
 
-    // Wait until build finished to call method.
+    //wait until build finished to call method
     WidgetsBinding.instance
         .addPostFrameCallback((_) => vehicle.parkOut(context));
   }
@@ -54,7 +51,7 @@ class _ParkOutPageState extends State<ParkOutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(vehicle.name, style: whiteHeader)),
+      appBar: AppBar(title: Text(vehicle.name)),
       drawer: AppDrawer(Routes.parkOut),
       // Button observes parkedIn value of car.
       floatingActionButton: ValueListenableBuilder(
@@ -67,14 +64,36 @@ class _ParkOutPageState extends State<ParkOutPage> {
                 : Text(
                     AppLocalizations.of(context).actionButtonCancelParkProcess),
             backgroundColor: grey,
-            onPressed: () {},
+            onPressed: () {
+              setState(() {});
+            },
           );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: ListTile(
-        title: Text(currentParkingGarage.name),
-        subtitle: Text(currentParkingGarage.type.toShortString()),
+      body: Column(
+        children: [
+          ListTile(
+            title: Text(currentParkingGarage.name),
+            subtitle: Text(currentParkingGarage.type.toShortString()),
+          ),
+          //add the map
+          Expanded(
+            child: ListView(
+              children: [
+                ValueListenableBuilder(
+                    valueListenable: vehicle.locationObserver,
+                    builder: (BuildContext context, coordinate, Widget widget) {
+                      print('rebuilding park in map');
+                      return ParkManager.getParkAnimation(
+                          context: context,
+                          vehiclePosition: vehicle.location,
+                          destination: vehicle.parkingSpot);
+                    })
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

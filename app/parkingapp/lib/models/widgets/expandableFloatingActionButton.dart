@@ -1,12 +1,6 @@
-import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/addvehicle.dart';
-import 'package:parkingapp/models/classes/chargeablevehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/util/utility.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FancyFab extends StatefulWidget {
   final Function() onPressed;
@@ -83,7 +77,7 @@ class _FancyFabState extends State<FancyFab>
     return Container(
       child: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, Routes.qrscanner);
+          Navigator.pushNamed(context, Routes.qrScanner);
         },
         tooltip: 'QR Code',
         elevation: 10,

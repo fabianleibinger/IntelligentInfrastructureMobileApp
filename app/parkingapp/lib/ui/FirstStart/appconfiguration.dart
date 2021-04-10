@@ -1,4 +1,3 @@
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/models/global.dart';
@@ -22,8 +21,7 @@ class AppConfiguration extends StatelessWidget {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-          title: Text(AppLocalizations.of(context).titleConfigureApp,
-              style: whiteHeader)),
+          title: Text(AppLocalizations.of(context).titleConfigureApp)),
       bottomNavigationBar: Material(
         elevation: 10,
         child: ButtonBar(

@@ -44,7 +44,7 @@ class _AppLockPageState extends State<AppLockPage> {
           CircleUIConfig(borderColor: green, fillColor: green, circleSize: 30),
       keyboardUIConfig:
           KeyboardUIConfig(digitBorderWidth: 2, primaryColor: green),
-      passwordEnteredCallback: _onPasscodeEntered,
+      passwordEnteredCallback: _onPassCodeEntered,
       cancelButton: Text(
         'Delete',
         style: const TextStyle(fontSize: 16, color: Colors.white),
@@ -57,7 +57,7 @@ class _AppLockPageState extends State<AppLockPage> {
       ),
       shouldTriggerVerification: _verificationNotifier.stream,
       backgroundColor: Colors.black.withOpacity(0.8),
-      cancelCallback: _onPasscodeCancelled,
+      cancelCallback: _onPassCodeCancelled,
       digits: digits,
       passwordDigits: 6,
     );
@@ -76,7 +76,7 @@ class _AppLockPageState extends State<AppLockPage> {
     }
   }
 
-  _onPasscodeCancelled() {
+  _onPassCodeCancelled() {
     Navigator.maybePop(context);
   }
 
@@ -96,7 +96,7 @@ class AuthentificationHandling extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _isAuthentificated(context);
+    _isAuthenticated(context);
     return Center(
       child: CircularProgressIndicator(),
     );
@@ -105,8 +105,8 @@ class AuthentificationHandling extends StatelessWidget {
   /// Checks if app is secured with passcode and handels routing
   void _isAuthentificated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthentificated = prefs.getBool('authentification') ?? false;
-    isAuthentificated
+    bool isAuthenticated = prefs.getBool('authentication') ?? false;
+    isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
         : Navigator.pushNamedAndRemoveUntil(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
+import 'package:parkingapp/models/classes/coordinate.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
@@ -22,7 +24,7 @@ import 'package:provider/provider.dart';
 import 'models/classes/parkinggarage.dart';
 import 'models/enum/parkinggaragetype.dart';
 
-// Main: From here you call all u'r widgets.
+// Main: From here you call all ur widgets.
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -45,6 +47,7 @@ class Main extends StatelessWidget {
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context).appTitle,
       theme: themeData,
+      darkTheme: darkThemeData,
       initialRoute: initialRoute,
       //Routing of app
       onGenerateRoute: (settings) {
@@ -64,10 +67,10 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => RouteLandingPage());
           case Routes.authPage:
             return MaterialPageRoute(
-                builder: (context) => AuthentificationHandling());
-          case Routes.qrscanner:
+                builder: (context) => AuthenticationHandling());
+          case Routes.qrScanner:
             return MaterialPageRoute(builder: (context) => ScanScreen());
-          case Routes.transferkeys:
+          case Routes.transferKeys:
             return MaterialPageRoute(builder: (context) => Transferkeys());
         }
         //vehicles park routes
@@ -119,7 +122,7 @@ class Main extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider<VehicleBloc>(create: (context) {
-          return VehicleBloc(List<Vehicle>());
+          return VehicleBloc(<Vehicle>[]);
         }),
         ListenableProvider(
           create: (_) => DrawerStateInfo(Routes.vehicle),
@@ -129,26 +132,3 @@ class Main extends StatelessWidget {
     );
   }
 }
-/*
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Text("ijawd");
-  }
-
-  void login() {
-    setState(() {
-      build(context);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-}*/

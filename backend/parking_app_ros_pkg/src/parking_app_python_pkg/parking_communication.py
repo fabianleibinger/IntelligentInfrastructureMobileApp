@@ -7,11 +7,11 @@ import enum
 import parking_app_python_pkg.database as id_database
 
 from std_msgs.msg import String
-from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
-from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
-from parking_app_ros_pkg.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
-from parking_app_ros_pkg.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
+from ros_parking_management_msgs.srv import CapacityRequest, CapacityRequestResponse
+from ros_parking_management_msgs.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
+from ros_parking_management_msgs.srv import VehiclePositionRequest, VehiclePositionRequestResponse
+from ros_parking_management_msgs.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
+from ros_parking_management_msgs.msg import VehicleInformationMsg, VehicleLoadingMsg, VehicleIdentificationMsg
 
 # Initialise a ROS node to allow ROS publisher/subscriber or requesting ROS services.
 # Use threading to avoid collision with flask server.
@@ -103,7 +103,8 @@ class VehicleStatus(enum.Enum):
     status_parking_out = 3  # park process at parking spot
     status_drop_off = 4  # vehicle in drop-off zone and will be moved to parking spot soon
     status_pickup = 5  # vehicle in pickup zone and will be taken over by driver soon
-    status_unknown = 6
+    status_unknown = 6  # parking management system´s simulation returns status_unknown
+                        # because vehicle is deleted when it reached the pickup zone
 
 
 class ParkProcess:
@@ -122,11 +123,11 @@ class ParkProcess:
             vehicle_parameters, vehicle_status=VehicleStatus.status_drop_off.value)
         vehicle_message.entry_time = rospy.get_rostime()
         try:
-            rospy.wait_for_service('register_vehicle_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/register_vehicle_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            register_vehicle_request = rospy.ServiceProxy('register_vehicle_request', RegisterVehicleRequest)
+            register_vehicle_request = rospy.ServiceProxy('/register_vehicle_request', RegisterVehicleRequest)
             response = register_vehicle_request(vehicle_message)
             return self.generate_park_in_response(response, vehicle_message.identifiers.app_id)
         except rospy.ServiceException as service_exception:
@@ -145,11 +146,11 @@ class ParkProcess:
         pms_id = IdMapper.get_corresponding_pms_id(app_id)
         vehicle_identification_message = self.generate_identification_message(app_id, number_plate, pms_id)
         try:
-            rospy.wait_for_service('parkout_vehicle_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/unpark_vehicle_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            parkout_vehicle_request = rospy.ServiceProxy('parkout_vehicle_request', ParkoutVehicleRequest)
+            parkout_vehicle_request = rospy.ServiceProxy('/unpark_vehicle_request', ParkoutVehicleRequest)
             response = parkout_vehicle_request(vehicle_identification_message)
             return self.generate_park_out_response(response)
         except rospy.ServiceException as service_exception:
@@ -371,11 +372,11 @@ class LocalizationProcess:
         vehicle_identification = park_process_ids.generate_identification_message(app_id, number_plate, pms_id)
 
         try:
-            rospy.wait_for_service('vehicle_position_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/vehicle_position_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            vehicle_position_request = rospy.ServiceProxy('vehicle_position_request', VehiclePositionRequest)
+            vehicle_position_request = rospy.ServiceProxy('/vehicle_position_request', VehiclePositionRequest)
             response = vehicle_position_request(vehicle_identification)
             return self.generate_get_position_response(response)
         except rospy.ServiceException as service_exception:
@@ -401,7 +402,8 @@ class LocalizationProcess:
             in_park_process = False
 
         if response.vehicle_status.status == VehicleStatus.status_parked.value \
-                or response.vehicle_status.status == VehicleStatus.status_pickup.value:
+                or response.vehicle_status.status == VehicleStatus.status_pickup.value \
+                or response.vehicle_status.status == VehicleStatus.status_unknown.value:
             reached_target_position = True
         else:
             reached_target_position = False
@@ -423,12 +425,12 @@ class CapacityProcess:
         :exception: CommunicationRosServiceException if the ROS service is unavailable
         """
         try:
-            rospy.wait_for_service('capacity_request', max_secs_to_wait_for_ros_service)
+            rospy.wait_for_service('/capacity_request', max_secs_to_wait_for_ros_service)
         except rospy.exceptions.ROSException as ros_exception:
             # If you get this exception here, probably your ROS service server is not running.
             raise CommunicationRosServiceException(str(ros_exception))
         try:
-            capacity_request = rospy.ServiceProxy('capacity_request', CapacityRequest)
+            capacity_request = rospy.ServiceProxy('/capacity_request', CapacityRequest)
             capacities = capacity_request()
             return capacities
         except rospy.ServiceException as service_exception:
@@ -529,5 +531,3 @@ class VehicleIdentificationException(Exception):
     Unify exceptions occurring due to unknown app identifiers in the ID mapping database.
     """
     pass
-
-

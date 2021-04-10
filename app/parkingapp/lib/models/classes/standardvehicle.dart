@@ -4,26 +4,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/data/databaseprovider.dart';
 
 class StandardVehicle extends Vehicle {
-  StandardVehicle(this.inAppKey,
-      this.name,
-      this.licensePlate,
-      this.width,
-      this.height,
-      this.length,
-      this.turningCycle,
-      this.distRearAxleLicensePlate,
-      this.nearExitPreference,
-      this.parkingCard,
-      this.parkedIn) {
-    // Notifier for [parkedIn].
-    this.parkedInObserver = ValueNotifier(this.parkedIn);
-    this.parkingIn = false;
-    this.parkingOut = false;
-  }
-
-  /// Private constructor: only called by [fromMap] method,
-  /// database defines databaseId
-  StandardVehicle._(this.databaseId,
+  StandardVehicle(
       this.inAppKey,
       this.name,
       this.licensePlate,
@@ -37,6 +18,29 @@ class StandardVehicle extends Vehicle {
       this.parkedIn) {
     // Notifier for [parkedIn].
     this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.locationObserver = ValueNotifier(this.location);
+    this.parkingIn = false;
+    this.parkingOut = false;
+  }
+
+  /// Private constructor: only called by [fromMap] method,
+  /// database defines databaseId
+  StandardVehicle._(
+      this.databaseId,
+      this.inAppKey,
+      this.name,
+      this.licensePlate,
+      this.width,
+      this.height,
+      this.length,
+      this.turningCycle,
+      this.distRearAxleLicensePlate,
+      this.nearExitPreference,
+      this.parkingCard,
+      this.parkedIn) {
+    // Notifier for [parkedIn].
+    this.parkedInObserver = ValueNotifier(this.parkedIn);
+    this.locationObserver = ValueNotifier(this.location);
     this.parkingIn = false;
     this.parkingOut = false;
   }

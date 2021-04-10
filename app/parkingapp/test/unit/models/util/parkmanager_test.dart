@@ -13,7 +13,7 @@ void main() {
     test('Should return if parked in vehicle needs to park in', () {
       _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkIn(_vehicle);
+      bool parkIn = ParkManager.needsToParkIn(null, _vehicle);
 
       expect(parkIn, false);
     });
@@ -21,7 +21,7 @@ void main() {
     test('Should return if parked out vehicle needs to park in', () {
       _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkIn(_vehicle);
+      bool parkIn = ParkManager.needsToParkIn(null, _vehicle);
 
       expect(parkIn, true);
     });
@@ -30,7 +30,7 @@ void main() {
       _vehicle.parkingIn = true;
       _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkIn(_vehicle);
+      bool parkIn = ParkManager.needsToParkIn(null, _vehicle);
 
       expect(parkIn, false);
     });
@@ -39,7 +39,7 @@ void main() {
       _vehicle.parkingOut = true;
       _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkIn(_vehicle);
+      bool parkIn = ParkManager.needsToParkIn(null, _vehicle);
 
       expect(parkIn, false);
     });
@@ -48,18 +48,18 @@ void main() {
       _vehicle.parkingOut = true;
       _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkIn(_vehicle);
+      bool parkIn = ParkManager.needsToParkIn(null, _vehicle);
 
       expect(parkIn, false);
     });
   });
 
-
-  group('Should return if vehicle needs to park out for all vehicle states', () {
+  group('Should return if vehicle needs to park out for all vehicle states',
+      () {
     test('Should return if parked in vehicle needs to park out', () {
       _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkOut(_vehicle);
+      bool parkIn = ParkManager.needsToParkOut(null, _vehicle);
 
       expect(parkIn, true);
     });
@@ -67,7 +67,7 @@ void main() {
     test('Should return if parked out vehicle needs to park out', () {
       _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkOut(_vehicle);
+      bool parkIn = ParkManager.needsToParkOut(null, _vehicle);
 
       expect(parkIn, false);
     });
@@ -76,7 +76,7 @@ void main() {
       _vehicle.parkingIn = true;
       _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkOut(_vehicle);
+      bool parkIn = ParkManager.needsToParkOut(null, _vehicle);
 
       expect(parkIn, true);
     });
@@ -85,7 +85,7 @@ void main() {
       _vehicle.parkingOut = true;
       _vehicle.parkedIn = false;
 
-      bool parkIn = ParkManager.needsToParkOut(_vehicle);
+      bool parkIn = ParkManager.needsToParkOut(null, _vehicle);
 
       expect(parkIn, false);
     });
@@ -94,7 +94,7 @@ void main() {
       _vehicle.parkingOut = true;
       _vehicle.parkedIn = true;
 
-      bool parkIn = ParkManager.needsToParkOut(_vehicle);
+      bool parkIn = ParkManager.needsToParkOut(null, _vehicle);
 
       expect(parkIn, false);
     });

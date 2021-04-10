@@ -6,11 +6,8 @@ import 'package:parkingapp/models/classes/chargeablevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:provider/Provider.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:parkingapp/bloc/events/setvehicles.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 
 final EdgeInsets drawerHeaderPadding = EdgeInsets.all(16.0);
 final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
@@ -110,10 +107,7 @@ ListTile generateVehicleTile(BuildContext context, String currentDrawer,
 
 Widget generateVehicles(BuildContext context, String currentDrawer) {
   //TODO this needs to be removed or replaced by something that will not allways regcreate the drawer
-  // get vehicleList
-  DatabaseProvider.db.getVehicles().then((vehicleList) {
-    BlocProvider.of<VehicleBloc>(context).add(SetVehicles(vehicleList));
-  });
+
   return BlocBuilder<VehicleBloc, List<Vehicle>>(
     buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
       return true;

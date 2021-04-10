@@ -1,5 +1,6 @@
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/ui/FirstStart/landingpage.dart';
+import 'package:parkingapp/ui/FirstStart/routelandingpage.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:parkingapp/ui/settingspage/AGBpage.dart';
@@ -22,24 +23,20 @@ class Routes {
   static const String createVehicle = CreateVehicle.routeName;
   static const String landingPage = LandingPage.routeName;
   static const String routeLandingPage = RouteLandingPage.routeName;
-  static const String transferkeys = Transferkeys.routeName;
-  static const String qrpage = QRPage.routeName;
-  static const String authPage = AuthentificationHandling.routeName;
-  static const String qrscanner = ScanScreen.routeName;
+  static const String transferKeys = Transferkeys.routeName;
+  static const String qrPage = QRPage.routeName;
+  static const String authPage = AuthenticationHandling.routeName;
+  static const String qrScanner = ScanScreen.routeName;
 
   /// Returns the correct route according to [vehicle] values.
   /// Opens either [MainPage], [ParkInPage], [ParkOutPage].
   static String returnCorrectRouteForVehicle(Vehicle vehicle) {
-    // vehicle is currently parking in.
-    if (vehicle.parkingIn) {
-      print('AppDrawer chose park in page');
-      return vehicle.inAppKey + parkIn;
-      // vehicle is currently parking out or cancelling park in.
-    } else if (vehicle.parkingOut) {
+    // vehicle is currently parking out or cancelling park in.
+    if (vehicle.parkingOut) {
       print('AppDrawer chose park out page');
       return vehicle.inAppKey + parkOut;
-      // vehicle is parked in.
-    } else if (vehicle.parkedIn) {
+      // vehicle is currently parking in or parked in.
+    } else if (vehicle.parkingIn || vehicle.parkedIn) {
       print('AppDrawer chose park in page');
       return vehicle.inAppKey + parkIn;
       // vehicle is not inside the parking garage.

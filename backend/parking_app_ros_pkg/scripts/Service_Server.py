@@ -2,10 +2,10 @@
 
 from __future__ import print_function
 
-from parking_app_ros_pkg.srv import CapacityRequest, CapacityRequestResponse
-from parking_app_ros_pkg.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
-from parking_app_ros_pkg.srv import VehiclePositionRequest, VehiclePositionRequestResponse
-from parking_app_ros_pkg.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
+from ros_parking_management_msgs.srv import CapacityRequest, CapacityRequestResponse
+from ros_parking_management_msgs.srv import RegisterVehicleRequest, RegisterVehicleRequestResponse
+from ros_parking_management_msgs.srv import VehiclePositionRequest, VehiclePositionRequestResponse
+from ros_parking_management_msgs.srv import ParkoutVehicleRequest, ParkoutVehicleRequestResponse
 import rospy
 import random
 
@@ -86,10 +86,10 @@ def start_server():
     Initialize a ROS node and provide services from it.
     """
     rospy.init_node('service_server_capacity')
-    service_capacity = rospy.Service('capacity_request', CapacityRequest, handle_request_capacity)
-    service_parking = rospy.Service('register_vehicle_request', RegisterVehicleRequest, handle_request_register)
-    service_position = rospy.Service('vehicle_position_request', VehiclePositionRequest, handle_request_vehicle_position)
-    service_parkout = rospy.Service('parkout_vehicle_request', ParkoutVehicleRequest, handle_request_parkout_vehicle)
+    service_capacity = rospy.Service('/capacity_request', CapacityRequest, handle_request_capacity)
+    service_parking = rospy.Service('/register_vehicle_request', RegisterVehicleRequest, handle_request_register)
+    service_position = rospy.Service('/vehicle_position_request', VehiclePositionRequest, handle_request_vehicle_position)
+    service_parkout = rospy.Service('/unpark_vehicle_request', ParkoutVehicleRequest, handle_request_parkout_vehicle)
     rospy.spin()
 
 
