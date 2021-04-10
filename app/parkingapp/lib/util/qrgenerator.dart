@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// Class to show qr code to share
 class QRPage extends StatelessWidget {
   static const routeName = '/qrpage';
-  // selcted vehicle for transfer
+  // selected vehicle for transfer
   final Vehicle vehicle;
   const QRPage({Key key, this.vehicle}) : super(key: key);
   @override

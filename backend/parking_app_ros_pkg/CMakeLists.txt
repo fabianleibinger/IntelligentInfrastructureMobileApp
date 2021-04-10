@@ -51,32 +51,13 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- add_message_files(
+# add_message_files(
 	FILES
-	CapacityMsg.msg
-	VehicleDimensionsMsg.msg
-	VehicleInformationMsg.msg
-	VehicleIdentificationMsg.msg
-	ParkingGarageInformation.msg
-	VehicleMotionInstructionMsg.msg
-	VehicleAutonomousGradeMsg.msg
-	VehicleTypeMsg.msg
-	VehicleStatusMsg.msg
-	VehicleLoadingMsg.msg
-	GeographicalPositionMsg.msg
-	PathMsg.msg
-	MultiPathMsg.msg
-	Pose2DStamped.msg
-	ParkPreferencesMsg.msg
 )
 
 ## Generate services in the 'srv' folder
- add_service_files(
+# add_service_files(
  	FILES
-	CapacityRequest.srv
-	RegisterVehicleRequest.srv
-	VehiclePositionRequest.srv
-	ParkoutVehicleRequest.srv
 )
 
 ## Generate actions in the 'action' folder

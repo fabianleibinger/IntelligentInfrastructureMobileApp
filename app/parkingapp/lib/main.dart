@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 import 'models/classes/parkinggarage.dart';
 import 'models/enum/parkinggaragetype.dart';
 
-// Main: From here you call all u'r widgets.
+// Main: From here you call all ur widgets.
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
@@ -67,7 +67,7 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => RouteLandingPage());
           case Routes.authPage:
             return MaterialPageRoute(
-                builder: (context) => AuthentificationHandling());
+                builder: (context) => AuthenticationHandling());
           case Routes.qrScanner:
             return MaterialPageRoute(builder: (context) => ScanScreen());
           case Routes.transferKeys:
@@ -115,14 +115,14 @@ class Main extends StatelessWidget {
         freeChargeableParkingSpots: 0,
         image: 'assets/parkgarage-fasanengarten.jpg',
         map: "assets/parkgarage-fasanengarten-map.jpg",
-        bottomLeft: Coordinate(lattitude: 49.0134227, longitude: 8.41950527853),
+        bottomLeft: Coordinate(latitude: 49.0134227, longitude: 8.41950527853),
         topRight:
-            Coordinate(lattitude: 49.0144759205, longitude: 8.42059599234));
+            Coordinate(latitude: 49.0144759205, longitude: 8.42059599234));
     //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
     return MultiProvider(
       providers: [
         BlocProvider<VehicleBloc>(create: (context) {
-          return VehicleBloc(List<Vehicle>());
+          return VehicleBloc(<Vehicle>[]);
         }),
         ListenableProvider(
           create: (_) => DrawerStateInfo(Routes.vehicle),
@@ -132,26 +132,3 @@ class Main extends StatelessWidget {
     );
   }
 }
-/*
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Text("ijawd");
-  }
-
-  void login() {
-    setState(() {
-      build(context);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-}*/

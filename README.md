@@ -9,3 +9,7 @@ Users of the intelligent infrastructure can use the services with an installable
 
 ## Backend: Python Flask server using ROS for communication
 The frontend communicates with a server running on local wifi of the parking garage. For data exchange, HTTP requests with JSON data in the body are used. The backend itself is connected to the parking management system with a ROS interface. The parking management system must provide ROS services, which allow ROS message exchange between our backend and the parking management system. The backend is programmed using the flask micro web framework. Moreover, it is structured in layers.
+
+## Component structure
+This is an overview of the components and communication between different systems involved in this project:
+![component diagram of the project system](/documentation/Projektschema_Komponenten.PNG)

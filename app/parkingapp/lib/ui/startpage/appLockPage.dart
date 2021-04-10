@@ -44,7 +44,7 @@ class _AppLockPageState extends State<AppLockPage> {
           CircleUIConfig(borderColor: green, fillColor: green, circleSize: 30),
       keyboardUIConfig:
           KeyboardUIConfig(digitBorderWidth: 2, primaryColor: green),
-      passwordEnteredCallback: _onPasscodeEntered,
+      passwordEnteredCallback: _onPassCodeEntered,
       cancelButton: Text(
         'Delete',
         style: const TextStyle(fontSize: 16, color: Colors.white),
@@ -57,15 +57,15 @@ class _AppLockPageState extends State<AppLockPage> {
       ),
       shouldTriggerVerification: _verificationNotifier.stream,
       backgroundColor: Colors.black.withOpacity(0.8),
-      cancelCallback: _onPasscodeCancelled,
+      cancelCallback: _onPassCodeCancelled,
       digits: digits,
       passwordDigits: 6,
     );
   }
 
-  _onPasscodeEntered(String enteredPasscode) async {
-    String passcode = await SharedPreferencesHelper.getPasscode() ?? "123456";
-    bool isValid = passcode == enteredPasscode;
+  _onPassCodeEntered(String enteredPassCode) async {
+    String passCode = await SharedPreferencesHelper.getPasscode() ?? "123456";
+    bool isValid = passCode == enteredPassCode;
     _verificationNotifier.add(isValid);
     if (isValid) {
       setState(() {
@@ -75,7 +75,7 @@ class _AppLockPageState extends State<AppLockPage> {
     }
   }
 
-  _onPasscodeCancelled() {
+  _onPassCodeCancelled() {
     Navigator.maybePop(context);
   }
 
@@ -86,23 +86,23 @@ class _AppLockPageState extends State<AppLockPage> {
   }
 }
 
-/// Handels routing if app is locked
-class AuthentificationHandling extends StatelessWidget {
+/// Handles routing if app is locked
+class AuthenticationHandling extends StatelessWidget {
   static const String routeName = '/authPage';
 
   @override
   Widget build(BuildContext context) {
-    _isAuthentificated(context);
+    _isAuthenticated(context);
     return Center(
       child: CircularProgressIndicator(),
     );
   }
 
-  void _isAuthentificated(BuildContext context) async {
+  void _isAuthenticated(BuildContext context) async {
     //ask if device is locked with password
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthentificated = prefs.getBool('authentification') ?? false;
-    isAuthentificated
+    bool isAuthenticated = prefs.getBool('authentication') ?? false;
+    isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
         : Navigator.pushNamedAndRemoveUntil(

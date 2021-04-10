@@ -21,11 +21,14 @@ class RouteLandingPage extends StatelessWidget {
     );
   }
 
-  //check the shared preferences and database if the app has been succesfully set up and navigate to correct page
+  //check the shared preferences and database if the app has been successfully set up and navigate to correct page
   void _isSetUp(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
     print('isSetUp? ' + isSetUp.toString());
+
+    await DataHelper.initVehicles(context);
+
     //navigate to page and remove all widgets from the widget tree
     isSetUp
         ? Navigator.pushNamedAndRemoveUntil(
@@ -34,10 +37,10 @@ class RouteLandingPage extends StatelessWidget {
             context, Routes.landingPage, (Route<dynamic> route) => false);
   }
 
-  void _isAuthentificated(BuildContext context) async {
+  void _isAuthenticated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthentificated = prefs.getBool('authentification') ?? false;
-    isAuthentificated
+    bool isAuthenticated = prefs.getBool('authentication') ?? false;
+    isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
         : Navigator.pushNamedAndRemoveUntil(

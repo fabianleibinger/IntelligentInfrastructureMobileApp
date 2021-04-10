@@ -147,8 +147,10 @@ abstract class Vehicle {
     DataHelper.updateVehicle(context, this);
   }
 
-  void setLocation(Coordinate coordinate) {
-    this.location = coordinate;
+  /// Setter for location, defined by [latitude], [longitude].
+  void setLocation(double latitude, double longitude) {
+    Coordinate location = Coordinate(latitude: latitude, longitude: longitude);
+    this.location = location;
     this.locationObserver.value = this.location;
   }
 
@@ -163,9 +165,11 @@ abstract class Vehicle {
     DataHelper.updateVehicle(context, this);
   }
 
-  //set the parkingSpot for the vehicle
-  void setParkingSpot(Coordinate parkingSpot) {
-    this.parkingSpot = parkingSpot;
+  /// Setter for the parking spot location, defined by [latitude], [longitude].
+  void setParkingSpot(double latitude, double longitude) {
+    Coordinate destination =
+        Coordinate(latitude: latitude, longitude: longitude);
+    this.parkingSpot = destination;
   }
 
   /// Compares [vehicle] attribute values with own attribute values

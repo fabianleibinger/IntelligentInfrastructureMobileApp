@@ -21,7 +21,7 @@ class Notifications {
 
   /// Sets the initial notification settings.
   /// Needs to be called in every method that creates a new notification.
-  static _initialize() {
+  static _initialize() async {
     var androidInitialize =
         new AndroidInitializationSettings(_notificationIcon);
     var iOSInitialize = new IOSInitializationSettings();
@@ -29,14 +29,14 @@ class Notifications {
         android: androidInitialize, iOS: iOSInitialize);
 
     _localNotification = new FlutterLocalNotificationsPlugin();
-    _localNotification.initialize(initializationSettings);
+    await _localNotification.initialize(initializationSettings);
   }
 
   /// Sets the initial clickable notification settings.
   /// The Function to be called by notification [onSelectedNotification].
   /// Needs to be called in every method that creates a new clickable notification.
   static _initializeClickable(
-      Future<dynamic> Function(String) onSelectedNotification) {
+      Future<dynamic> Function(String) onSelectedNotification) async {
     var androidInitialize =
         new AndroidInitializationSettings(_notificationIcon);
     var iOSInitialize = new IOSInitializationSettings();
@@ -44,7 +44,7 @@ class Notifications {
         android: androidInitialize, iOS: iOSInitialize);
 
     _localNotification = new FlutterLocalNotificationsPlugin();
-    _localNotification.initialize(initializationSettings,
+    await _localNotification.initialize(initializationSettings,
         onSelectNotification: onSelectedNotification);
   }
 
@@ -113,4 +113,5 @@ class Notifications {
     _enabledForPark = prefs.getBool('notificationsParked') ?? false;
     _enabledForCharge = prefs.getBool('notificationsCharged') ?? false;
   }
+
 }
