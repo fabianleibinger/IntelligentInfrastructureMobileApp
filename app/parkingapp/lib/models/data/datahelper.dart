@@ -23,7 +23,7 @@ class DataHelper {
 
   // deletes a specific vehicle
   static deleteVehicle(BuildContext context, Vehicle vehicle) {
-    DatabaseProvider.db.delete(vehicle.databaseId).then((_) {
+    DatabaseProvider.db.delete(vehicle.inAppKey).then((_) {
       BlocProvider.of<VehicleBloc>(context).add(DeleteVehicle(vehicle));
     });
   }
