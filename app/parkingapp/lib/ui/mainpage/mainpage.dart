@@ -53,7 +53,6 @@ class _MainPageState extends State<MainPage> {
       _noConnection = true;
       ApiProvider.connect().then((value) {
         _noConnection = false;
-      }).whenComplete(() {
         _setButtonIsDisabled();
       }).catchError((e) => _setButtonIsDisabled());
     });
