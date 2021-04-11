@@ -37,7 +37,7 @@ class ParkManager {
               _checkAndReactIfParkInFailed(vehicle, timer, context);
               _checkAndReactIfVehicleParkedIn(vehicle, parking, timer, context);
             }).catchError((e) {
-              _handleGetPositionErrorForParkInRequest(
+              _errorCount = _handleGetPositionErrorForParkInRequest(vehicle,
                   _errorCount, timer, context);
               return;
             });
@@ -124,10 +124,13 @@ class ParkManager {
   }
 
   /// Shows [NoConnectionDialog] after [_errorLimit] is reached.
-  static void _handleGetPositionErrorForParkInRequest(
+  /// Returns updated [errorCount].
+  static int _handleGetPositionErrorForParkInRequest(Vehicle vehicle,
       int errorCount, Timer timer, BuildContext context) {
     print('Could not update position ' + errorCount.toString());
-    if (errorCount++ > _errorLimit) {
+    errorCount++;
+    if (errorCount > _errorLimit) {
+      vehicle.setAndUpdateParkIngIn(context, false);
       timer.cancel();
       showDialog(
           context: context,
@@ -135,6 +138,7 @@ class ParkManager {
             return NoConnectionDialog.getDialog(context);
           });
     }
+    return errorCount;
   }
 
   /// Returns parking garage occupied dialog.
@@ -167,7 +171,7 @@ class ParkManager {
             _checkAndReactIfParkOutFailed(vehicle, timer, context);
             _checkAndReactIfVehicleParkedOut(vehicle, parking, timer, context);
           }).catchError((e) {
-            _handleGetPositionErrorForParkOutRequest(
+            _errorCount = _handleGetPositionErrorForParkOutRequest(vehicle,
                 _errorCount, timer, context);
             return;
           });
@@ -242,17 +246,21 @@ class ParkManager {
   }
 
   /// Shows [NoConnectionDialog] after [_errorLimit] is reached.
-  static void _handleGetPositionErrorForParkOutRequest(
+  /// Returns updated [errorCount].
+  static int _handleGetPositionErrorForParkOutRequest(Vehicle vehicle,
       int errorCount, Timer timer, BuildContext context) {
     print('Could not update position ' + errorCount.toString());
-    if (errorCount++ > _errorLimit) {
+    errorCount++;
+    if (errorCount > _errorLimit) {
       timer.cancel();
+      vehicle.setAndUpdateParkIngOut(context, false);
       showDialog(
           context: context,
           builder: (context) {
             return NoConnectionDialog.getDialog(context);
           });
     }
+    return errorCount;
   }
 
   /// Widget showing the parking garages map and an overlay for
