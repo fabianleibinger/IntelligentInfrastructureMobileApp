@@ -23,8 +23,6 @@ class VehiclePage extends StatefulWidget {
 }
 
 class _VehiclePageState extends State<VehiclePage> {
-  final GlobalKey<FormState> _loginFormKey =
-      new GlobalKey<FormState>(debugLabel: '_loginFormKey');
   static bool _firstBuild = true;
 
   @override
@@ -41,7 +39,6 @@ class _VehiclePageState extends State<VehiclePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _loginFormKey,
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).drawerVehicles),
         ),

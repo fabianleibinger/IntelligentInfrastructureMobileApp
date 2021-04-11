@@ -53,9 +53,8 @@ class _MainPageState extends State<MainPage> {
       _noConnection = true;
       ApiProvider.connect().then((value) {
         _noConnection = false;
-      }).whenComplete(() {
         _setButtonIsDisabled();
-      });
+      }).catchError((e) => _setButtonIsDisabled());
     });
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
@@ -69,6 +68,14 @@ class _MainPageState extends State<MainPage> {
         in BlocProvider.of<VehicleBloc>(context).state) {
       if (currentVehicle.inAppKey == widget.carInAppKey)
         vehicle = currentVehicle;
+    }
+  }
+
+  // Only call setState() if widget is mounted.
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
     }
   }
 
