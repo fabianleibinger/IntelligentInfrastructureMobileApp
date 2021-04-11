@@ -92,9 +92,7 @@ class _VehiclePageState extends State<VehiclePage> {
                     //remove vehicle from displayed list
                     vehicleList.remove(vehicle.inAppKey);
                     //remove vehicle from database and bloc
-                    DatabaseProvider.db.delete(vehicle.databaseId);
-                    BlocProvider.of<VehicleBloc>(context)
-                        .add(DeleteVehicle(vehicle));
+                    DataHelper.deleteVehicle(context, vehicle);
                     //show SnackBar that vehicle has been deleted
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(vehicle.name +
