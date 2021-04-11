@@ -109,7 +109,7 @@ class AuthentificationHandling extends StatelessWidget {
   void _isAuthentificated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isAuthenticated = prefs.getBool('authentification') ?? false;
-    print(isAuthenticated);
+    print("Passcode required: " + isAuthenticated.toString());
     isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
