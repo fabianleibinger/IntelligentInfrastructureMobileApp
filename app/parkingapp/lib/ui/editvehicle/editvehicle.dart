@@ -79,10 +79,21 @@ class _VehicleFormState extends State<VehicleForm> {
   bool _vehicleDoCharge = false;
 
   @override
+  void initState() {
+    //set vehicleDoCharge
+    if (widget.vehicle.runtimeType == ChargeableVehicle) {
+      ChargeableVehicle tempVehicle = vehicle;
+      _vehicleDoCharge = tempVehicle.doCharge;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     //preselect if vehicle is chargeable or not
     if (_vehicleChargeable == null)
       _vehicleChargeable = widget.vehicle.runtimeType == ChargeableVehicle;
+
     return Form(
       key: _formKey,
       child: Padding(
@@ -252,6 +263,11 @@ class _VehicleFormState extends State<VehicleForm> {
         print('converting to standard vehicle');
         ChargeableVehicle convertVehicle = vehicle;
         vehicle = convertVehicle.toStandardVehicle();
+      } else {
+        //sync vehicleDoCharge from toggle to vehicle
+        ChargeableVehicle tempVehicle = vehicle;
+        tempVehicle.doCharge = _vehicleDoCharge;
+        vehicle = tempVehicle;
       }
       // create/update the vehicle
       //this will only "update" the vehicle because it has been created at the start

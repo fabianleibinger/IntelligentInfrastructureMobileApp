@@ -285,7 +285,9 @@ class ParkManager {
 
     double _iconSize = 16;
     Container _vehicleIcon = Container(
-        width: _iconSize, height: _iconSize, child: Icon(Icons.circle));
+        width: _iconSize,
+        height: _iconSize,
+        child: Icon(Icons.circle, color: Colors.black));
     Container _destinationIcon = Container(
         width: _iconSize,
         height: _iconSize,

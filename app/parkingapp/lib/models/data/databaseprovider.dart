@@ -125,10 +125,10 @@ class DatabaseProvider {
   }
 
   // deletes a vehicle by database_id, returns the database_id
-  Future<int> delete(int id) async {
+  Future<int> delete(String inAppKey) async {
     final db = await database;
     return await db.delete(TABLE_VEHICLE,
-        where: "$COLUMN_DATABASE_ID = ?", whereArgs: [id]);
+        where: "$COLUMN_IN_APP_KEY = ?", whereArgs: [inAppKey]);
   }
 
   // updates a vehicle, returns the database_id
