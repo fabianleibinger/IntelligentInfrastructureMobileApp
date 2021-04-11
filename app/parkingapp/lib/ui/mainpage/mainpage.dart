@@ -72,6 +72,14 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+  // Only call setState() if widget is mounted.
+  @override
+  void setState(fn) {
+    if(mounted) {
+      super.setState(fn);
+    }
+  }
+
   /// Disables button.
   _setButtonIsDisabled() {
     setState(() {

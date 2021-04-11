@@ -41,7 +41,7 @@ class ParkingGarage {
         int.parse(value.values.single
             .toString()
             .split(' ')
-            .last));
+            .last)).catchError((e) => this.freeParkingSpots = 0);
   }
 
   /// Updates [freeChargeableParkingSpots]
@@ -52,7 +52,7 @@ class ParkingGarage {
         int.parse(value.values.single
             .toString()
             .split(' ')
-            .last));
+            .last)).catchError((e) => this.freeChargeableParkingSpots = 0);
   }
 
   /// Returns true when parking spots
