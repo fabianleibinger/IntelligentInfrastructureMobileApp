@@ -44,6 +44,7 @@ class VehicleHelper {
       print('parsedVehicle is electric; using parsed vehicle as is');
       vehicle = parseVehicle;
     } else if (parseVehicle.runtimeType == StandardVehicle) {
+      vehicle = parseVehicle;
       DataHelper.deleteVehicle(context, vehicle);
       print('parsedVehicle is standard; converting into chargeable');
       StandardVehicle convertVehicle = parseVehicle;
