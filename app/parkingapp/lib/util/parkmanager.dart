@@ -123,13 +123,17 @@ class ParkManager {
     }, true, false);
   }
 
-  /// Assumes that vehicle parked in after [_errorLimit] is reached.
+  /// Shows [NoConnectionDialog] after [_errorLimit] is reached.
   static void _handleGetPositionErrorForParkInRequest(
       int errorCount, Timer timer, BuildContext context) {
     print('Could not update position ' + errorCount.toString());
     if (errorCount++ > _errorLimit) {
       timer.cancel();
-      _setParkedIn(vehicle, context);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
     }
   }
 
@@ -237,13 +241,17 @@ class ParkManager {
         false);
   }
 
-  /// Assumes that vehicle parked out after [_errorLimit] is reached.
+  /// Shows [NoConnectionDialog] after [_errorLimit] is reached.
   static void _handleGetPositionErrorForParkOutRequest(
       int errorCount, Timer timer, BuildContext context) {
     print('Could not update position ' + errorCount.toString());
     if (errorCount++ > _errorLimit) {
       timer.cancel();
-      _setParkedOut(vehicle, context);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return NoConnectionDialog.getDialog(context);
+          });
     }
   }
 
