@@ -5,6 +5,7 @@ import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 /// Passcode ui
 ///
@@ -32,7 +33,7 @@ class PasscodePageState extends State<PasscodePage> {
   Widget showPasscodeScreen() {
     return PasscodeScreen(
         title: Text(
-          'Neues App Passwort eingeben',
+          AppLocalizations.of(context).newAppPasscode,
           textAlign: TextAlign.center,
           style: TextStyle(color: Colors.white, fontSize: 28),
         ),
@@ -48,9 +49,9 @@ class PasscodePageState extends State<PasscodePage> {
           color: Theme.of(context).primaryColor,
         ),
         deleteButton: Text(
-          'Delete',
+          AppLocalizations.of(context).deleteButton,
           style: const TextStyle(fontSize: 16, color: Colors.white),
-          semanticsLabel: 'Delete',
+          semanticsLabel: AppLocalizations.of(context).deleteButton,
         ),
         bottomWidget: _buildPasscodeRestoreButton(),
         shouldTriggerVerification: _verificationNotifier.stream,
@@ -70,7 +71,6 @@ class PasscodePageState extends State<PasscodePage> {
     } else {
       isValid = false;
     }
-    //_verificationNotifier.add(isValid);
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
@@ -92,7 +92,7 @@ class PasscodePageState extends State<PasscodePage> {
           margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
           child: FlatButton(
             child: Text(
-              "App Passwort ausschalten",
+              AppLocalizations.of(context).turnOffPasscode,
               textAlign: TextAlign.center,
               style: const TextStyle(
                   fontSize: 16,
