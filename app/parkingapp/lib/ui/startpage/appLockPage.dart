@@ -9,7 +9,7 @@ import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Class to show lockscreen if app is locked
+// Class is only called from [AuthentificationHandling] when app is locked
 class AppLockPage extends StatefulWidget {
   final String apikey;
   const AppLockPage({Key key, this.apikey}) : super(key: key);
@@ -44,7 +44,7 @@ class _AppLockPageState extends State<AppLockPage> {
           CircleUIConfig(borderColor: green, fillColor: green, circleSize: 30),
       keyboardUIConfig:
           KeyboardUIConfig(digitBorderWidth: 2, primaryColor: green),
-      passwordEnteredCallback: _onPassCodeEntered,
+      passwordEnteredCallback: _onPasscodeEntered,
       cancelButton: Text(
         'Delete',
         style: const TextStyle(fontSize: 16, color: Colors.white),
@@ -63,15 +63,18 @@ class _AppLockPageState extends State<AppLockPage> {
     );
   }
 
-  _onPassCodeEntered(String enteredPassCode) async {
-    String passCode = await SharedPreferencesHelper.getPasscode() ?? "123456";
-    bool isValid = passCode == enteredPassCode;
-    _verificationNotifier.add(isValid);
+  // Checks if entered passcode equals stored passcode
+  _onPasscodeEntered(String enteredPasscode) async {
+    String passcode = await SharedPreferencesHelper.getPasscode() ?? "123456";
+    bool isValid = passcode == enteredPasscode;
+    //_verificationNotifier.add(isValid);
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
-        Navigator.pushReplacementNamed(context, Routes.settings);
       });
+      // Routes to [RouteLandingPage] after unlock
+      Navigator.pushReplacementNamed(context, Routes.routeLandingPage);
+      this.isValidCallBack();
     }
   }
 
@@ -84,24 +87,30 @@ class _AppLockPageState extends State<AppLockPage> {
     _verificationNotifier.close();
     super.dispose();
   }
+
+  void isValidCallBack() {}
 }
 
-/// Handles routing if app is locked
-class AuthenticationHandling extends StatelessWidget {
+/// Handels routing if app is locked,
+///
+/// directing to [AppLockPage] if a passcode is required,
+/// directing to [RouteLandingPage] if no passcode is required
+class AuthentificationHandling extends StatelessWidget {
   static const String routeName = '/authPage';
 
   @override
   Widget build(BuildContext context) {
-    _isAuthenticated(context);
+    _isAuthentificated(context);
     return Center(
       child: CircularProgressIndicator(),
     );
   }
 
-  void _isAuthenticated(BuildContext context) async {
-    //ask if device is locked with password
+  /// Checks if app is secured with passcode and handels routing
+  void _isAuthentificated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isAuthenticated = prefs.getBool('authentication') ?? false;
+    bool isAuthenticated = prefs.getBool('authentification') ?? false;
+    print(isAuthenticated);
     isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))

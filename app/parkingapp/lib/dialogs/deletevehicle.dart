@@ -8,11 +8,11 @@ class ConfirmDelete extends AlertDialog {
       title: Text(AppLocalizations.of(context).askDeleteVehicle),
       content: Text(AppLocalizations.of(context).askDeleteVehicleContent),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(AppLocalizations.of(context).scanQRDialogCancelButton),
           onPressed: () => Navigator.of(context).pop(false),
         ),
-        FlatButton(
+        TextButton(
           child: Text(AppLocalizations.of(context).scanQRDialogConfirmButton),
           onPressed: () => Navigator.of(context).pop(true),
         )
@@ -28,7 +28,7 @@ class CantDeleteVehicle extends StatelessWidget {
       title: Text(AppLocalizations.of(context).vehicleIsParkedInTitle),
       content: Text(AppLocalizations.of(context).vehicleIsParkedInBody),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text(AppLocalizations.of(context).buttonOk),
           onPressed: () => Navigator.of(context).pop(false),
         )

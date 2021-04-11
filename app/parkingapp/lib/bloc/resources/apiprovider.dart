@@ -11,7 +11,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 class ApiProvider {
   /// The Backend Server Address.
   //TODO new url 192.168.4.1
-  static final String _serverUrl = 'http://cloud.carl.al';
+  static final String _serverUrl = 'http://192.168.4.1';
   static final String _serverPort = ':2525';
 
   /// The HTTP status codes.
@@ -21,9 +21,6 @@ class ApiProvider {
   /// The HTTP Header specifications.
   static final String _httpPostHeaderFirst = 'Content-Type';
   static final String _httpPostHeaderSecond = 'application/json; charset=UTF-8';
-
-  /// The time span that triggers a time out.
-  static final Duration _timeOutAfter = Duration(seconds: 10);
 
   /// Returns connection details.
   /// ['IP', 'Port', 'Parking garage']
@@ -86,7 +83,7 @@ class ApiProvider {
   /// Throws an [HttpException] with the [failureText].
   static Future<Map<String, dynamic>> httpGet(
       String url, String failureText) async {
-    final response = await http.get(url).timeout(_timeOutAfter);
+    final response = await http.get(url);
     if (response.statusCode == _httpGetStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
@@ -105,8 +102,7 @@ class ApiProvider {
             headers: <String, String>{
               _httpPostHeaderFirst: _httpPostHeaderSecond,
             },
-            body: jsonEncode(body))
-        .timeout(_timeOutAfter);
+            body: jsonEncode(body));
     if (response.statusCode == _httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;

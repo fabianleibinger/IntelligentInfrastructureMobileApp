@@ -3,13 +3,18 @@ import 'package:parkingapp/models/data/sharedpreferences.dart';
 import 'package:parkingapp/notifications/notifications.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
+import 'package:parkingapp/ui/settingspage/AGBpage.dart';
 import 'package:parkingapp/ui/settingspage/passcodepage.dart';
+import 'package:parkingapp/util/qrgenerator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:system_settings/system_settings.dart';
 
-/// Class for showing the settings page
+/// Settings ui
+///
+/// User can modify push notification and passcode settings and can transfer
+/// vehicles via QR from this page
 class SettingsPage extends StatelessWidget {
   static const String routeName = '/settingspage';
   const SettingsPage({Key key}) : super(key: key);
@@ -22,8 +27,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      appBar: AppBar(
-          title: Text(AppLocalizations.of(context).settingsTitle)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).settingsTitle)),
       body: SettingsForm(),
     );
   }
@@ -74,6 +78,7 @@ class SettingsFormState extends State<SettingsForm> {
     );
   }
 
+  /// Creates ListTile for notifications and stores users preferences in sharedpreferences
   Widget _notificationsListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessages),
@@ -100,6 +105,8 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
+  /// Creates ListTile for notifications if vehicle is parked
+  /// and stores users preferences in sharedpreferences
   Widget _notificationsParkedListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessagesParked),
@@ -113,6 +120,8 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
+  /// Creates ListTile for notifications if vehicle is charged
+  /// and stores users preferences in sharedpreferences
   Widget _notificationsChargedListTile() {
     return SwitchListTile(
         title: Text(AppLocalizations.of(context).pushMessagesCharge),
@@ -126,6 +135,7 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
+  /// Creates List Tile for passcode and calls _passCodeSettings()
   Widget _passcodeListTile() {
     return ListTile(
       title: Text(AppLocalizations.of(context).password),
@@ -137,6 +147,7 @@ class SettingsFormState extends State<SettingsForm> {
     );
   }
 
+  /// Creates List Tile for transfer Data and routes to [TransferKeys]
   Widget _transferDataListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).transferData),
@@ -147,6 +158,7 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
+  /// Creates List Tile for showing terms and conditions and routes to [AGB]
   Widget _showTermsListTile() {
     return ListTile(
         title: Text(AppLocalizations.of(context).showTermsAndConditions),
@@ -158,6 +170,7 @@ class SettingsFormState extends State<SettingsForm> {
         });
   }
 
+  /// Routes to [PassCodePage]
   _passCodeSettings() {
     Navigator.push(context,
         MaterialPageRoute(builder: (BuildContext context) => PasscodePage()));

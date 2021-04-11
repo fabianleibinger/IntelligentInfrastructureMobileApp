@@ -52,7 +52,6 @@ class _ParkOutPageState extends State<ParkOutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(vehicle.name)),
-      drawer: AppDrawer(Routes.parkOut),
       // Button observes parkedIn value of car.
       floatingActionButton: ValueListenableBuilder(
         valueListenable: vehicle.parkedInObserver,

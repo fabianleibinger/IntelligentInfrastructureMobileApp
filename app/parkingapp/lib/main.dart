@@ -67,7 +67,7 @@ class Main extends StatelessWidget {
             return MaterialPageRoute(builder: (context) => RouteLandingPage());
           case Routes.authPage:
             return MaterialPageRoute(
-                builder: (context) => AuthenticationHandling());
+                builder: (context) => AuthentificationHandling());
           case Routes.qrScanner:
             return MaterialPageRoute(builder: (context) => ScanScreen());
           case Routes.transferKeys:
@@ -80,7 +80,6 @@ class Main extends StatelessWidget {
         if (uri.pathSegments.length > 0 &&
             inAppKeyRegExp.hasMatch(uri.pathSegments.first)) {
           print('vehicle: ' + uri.pathSegments.first);
-          //TODO generate vehicle Page with inAppKey
           if (uri.pathSegments.length == 2) {
             //does only need the path behind /
             if (uri.pathSegments.last == Routes.parkOut.split('/').last) {
@@ -118,7 +117,7 @@ class Main extends StatelessWidget {
         bottomLeft: Coordinate(latitude: 49.0134227, longitude: 8.41950527853),
         topRight:
             Coordinate(latitude: 49.0144759205, longitude: 8.42059599234));
-    //TODO move ListenableProvider into getMaterialApp method. For some reason ListenableProvider is not initialized if built in getMaterialApp
+
     return MultiProvider(
       providers: [
         BlocProvider<VehicleBloc>(create: (context) {
