@@ -8,6 +8,7 @@ import 'package:passcode_screen/circle.dart';
 import 'package:passcode_screen/keyboard.dart';
 import 'package:passcode_screen/passcode_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Class is only called from [AuthentificationHandling] when app is locked
 class AppLockPage extends StatefulWidget {
@@ -16,8 +17,6 @@ class AppLockPage extends StatefulWidget {
   @override
   _AppLockPageState createState() => _AppLockPageState();
 }
-
-const storedPasscode = '123456';
 
 class _AppLockPageState extends State<AppLockPage> {
   //for passcode screen
@@ -36,7 +35,7 @@ class _AppLockPageState extends State<AppLockPage> {
   _passCodeLockScreen(BuildContext context) {
     return PasscodeScreen(
       title: Text(
-        'App Passwort eingeben',
+        AppLocalizations.of(context).enterPasscode,
         textAlign: TextAlign.center,
         style: TextStyle(color: Colors.white, fontSize: 28),
       ),
@@ -46,14 +45,14 @@ class _AppLockPageState extends State<AppLockPage> {
           KeyboardUIConfig(digitBorderWidth: 2, primaryColor: green),
       passwordEnteredCallback: _onPasscodeEntered,
       cancelButton: Text(
-        'Delete',
+        AppLocalizations.of(context).deleteButton,
         style: const TextStyle(fontSize: 16, color: Colors.white),
-        semanticsLabel: 'Delete',
+        semanticsLabel: AppLocalizations.of(context).deleteButton,
       ),
       deleteButton: Text(
-        'Delete',
+        AppLocalizations.of(context).deleteButton,
         style: const TextStyle(fontSize: 16, color: Colors.white),
-        semanticsLabel: 'Delete',
+        semanticsLabel: AppLocalizations.of(context).deleteButton,
       ),
       shouldTriggerVerification: _verificationNotifier.stream,
       backgroundColor: Colors.black.withOpacity(0.8),
@@ -67,14 +66,16 @@ class _AppLockPageState extends State<AppLockPage> {
   _onPasscodeEntered(String enteredPasscode) async {
     String passcode = await SharedPreferencesHelper.getPasscode() ?? "123456";
     bool isValid = passcode == enteredPasscode;
-    //_verificationNotifier.add(isValid);
     if (isValid) {
       setState(() {
         this.isAuthenticated = isValid;
       });
       // Routes to [RouteLandingPage] after unlock
       Navigator.pushReplacementNamed(context, Routes.routeLandingPage);
-      this.isValidCallBack();
+    } else {
+      // Reloads page with empty passcode field
+      Navigator.pop(context);
+      Navigator.pushNamed(context, Routes.authPage);
     }
   }
 
@@ -87,8 +88,6 @@ class _AppLockPageState extends State<AppLockPage> {
     _verificationNotifier.close();
     super.dispose();
   }
-
-  void isValidCallBack() {}
 }
 
 /// Handels routing if app is locked,
@@ -110,7 +109,7 @@ class AuthentificationHandling extends StatelessWidget {
   void _isAuthentificated(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isAuthenticated = prefs.getBool('authentification') ?? false;
-    print(isAuthenticated);
+    print("Passcode required: " + isAuthenticated.toString());
     isAuthenticated
         ? Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) => AppLockPage()))
