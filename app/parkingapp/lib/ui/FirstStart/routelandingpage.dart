@@ -27,8 +27,6 @@ class RouteLandingPage extends StatelessWidget {
     bool isSetUp = prefs.getBool(RouteLandingPage.isSetUp) ?? false;
     print('isSetUp? ' + isSetUp.toString());
 
-    await DataHelper.initVehicles(context);
-
     //navigate to page and remove all widgets from the widget tree
     isSetUp
         ? Navigator.pushNamedAndRemoveUntil(
