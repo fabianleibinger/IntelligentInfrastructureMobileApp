@@ -55,7 +55,7 @@ class _MainPageState extends State<MainPage> {
         _noConnection = false;
       }).whenComplete(() {
         _setButtonIsDisabled();
-      });
+      }).catchError((e) => _setButtonIsDisabled());
     });
     BlocListener<VehicleBloc, List<Vehicle>>(
       listener: (context, vehicleList) {
