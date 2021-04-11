@@ -338,7 +338,15 @@
     "scanScreenTitle": "QR Code Scanner",
     "@scanScreenTitle": {},
     "noQrCodeScanned": "Noch keinen QR Code gescannt!",
-    "@noQrCodeScanned": {}
+    "@noQrCodeScanned": {},
+    "newAppPasscode": "Neues App Passwort eingeben",
+    "@newAppPasscode": {},
+    "deleteButton": "Löschen",
+    "@deleteButton": {},
+    "turnOffPasscode": "App Passwort ausschalten",
+    "@turnOffPasscode": {},
+    "enterPasscode": "App Passwort eingeben",
+    "@enterPasscode": {}
 
 
 
