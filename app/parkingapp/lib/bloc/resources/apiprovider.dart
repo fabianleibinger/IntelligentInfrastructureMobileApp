@@ -11,7 +11,7 @@ import 'package:parkingapp/models/classes/vehicle.dart';
 class ApiProvider {
   /// The Backend Server Address.
   //TODO new url 192.168.4.1
-  static final String _serverUrl = 'http://cloud.carl.al';
+  static final String _serverUrl = 'http://192.168.4.1';
   static final String _serverPort = ':2525';
 
   /// The HTTP status codes.
@@ -97,12 +97,11 @@ class ApiProvider {
   /// Throws an [HttpException] with the [failureText].
   static Future<Map<String, dynamic>> httpPost(
       String url, Map<String, dynamic> body, String failureText) async {
-    final response = await http
-        .post(url,
-            headers: <String, String>{
-              _httpPostHeaderFirst: _httpPostHeaderSecond,
-            },
-            body: jsonEncode(body));
+    final response = await http.post(url,
+        headers: <String, String>{
+          _httpPostHeaderFirst: _httpPostHeaderSecond,
+        },
+        body: jsonEncode(body));
     if (response.statusCode == _httpPostStatusCodeSuccess) {
       final Map result = json.decode(response.body);
       return result;
