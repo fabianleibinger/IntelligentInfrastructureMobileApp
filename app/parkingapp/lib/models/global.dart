@@ -82,6 +82,8 @@ ThemeData themeData = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   toggleableActiveColor: green,
   disabledColor: grey,
+  elevatedButtonTheme:
+      ElevatedButtonThemeData(style: ElevatedButton.styleFrom(primary: green)),
 );
 
 /// Dark App Theme
@@ -94,4 +96,6 @@ ThemeData darkThemeData = ThemeData(
   visualDensity: VisualDensity.adaptivePlatformDensity,
   toggleableActiveColor: green,
   disabledColor: grey,
+  elevatedButtonTheme:
+      ElevatedButtonThemeData(style: ElevatedButton.styleFrom(primary: green)),
 );
