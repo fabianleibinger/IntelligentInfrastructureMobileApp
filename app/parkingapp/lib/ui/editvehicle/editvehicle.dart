@@ -14,6 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/util/vehiclehelper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+/// Edit an existing [Vehicle]
 class EditVehicle extends StatelessWidget {
   final Vehicle vehicle;
   const EditVehicle({Key key, this.vehicle}) : super(key: key);
@@ -41,6 +42,7 @@ class EditVehicle extends StatelessWidget {
   }
 }
 
+/// Create a new [Vehicle]
 class CreateVehicle extends StatelessWidget {
   static const String routeName = '/createVehicle';
 
@@ -60,6 +62,7 @@ class CreateVehicle extends StatelessWidget {
   }
 }
 
+/// Display a Form to create a new [Vehicle] or update an existing [Vehicle]
 class VehicleForm extends StatefulWidget {
   final Vehicle vehicle;
   //this route will be called when the form is completed
@@ -171,14 +174,11 @@ class _VehicleFormState extends State<VehicleForm> {
               ),
             ),
             //end of form
-            RaisedButton(
+            ElevatedButton(
               child: widget.vehicle == null
                   ? Text(AppLocalizations.of(context).addVehicleButton)
                   : Text(AppLocalizations.of(context).editVehicleButton),
-              onPressed: () => onPressed(_vehicleChargeable),
-              highlightColor: Theme.of(context).accentColor,
-              color: Theme.of(context).primaryColor,
-              colorBrightness: Theme.of(context).primaryColorBrightness,
+              onPressed: () => validate(_vehicleChargeable),
             )
           ],
         ),
@@ -186,14 +186,15 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  // show a dialog, wait for it to finish and update state after finishing
-  // returns true when finished
+  /// show a dialog, wait for it to finish and update state after finishing
+  /// returns true when finished
   Future<bool> _showDialog(BuildContext context, Widget dialog) async {
     await showDialog(context: context, builder: (context) => dialog);
     setState(() {});
     return true;
   }
 
+  /// Subtitle for the [Vehicle] dimensions [FormField]
   Widget _vehicleDimensionsSubtitle() {
     if (vehicle.height == notSpecifiedDouble &&
         vehicle.width == notSpecifiedDouble &&
@@ -205,7 +206,7 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  //electric vehicle toggles
+  /// [ChargeableVehicle] specific [ListTile]s
   Column _getElectricToggles(bool vehicleChargeable) {
     //return no toggles if not chargeable
     if (!vehicleChargeable) return Column();
@@ -244,14 +245,15 @@ class _VehicleFormState extends State<VehicleForm> {
     );
   }
 
-  // returns a string if no text is provided, otherwise null
-  // if null is returned the validator accepts the string
+  /// [TextFormField] validator for required [String]s
+  /// returns a string if no text is provided, otherwise null
+  /// if null is returned the validator accepts the string
   String requiredValue(String str) {
     return str.isEmpty ? AppLocalizations.of(context).requiredText : null;
   }
 
-  //validate the form
-  void onPressed(bool vehicleChargeable) async {
+  /// Validate the [VehicleForm] and save the [Vehicle]
+  void validate(bool vehicleChargeable) async {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();
@@ -284,7 +286,7 @@ class _VehicleFormState extends State<VehicleForm> {
   }
 }
 
-//format text to uppercase
+/// Format text to uppercase in a [TextFormField]
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(

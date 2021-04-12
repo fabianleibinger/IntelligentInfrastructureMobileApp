@@ -12,6 +12,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 final EdgeInsets drawerHeaderPadding = EdgeInsets.all(16.0);
 final EdgeInsets listViewPadding = EdgeInsets.fromLTRB(0, 8, 0, 0);
 
+/// Unified AppDrawer used throughout the app
+/// Displays the Apps Name in the header and the [Vehicle]s, [VehiclePage] and [SettingsPage] in a [ListView]
 class AppDrawer extends StatelessWidget {
   AppDrawer([this.currentPage]);
 
@@ -31,8 +33,8 @@ class AppDrawer extends StatelessWidget {
           Container(
             padding: drawerHeaderPadding,
             width: MediaQuery.of(context).size.width,
-            child: Text(AppLocalizations.of(context).drawerHeader,
-                style: whiteHeader),
+            child:
+                Text(AppLocalizations.of(context).appName, style: whiteHeader),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               border: Border(
@@ -66,9 +68,10 @@ class AppDrawer extends StatelessWidget {
   }
 }
 
-//route: Route to page that shall be opened on tap
-//text: text shown on tile
-//icon: icon shown to the left of the text on the tile
+/// Generates a single standard tile for the [ListView] in the [AppDrawer]
+/// [route] to page that shall be opened on tap
+/// [text] shown on tile
+/// [icon] shown to the left of the text on the tile
 ListTile generateTile(BuildContext context, String currentDrawer, String route,
     String text, IconData icon) {
   return ListTile(
@@ -85,7 +88,8 @@ ListTile generateTile(BuildContext context, String currentDrawer, String route,
       });
 }
 
-//generates vehicle tiles, displaying vehicle.name, and routing to next page
+/// Generates a single vehicle tile for the [ListView] in the [AppDrawer] displaying [vehicle.name] and arouting to the vhicle page by [vehicle.inAppKey]
+/// [icon] shown to the left of the text on the tile
 ListTile generateVehicleTile(BuildContext context, String currentDrawer,
     Vehicle vehicle, IconData icon) {
   return ListTile(
@@ -104,6 +108,7 @@ ListTile generateVehicleTile(BuildContext context, String currentDrawer,
   );
 }
 
+/// Generates [generateVehicleTile] for all [Vehicle] in the [VehicleBloc]
 Widget generateVehicles(BuildContext context, String currentDrawer) {
   return BlocBuilder<VehicleBloc, List<Vehicle>>(
     buildWhen: (List<Vehicle> previous, List<Vehicle> current) {
@@ -117,8 +122,8 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
         vehicle.runtimeType == ChargeableVehicle
             ? icon = Icons.electric_car
             : icon = Icons.directions_car;
-        listTiles.add(generateVehicleTile(
-            context, currentDrawer, vehicle, icon));
+        listTiles
+            .add(generateVehicleTile(context, currentDrawer, vehicle, icon));
       }
       return Column(
         children: listTiles,
@@ -127,7 +132,7 @@ Widget generateVehicles(BuildContext context, String currentDrawer) {
   );
 }
 
-// this manages the highlighted item in the drawer.
+/// this manages the highlighted item in the drawer.
 class DrawerStateInfo with ChangeNotifier {
   // set initial drawer state
   //if not provided drawer will only highlight after the first interaction with the drawer

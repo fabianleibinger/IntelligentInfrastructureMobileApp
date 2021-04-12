@@ -37,8 +37,8 @@ class ParkManager {
               _checkAndReactIfParkInFailed(vehicle, timer, context);
               _checkAndReactIfVehicleParkedIn(vehicle, parking, timer, context);
             }).catchError((e) {
-              _errorCount = _handleGetPositionErrorForParkInRequest(vehicle,
-                  _errorCount, timer, context);
+              _errorCount = _handleGetPositionErrorForParkInRequest(
+                  vehicle, _errorCount, timer, context);
               return;
             });
           });
@@ -125,8 +125,8 @@ class ParkManager {
 
   /// Shows [NoConnectionDialog] after [_errorLimit] is reached.
   /// Returns updated [errorCount].
-  static int _handleGetPositionErrorForParkInRequest(Vehicle vehicle,
-      int errorCount, Timer timer, BuildContext context) {
+  static int _handleGetPositionErrorForParkInRequest(
+      Vehicle vehicle, int errorCount, Timer timer, BuildContext context) {
     print('Could not update position ' + errorCount.toString());
     errorCount++;
     if (errorCount > _errorLimit) {
@@ -171,8 +171,8 @@ class ParkManager {
             _checkAndReactIfParkOutFailed(vehicle, timer, context);
             _checkAndReactIfVehicleParkedOut(vehicle, parking, timer, context);
           }).catchError((e) {
-            _errorCount = _handleGetPositionErrorForParkOutRequest(vehicle,
-                _errorCount, timer, context);
+            _errorCount = _handleGetPositionErrorForParkOutRequest(
+                vehicle, _errorCount, timer, context);
             return;
           });
         });
@@ -247,8 +247,8 @@ class ParkManager {
 
   /// Shows [NoConnectionDialog] after [_errorLimit] is reached.
   /// Returns updated [errorCount].
-  static int _handleGetPositionErrorForParkOutRequest(Vehicle vehicle,
-      int errorCount, Timer timer, BuildContext context) {
+  static int _handleGetPositionErrorForParkOutRequest(
+      Vehicle vehicle, int errorCount, Timer timer, BuildContext context) {
     print('Could not update position ' + errorCount.toString());
     errorCount++;
     if (errorCount > _errorLimit) {
@@ -274,7 +274,8 @@ class ParkManager {
     print('generate parkInMap');
     //TODO height must be calculated from aspect ratio of map
     final double _width = MediaQuery.of(context).size.width;
-    final double _height = (1473 * _width) / 1000;
+    final double _height = (currentParkingGarage.mapHeight * _width) /
+        currentParkingGarage.mapWidth;
 
     //assume 0x0 to be the bottom left
     Coordinate _topRightAdjusted = Coordinate(

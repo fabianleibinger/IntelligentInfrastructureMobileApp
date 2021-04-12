@@ -90,7 +90,7 @@ class PasscodePageState extends State<PasscodePage> {
         alignment: Alignment.bottomCenter,
         child: Container(
           margin: const EdgeInsets.only(bottom: 10.0, top: 20.0),
-          child: FlatButton(
+          child: TextButton(
             child: Text(
               AppLocalizations.of(context).turnOffPasscode,
               textAlign: TextAlign.center,
@@ -99,8 +99,6 @@ class PasscodePageState extends State<PasscodePage> {
                   color: Colors.white,
                   fontWeight: FontWeight.w300),
             ),
-            splashColor: Colors.white.withOpacity(0.4),
-            highlightColor: Colors.white.withOpacity(0.2),
             onPressed: () {
               _resetAppPassword();
               Navigator.maybePop(context);

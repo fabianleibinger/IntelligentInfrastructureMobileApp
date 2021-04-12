@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
 import 'package:parkingapp/models/global.dart';
-import 'package:parkingapp/routes/routes.dart';
-import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:parkingapp/ui/mainpage/mainpage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/models/enum/parkinggaragetype.dart';
 import 'package:parkingapp/util/parkmanager.dart';
 
+/// Park out a [Vehicle]
+/// A map of of the [ParkingGarage] will be displayed with the current position of the [Vehicle].
 class ParkOutPage extends StatefulWidget {
   static const String routeName = '/parkoutpage';
 

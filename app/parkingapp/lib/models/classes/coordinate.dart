@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Stores a longitude and latitude from a geolocation
 class Coordinate {
   final double latitude, longitude;
 
