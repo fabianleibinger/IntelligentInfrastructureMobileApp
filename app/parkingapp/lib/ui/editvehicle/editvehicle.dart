@@ -174,14 +174,11 @@ class _VehicleFormState extends State<VehicleForm> {
               ),
             ),
             //end of form
-            RaisedButton(
+            ElevatedButton(
               child: widget.vehicle == null
                   ? Text(AppLocalizations.of(context).addVehicleButton)
                   : Text(AppLocalizations.of(context).editVehicleButton),
               onPressed: () => validate(_vehicleChargeable),
-              highlightColor: Theme.of(context).accentColor,
-              color: Theme.of(context).primaryColor,
-              colorBrightness: Theme.of(context).primaryColorBrightness,
             )
           ],
         ),
