@@ -36,4 +36,7 @@
 11. bash catkin_ws/setup_script.sh
 
 // Shutdown the server with catkin_ws/shutdown_script.sh
+
 // Start standalone server with simulated Parkhaus-Management-System with catkin_ws/setup_script_standalone.sh
+
+// Get the newest version from git with updateFromGit.sh
