@@ -178,7 +178,7 @@ class _VehicleFormState extends State<VehicleForm> {
               child: widget.vehicle == null
                   ? Text(AppLocalizations.of(context).addVehicleButton)
                   : Text(AppLocalizations.of(context).editVehicleButton),
-              onPressed: () => onPressed(_vehicleChargeable),
+              onPressed: () => validate(_vehicleChargeable),
               highlightColor: Theme.of(context).accentColor,
               color: Theme.of(context).primaryColor,
               colorBrightness: Theme.of(context).primaryColorBrightness,
@@ -255,8 +255,8 @@ class _VehicleFormState extends State<VehicleForm> {
     return str.isEmpty ? AppLocalizations.of(context).requiredText : null;
   }
 
-  void onPressed(bool vehicleChargeable) async {
   /// Validate the [VehicleForm] and save the [Vehicle]
+  void validate(bool vehicleChargeable) async {
     var form = _formKey.currentState;
     if (form.validate()) {
       form.save();

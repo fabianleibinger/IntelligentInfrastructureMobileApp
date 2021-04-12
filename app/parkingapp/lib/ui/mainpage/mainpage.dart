@@ -75,7 +75,7 @@ class _MainPageState extends State<MainPage> {
   // Only call setState() if widget is mounted.
   @override
   void setState(fn) {
-    if(mounted) {
+    if (mounted) {
       super.setState(fn);
     }
   }
@@ -188,9 +188,7 @@ class _MainPageState extends State<MainPage> {
     // car park specific items
     List<String> _properties;
     _noConnection
-        ? _properties = [
-            AppLocalizations.of(context).noConnectionDialogTitle
-          ]
+        ? _properties = [AppLocalizations.of(context).noConnectionDialogTitle]
         : _properties = [
             AppLocalizations.of(context).mainPageAvailableSpaces +
                 _parkingSpots.toString()
