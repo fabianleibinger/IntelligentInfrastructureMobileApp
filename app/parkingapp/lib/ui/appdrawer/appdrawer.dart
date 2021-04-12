@@ -31,8 +31,8 @@ class AppDrawer extends StatelessWidget {
           Container(
             padding: drawerHeaderPadding,
             width: MediaQuery.of(context).size.width,
-            child: Text(AppLocalizations.of(context).drawerHeader,
-                style: whiteHeader),
+            child:
+                Text(AppLocalizations.of(context).appName, style: whiteHeader),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor,
               border: Border(
