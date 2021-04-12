@@ -31,7 +31,6 @@ sudo systemctl unmask hostapd
 sudo systemctl enable hostapd
 sudo apt install -y dnsmasq
 sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent
-#printf "\ninterface wlan0 \n    static ip_address=192.168.4.1/24 \n    nohook wpa_supplicant" | sudo tee -a /etc/dhcpcd.conf
 printf "# https://www.raspberrypi.org/documentation/configuration/wireless/access-point-routed.md\n# Enable IPv4 routing\nnet.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.d/routed-ap.conf
 sudo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
 sudo netfilter-persistent save
@@ -53,7 +52,8 @@ sudo rm /etc/localtime
 sudo dpkg-reconfigure -f noninteractive tzdata
 cd /tmp && wget https://files.ovpn.com/raspbian/ovpn-de-frankfurt.zip && unzip ovpn-de-frankfurt.zip && mkdir -p /etc/openvpn && mv config/* /etc/openvpn && chmod +x /etc/openvpn/update-resolv-conf && rm -rf config && rm -f ovpn-de-frankfurt.zip 
 sudo cp /home/pi/client.ovpn /etc/openvpn
-sudo openvpn client.ovpn
+sudo mv /etc/openvpn/client.ovpn /etc/openvpn/client.conf
+sudo openvpn client.conf &
 # type in username and password
 
 
@@ -62,14 +62,13 @@ sudo openvpn client.ovpn
 sudo apt install -y git
 mkdir /home/pi/git/
 cd git
-sudo git clone https://git.scc.kit.edu/teamprojekt-intelligente-infrastruktur-2020-21-fzi/intelligentinfrastructuremobileapp.git
-#//https://ids-git.fzi.de/qm821/intelligente-infrastruktur-fzi-autopark.git
-sudo cp /home/pi/git/intelligentinfrastructuremobileapp/backend/setup_script.sh /home/pi/catkin_ws/
-sudo cp /home/pi/git/intelligentinfrastructuremobileapp/backend/setup_script_standalone.sh /home/pi/catkin_ws/
-sudo cp /home/pi/git/intelligentinfrastructuremobileapp/backend/requirements.txt /home/pi/catkin_ws/
-sudo cp /home/pi/git/intelligentinfrastructuremobileapp/backend/shutdown_script.sh /home/pi/catkin_ws/
-sudo cp -r /home/pi/git/intelligentinfrastructuremobileapp/backend/parking_app_ros_pkg /home/pi/catkin_ws/src/
-sudo cp -r /home/pi/git/intelligentinfrastructuremobileapp/backend/ros_parking_management_msgs /home/pi/catkin_ws/src/
+sudo git clone https://ids-git.fzi.de/qm821/intelligente-infrastruktur-fzi-autopark.git
+sudo cp /home/pi/git/intelligente-infrastruktur-fzi-autopark/backend/setup_script.sh /home/pi/catkin_ws/
+sudo cp /home/pi/git/intelligente-infrastruktur-fzi-autopark/backend/setup_script_standalone.sh /home/pi/catkin_ws/
+sudo cp /home/pi/git/intelligente-infrastruktur-fzi-autopark/backend/requirements.txt /home/pi/catkin_ws/
+sudo cp /home/pi/git/intelligente-infrastruktur-fzi-autopark/backend/shutdown_script.sh /home/pi/catkin_ws/
+sudo cp -r /home/pi/git/intelligente-infrastruktur-fzi-autopark/backend/parking_app_ros_pkg /home/pi/catkin_ws/src/
+sudo cp -r /home/pi/git/intelligente-infrastruktur-fzi-autopark/backend/ros_parking_management_msgs /home/pi/catkin_ws/src/
 cd
 cd /home/pi/catkin_ws/src
 git clone  https://github.com/ros/common_msgs.git 
