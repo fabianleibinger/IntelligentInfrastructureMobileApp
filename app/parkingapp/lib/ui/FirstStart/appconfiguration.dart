@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:parkingapp/models/data/sharedpreferences.dart';
-import 'package:parkingapp/models/global.dart';
 import 'package:parkingapp/routes/routes.dart';
 import 'package:parkingapp/ui/FirstStart/addvehicle.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,8 +19,8 @@ class AppConfiguration extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AppDrawer(),
-      appBar: AppBar(
-          title: Text(AppLocalizations.of(context).titleConfigureApp)),
+      appBar:
+          AppBar(title: Text(AppLocalizations.of(context).titleConfigureApp)),
       bottomNavigationBar: Material(
         elevation: 10,
         child: ButtonBar(

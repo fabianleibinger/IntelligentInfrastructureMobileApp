@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:parkingapp/bloc/blocs/vehiclebloc.dart';
-import 'package:parkingapp/bloc/events/deletevehicle.dart';
 import 'package:parkingapp/dialogs/deletevehicle.dart';
 import 'package:parkingapp/models/classes/vehicle.dart';
-import 'package:parkingapp/models/data/databaseprovider.dart';
 import 'package:parkingapp/models/data/datahelper.dart';
 import 'package:parkingapp/models/widgets/expandableFloatingActionButton.dart';
 import 'package:parkingapp/ui/editvehicle/editvehicle.dart';
