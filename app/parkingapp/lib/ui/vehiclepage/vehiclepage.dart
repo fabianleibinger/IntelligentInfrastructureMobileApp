@@ -43,7 +43,6 @@ class _VehiclePageState extends State<VehiclePage> {
         appBar: AppBar(
           title: Text(AppLocalizations.of(context).drawerVehicles),
         ),
-        //TODO use routeName
         drawer: AppDrawer(),
         floatingActionButton: FancyFab(),
         body: Container(padding: EdgeInsets.all(8), child: createListView()));

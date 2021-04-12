@@ -272,7 +272,6 @@ class ParkManager {
       Coordinate vehiclePosition,
       destination}) {
     print('generate parkInMap');
-    //TODO height must be calculated from aspect ratio of map
     final double _width = MediaQuery.of(context).size.width;
     final double _height = (currentParkingGarage.mapHeight * _width) /
         currentParkingGarage.mapWidth;

@@ -124,8 +124,6 @@ class _VehicleFormState extends State<VehicleForm> {
                     inputFormatters: [UpperCaseTextFormatter()],
                   ),
                   //when this is toggled add the electric toggles
-                  //TODO animate expand
-                  //TODO move this into a seperate Form
                   SwitchListTile(
                     title: Text(AppLocalizations.of(context).vehicleCanCharge),
                     onChanged: (bool newValue) =>
@@ -277,7 +275,6 @@ class _VehicleFormState extends State<VehicleForm> {
       form.reset();
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setBool(RouteLandingPage.isSetUp, true);
-      //TODO move to the Scaffold Widget from EditVehicle/AddVehicle
       //navigate to supplied route or pop the page of no route was supplied
       widget.route != null
           ? Navigator.of(context).pushReplacement(widget.route)
