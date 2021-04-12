@@ -13,6 +13,9 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parkingapp/util/vehiclehelper.dart';
 
+/// Display all [Vehicle]s in a [ListView]
+/// [Vehicle]s can be deleted by swiping them from right to left or edited by tapping on them
+/// New [Vehicle]s can be created or imported
 class VehiclePage extends StatefulWidget {
   static const String routeName = '/vehiclepage';
 

@@ -16,7 +16,9 @@ final TimeOfDay notSpecifiedTimeOfDay = TimeOfDay(hour: 0, minute: 0);
 final String defaultChargingProvider =
     ChargingProvider.Automatisch.toShortString();
 
+/// Help the [VehicleForm] creating a [Vehicle]
 class VehicleHelper {
+  /// Set the [Vehicle] on [MainPage] to a specified vehicle or a new one
   static void updateMainPageVehicle(
       {@required BuildContext context, Vehicle parseVehicle}) {
     if (parseVehicle == null) {
@@ -54,6 +56,7 @@ class VehicleHelper {
     }
   }
 
+  /// Delete or update the [Vehicle] created by [updateMainPageVehicle]
   static Future<bool> cleanUpDummy(
       {@required BuildContext context, Vehicle parseVehicle}) async {
     print('starting clean up');
@@ -87,7 +90,7 @@ class VehicleHelper {
     return true;
   }
 
-  ///deletes all [Vehicle] from the Database that are dummy vehicles
+  /// Deletes all [Vehicle]s from the Database that are dummy vehicles
   static void cleanUpVehicles(BuildContext context) {
     for (Vehicle vehicle in BlocProvider.of<VehicleBloc>(context).state) {
       if (vehicle.name == notSpecifiedString &&

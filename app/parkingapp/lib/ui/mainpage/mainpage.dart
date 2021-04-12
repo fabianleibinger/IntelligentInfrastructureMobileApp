@@ -17,6 +17,7 @@ import 'package:parkingapp/ui/appdrawer/appdrawer.dart';
 Vehicle vehicle;
 ParkingGarage currentParkingGarage;
 
+/// The main page allowing for parking in a [Vehicle]
 // ignore: must_be_immutable
 class MainPage extends StatefulWidget {
   static const String routeName = '/MainPage';
@@ -182,6 +183,7 @@ class _MainPageState extends State<MainPage> {
         ));
   }
 
+  /// Build all [ListTile]s for a [Vehicle] that can be changed on the [MainPage]
   List<Widget> buildCarToggles(Vehicle vehicle) {
     // car park specific items
     List<String> _properties;
@@ -215,6 +217,7 @@ class _MainPageState extends State<MainPage> {
     return widgets;
   }
 
+  /// Build all [ListTile]s for a [ChargeableVehicle] that can be changed on the [MainPage]
   List<Widget> addElectricVehicleTiles(ChargeableVehicle vehicle) {
     List<Widget> widgets = [];
     widgets.add(SwitchListTile(

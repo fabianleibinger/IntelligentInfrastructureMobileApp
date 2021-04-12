@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingapp/ui/FirstStart/appconfiguration.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// Display the tearms of service of the app and require accepting of the terms
 class TermsOfService extends StatefulWidget {
   @override
   _TermsOfServiceState createState() => _TermsOfServiceState();

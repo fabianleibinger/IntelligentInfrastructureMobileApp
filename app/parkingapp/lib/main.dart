@@ -24,15 +24,14 @@ import 'package:provider/provider.dart';
 import 'models/classes/parkinggarage.dart';
 import 'models/enum/parkinggaragetype.dart';
 
-// Main: From here you call all ur widgets.
-
 void main() {
   Provider.debugCheckInvalidValueType = null;
   runApp(Main());
 }
 
 class Main extends StatelessWidget {
-  //defines MaterialApp used by this program. [homeWidget] is the home child of MaterialApp
+  /// Defines MaterialApp used by this program.
+  /// [initialRoute] is the home route of MaterialApp
   static MaterialApp getMaterialApp(String initialRoute) {
     return MaterialApp(
       //Initialize Localization
@@ -104,7 +103,6 @@ class Main extends StatelessWidget {
     );
   }
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     currentParkingGarage = ParkingGarage(

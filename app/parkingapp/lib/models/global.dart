@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// colors used throughout the app
 Color black = Colors.black;
 Color blue = Color(0xFF0E2356);
 Color green = Color(0xFF007749);
@@ -9,6 +10,7 @@ Color lightGreen = Color(0xFF2FAE7A);
 Color red = Color(0xFFBF1E00);
 Color white = Colors.white;
 
+// custom text styles used in the app
 TextStyle blackText = new TextStyle(
     fontFamily: 'Avenir',
     fontWeight: FontWeight.bold,
@@ -69,7 +71,7 @@ TextStyle redButtonText = new TextStyle(
     color: red,
     fontSize: 30);
 
-// App theme
+/// App theme
 ThemeData themeData = ThemeData(
   brightness: Brightness.light,
   appBarTheme:
@@ -82,7 +84,7 @@ ThemeData themeData = ThemeData(
   disabledColor: grey,
 );
 
-//Dark App Theme
+/// Dark App Theme
 ThemeData darkThemeData = ThemeData(
   brightness: Brightness.dark,
   appBarTheme: AppBarTheme(titleTextStyle: whiteHeader),
