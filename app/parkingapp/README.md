@@ -17,6 +17,6 @@ The main goal of the Parking App is to send park requests for the users vehicles
 ### Park operations
 To keep the vehicles state consistent during park operations, the ParkManager class provides the necessary logic.
 
-During a park process the user can track the current and target position of his vehicle on a map of the parking garage, implemented on the ParkPages (ParkInPage and ParkOutPage classes).
+During a park process the user can track the current and target position of his vehicle on a map of the parking garage, implemented on the ParkPages (ParkInPage and ParkOutPage classes) and in the ParkManager.
 
 Push notifications (Notifications class) inform about important operations and allow the user to park out a vehicle from home screen with only one click. Notifications can be enabled or disabled on the SettingsPage widget. 
